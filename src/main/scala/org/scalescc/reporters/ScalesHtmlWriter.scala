@@ -29,15 +29,21 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def _package(pack: MeasuredPackage): Node = {
-    <table>
-      <tr>
-        <th>Class</th>
-        <th>Lines</th>
-        <th>Methods</th>
-        <th>Statement Coverage</th>
-        <th>Branch Coverage</th>
-        <th>Complexity</th>
-      </tr>{pack.classes.map(_class)}
+    <table class="pure-table pure-table-bordered pure-table-striped">
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>Lines</th>
+          <th>Methods</th>
+          <th>Statement Coverage</th>
+          <th>Branch Coverage</th>
+          <th>Complexity</th>
+        </tr>
+
+      </thead>
+      <tbody>
+        {pack.classes.map(_class)}
+      </tbody>
     </table>
   }
 
