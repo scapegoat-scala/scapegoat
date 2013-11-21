@@ -2,16 +2,14 @@ package org.scalescc.reporters
 
 import scales.{MeasuredMethod, MeasuredClass, MeasuredPackage, Coverage}
 import scala.xml.Node
-import java.io.{BufferedWriter, FileWriter, File}
+import java.io.File
+import org.apache.commons.io.FileUtils
 
 /** @author Stephen Samuel */
 object CoberturaXmlWriter extends CoverageWriter {
 
   def write(coverage: Coverage, dir: File): Unit = {
-    val file = new File(dir.getAbsolutePath + "/cobertura.xml")
-    val writer = new BufferedWriter(new FileWriter(file))
-    writer.append(xml(coverage).toString())
-    writer.close()
+    FileUtils.write(new File(dir.getAbsolutePath + "/cobertura.xml"), xml(coverage).toString())
   }
 
   def method(method: MeasuredMethod): Node = {

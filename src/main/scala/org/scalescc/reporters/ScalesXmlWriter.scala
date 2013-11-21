@@ -5,16 +5,14 @@ import scala.xml.Node
 import scales.MeasuredStatement
 import scales.MeasuredClass
 import scales.MeasuredMethod
-import java.io.{FileWriter, BufferedWriter, File}
+import java.io.File
+import org.apache.commons.io.FileUtils
 
 /** @author Stephen Samuel */
 object ScalesXmlWriter extends CoverageWriter {
 
   def write(coverage: Coverage, dir: File): Unit = {
-    val file = new File(dir.getAbsolutePath + "/scales.xml")
-    val writer = new BufferedWriter(new FileWriter(file))
-    writer.append(xml(coverage).toString())
-    writer.close()
+    FileUtils.write(new File(dir.getAbsolutePath + "/scales.xml"), xml(coverage).toString())
   }
 
   def statement(stmt: MeasuredStatement): Node = {
