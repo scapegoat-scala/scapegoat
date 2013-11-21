@@ -18,7 +18,12 @@ object CoberturaXmlWriter extends CoverageWriter {
             line-rate={method.statementCoverage.toString}
             branch-rate="0">
       <lines>
-        {method.statements.map(stmt => <line number={stmt.line} hits={stmt.count} branch="false"/>)}
+        {method.statements.map(stmt =>
+          <line
+          number={stmt.line.toString}
+          hits={stmt.count.toString}
+          branch="false"/>
+      )}
       </lines>
     </method>
   }

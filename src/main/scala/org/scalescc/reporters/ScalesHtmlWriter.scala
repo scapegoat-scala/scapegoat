@@ -5,23 +5,73 @@ import scala.reflect.internal.util.SourceFile
 import scala.xml.Node
 import scales.MeasuredFile
 import java.util.Date
-import java.io.{FileWriter, BufferedWriter, File}
+import java.io.File
+import org.apache.commons.io.FileUtils
 
 /** @author Stephen Samuel */
 object ScalesHtmlWriter extends CoverageWriter {
 
   def write(coverage: Coverage, dir: File): Unit = {
     val indexFile = new File(dir.getAbsolutePath + "/index.html")
-    val writer = new BufferedWriter(new FileWriter(indexFile))
-    writer.append(xml(coverage).toString())
-    writer.close()
+    val packageFile = new File(dir.getAbsolutePath + "/packages.html")
+    val overviewFile = new File(dir.getAbsolutePath + "/overview.html")
+
+    FileUtils.copyInputStreamToFile(getClass.getResourceAsStream("/org/scalescc/reporters/index.html"), indexFile)
+    FileUtils.write(packageFile, packages(coverage).toString())
+    FileUtils.write(overviewFile, overview(coverage).toString())
+
+    coverage.packages.foreach(write(_, dir))
+  }
+
+  def write(pack: MeasuredPackage, dir: File) {
+    val file = new File(dir.getAbsolutePath + "/" + pack.name + ".html")
+    FileUtils.write(file, _package(pack).toString())
+  }
+
+  def _package(pack: MeasuredPackage): Node = {
+    <table>
+      <tr>
+        <th>Class</th>
+        <th>Lines</th>
+        <th>Methods</th>
+        <th>Statement Coverage</th>
+        <th>Branch Coverage</th>
+        <th>Complexity</th>
+      </tr>{pack.classes.map(_class)}
+    </table>
+  }
+
+  def _class(klass: MeasuredClass): Node = {
+    <tr>
+      <td>
+        {klass.name}
+      </td>
+      <td>
+        {klass.loc.toString}
+      </td>
+      <td>
+        {klass.methodCount.toString}
+      </td>
+      <td>
+        {klass.statementCoverageFormatted}
+      </td>
+      <td>tbc</td>
+      <td>tbc</td>
+    </tr>
   }
 
   def packages(coverage: Coverage): Node = {
     <ul>
-      {coverage.packages.map(arg =>
       <li>
-        {arg.name}{arg.statementCoverage.toString}
+        <a href="overview.html" target="mainFrame">
+          All packages
+        </a>{coverage.statementCoverageFormatted}
+        %
+      </li>{coverage.packages.map(arg =>
+      <li>
+        <a href={arg.name + ".html"} target="mainFrame">
+          {arg.name}
+        </a>{arg.statementCoverageFormatted}
         %
       </li>)}
     </ul>
@@ -54,7 +104,7 @@ object ScalesHtmlWriter extends CoverageWriter {
           /
           {arg.statementCount}
           (
-          {arg.statementCoverage.toString}
+          {arg.statementCoverageFormatted}
           %)
         </td>
       </tr>
@@ -64,7 +114,7 @@ object ScalesHtmlWriter extends CoverageWriter {
     </table>
   }
 
-  def overview(coverage: Coverage) = {
+  def overview(coverage: Coverage): Node = {
     <table>
       <caption>Statistics generated at
         {new Date().toString}
@@ -76,7 +126,7 @@ object ScalesHtmlWriter extends CoverageWriter {
         </td>
         <td>Statements:</td>
         <td>
-          {coverage.statementCount.toString}
+          {coverage.statementCount}
         </td>
         <td>Clases per package:</td>
         <td>
@@ -88,9 +138,9 @@ object ScalesHtmlWriter extends CoverageWriter {
         </td>
       </tr>
       <tr>
-        <td>Non comment lines of code:</td>
+        <td>to be completed</td>
         <td>
-          {coverage.ncloc.toString}
+
         </td>
         <td>Packages:</td>
         <td>
@@ -106,19 +156,6 @@ object ScalesHtmlWriter extends CoverageWriter {
         </td>
       </tr>
     </table>
-  }
-
-  def writeIndex(coverage: Coverage) {
-    val data = <html>
-      <head>
-        <title>Scales Code Coverage Overview</title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-nr-min.css"/>
-      </head>
-      <body>
-        <h1>Scales Code Coverage</h1>{overview(coverage)}{risks(coverage)}{packages(coverage)}
-      </body>
-    </html>
-    IOUtils.write("index.html", data.toString())
   }
 
   def lines(source: SourceFile): Seq[String] = new String(source.content).split("\n")
@@ -145,30 +182,5 @@ object ScalesHtmlWriter extends CoverageWriter {
     case MissingCoverage => "background: red"
     case NotInstrumented => "background: white"
   }
-
-  def html(file: MeasuredFile) =
-    <html>
-      <head>
-        <title>
-          {file.source}
-        </title>
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-nr-min.css"/>
-      </head>
-      <body>
-        <h1>
-          Filename:
-          {file.source}
-        </h1>
-        <div>Statement Coverage:
-          {file.invokedStatements.toString}
-          /
-          {file.statementCount.toString}{file.statementCoverage.toString}
-          %
-        </div>
-        <table>
-          {table(file)}
-        </table>
-      </body>
-    </html>
 }
 
