@@ -27,7 +27,7 @@ class SourceHighlighter {
       </head>
       <body style="font-family: monospace;">
         <table>
-          {lines.map(_.replace(" ", "&nbsp;")).map(line => {
+          {lines.map(_.replace(" ", "&nbsp;").replace("<", "&lt;").replace(">", "&gt;")).map(line => {
           lineNumber = lineNumber + 1
           <tr>
             <td>
@@ -39,7 +39,10 @@ class SourceHighlighter {
           </tr>
         })}
         </table>
-        <br/><br/><br/><br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
       </body>
     </html>
   }

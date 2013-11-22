@@ -66,6 +66,25 @@ object ScalesHtmlWriter extends CoverageWriter {
             {pack.classes.map(_class)}
           </tbody>
         </table>
+
+        <table>
+          {pack.statements.map(stmt => {
+          <tr>
+            <td>
+              {stmt.source.toString}
+            </td>
+            <td>
+              {stmt.line.toString}
+            </td>
+            <td>
+              {stmt.start.toString}
+            </td>
+            <td>
+              {stmt.end.toString}
+            </td>
+          </tr>
+        })}
+        </table>
       </body>
     </html>
   }
@@ -112,27 +131,36 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def packages(coverage: Coverage): Node = {
-    <table class="pure-table pure-table-bordered pure-table-striped">
-      <tbody>
-        <tr>
-          <td>
-            <a href="overview.html" target="mainFrame">
-              All packages
-            </a>{coverage.statementCoverageFormatted}
-            %
-          </td>
-        </tr>{coverage.packages.map(arg =>
-        <tr>
-          <td>
-            <a href={arg.name.replace('.', '/') + "/package.html"} target="mainFrame">
-              {arg.name}
-            </a>{arg.statementCoverageFormatted}
-            %
-          </td>
-        </tr>
-      )}
-      </tbody>
-    </table>
+    <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id='title'>Scales Code Coverage</title>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css"/>
+      </head>
+      <body>
+        <table class="pure-table pure-table-bordered pure-table-striped" style="font-size: 12px">
+          <tbody>
+            <tr>
+              <td>
+                <a href="overview.html" target="mainFrame">
+                  All packages
+                </a>{coverage.statementCoverageFormatted}
+                %
+              </td>
+            </tr>{coverage.packages.map(arg =>
+            <tr>
+              <td>
+                <a href={arg.name.replace('.', '/') + "/package.html"} target="mainFrame">
+                  {arg.name}
+                </a>{arg.statementCoverageFormatted}
+                %
+              </td>
+            </tr>
+          )}
+          </tbody>
+        </table>
+      </body>
+    </html>
   }
 
   def risks(coverage: Coverage) = {
