@@ -11,18 +11,18 @@ class SourceHighlighter {
   def print(mfile: MeasuredFile): Node = {
     val file = new File(mfile.source)
     val source = IOUtils.toString(new FileInputStream(file), "UTF-8")
-    val ranges = mfile.invokedStatements.toSeq.sortBy(_.start).map(arg => arg.start until arg.end)
+    val ranges = mfile.invokedStatements.map(arg => arg.start to arg.end)
     val intersection = collapse(ranges)
     val highlighted = highlight(source, intersection)
     val lines = highlighted.split(System.getProperty("line.separator"))
     print(lines)
   }
 
-  def collapse(ranges: Seq[Range]) = {
+  def collapse(ranges: Iterable[Range]): Seq[Range] = {
     // sorting the list puts overlapping ranges adjacent to one another in the list
     // foldLeft runs a function on successive elements. it's a great way to process
     // a list when the results are not a 1:1 mapping.
-    ranges.sortBy(_.start).foldLeft(List.empty[Range]) {
+    ranges.toSeq.sortBy(_.start).foldLeft(List.empty[Range]) {
       (acc, r) =>
         acc match {
           case head :: tail if head.start <= r.start && r.end <= head.end =>
@@ -32,10 +32,9 @@ class SourceHighlighter {
             // partial overlap; expand head to include both head and r
             Range(head.start, r.end) :: tail
           case _ =>
-            // no overlap; prepend r to list
             r :: acc
         }
-    }
+    }.reverse
   }
 
   def highlight(source: String, statements: Seq[Range]) = {
