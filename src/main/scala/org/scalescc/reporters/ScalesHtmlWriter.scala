@@ -1,7 +1,6 @@
 package org.scalescc.reporters
 
 import scales._
-import scala.reflect.internal.util.SourceFile
 import scala.xml.Node
 import scales.MeasuredFile
 import java.util.Date
@@ -21,7 +20,7 @@ object ScalesHtmlWriter extends CoverageWriter {
     FileUtils.write(overviewFile, overview(coverage).toString())
 
     coverage.packages.foreach(write(_, dir))
-    coverage.classes.foreach(write(_, dir))
+    coverage.files.foreach(write(_, dir))
   }
 
   def write(pack: MeasuredPackage, dir: File) {
@@ -30,18 +29,22 @@ object ScalesHtmlWriter extends CoverageWriter {
     FileUtils.write(file, _package(pack).toString())
   }
 
-  def write(klass: MeasuredClass, dir: File) {
-    val file = new File(dir.getAbsolutePath + "/" + klass.name.replace('.', '/') + ".html")
+  def write(mfile: MeasuredFile, dir: File) {
+    val file = new File(dir.getAbsolutePath + "/" + mfile.source + ".html")
     file.getParentFile.mkdirs()
-    FileUtils.write(file, _class(klass).toString())
+    FileUtils.write(file, _file(mfile).toString())
+  }
+
+  def _file(mfile: MeasuredFile): Node = {
+    new SourceHighlighter().print(mfile)
   }
 
   def _package(pack: MeasuredPackage): Node = {
     <table class="pure-table pure-table-bordered pure-table-striped">
       <thead>
         <tr>
-          <th>Source</th>
           <th>Class</th>
+          <th>Source</th>
           <th>Lines</th>
           <th>Methods</th>
           <th>Statements</th>
@@ -51,7 +54,6 @@ object ScalesHtmlWriter extends CoverageWriter {
           <th>Branches Invoked</th>
           <th>Branch Coverage</th>
         </tr>
-
       </thead>
       <tbody>
         {pack.classes.map(_class)}
@@ -62,12 +64,12 @@ object ScalesHtmlWriter extends CoverageWriter {
   def _class(klass: MeasuredClass): Node = {
     <tr>
       <td>
-        {klass.statements.headOption.map(_.source.split('/').last).getOrElse("")}
-      </td>
-      <td>
-        <a href={klass.name.split('.').last + ".html"}>
+        <a href={klass.source.split('/').last + ".html"}>
           {klass.name}
         </a>
+      </td>
+      <td>
+        {klass.statements.headOption.map(_.source.split('/').last).getOrElse("")}
       </td>
       <td>
         {klass.loc.toString}
@@ -136,7 +138,7 @@ object ScalesHtmlWriter extends CoverageWriter {
           %)
         </td>
         <td>
-          {arg.invokedStatements.toString}
+          {arg.invokedStatements.toString()}
           /
           {arg.statementCount}
           (
@@ -194,29 +196,5 @@ object ScalesHtmlWriter extends CoverageWriter {
     </table>
   }
 
-  def lines(source: SourceFile): Seq[String] = new String(source.content).split("\n")
-
-  def table(file: MeasuredFile): Seq[Node] = {
-    var lineNumber = 0
-    lines(file.source).map(line => {
-      lineNumber = lineNumber + 1
-      val status = file.lineStatus(lineNumber)
-      val css = lineCss(status)
-      <tr>
-        <td>
-          {lineNumber.toString}
-        </td>
-        <td style={css}>
-
-        </td>
-      </tr>
-    })
-  }
-
-  def lineCss(status: LineStatus): String = status match {
-    case Covered => "background: green"
-    case MissingCoverage => "background: red"
-    case NotInstrumented => "background: white"
-  }
 }
 
