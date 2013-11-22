@@ -25,7 +25,7 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def write(pack: MeasuredPackage, dir: File) {
-    val file = new File(dir.getAbsolutePath + "/" + pack.name.replace('.', '/') + pack.name.split('.').last + ".html")
+    val file = new File(dir.getAbsolutePath + "/" + pack.name.replace('.', '/') + "/package.html")
     file.getParentFile.mkdirs()
     FileUtils.write(file, _package(pack).toString())
   }
@@ -89,7 +89,7 @@ object ScalesHtmlWriter extends CoverageWriter {
         %
       </li>{coverage.packages.map(arg =>
       <li>
-        <a href={arg.name.replace('.', '/') + ".html"} target="mainFrame">
+        <a href={arg.name.replace('.', '/') + "/package.html"} target="mainFrame">
           {arg.name}
         </a>{arg.statementCoverageFormatted}
         %
