@@ -21,11 +21,19 @@ object ScalesHtmlWriter extends CoverageWriter {
     FileUtils.write(overviewFile, overview(coverage).toString())
 
     coverage.packages.foreach(write(_, dir))
+    coverage.classes.foreach(write(_, dir))
   }
 
   def write(pack: MeasuredPackage, dir: File) {
-    val file = new File(dir.getAbsolutePath + "/" + pack.name + ".html")
+    val file = new File(dir.getAbsolutePath + "/" + pack.name.replace('.', '/') + pack.name.split('.').last + ".html")
+    file.getParentFile.mkdirs()
     FileUtils.write(file, _package(pack).toString())
+  }
+
+  def write(klass: MeasuredClass, dir: File) {
+    val file = new File(dir.getAbsolutePath + "/" + klass.name.replace('.', '/') + ".html")
+    file.getParentFile.mkdirs()
+    FileUtils.write(file, _class(klass).toString())
   }
 
   def _package(pack: MeasuredPackage): Node = {
@@ -51,7 +59,9 @@ object ScalesHtmlWriter extends CoverageWriter {
   def _class(klass: MeasuredClass): Node = {
     <tr>
       <td>
-        {klass.name}
+        <a href={klass.name.split('.').last + ".html"}>
+          {klass.name}
+        </a>
       </td>
       <td>
         {klass.loc.toString}
@@ -79,7 +89,7 @@ object ScalesHtmlWriter extends CoverageWriter {
         %
       </li>{coverage.packages.map(arg =>
       <li>
-        <a href={arg.name + ".html"} target="mainFrame">
+        <a href={arg.name.replace('.', '/') + ".html"} target="mainFrame">
           {arg.name}
         </a>{arg.statementCoverageFormatted}
         %
