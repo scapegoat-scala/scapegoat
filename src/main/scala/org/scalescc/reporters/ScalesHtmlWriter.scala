@@ -95,7 +95,8 @@ object ScalesHtmlWriter extends CoverageWriter {
         {klass.invokedStatementCount.toString}
       </td>
       <td>
-        {klass.statementCoverageFormatted}%
+        {klass.statementCoverageFormatted}
+        %
       </td>
       <td>
         {klass.branchCount.toString}
@@ -104,26 +105,34 @@ object ScalesHtmlWriter extends CoverageWriter {
         {klass.invokedBranchesCount.toString}
       </td>
       <td>
-        {klass.branchCoverageFormatted}%
+        {klass.branchCoverageFormatted}
+        %
       </td>
     </tr>
   }
 
   def packages(coverage: Coverage): Node = {
-    <ul>
-      <li>
-        <a href="overview.html" target="mainFrame">
-          All packages
-        </a>{coverage.statementCoverageFormatted}
-        %
-      </li>{coverage.packages.map(arg =>
-      <li>
-        <a href={arg.name.replace('.', '/') + "/package.html"} target="mainFrame">
-          {arg.name}
-        </a>{arg.statementCoverageFormatted}
-        %
-      </li>)}
-    </ul>
+    <table class="pure-table pure-table-bordered pure-table-striped">
+      <tbody>
+        <tr>
+          <td>
+            <a href="overview.html" target="mainFrame">
+              All packages
+            </a>{coverage.statementCoverageFormatted}
+            %
+          </td>
+        </tr>{coverage.packages.map(arg =>
+        <tr>
+          <td>
+            <a href={arg.name.replace('.', '/') + "/package.html"} target="mainFrame">
+              {arg.name}
+            </a>{arg.statementCoverageFormatted}
+            %
+          </td>
+        </tr>
+      )}
+      </tbody>
+    </table>
   }
 
   def risks(coverage: Coverage) = {
