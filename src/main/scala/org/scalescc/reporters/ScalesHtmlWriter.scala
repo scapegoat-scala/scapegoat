@@ -95,7 +95,7 @@ object ScalesHtmlWriter extends CoverageWriter {
         {klass.invokedStatementCount.toString}
       </td>
       <td>
-        {klass.statementCoverageFormatted}
+        {klass.statementCoverageFormatted}%
       </td>
       <td>
         {klass.branchCount.toString}
@@ -104,7 +104,7 @@ object ScalesHtmlWriter extends CoverageWriter {
         {klass.invokedBranchesCount.toString}
       </td>
       <td>
-        {klass.branchCoverageFormatted}
+        {klass.branchCoverageFormatted}%
       </td>
     </tr>
   }

@@ -25,13 +25,13 @@ class SourceHighlighter {
         <title id='title'>Scales Code Coverage</title>
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css"/>
       </head>
-      <body>
+      <body style="font-family: monospace;">
         <table>
-          {lines.map(_.replace(" ", "&nbsp")).map(line => {
+          {lines.map(_.replace(" ", "&nbsp;")).map(line => {
           lineNumber = lineNumber + 1
           <tr>
             <td>
-              {lineNumber.toString}
+              {lineNumber.toString}&nbsp; &nbsp;
             </td>
             <td>
               {Unparsed(line)}
