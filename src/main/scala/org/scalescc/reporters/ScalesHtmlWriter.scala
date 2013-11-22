@@ -30,7 +30,7 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def write(mfile: MeasuredFile, dir: File) {
-    val file = new File(dir.getAbsolutePath + "/" + mfile.source + ".html")
+    val file = new File(dir.getAbsolutePath + "/" + mfile.source.replace('.', '/') + ".html")
     file.getParentFile.mkdirs()
     FileUtils.write(file, _file(mfile).toString())
   }
@@ -64,8 +64,8 @@ object ScalesHtmlWriter extends CoverageWriter {
   def _class(klass: MeasuredClass): Node = {
     <tr>
       <td>
-        <a href={klass.source.split('/').last + ".html"}>
-          {klass.name}
+        <a href={klass.source.split('/').last.replace(".scala", "") + ".html"}>
+          {klass.name.split('.').last}
         </a>
       </td>
       <td>
