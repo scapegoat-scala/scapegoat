@@ -44,9 +44,11 @@ object ScalesHtmlWriter extends CoverageWriter {
           <th>Lines</th>
           <th>Methods</th>
           <th>Statements</th>
+          <th>Statements Invoked</th>
           <th>Statement Coverage</th>
+          <th>Branches</th>
+          <th>Branches Invoked</th>
           <th>Branch Coverage</th>
-          <th>Complexity</th>
         </tr>
 
       </thead>
@@ -73,10 +75,20 @@ object ScalesHtmlWriter extends CoverageWriter {
         {klass.statementCount.toString}
       </td>
       <td>
+        {klass.invokedStatementCount.toString}
+      </td>
+      <td>
         {klass.statementCoverageFormatted}
       </td>
-      <td>tbc</td>
-      <td>tbc</td>
+      <td>
+        {klass.branchCount.toString}
+      </td>
+      <td>
+        {klass.invokedBranchesCount.toString}
+      </td>
+      <td>
+        {klass.branchCoverageFormatted}
+      </td>
     </tr>
   }
 

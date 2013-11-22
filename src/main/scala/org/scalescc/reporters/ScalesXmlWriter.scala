@@ -18,7 +18,7 @@ object ScalesXmlWriter extends CoverageWriter {
   def statement(stmt: MeasuredStatement): Node = {
     <statement package={stmt.location._package}
                class={stmt.location._class}
-               method={stmt.location.method.orNull}
+               method={stmt.location.method}
                start={stmt.start.toString}
                line={stmt.line.toString}
                invocation-count={stmt.count.toString}>
