@@ -35,6 +35,7 @@ object ScalesHtmlWriter extends CoverageWriter {
           <th>Class</th>
           <th>Lines</th>
           <th>Methods</th>
+          <th>Statements</th>
           <th>Statement Coverage</th>
           <th>Branch Coverage</th>
           <th>Complexity</th>
@@ -57,6 +58,9 @@ object ScalesHtmlWriter extends CoverageWriter {
       </td>
       <td>
         {klass.methodCount.toString}
+      </td>
+      <td>
+        {klass.statementCount.toString}
       </td>
       <td>
         {klass.statementCoverageFormatted}
