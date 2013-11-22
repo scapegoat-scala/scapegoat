@@ -47,7 +47,7 @@ object ScalesHtmlWriter extends CoverageWriter {
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css"/>
       </head>
       <body>
-        <table class="pure-table pure-table-bordered pure-table-striped">
+        <table class="pure-table pure-table-bordered pure-table-striped" style="font-size:12px">
           <thead>
             <tr>
               <th>Class</th>
@@ -163,12 +163,30 @@ object ScalesHtmlWriter extends CoverageWriter {
     </html>
   }
 
-  def risks(coverage: Coverage) = {
-    <div id="risks">
-      <div>Total 20 Project Risks</div>{coverage.risks(20).map(arg => <div>
-      {arg.name}
-    </div>)}
-    </div>
+  def risks(coverage: Coverage, limit: Int) = {
+    <table class="pure-table pure-table-bordered pure-table-striped" style="font-size: 12px">
+      <captain>Top 20 Class Risks</captain>
+      <tbody>
+        {coverage.risks(limit).map(klass =>
+        <tr>
+          <td>
+            {klass.simpleName}
+          </td>
+          <td>
+            {klass.loc.toString}
+          </td>
+          <td>
+            {klass.methodCount.toString}
+          </td>
+          <td>
+            {klass.statementCoverageFormatted}
+          </td>
+          <td>
+            {klass.branchCoverageFormatted}
+          </td>
+        </tr>)}
+      </tbody>
+    </table>
   }
 
   def packages2(coverage: Coverage) = {
@@ -201,6 +219,12 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def overview(coverage: Coverage): Node = {
+    <div class="overview">
+      {stats(coverage)}{risks(coverage, 20)}
+    </div>
+  }
+
+  def stats(coverage: Coverage): Node = {
     <table>
       <caption>Statistics generated at
         {new Date().toString}
@@ -226,7 +250,6 @@ object ScalesHtmlWriter extends CoverageWriter {
       <tr>
         <td>to be completed</td>
         <td>
-
         </td>
         <td>Packages:</td>
         <td>
