@@ -39,6 +39,7 @@ class SourceHighlighter {
           </tr>
         })}
         </table>
+        <br/><br/><br/><br/>
       </body>
     </html>
   }
