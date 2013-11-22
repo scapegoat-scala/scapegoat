@@ -16,7 +16,7 @@ object CoberturaXmlWriter extends CoverageWriter {
     <method name={method.name}
             signature="()V"
             line-rate={method.statementCoverage.toString}
-            branch-rate="0">
+            branch-rate={method.branchCoverageFormatted}>
       <lines>
         {method.statements.map(stmt =>
           <line
@@ -30,9 +30,10 @@ object CoberturaXmlWriter extends CoverageWriter {
 
   def klass(klass: MeasuredClass): Node = {
     <class name={klass.name}
-           filename="notimpl.java"
+           filename={klass.source}
            line-rate={klass.statementCoverage.toString}
-           branch-rate="0" complexity="0">
+           branch-rate={klass.branchCoverageFormatted}
+           complexity="0">
       <methods>
         {klass.methods.map(method)}
       </methods>
@@ -52,11 +53,11 @@ object CoberturaXmlWriter extends CoverageWriter {
 
   def xml(coverage: Coverage): Node = {
     <coverage line-rate={coverage.statementCoverage.toString}
-              branch-rate="0"
+              branch-rate={coverage.branchCoverageFormatted}
               version="1.0"
               timestamp={System.currentTimeMillis.toString}>
       <sources>
-        <source>C:/local/mvn-coverage-example/src/main/java</source>
+        <source>/src/main/scala</source>
       </sources>
       <packages>
         {coverage.packages.map(pack)}
