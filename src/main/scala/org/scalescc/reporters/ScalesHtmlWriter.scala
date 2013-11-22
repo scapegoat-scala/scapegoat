@@ -5,7 +5,7 @@ import scala.xml.Node
 import scales.MeasuredFile
 import java.util.Date
 import java.io.File
-import org.apache.commons.io.FileUtils
+import org.apache.commons.io.{FilenameUtils, FileUtils}
 
 /** @author Stephen Samuel */
 object ScalesHtmlWriter extends CoverageWriter {
@@ -20,17 +20,17 @@ object ScalesHtmlWriter extends CoverageWriter {
     FileUtils.write(overviewFile, overview(coverage).toString())
 
     coverage.packages.foreach(write(_, dir))
-    coverage.files.foreach(write(_, dir))
   }
 
   def write(pack: MeasuredPackage, dir: File) {
     val file = new File(dir.getAbsolutePath + "/" + pack.name.replace('.', '/') + "/package.html")
     file.getParentFile.mkdirs()
     FileUtils.write(file, _package(pack).toString())
+    pack.files.foreach(write(_, file.getParentFile))
   }
 
   def write(mfile: MeasuredFile, dir: File) {
-    val file = new File(dir.getAbsolutePath + "/" + mfile.source.replace('.', '/') + ".html")
+    val file = new File(dir.getAbsolutePath + "/" + FilenameUtils.getBaseName(mfile.source) + ".html")
     file.getParentFile.mkdirs()
     FileUtils.write(file, _file(mfile).toString())
   }
@@ -40,32 +40,43 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def _package(pack: MeasuredPackage): Node = {
-    <table class="pure-table pure-table-bordered pure-table-striped">
-      <thead>
-        <tr>
-          <th>Class</th>
-          <th>Source</th>
-          <th>Lines</th>
-          <th>Methods</th>
-          <th>Statements</th>
-          <th>Statements Invoked</th>
-          <th>Statement Coverage</th>
-          <th>Branches</th>
-          <th>Branches Invoked</th>
-          <th>Branch Coverage</th>
-        </tr>
-      </thead>
-      <tbody>
-        {pack.classes.map(_class)}
-      </tbody>
-    </table>
+    <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id='title'>Scales Code Coverage</title>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css"/>
+      </head>
+      <body>
+        <table class="pure-table pure-table-bordered pure-table-striped">
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Source</th>
+              <th>Lines</th>
+              <th>Methods</th>
+              <th>Statements</th>
+              <th>Statements Invoked</th>
+              <th>Statement Coverage</th>
+              <th>Branches</th>
+              <th>Branches Invoked</th>
+              <th>Branch Coverage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {pack.classes.map(_class)}
+          </tbody>
+        </table>
+      </body>
+    </html>
   }
 
   def _class(klass: MeasuredClass): Node = {
+    val filename = FilenameUtils.getBaseName(klass.source) + ".html"
+    val simpleClassName = klass.name.split('.').last
     <tr>
       <td>
-        <a href={klass.source.split('/').last.replace(".scala", "") + ".html"}>
-          {klass.name.split('.').last}
+        <a href={filename}>
+          {simpleClassName}
         </a>
       </td>
       <td>
