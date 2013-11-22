@@ -1,11 +1,8 @@
 package org.scalescc.reporters
 
-import java.io.{FileReader, File}
+import java.io.{FileInputStream, File}
 import org.apache.commons.io.IOUtils
-import scales._
-import scala.collection.JavaConverters._
 import scala.xml.{Unparsed, Node}
-import scales.MeasuredStatement
 import scales.MeasuredFile
 
 /** @author Stephen Samuel */
@@ -13,11 +10,49 @@ class SourceHighlighter {
 
   def print(mfile: MeasuredFile): Node = {
     val file = new File(mfile.source)
-    val lines = IOUtils.readLines(new FileReader(file)).asScala
-    print(lines, mfile.statements)
+    val source = IOUtils.toString(new FileInputStream(file), "UTF-8")
+    val ranges = mfile.invokedStatements.toSeq.sortBy(_.start).map(arg => arg.start until arg.end)
+    val intersection = collapse(ranges)
+    val highlighted = highlight(source, intersection)
+    val lines = highlighted.split(System.getProperty("line.separator"))
+    print(lines)
   }
 
-  def print(lines: Seq[String], statements: Iterable[MeasuredStatement]): Node = {
+  def collapse(ranges: Seq[Range]) = {
+    // sorting the list puts overlapping ranges adjacent to one another in the list
+    // foldLeft runs a function on successive elements. it's a great way to process
+    // a list when the results are not a 1:1 mapping.
+    ranges.sortBy(_.start).foldLeft(List.empty[Range]) {
+      (acc, r) =>
+        acc match {
+          case head :: tail if head.start <= r.start && r.end <= head.end =>
+            // r completely contained; drop it
+            head :: tail
+          case head :: tail if head.contains(r.start) =>
+            // partial overlap; expand head to include both head and r
+            Range(head.start, r.end) :: tail
+          case _ =>
+            // no overlap; prepend r to list
+            r :: acc
+        }
+    }
+  }
+
+  def highlight(source: String, statements: Seq[Range]) = {
+    var offset = 0
+    val opening = "[invoked]"
+    val closing = "[/invoked]"
+    statements.foldLeft(source)((a, b) => {
+      val adjusted = new Range(b.start + offset, b.end + offset, 1)
+      val before = a.take(adjusted.start)
+      val middle = a.drop(adjusted.start).take(adjusted.length)
+      val after = a.drop(adjusted.end)
+      offset = offset + opening.length + closing.length
+      before + opening + middle + closing + after
+    })
+  }
+
+  def print(lines: Seq[String]): Node = {
     var lineNumber = 0
     <html>
       <head>
@@ -27,7 +62,12 @@ class SourceHighlighter {
       </head>
       <body style="font-family: monospace;">
         <table>
-          {lines.map(_.replace(" ", "&nbsp;").replace("<", "&lt;").replace(">", "&gt;")).map(line => {
+          {lines.map(_
+          .replace(" ", "&nbsp;")
+          .replace("<", "&lt;")
+          .replace(">", "&gt;")
+          .replace("[invoked]", "<span style='background: #AEF1AE'>")
+          .replace("[/invoked]", "</span>")).map(line => {
           lineNumber = lineNumber + 1
           <tr>
             <td>
@@ -47,7 +87,7 @@ class SourceHighlighter {
     </html>
   }
 
-  def lineCss(status: LineStatus): String = status match {
+  def statementCss(status: StatementStatus): String = status match {
     case Covered => "background: green"
     case MissingCoverage => "background: red"
     case NotInstrumented => "background: white"

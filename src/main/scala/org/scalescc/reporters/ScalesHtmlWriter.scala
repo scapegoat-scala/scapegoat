@@ -164,8 +164,19 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def risks(coverage: Coverage, limit: Int) = {
-    <table class="pure-table pure-table-bordered pure-table-striped" style="font-size: 12px">
-      <captain>Top 20 Class Risks</captain>
+    <table class="pure-table pure-table-bordered pure-table-striped">
+      <caption>Top 20 Class Risks</caption>
+      <thead>
+        <tr>
+          <th>Class</th>
+          <th>Lines</th>
+          <th>Methods</th>
+          <th>Statements</th>
+          <th>Statement Rate</th>
+          <th>Branches</th>
+          <th>Branch Rate</th>
+        </tr>
+      </thead>
       <tbody>
         {coverage.risks(limit).map(klass =>
         <tr>
@@ -179,10 +190,18 @@ object ScalesHtmlWriter extends CoverageWriter {
             {klass.methodCount.toString}
           </td>
           <td>
+            {klass.statementCount.toString}
+          </td>
+          <td>
             {klass.statementCoverageFormatted}
+            %
+          </td>
+          <td>
+            {klass.branchCount.toString}
           </td>
           <td>
             {klass.branchCoverageFormatted}
+            %
           </td>
         </tr>)}
       </tbody>
@@ -219,9 +238,18 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def overview(coverage: Coverage): Node = {
-    <div class="overview">
-      {stats(coverage)}{risks(coverage, 20)}
-    </div>
+    <html>
+      <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title id='title'>Scales Code Coverage</title>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css"/>
+      </head>
+      <body>
+        <div class="overview">
+          {stats(coverage)}{risks(coverage, 20)}
+        </div>
+      </body>
+    </html>
   }
 
   def stats(coverage: Coverage): Node = {
