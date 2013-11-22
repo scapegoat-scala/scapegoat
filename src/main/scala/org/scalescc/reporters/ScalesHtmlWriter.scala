@@ -40,6 +40,7 @@ object ScalesHtmlWriter extends CoverageWriter {
     <table class="pure-table pure-table-bordered pure-table-striped">
       <thead>
         <tr>
+          <th>Source</th>
           <th>Class</th>
           <th>Lines</th>
           <th>Methods</th>
@@ -60,6 +61,9 @@ object ScalesHtmlWriter extends CoverageWriter {
 
   def _class(klass: MeasuredClass): Node = {
     <tr>
+      <td>
+        {klass.statements.headOption.map(_.source.split('/').last).getOrElse("")}
+      </td>
       <td>
         <a href={klass.name.split('.').last + ".html"}>
           {klass.name}
