@@ -8,16 +8,19 @@ import scales.MeasuredFile
 /** @author Stephen Samuel */
 class SourceHighlighter {
 
+  val sep = System.getProperty("line.separator")
+
   def print(mfile: MeasuredFile): Node = {
     val file = new File(mfile.source)
     val source = IOUtils.toString(new FileInputStream(file), "UTF-8")
     val ranges = mfile.invokedStatements.map(arg => arg.start to arg.end)
     val intersection = collapse(ranges)
     val highlighted = highlight(source, intersection)
-    val lines = highlighted.split(System.getProperty("line.separator"))
+    val lines = highlighted.split(sep)
     print(lines)
   }
 
+  // attribution dave @ http://stackoverflow.com/a/9219395/2048448
   def collapse(ranges: Iterable[Range]): Seq[Range] = {
     // sorting the list puts overlapping ranges adjacent to one another in the list
     // foldLeft runs a function on successive elements. it's a great way to process
@@ -44,7 +47,7 @@ class SourceHighlighter {
     statements.foldLeft(source)((a, b) => {
       val adjusted = new Range(b.start + offset, b.end + offset, 1)
       val before = a.take(adjusted.start)
-      val middle = a.drop(adjusted.start).take(adjusted.length)
+      val middle = a.drop(adjusted.start).take(adjusted.length).replace(sep, closing + sep + opening)
       val after = a.drop(adjusted.end)
       offset = offset + opening.length + closing.length
       before + opening + middle + closing + after

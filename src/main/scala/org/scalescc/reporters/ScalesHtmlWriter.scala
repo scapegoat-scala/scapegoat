@@ -66,25 +66,6 @@ object ScalesHtmlWriter extends CoverageWriter {
             {pack.classes.map(_class)}
           </tbody>
         </table>
-
-        <table>
-          {pack.statements.map(stmt => {
-          <tr>
-            <td>
-              {stmt.source.toString}
-            </td>
-            <td>
-              {stmt.line.toString}
-            </td>
-            <td>
-              {stmt.start.toString}
-            </td>
-            <td>
-              {stmt.end.toString}
-            </td>
-          </tr>
-        })}
-        </table>
       </body>
     </html>
   }
@@ -164,7 +145,7 @@ object ScalesHtmlWriter extends CoverageWriter {
   }
 
   def risks(coverage: Coverage, limit: Int) = {
-    <table class="pure-table pure-table-bordered pure-table-striped">
+    <table class="pure-table pure-table-bordered pure-table-striped" style="font-size: 12px">
       <caption>Top 20 Class Risks</caption>
       <thead>
         <tr>
@@ -268,11 +249,11 @@ object ScalesHtmlWriter extends CoverageWriter {
         </td>
         <td>Clases per package:</td>
         <td>
-          {coverage.avgClassesPerPackage.toString}
+          {coverage.avgClassesPerPackageFormatted}
         </td>
         <td>Methods per class:</td>
         <td>
-          {coverage.avgMethodsPerClass.toString}
+          {coverage.avgMethodsPerClassFormatted}
         </td>
       </tr>
       <tr>
