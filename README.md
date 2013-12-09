@@ -1,4 +1,4 @@
-scales-reporters
+scoverage-reporters
 ================
 
-Report implementations for scales coverage
+Report implementations for scoverage.
