@@ -1,4 +1,4 @@
 scoverage-reporters
 ================
 
-Report implementations for scoverage.
+This repo is now defunct.
