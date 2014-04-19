@@ -1,4 +1,2 @@
-scoverage-reporters
+Scapegoat
 ================
-
-This repo is now defunct.
