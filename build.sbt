@@ -4,13 +4,29 @@ organization := "com.sksamuel.scapegoat"
 
 version := "0.1-SNAPSHOT"
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.1"
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
+scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
 publishMavenStyle := true
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
+
+crossScalaVersions := Seq("2.10.4", "2.11.0")
+
+libraryDependencies ++= Seq(
+  "commons-io"                     %     "commons-io"            % "2.4",
+  "org.scalatest"                  %%    "scalatest"             % "2.1.6"       % "test",
+  "com.typesafe.scala-logging"     %%    "scala-logging-slf4j"   % "2.1.2"       % "test",
+  "org.mockito"                    %     "mockito-all"           % "1.9.5"       % "test",
+  "joda-time"                      %     "joda-time"             % "2.3"         % "test",
+  "org.joda"                       %     "joda-convert"          % "1.3.1"       % "test",
+  "org.slf4j"                      %     "slf4j-api"             % "1.7.7"       % "test"
+)
+
+libraryDependencies += {
+  "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided"
+}
 
 publishTo <<= version {
   (v: String) =>
@@ -21,9 +37,15 @@ publishTo <<= version {
       Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
+publishMavenStyle := true
+
 publishArtifact in Test := false
 
 parallelExecution in Test := false
+
+pomIncludeRepository := {
+  _ => false
+}
 
 pomExtra := {
   <url>https://github.com/sksamuel/scapegoat</url>
