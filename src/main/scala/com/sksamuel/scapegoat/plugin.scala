@@ -1,3 +1,5 @@
+package com.sksamuel.scapegoat
+
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
