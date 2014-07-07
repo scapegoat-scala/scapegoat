@@ -1,5 +1,7 @@
 package com.sksamuel.scapegoat
 
+import com.sksamuel.scapegoat.goat.{Goat, ComparingUnrelatedTypes}
+
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
@@ -23,6 +25,7 @@ class ScoveragePlugin(val global: Global) extends Plugin {
 class ScapegoatComponent(val global: Global) extends PluginComponent with TypingTransformers with Transform {
 
   import global._
+  import scala.reflect.runtime.{universe => u}
 
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("parser")
@@ -36,8 +39,14 @@ class ScapegoatComponent(val global: Global) extends PluginComponent with Typing
     }
   }
 
+  private val reporter = new Reporter()
+  private val goats: Seq[Goat] = List(ComparingUnrelatedTypes)
+
   protected def newTransformer(unit: CompilationUnit): Transformer = new Transformer(unit)
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
-    override def transform(tree: Tree) = tree
+    override def transform(tree: Tree) = {
+      goats.foreach(_.analyze(tree.asInstanceOf[u.Tree], reporter))
+      super.transform(tree)
+    }
   }
 }

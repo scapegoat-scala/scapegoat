@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.goat
 
 /** @author Stephen Samuel */
-class ComparingUnrelatedTypes extends Goat {
+object ComparingUnrelatedTypes extends Goat {
 
   import scala.reflect.runtime.{universe => u}
 
