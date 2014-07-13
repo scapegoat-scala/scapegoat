@@ -8,7 +8,7 @@ class ReturnUseInspectionTest extends FreeSpec with ASTSugar with Matchers with 
 
   override val inspections = Seq(ReturnUseInspection)
 
-  "null use" - {
+  "return keyword use" - {
     "should report warning" in {
 
       val code = """class Test {

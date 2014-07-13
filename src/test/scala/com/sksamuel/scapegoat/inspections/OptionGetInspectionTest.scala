@@ -8,7 +8,7 @@ class OptionGetInspectionTest extends FreeSpec with ASTSugar with Matchers with 
 
   override val inspections = Seq(OptionGetInspection)
 
-  "null use" - {
+  "option.get use" - {
     "should report warning" in {
 
       val code = """class Test {
