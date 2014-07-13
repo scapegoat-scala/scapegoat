@@ -22,7 +22,7 @@ class ComparingUnrelatedTypesTest extends FreeSpec with ASTSugar with Matchers {
           val equality = a == b
         }
         println(u showRaw expr.tree)
-        new ComparingUnrelatedTypes().analyze(expr.tree, reporter)
+        ComparingUnrelatedTypes.analyze(expr.tree, reporter)
         reporter.warnings.size shouldBe 1
       }
     }
