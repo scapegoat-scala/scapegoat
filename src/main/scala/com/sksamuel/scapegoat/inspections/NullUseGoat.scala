@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Reporter, ScapegoatUniverse}
+import com.sksamuel.scapegoat.{Inspection, Reporter}
 
 /** @author Stephen Samuel */
 object NullUseGoat extends Inspection {

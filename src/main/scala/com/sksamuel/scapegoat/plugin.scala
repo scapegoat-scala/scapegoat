@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat
 
-import com.sksamuel.scapegoat.inspections.{NullUseGoat, OptionGetInspection}
+import com.sksamuel.scapegoat.inspections.{ReturnUseInspection, NullUseGoat, OptionGetInspection}
 
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
@@ -10,7 +10,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val name: String = "scapegoat"
   override val description: String = "scapegoat find bugs compiler plugin"
-  val inspections = Seq(NullUseGoat, OptionGetInspection)
+  val inspections = Seq(NullUseGoat, OptionGetInspection, ReturnUseInspection)
 
   val component = new ScapegoatComponent(global, inspections)
   override val components: List[PluginComponent] = List(component)
