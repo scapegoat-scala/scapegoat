@@ -19,7 +19,7 @@ class NullUseInspectionTest extends FreeSpec with ASTSugar with Matchers {
         println(b)
       }
       println(u showRaw expr.tree)
-      NullUseGoat.traverser(reporter).traverse(expr.tree)
+      NullUseInspection.traverser(reporter).traverse(expr.tree)
       reporter.warnings.size shouldBe 1
     }
   }
