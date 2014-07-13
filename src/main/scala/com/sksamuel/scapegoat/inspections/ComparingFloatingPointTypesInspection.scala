@@ -15,7 +15,7 @@ object ComparingFloatingPointTypesInspection extends Inspection {
           val rightType = Option(left.tpe).map(_.typeSymbol).map(_.fullName).orNull
           val leftFloating = leftType == "scala.Double" || leftType == "scala.Float"
           val rightFloating = rightType == "scala.Double" || rightType == "scala.Float"
-          if (leftFloating && rightFloating) reporter.warn("Floating type comparison")
+          if (leftFloating && rightFloating) reporter.warn("Floating type comparison", tree.pos.line)
         case _ => super.traverse(tree)
       }
     }

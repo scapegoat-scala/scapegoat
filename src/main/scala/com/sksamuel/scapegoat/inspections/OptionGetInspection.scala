@@ -12,7 +12,8 @@ object OptionGetInspection extends Inspection {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {
         case Select(left, TermName("get")) =>
-          if (left.tpe.typeSymbol.fullName == optionSymbol.asType.fullName) reporter.warn("Use of Option.get")
+          if (left.tpe.typeSymbol.fullName == optionSymbol.asType.fullName)
+            reporter.warn("Use of Option.get", tree.pos.line)
         case _ => super.traverse(tree)
       }
     }

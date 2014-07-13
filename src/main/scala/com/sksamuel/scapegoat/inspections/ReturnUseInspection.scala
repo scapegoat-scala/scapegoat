@@ -10,7 +10,7 @@ object ReturnUseInspection extends Inspection {
   override def traverser(reporter: Reporter) = new universe.Traverser {
     override def traverse(tree: universe.Tree): Unit = {
       tree match {
-        case Return(expr) => reporter.warn("Use of Return")
+        case Return(expr) => reporter.warn("Use of Return", tree.pos.line)
         case _ => super.traverse(tree)
       }
     }
