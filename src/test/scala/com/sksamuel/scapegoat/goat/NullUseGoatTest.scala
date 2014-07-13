@@ -1,0 +1,26 @@
+package com.sksamuel.scapegoat.goat
+
+import com.sksamuel.scapegoat.Reporter
+import org.scalatest.{FreeSpec, Matchers}
+
+/** @author Stephen Samuel */
+class NullUseGoatTest extends FreeSpec with ASTSugar with Matchers {
+
+  import scala.reflect.runtime.{currentMirror => m, universe => u}
+  import scala.tools.reflect.ToolBox
+
+  val reporter = new Reporter()
+  val tb = m.mkToolBox()
+
+  "null use" - {
+    "should report warning" in {
+      val expr = u.reify {
+        val b = null
+        println(b)
+      }
+      println(u showRaw expr.tree)
+      NullUseGoat.traverser(reporter).traverse(expr.tree)
+      reporter.warnings.size shouldBe 1
+    }
+  }
+}
