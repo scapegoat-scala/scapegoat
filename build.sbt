@@ -1,4 +1,4 @@
-name := "scapegoat"
+name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
