@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.goat
 
-import com.sksamuel.scapegoat.{ScapegoatTraverser, Reporter, ScapegoatUniverse}
+import com.sksamuel.scapegoat.{Inspection, Reporter, ScapegoatUniverse}
 
 /** @author Stephen Samuel */
-object NullUseGoat extends ScapegoatTraverser {
+object NullUseGoat extends Inspection {
 
   import scala.reflect.runtime.universe
   import scala.reflect.runtime.universe._

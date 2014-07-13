@@ -6,12 +6,13 @@ import java.net.URL
 import scala.collection.mutable.ListBuffer
 import scala.tools.nsc.Global
 import scala.tools.nsc.plugins.PluginComponent
+import scala.tools.nsc.reporters.ConsoleReporter
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
 
 /** @author Stephen Samuel */
 trait PluginRunner {
 
-  val scalaVersion = "2.11.0"
+  val scalaVersion = "2.11.1"
   val shortScalaVersion = scalaVersion.dropRight(2)
 
   val classPath = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
@@ -25,8 +26,9 @@ trait PluginRunner {
     s
   }
 
-  val reporter = new scala.tools.nsc.reporters.ConsoleReporter(settings)
-  val compiler = new ScapegoatCompiler(settings, reporter)
+  val inspections: Seq[Inspection]
+  val reporter = new ConsoleReporter(settings)
+  lazy val compiler = new ScapegoatCompiler(settings, inspections, reporter)
 
   def writeCodeSnippetToTempFile(code: String): File = {
     val file = File.createTempFile("scapegoat_snippet", ".scala")
@@ -74,30 +76,13 @@ trait PluginRunner {
   }
 }
 
-class ScapegoatCompiler(settings: scala.tools.nsc.Settings, reporter: scala.tools.nsc.reporters.Reporter)
+class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
+                        inspections: Seq[Inspection],
+                        reporter: ConsoleReporter)
   extends scala.tools.nsc.Global(settings, reporter) {
 
-  val scapegoat = new ScapegoatComponent(this)
+  val scapegoat = new ScapegoatComponent(this, inspections)
   val store = new SourceStoreComponent(this)
-
-  class SourceStoreComponent(val global: Global) extends PluginComponent with TypingTransformers with Transform {
-
-    val sources = new ListBuffer[String]
-
-    override val phaseName: String = "scapegoat-teststore"
-    override val runsAfter: List[String] = List("dce")
-    // deadcode
-    override val runsBefore = List[String]("terminal")
-
-    override protected def newTransformer(unit: global.CompilationUnit): global.Transformer = new Transformer(unit)
-    class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
-
-      override def transform(tree: global.Tree) = {
-        sources append tree.toString
-        tree
-      }
-    }
-  }
 
   override def computeInternalPhases() {
     val phs = List(
@@ -127,9 +112,29 @@ class ScapegoatCompiler(settings: scala.tools.nsc.Settings, reporter: scala.tool
       inlineExceptionHandlers -> "optimization: inline exception handlers",
       closureElimination -> "optimization: eliminate uncalled closures",
       deadCode -> "optimization: eliminate dead code",
-      store -> "store",
+      //store -> "store",
       terminal -> "The last phase in the compiler chain"
     )
     phs foreach (addToPhasesSet _).tupled
   }
 }
+
+class SourceStoreComponent(val global: Global) extends PluginComponent with TypingTransformers with Transform {
+
+  val sources = new ListBuffer[String]
+
+  override val phaseName: String = "scapegoat-teststore"
+  override val runsAfter: List[String] = List("dce")
+  // deadcode
+  override val runsBefore = List[String]("terminal")
+
+  override protected def newTransformer(unit: global.CompilationUnit): global.Transformer = new Transformer(unit)
+  class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
+
+    override def transform(tree: global.Tree) = {
+      sources append tree.toString
+      tree
+    }
+  }
+}
+

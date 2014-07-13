@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.goat
 
 /** @author Stephen Samuel */
-class FloatingPointEqualityGoat extends Goat {
+class FloatingPointEqualityInspection extends Goat {
 
   import scala.reflect.runtime.{universe => u}
 

@@ -1,17 +1,18 @@
 package com.sksamuel.scapegoat
 
-import com.sksamuel.scapegoat.goat.{Goat, ComparingUnrelatedTypes}
+import com.sksamuel.scapegoat.goat.{NullUseGoat, OptionGetInspection}
 
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
 
-class ScoveragePlugin(val global: Global) extends Plugin {
+class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val name: String = "scapegoat"
   override val description: String = "scapegoat find bugs compiler plugin"
+  val inspections = Seq(NullUseGoat, OptionGetInspection)
 
-  val component = new ScapegoatComponent(global)
+  val component = new ScapegoatComponent(global, inspections)
   override val components: List[PluginComponent] = List(component)
 
   override def processOptions(opts: List[String], error: String => Unit) {
@@ -22,14 +23,19 @@ class ScoveragePlugin(val global: Global) extends Plugin {
   ).mkString("\n"))
 }
 
-class ScapegoatComponent(val global: Global) extends PluginComponent with TypingTransformers with Transform {
+class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
+  extends PluginComponent with TypingTransformers with Transform {
+  require(inspections != null)
 
   import global._
+
   import scala.reflect.runtime.{universe => u}
 
+  val reporter = new Reporter()
+
   override val phaseName: String = "scapegoat"
-  override val runsAfter: List[String] = List("parser")
-  override val runsBefore = List[String]("namer")
+  override val runsAfter: List[String] = List("typer")
+  override val runsBefore = List[String]("patmat")
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {
@@ -39,14 +45,13 @@ class ScapegoatComponent(val global: Global) extends PluginComponent with Typing
     }
   }
 
-  private val reporter = new Reporter()
-  private val goats: Seq[Goat] = List(ComparingUnrelatedTypes)
-
   protected def newTransformer(unit: CompilationUnit): Transformer = new Transformer(unit)
+
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: Tree) = {
-      goats.foreach(_.analyze(tree.asInstanceOf[u.Tree], reporter))
-      super.transform(tree)
+      require(inspections != null)
+      inspections.foreach(_.traverser(reporter).traverse(tree.asInstanceOf[u.Tree]))
+      tree
     }
   }
 }

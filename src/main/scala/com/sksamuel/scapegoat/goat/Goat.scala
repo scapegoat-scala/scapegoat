@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.goat
 import com.sksamuel.scapegoat.Reporter
 
 /**
- * A goat is a bad practice. It can be a bug, an incorrect idiom, bad practice, incorrect code,
+ * An Inspection is a bad practice. It can be a bug, an incorrect idiom, bad practice, incorrect code,
  * hard to read source, or anything along these lines. It's more than a bug, it's a goat.
  *
  * It is something that should be avoided.
