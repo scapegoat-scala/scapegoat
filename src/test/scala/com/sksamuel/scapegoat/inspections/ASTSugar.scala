@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.goat
+package com.sksamuel.scapegoat.inspections
 
 import org.scalatest.{Matchers, FreeSpec}
 

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat
 
-import com.sksamuel.scapegoat.goat.{NullUseGoat, OptionGetInspection}
+import com.sksamuel.scapegoat.inspections.{NullUseGoat, OptionGetInspection}
 
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}

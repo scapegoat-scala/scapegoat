@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.goat
+package com.sksamuel.scapegoat.inspections
 
 /** @author Stephen Samuel */
 object ComparingUnrelatedTypes extends Goat {
