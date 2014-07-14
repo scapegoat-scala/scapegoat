@@ -1,6 +1,9 @@
 package com.sksamuel.scapegoat
 
+import java.io.File
+
 import com.sksamuel.scapegoat.inspections.{ReturnUseInspection, NullUseInspection, OptionGetInspection}
+import com.sksamuel.scapegoat.io.IOUtils
 
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
@@ -19,7 +22,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   }
 
   override val optionsHelp: Option[String] = Some(Seq(
-    "-P:scoverage:dataDir:<pathtodatadir>                  where the coverage files should be written\n"
+    "-P:scapegoat:dataDir:<pathtodatadir>    where the report should be written\n"
   ).mkString("\n"))
 }
 
@@ -43,6 +46,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       super.run()
       val count = reporter.warnings.size
       println(s"[scapegoat]: Anaylsis complete - $count warnings found")
+      // todo add in proper target dir
+      IOUtils.serialize(reporter.warnings.toList, new File("."))
     }
   }
 
