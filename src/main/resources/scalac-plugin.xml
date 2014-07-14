@@ -1,0 +1,4 @@
+<plugin>
+    <name>scapegoat</name>
+    <classname>com.sksamuel.scapegoat.ScapegoatPlugin</classname>
+</plugin>
