@@ -41,7 +41,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     override def run(): Unit = {
       println("[scapegoat]: Begin anaylsis")
       super.run()
-      println("[scapegoat]: Anaylsis complete")
+      val count = reporter.warnings.size
+      println(s"[scapegoat]: Anaylsis complete - $count warnings found")
     }
   }
 
