@@ -11,7 +11,7 @@ object IOUtils {
   private val DataDir = "scapegoat-data"
 
   def serialize(warnings: Seq[Warning], targetDir: File) = {
-    val file = new File(targetDir.getAbsolutePath + "/" + DataDir)
+    val file = new File(targetDir.getAbsolutePath + "/" + DataDir + "/" + WarningsFile)
     val xml = toXML(warnings)
     val out = new BufferedWriter(new FileWriter(file))
     out.write(xml.toString())
