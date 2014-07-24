@@ -19,7 +19,8 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     AsInstanceOfInspection,
     VarUseInspection,
     ComparingFloatingPointTypesInspection,
-    CatchNpeInspection)
+    CatchNpeInspection,
+    ComparisonWithSelf)
 
   val component = new ScapegoatComponent(global, inspections)
   override val components: List[PluginComponent] = List(component)

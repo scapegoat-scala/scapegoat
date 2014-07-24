@@ -11,7 +11,7 @@ class CatchNpeInspectionTest extends FreeSpec with ASTSugar with Matchers with P
   "catching null pointer exception" - {
     "should report warning" in {
 
-      val code = """object Test {
+      val code1 = """object Test {
                         try {
                         var s : String = null
                         s.toString
@@ -20,11 +20,10 @@ class CatchNpeInspectionTest extends FreeSpec with ASTSugar with Matchers with P
                         }
                     } """.stripMargin
 
-      compileCodeSnippet(code)
+      compileCodeSnippet(code1)
       compiler.scapegoat.reporter.warnings.size shouldBe 1
-    }
 
-    val code = """object Test {
+      val code2 = """object Test {
                         try {
                         var s : String = null
                         s.toString
@@ -33,7 +32,8 @@ class CatchNpeInspectionTest extends FreeSpec with ASTSugar with Matchers with P
                         }
                     } """.stripMargin
 
-    compileCodeSnippet(code)
-    compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compileCodeSnippet(code2)
+      compiler.scapegoat.reporter.warnings.size shouldBe 0
+    }
   }
 }
