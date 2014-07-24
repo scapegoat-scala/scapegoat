@@ -4,9 +4,9 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class CatchNpeInspectionTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class CatchNpeTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
 
-  override val inspections = Seq(CatchNpeInspection)
+  override val inspections = Seq(CatchNpe)
 
   "catching null pointer exception" - {
     "should report warning" in {

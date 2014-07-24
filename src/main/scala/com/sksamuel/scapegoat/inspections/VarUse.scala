@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{Inspection, Reporter}
 import scala.reflect.runtime._
 
 /** @author Stephen Samuel */
-object VarUseInspection extends Inspection {
+object VarUse extends Inspection {
   override def traverser(reporter: Reporter) = new universe.Traverser {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {

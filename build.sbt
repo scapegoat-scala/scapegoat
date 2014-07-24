@@ -4,7 +4,7 @@ organization := "com.sksamuel.scapegoat"
 
 version := "0.1.0"
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.2"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
@@ -12,16 +12,18 @@ publishMavenStyle := true
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
-crossScalaVersions := Seq("2.10.4", "2.11.1")
+crossScalaVersions := Seq("2.10.4", "2.11.2")
 
 libraryDependencies ++= Seq(
-  "commons-io"                     %     "commons-io"            % "2.4",
-  "org.scalatest"                  %%    "scalatest"             % "2.1.6"       % "test",
-  "com.typesafe.scala-logging"     %%    "scala-logging-slf4j"   % "2.1.2"       % "test",
-  "org.mockito"                    %     "mockito-all"           % "1.9.5"       % "test",
-  "joda-time"                      %     "joda-time"             % "2.3"         % "test",
-  "org.joda"                       %     "joda-convert"          % "1.3.1"       % "test",
-  "org.slf4j"                      %     "slf4j-api"             % "1.7.7"       % "test"
+  "org.scala-lang"                  % "scala-reflect"             % "2.11.2",
+  "com.typesafe"                    %     "config"                % "1.2.1",
+  "commons-io"                      %     "commons-io"            % "2.4"         % "test",
+  "org.scalatest"                   %%    "scalatest"             % "2.1.6"       % "test",
+  "com.typesafe.scala-logging"      %%    "scala-logging-slf4j"   % "2.1.2"       % "test",
+  "org.mockito"                     %     "mockito-all"           % "1.9.5"       % "test",
+  "joda-time"                       %     "joda-time"             % "2.3"         % "test",
+  "org.joda"                        %     "joda-convert"          % "1.3.1"       % "test",
+  "org.slf4j"                       %     "slf4j-api"             % "1.7.7"       % "test"
 )
 
 libraryDependencies += {

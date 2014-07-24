@@ -4,13 +4,13 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class ComparingFloatingPointTypesInspectionTest
+class ComparingFloatingPointTypesTest
   extends FreeSpec
   with Matchers
   with PluginRunner
   with OneInstancePerTest {
 
-  override val inspections = Seq(ComparingFloatingPointTypesInspection)
+  override val inspections = Seq(ComparingFloatingPointTypes)
 
   "comparing floating type inspection" - {
     "should report warning" - {

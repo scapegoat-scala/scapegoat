@@ -6,7 +6,7 @@ import scala.reflect.runtime._
 import scala.reflect.runtime.universe._
 
 /** @author Stephen Samuel */
-object ComparingFloatingPointTypesInspection extends Inspection {
+object ComparingFloatingPointTypes extends Inspection {
   override def traverser(reporter: Reporter) = new universe.Traverser {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {

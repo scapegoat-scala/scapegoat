@@ -6,7 +6,7 @@ import scala.reflect.runtime.universe._
 import scala.reflect.runtime._
 
 /** @author Stephen Samuel */
-object ReturnUseInspection extends Inspection {
+object ReturnUse extends Inspection {
   override def traverser(reporter: Reporter) = new universe.Traverser {
     override def traverse(tree: universe.Tree): Unit = {
       tree match {

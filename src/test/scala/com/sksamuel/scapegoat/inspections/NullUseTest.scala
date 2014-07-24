@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.Reporter
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class NullUseInspectionTest extends FreeSpec with ASTSugar with Matchers {
+class NullUseTest extends FreeSpec with ASTSugar with Matchers {
 
   import scala.reflect.runtime.{currentMirror => m, universe => u}
   import scala.tools.reflect.ToolBox
@@ -18,7 +18,7 @@ class NullUseInspectionTest extends FreeSpec with ASTSugar with Matchers {
         println(null)
       }
       println(u showRaw expr.tree)
-      NullUseInspection.traverser(reporter).traverse(expr.tree)
+      NullUse.traverser(reporter).traverse(expr.tree)
       reporter.warnings.size shouldBe 1
     }
   }

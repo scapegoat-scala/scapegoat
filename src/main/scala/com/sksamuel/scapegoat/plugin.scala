@@ -2,7 +2,6 @@ package com.sksamuel.scapegoat
 
 import java.io.File
 
-import com.sksamuel.scapegoat.inspections._
 import com.sksamuel.scapegoat.io.IOUtils
 
 import scala.tools.nsc._
@@ -13,16 +12,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val name: String = "scapegoat"
   override val description: String = "scapegoat find bugs compiler plugin"
-  val inspections = Seq(NullUseInspection,
-    OptionGetInspection,
-    ReturnUseInspection,
-    AsInstanceOfInspection,
-    VarUseInspection,
-    ComparingFloatingPointTypesInspection,
-    CatchNpeInspection,
-    ComparisonWithSelf)
-
-  val component = new ScapegoatComponent(global, inspections)
+  val component = new ScapegoatComponent(global, ScapegoatConfig.inspections)
   override val components: List[PluginComponent] = List(component)
 
   override def processOptions(opts: List[String], error: String => Unit) {
@@ -39,7 +29,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   import global._
 
-  import scala.reflect.runtime.{universe => u}
+import scala.reflect.runtime.{universe => u}
 
   val reporter = new Reporter()
 

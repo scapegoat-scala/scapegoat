@@ -4,15 +4,18 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class VarUseInspectionTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class ReturnUseTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
 
-  override val inspections = Seq(VarUseInspection)
+  override val inspections = Seq(ReturnUse)
 
-  "var keyword use" - {
+  "return keyword use" - {
     "should report warning" in {
+
       val code = """class Test {
-                      def hello : String = "sammy"
-                      var name = hello
+                      def hello : String = {
+                        val s = "sammy"
+                        return s
+                      }
                     } """.stripMargin
 
       compileCodeSnippet(code)
