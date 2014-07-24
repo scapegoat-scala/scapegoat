@@ -46,6 +46,7 @@ trait PluginRunner {
     compileSourceFiles(urls.map(_.getFile).map(new File(_)): _*)
   }
   def compileSourceFiles(files: File*): ScapegoatCompiler = {
+    reporter.flush()
     val command = new scala.tools.nsc.CompilerCommand(files.map(_.getAbsolutePath).toList, settings)
     new compiler.Run().compile(command.files)
     compiler
