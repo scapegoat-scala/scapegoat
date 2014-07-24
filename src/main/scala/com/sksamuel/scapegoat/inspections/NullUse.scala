@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, Reporter}
 
 /** @author Stephen Samuel */
-object NullUse extends Inspection {
+class NullUse extends Inspection {
 
   import scala.reflect.runtime.universe
   import scala.reflect.runtime.universe._

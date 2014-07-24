@@ -28,8 +28,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   require(inspections != null)
 
   import global._
-
-import scala.reflect.runtime.{universe => u}
+  import scala.reflect.runtime.{universe => u}
 
   val reporter = new Reporter()
 

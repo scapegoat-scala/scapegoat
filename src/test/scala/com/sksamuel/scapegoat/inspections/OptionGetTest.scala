@@ -6,7 +6,7 @@ import org.scalatest.{FreeSpec, Matchers}
 /** @author Stephen Samuel */
 class OptionGetTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
 
-  override val inspections = Seq(OptionGet)
+  override val inspections = Seq(new OptionGet)
 
   "option.get use" - {
     "should report warning" in {

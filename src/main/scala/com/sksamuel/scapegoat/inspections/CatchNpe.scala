@@ -6,7 +6,7 @@ import scala.reflect.api
 import scala.reflect.runtime._
 
 /** @author Stephen Samuel */
-object CatchNpe extends Inspection {
+class CatchNpe extends Inspection {
   override def traverser(reporter: Reporter) = new universe.Traverser {
 
     private def catchesNpe(cases: List[api.JavaUniverse#CaseDef]): Boolean = {

@@ -6,7 +6,7 @@ import org.scalatest.{FreeSpec, Matchers}
 /** @author Stephen Samuel */
 class VarUseTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
 
-  override val inspections = Seq(VarUse)
+  override val inspections = Seq(new VarUse)
 
   "var keyword use" - {
     "should report warning" in {

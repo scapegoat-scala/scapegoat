@@ -7,7 +7,7 @@ import scala.reflect.runtime._
 import scala.reflect.runtime.universe._
 
 /** @author Stephen Samuel */
-object ComparisonWithSelf extends Inspection {
+class ComparisonWithSelf extends Inspection {
   override def traverser(reporter: Reporter) = new universe.Traverser {
 
     def containsAssignment(tree: api.JavaUniverse#Tree) = tree match {

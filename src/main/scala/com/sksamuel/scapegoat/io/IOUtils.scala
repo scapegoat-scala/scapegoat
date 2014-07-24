@@ -24,8 +24,6 @@ object IOUtils {
   }
 
   private def warning2xml(warning: Warning) = {
-    <warning line={warning.line.toString}>
-      {warning.text.trim}
-    </warning>
+      <warning line={warning.line.toString} text={warning.text} details={warning.snippet.orNull}/>
   }
 }

@@ -6,7 +6,7 @@ import org.scalatest.{FreeSpec, Matchers}
 /** @author Stephen Samuel */
 class ComparisonWithSelfInspectionTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
 
-  override val inspections = Seq(ComparisonWithSelf)
+  override val inspections = Seq(new ComparisonWithSelf)
 
   "ComparisonWithSelf" - {
     "should report warning" in {
