@@ -2,28 +2,32 @@ package com.sksamuel.scapegoat.io
 
 import java.io.{BufferedWriter, File, FileWriter}
 
-import com.sksamuel.scapegoat.Warning
+import com.sksamuel.scapegoat.{Reporter, Warning}
 
 /** @author Stephen Samuel */
 object IOUtils {
 
-  private val WarningsFile = "scapegoat-warnings.xml"
+  private val XmlFile = "scapegoat.xml"
+  private val HtmlFile = "scapegoat.html"
 
-  def serialize(warnings: Seq[Warning], targetDir: File) = {
-    val file = new File(targetDir.getAbsolutePath + "/" + WarningsFile)
-    val xml = toXML(warnings)
+  def serialize(file: File, str: String) = {
     val out = new BufferedWriter(new FileWriter(file))
-    out.write(xml.toString())
+    out.write(str)
     out.close()
   }
 
-  def toXML(warnings: Seq[Warning]) = {
-    <scapegoat count={warnings.size.toString}>
-      {warnings.map(warning2xml)}
-    </scapegoat>
+  def writeHTMLReport(targetDir: File, reporter: Reporter): File = {
+    val html = HtmlReportWriter.generate(reporter)
+    val file = new File(targetDir.getAbsolutePath + "/" + HtmlFile)
+    serialize(file, html.toString())
+    file
   }
 
-  private def warning2xml(warning: Warning) = {
-      <warning line={warning.line.toString} text={warning.text} details={warning.snippet.orNull}/>
+  def writeXMLReport(targetDir: File, reporter: Reporter): File = {
+    val html = XmlReportWriter.toXML(reporter)
+    val file = new File(targetDir.getAbsolutePath + "/" + XmlFile)
+    serialize(file, html.toString())
+    file
   }
+
 }

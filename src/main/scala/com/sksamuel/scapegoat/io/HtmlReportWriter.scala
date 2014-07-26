@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.io
 import com.sksamuel.scapegoat.{Levels, Reporter}
 
 /** @author Stephen Samuel */
-class HtmlReportWriter {
+object HtmlReportWriter {
 
   def header =
     <head>
@@ -39,5 +39,5 @@ class HtmlReportWriter {
     </div>
   )
 
-  def generate(reporter: Reporter) = header.toString() + body(reporter).toString()
+  def generate(reporter: Reporter) = <html>{header}{body(reporter)}</html>
 }
