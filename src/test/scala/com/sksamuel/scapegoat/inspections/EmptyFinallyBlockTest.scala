@@ -8,7 +8,7 @@ class EmptyFinallyBlockTest extends FreeSpec with ASTSugar with Matchers with Pl
 
   override val inspections = Seq(new EmptyFinallyBlock)
 
-  "ComparisonWithSelf" - {
+  "EmptyFinallyBlockTest" - {
     "should report warning" in {
 
       val code = """object Test {
