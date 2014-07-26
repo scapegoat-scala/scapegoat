@@ -11,6 +11,3 @@ Scapegoat is developed as a scala compiler plugin, which can then be used inside
 See:
 
 [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat)
-
-
-![travis badge](https://travis-ci.org/sksamuel/scapegoat.svg?branch=master)
