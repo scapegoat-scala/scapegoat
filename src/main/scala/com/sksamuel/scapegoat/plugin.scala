@@ -48,10 +48,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {
-      println("[scapegoat]: Begin anaylsis...")
+      println("[info] [scapegoat]: Begin anaylsis...")
       super.run()
       val count = reporter.warnings.size
-      println(s"[scapegoat]: Anaylsis complete - $count warnings found.")
+      println(s"[info] [scapegoat]: Anaylsis complete - $count warnings found.")
       // todo add in proper target dir
       IOUtils.writeHTMLReport(dataDir, reporter)
       IOUtils.writeXMLReport(dataDir, reporter)
