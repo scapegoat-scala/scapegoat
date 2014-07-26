@@ -10,7 +10,7 @@ class Reporter {
   def warn(text: String, line: Int, level: Level, snippet: Option[String]): Unit = {
     warnings.append(Warning(text, line, level, snippet))
   }
-  def warnings(level: Level) = warnings.filter(_.level == level)
+  def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 }
 
 case class Warning(text: String, line: Int, level: Level, snippet: Option[String])

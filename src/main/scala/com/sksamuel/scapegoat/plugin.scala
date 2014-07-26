@@ -43,7 +43,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       val count = reporter.warnings.size
       println(s"[scapegoat]: Anaylsis complete - $count warnings found")
       // todo add in proper target dir
-      IOUtils.serialize(reporter.warnings.toList, new File("."))
+      IOUtils.writeHTMLReport(new File("."), reporter)
+      IOUtils.writeXMLReport(new File("."), reporter)
     }
   }
 

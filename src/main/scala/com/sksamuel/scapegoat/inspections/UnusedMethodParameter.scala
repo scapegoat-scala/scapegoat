@@ -8,8 +8,6 @@ import scala.reflect.runtime._
 /** @author Stephen Samuel */
 class UnusedMethodParameter extends Inspection {
 
-  override def level: Level = Levels.Medium
-
   override def traverser(reporter: Reporter): universe.Traverser = new universe.Traverser {
 
     private def usesParameter(param: api.JavaUniverse#ValDef, rhs: api.JavaUniverse#Tree): Boolean = {
@@ -27,6 +25,7 @@ class UnusedMethodParameter extends Inspection {
             if (!usesParameter(vparam, rhs))
               reporter.warn("Unused method parameter",
                 tree.pos.line,
+                level = Levels.Medium,
                 "Unused method parameter " + name.toString.take(100))
           }
         case _ => super.traverse(tree)

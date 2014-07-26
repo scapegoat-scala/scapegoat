@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Reporter}
+import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
 
 import scala.reflect.api
 import scala.reflect.runtime._
@@ -19,7 +19,7 @@ class ComparisonWithSelf extends Inspection {
       tree match {
         case Apply(Select(left, TermName("$eq$eq")), List(right)) =>
           if (left.toString() == right.toString())
-            reporter.warn("Comparision with self", tree.pos.line)
+            reporter.warn("Comparision with self", tree.pos.line, level = Levels.Major)
         case _ => super.traverse(tree)
       }
     }

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Reporter, Inspection}
+import com.sksamuel.scapegoat.{Levels, Reporter, Inspection}
 
 import scala.reflect.runtime._
 import scala.reflect.runtime.universe._
@@ -13,7 +13,7 @@ class OptionGet extends Inspection {
       tree match {
         case Select(left, TermName("get")) =>
           if (left.tpe.typeSymbol.fullName == optionSymbol.asType.fullName)
-            reporter.warn("Use of Option.get", tree.pos.line)
+            reporter.warn("Use of Option.get", tree.pos.line, level = Levels.Major)
         case _ => super.traverse(tree)
       }
     }

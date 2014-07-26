@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Reporter}
+import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
 
 import scala.reflect.runtime._
 import scala.reflect.runtime.universe._
@@ -15,7 +15,8 @@ class ComparingFloatingPointTypes extends Inspection {
           val rightType = Option(left.tpe).map(_.typeSymbol).map(_.fullName).orNull
           val leftFloating = leftType == "scala.Double" || leftType == "scala.Float"
           val rightFloating = rightType == "scala.Double" || rightType == "scala.Float"
-          if (leftFloating && rightFloating) reporter.warn("Floating type comparison", tree.pos.line)
+          if (leftFloating && rightFloating) reporter
+            .warn("Floating type comparison", tree.pos.line, level = Levels.Major)
         case _ => super.traverse(tree)
       }
     }

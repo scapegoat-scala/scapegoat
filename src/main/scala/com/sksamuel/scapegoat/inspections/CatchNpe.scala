@@ -8,8 +8,6 @@ import scala.reflect.runtime._
 /** @author Stephen Samuel */
 class CatchNpe extends Inspection {
 
-  override def level: Level = Levels.Medium
-
   override def traverser(reporter: Reporter) = new universe.Traverser {
 
     private def catchesNpe(cases: List[api.JavaUniverse#CaseDef]): Boolean = {
@@ -19,7 +17,7 @@ class CatchNpe extends Inspection {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {
         case universe.Try(block, catches, finalizer) if catchesNpe(catches) =>
-          reporter.warn("Catching NPE", tree.pos.line)
+          reporter.warn("Catching NPE", tree.pos.line, level = Levels.Medium)
         case _ => super.traverse(tree)
       }
     }

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Reporter}
+import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
 
 import scala.reflect.runtime.universe._
 import scala.reflect.runtime._
@@ -10,7 +10,7 @@ class ReturnUse extends Inspection {
   override def traverser(reporter: Reporter) = new universe.Traverser {
     override def traverse(tree: universe.Tree): Unit = {
       tree match {
-        case Return(expr) => reporter.warn("Use of Return", tree.pos.line)
+        case Return(expr) => reporter.warn("Use of Return", tree.pos.line, level = Levels.Major)
         case _ => super.traverse(tree)
       }
     }

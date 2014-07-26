@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Reporter}
+import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
 
 import scala.reflect.runtime._
 
@@ -10,7 +10,11 @@ class JavaConversionsUse extends Inspection {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {
         case universe.Select(_, universe.TermName("JavaConversions")) =>
-          reporter.warn("Java conversions", tree.pos.line, "Use of java conversions " + tree.toString().take(100))
+          reporter
+            .warn("Java conversions",
+            tree.pos.line,
+            level = Levels.Major,
+            "Use of java conversions " + tree.toString().take(100))
         case _ => super.traverse(tree)
       }
     }
