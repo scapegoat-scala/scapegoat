@@ -15,7 +15,7 @@ javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 crossScalaVersions := Seq("2.10.4", "2.11.2")
 
 libraryDependencies ++= Seq(
-  "org.scala-lang"                  % "scala-reflect"             % "2.11.2",
+  "org.scala-lang"                  %     "scala-reflect"         % "2.11.2",
   "com.typesafe"                    %     "config"                % "1.2.1",
   "commons-io"                      %     "commons-io"            % "2.4"         % "test",
   "org.scalatest"                   %%    "scalatest"             % "2.1.6"       % "test",
