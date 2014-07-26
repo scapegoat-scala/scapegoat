@@ -8,7 +8,7 @@ class EmptyElseBlockTest extends FreeSpec with ASTSugar with Matchers with Plugi
 
   override val inspections = Seq(new EmptyElseBlock)
 
-  "ComparisonWithSelf" - {
+  "EmptyElseBlock" - {
     "should report warning" in {
 
       val code = """object Test {
