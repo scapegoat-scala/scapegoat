@@ -4,6 +4,7 @@ import java.io.File
 
 import com.sksamuel.scapegoat.io.IOUtils
 
+import scala.collection.mutable.ListBuffer
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
@@ -11,11 +12,22 @@ import scala.tools.nsc.transform.{Transform, TypingTransformers}
 class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val name: String = "scapegoat"
-  override val description: String = "scapegoat find bugs compiler plugin"
-  val component = new ScapegoatComponent(global, ScapegoatConfig.inspections)
-  override val components: List[PluginComponent] = List(component)
+  override val description: String = "scapegoat compiler plugin"
 
-  override def processOptions(opts: List[String], error: String => Unit) {
+  private val _components = new ListBuffer[PluginComponent]
+  lazy val components: List[PluginComponent] = _components.toList
+
+  override def init(options: List[String], error: String => Unit): Boolean = {
+    options.find(_.startsWith("dataDir:")) match {
+      case Some(option) =>
+        val dataDir = option.drop("dataDir:".length)
+        val component = new ScapegoatComponent(global, ScapegoatConfig.inspections, new File(dataDir))
+        _components.append(component)
+        true
+      case None =>
+        error("-P:scapegoat:dataDir:<pathtodatadir> not specified")
+        false
+    }
   }
 
   override val optionsHelp: Option[String] = Some(Seq(
@@ -23,7 +35,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   ).mkString("\n"))
 }
 
-class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
+class ScapegoatComponent(val global: Global, inspections: Seq[Inspection], dataDir: File)
   extends PluginComponent with TypingTransformers with Transform {
   require(inspections != null)
 
@@ -43,8 +55,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       val count = reporter.warnings.size
       println(s"[scapegoat]: Anaylsis complete - $count warnings found")
       // todo add in proper target dir
-      IOUtils.writeHTMLReport(new File("."), reporter)
-      IOUtils.writeXMLReport(new File("."), reporter)
+      IOUtils.writeHTMLReport(dataDir, reporter)
+      IOUtils.writeXMLReport(dataDir, reporter)
     }
   }
 

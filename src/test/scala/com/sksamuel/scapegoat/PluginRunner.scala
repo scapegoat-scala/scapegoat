@@ -82,7 +82,7 @@ class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
                         reporter: ConsoleReporter)
   extends scala.tools.nsc.Global(settings, reporter) {
 
-  val scapegoat = new ScapegoatComponent(this, inspections)
+  val scapegoat = new ScapegoatComponent(this, inspections, new File("."))
   val store = new SourceStoreComponent(this)
 
   override def computeInternalPhases() {

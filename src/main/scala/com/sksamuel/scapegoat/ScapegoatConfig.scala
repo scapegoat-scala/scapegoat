@@ -6,7 +6,6 @@ import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 object ScapegoatConfig extends App {
-
   def inspections: Seq[Inspection] = {
     def names: Seq[String] = {
       val conf = ConfigFactory.load()
@@ -15,6 +14,4 @@ object ScapegoatConfig extends App {
     def instance(name: String): Inspection = Class.forName(name).newInstance.asInstanceOf[Inspection]
     names.map(instance)
   }
-
-  println(inspections)
 }
