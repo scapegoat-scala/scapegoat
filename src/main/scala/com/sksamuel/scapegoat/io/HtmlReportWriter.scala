@@ -36,8 +36,13 @@ object HtmlReportWriter {
       <div class="level">
         {warning.level.toString}
       </div>
+      <div class="file">
+        {warning.sourceFile}
+      </div>
     </div>
   )
 
-  def generate(reporter: Reporter) = <html>{header}{body(reporter)}</html>
+  def generate(reporter: Reporter) = <html>
+    {header}{body(reporter)}
+  </html>
 }

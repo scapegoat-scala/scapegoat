@@ -17,6 +17,7 @@ object XmlReportWriter {
       <warning line={warning.line.toString}
                text={warning.text}
                snippet={warning.snippet.orNull}
-               level={warning.level.toString}/>
+               level={warning.level.toString}
+               file={warning.sourceFile}/>
   }
 }
