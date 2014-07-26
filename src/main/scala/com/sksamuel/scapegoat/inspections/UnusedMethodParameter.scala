@@ -24,7 +24,7 @@ class UnusedMethodParameter extends Inspection {
                 vparam <- vparams ) {
             if (!usesParameter(vparam, rhs))
               reporter.warn("Unused method parameter",
-                tree.pos.line,
+                tree,
                 level = Levels.Medium,
                 "Unused method parameter " + name.toString.take(100))
           }

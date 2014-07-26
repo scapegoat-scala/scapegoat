@@ -19,7 +19,7 @@ class ComparisonWithSelf extends Inspection {
       tree match {
         case Apply(Select(left, TermName("$eq$eq")), List(right)) =>
           if (left.toString() == right.toString())
-            reporter.warn("Comparision with self", tree.pos.line, level = Levels.Major)
+            reporter.warn("Comparision with self", tree, level = Levels.Major)
         case _ => super.traverse(tree)
       }
     }

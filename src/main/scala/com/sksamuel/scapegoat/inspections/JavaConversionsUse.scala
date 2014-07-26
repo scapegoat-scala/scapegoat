@@ -12,7 +12,7 @@ class JavaConversionsUse extends Inspection {
         case universe.Select(_, universe.TermName("JavaConversions")) =>
           reporter
             .warn("Java conversions",
-            tree.pos.line,
+            tree,
             level = Levels.Major,
             "Use of java conversions " + tree.toString().take(100))
         case _ => super.traverse(tree)

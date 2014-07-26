@@ -40,7 +40,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   import scala.reflect.runtime.{universe => u}
 
   val reporter = new Reporter()
-  var dataDir: File = _
+  var dataDir: File = new File(".")
 
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")

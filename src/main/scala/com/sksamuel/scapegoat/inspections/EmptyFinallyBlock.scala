@@ -12,9 +12,8 @@ class EmptyFinallyBlock extends Inspection {
       tree match {
         case universe.Try(body, catches, finalizer) =>
           if (finalizer.children.isEmpty)
-            reporter
-              .warn("Empty finalizer",
-              tree.pos.line,
+            reporter.warn("Empty finalizer",
+              tree,
               level = Levels.Minor,
               "Empty finalizer near " + body.toString().take(100))
         case _ => super.traverse(tree)
