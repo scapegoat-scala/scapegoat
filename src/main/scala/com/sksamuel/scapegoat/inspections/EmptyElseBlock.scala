@@ -1,11 +1,14 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Reporter}
+import com.sksamuel.scapegoat.{Levels, Level, Inspection, Reporter}
 
 import scala.reflect.runtime._
 
 /** @author Stephen Samuel */
 class EmptyElseBlock extends Inspection {
+
+  override def level: Level = Levels.Medium
+
   override def traverser(reporter: Reporter) = new universe.Traverser {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {

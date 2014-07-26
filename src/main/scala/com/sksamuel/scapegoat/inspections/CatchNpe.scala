@@ -1,12 +1,15 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Reporter}
+import com.sksamuel.scapegoat.{Levels, Level, Inspection, Reporter}
 
 import scala.reflect.api
 import scala.reflect.runtime._
 
 /** @author Stephen Samuel */
 class CatchNpe extends Inspection {
+
+  override def level: Level = Levels.Medium
+
   override def traverser(reporter: Reporter) = new universe.Traverser {
 
     private def catchesNpe(cases: List[api.JavaUniverse#CaseDef]): Boolean = {

@@ -1,12 +1,14 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Reporter, Inspection}
+import com.sksamuel.scapegoat.{Levels, Level, Reporter, Inspection}
 
 import scala.reflect.api
 import scala.reflect.runtime._
 
 /** @author Stephen Samuel */
 class UnusedMethodParameter extends Inspection {
+
+  override def level: Level = Levels.Medium
 
   override def traverser(reporter: Reporter): universe.Traverser = new universe.Traverser {
 

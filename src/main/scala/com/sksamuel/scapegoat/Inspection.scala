@@ -4,4 +4,5 @@ package com.sksamuel.scapegoat
 trait Inspection {
   import scala.reflect.runtime.universe
   def traverser(reporter: Reporter): universe.Traverser
+  def level: Level = Levels.Major
 }
