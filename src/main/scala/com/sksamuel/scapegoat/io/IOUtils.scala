@@ -17,6 +17,7 @@ object IOUtils {
   }
 
   def writeHTMLReport(targetDir: File, reporter: Reporter): File = {
+    targetDir.mkdirs()
     val html = HtmlReportWriter.generate(reporter)
     val file = new File(targetDir.getAbsolutePath + "/" + HtmlFile)
     serialize(file, html.toString())
@@ -24,6 +25,7 @@ object IOUtils {
   }
 
   def writeXMLReport(targetDir: File, reporter: Reporter): File = {
+    targetDir.mkdirs()
     val html = XmlReportWriter.toXML(reporter)
     val file = new File(targetDir.getAbsolutePath + "/" + XmlFile)
     serialize(file, html.toString())
