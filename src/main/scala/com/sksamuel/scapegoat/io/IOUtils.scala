@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.io
 
 import java.io.{BufferedWriter, File, FileWriter}
 
-import com.sksamuel.scapegoat.{Reporter, Warning}
+import com.sksamuel.scapegoat.Reporter
 
 /** @author Stephen Samuel */
 object IOUtils {
