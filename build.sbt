@@ -12,8 +12,6 @@ publishMavenStyle := true
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
-crossScalaVersions := Seq("2.10.4", "2.11.2")
-
 libraryDependencies ++= Seq(
   "org.scala-lang"                  %     "scala-reflect"         % "2.11.2",
   "com.typesafe"                    %     "config"                % "1.2.1",
