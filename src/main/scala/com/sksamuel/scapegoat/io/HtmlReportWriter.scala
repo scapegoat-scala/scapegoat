@@ -10,7 +10,7 @@ object HtmlReportWriter {
   def header =
     <head>
       <title>Scapegoat Inspection Reporter</title>{Unparsed(
-      "<link href=\"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css\" rel=\"stylesheet\">")}
+      "<link href=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css\" rel=\"stylesheet\">")}
     </head>
 
   def body(reporter: Reporter) =
@@ -37,7 +37,11 @@ object HtmlReportWriter {
         {warning.line.toString}
       </div>
       <div class="level">
-        {warning.level.toString}
+        {warning.level match {
+        case Levels.Warning => <span class="label label-info">Info</span>
+        case Levels.Warning => <span class="label label-warning">Warning</span>
+        case Levels.Warning => <span class="label label-danger">Error</span>
+      }}
       </div>
     </div>
   )

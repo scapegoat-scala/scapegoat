@@ -13,7 +13,7 @@ object ScapegoatConfig extends App {
     new EitherGet,
     new EmptyElseBlock,
     new EmptyCatchBlock,
-    new ExpressionAsStatement,
+    //new ExpressionAsStatement,
     new JavaConversionsUse,
     new NullUse,
     new OptionGet,
