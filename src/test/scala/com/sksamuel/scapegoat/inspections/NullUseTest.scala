@@ -15,7 +15,11 @@ class NullUseTest extends FreeSpec with ASTSugar with Matchers {
   "null use" - {
     "should report warning" in {
       val expr = u.reify {
-        println(null)
+        synchronized {
+          println("sammy")
+        }
+        synchronized {
+        }
       }
       println(u showRaw expr.tree)
       new NullUse().traverser(reporter).traverse(expr.tree)
