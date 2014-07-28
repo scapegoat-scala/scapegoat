@@ -2,8 +2,6 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 
-import scala.reflect.runtime._
-
 /** @author Stephen Samuel */
 class CatchNpe extends Inspection {
 

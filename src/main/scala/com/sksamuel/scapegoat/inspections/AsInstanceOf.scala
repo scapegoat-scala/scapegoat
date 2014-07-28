@@ -1,18 +1,18 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
-
-import scala.reflect.runtime._
-import scala.reflect.runtime.universe._
+import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 
 /** @author Stephen Samuel */
 class AsInstanceOf extends Inspection {
-  override def traverser(reporter: Reporter) = new universe.Traverser {
-    override def traverse(tree: universe.Tree): Unit = {
+
+  import scala.reflect.runtime.universe._
+
+  override def traverser(reporter: Reporter) = new Traverser {
+    override def traverse(tree: Tree): Unit = {
       tree match {
-        case Select(_, TermName("asInstanceOf")) =>
+        case TypeApply(Select(_, TermName("asInstanceOf")), _) =>
           reporter.warn("Use of asInstanceOf", tree, Levels.Warning,
-            "asInstanceOf used near " + tree.toString().take(500))
+            "asInstanceOf used near " + tree.toString().take(500) + ". Consider using collect.")
         case DefDef(modifiers, _, _, _, _, _) if modifiers.hasFlag(Flag.SYNTHETIC) => // no further
         case _ => super.traverse(tree)
       }
