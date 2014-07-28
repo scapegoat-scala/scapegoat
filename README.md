@@ -41,9 +41,12 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Empty Try Block | description needed |
 | Expresson as statement | description needed |
 | Java conversions use | description needed |
+| Mod one | description needed |
 | Null use | description needed |
 | Option Get| description needed |
 | Parameterless method returns unit | description needed |
+| Prefer set empty | description needed |
+| Try empty | description needed |
 | Unused method parameter | description needed |
 | Var use | description needed |
 
