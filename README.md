@@ -28,8 +28,8 @@ The currently implemented inspections are as follows. Most of the descriptions n
 |----|-----------|
 | As instance of | description needed |
 | Blocking actor | check for use Await.result and Await.ready in actor |
-| Broken oddness | description needed |
-| Catching NPE | description needed |
+| Broken oddness | checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
+| Catching NPE | checks for case clause catching NPE |
 | Collection promotion to any | description needed |
 | Comparing floating point types | description needed |
 | Comparison with self | description needed |
@@ -40,15 +40,16 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Empty Synchronized Block | description needed |
 | Empty Method | description needed |
 | Empty Try Block | description needed |
-| Expresson as statement | description needed |
+| Expresson as statement | executing an expression as a statement could be a mistake |
+| filter.size instead of count | .filter(x => Bool).size can be replaced more concisely with with count(x => Bool) |
 | Java conversions use | description needed |
-| Mod one | description needed |
+| Mod one | checks for redundant x % 1 which always returns 0 |
 | Null use | checks for use of null |
 | Option Get | checks for improper use of Option.get |
 | Parameterless method returns unit | checks for procedures (methods returning null) that don't declare a params list |
 | Prefer set empty | checks for use of Set.empty rather than Set() |
-| Return use | description needed |
-| Try get | description needed |
-| Unused method parameter | description needed |
+| Return use | using return in Scala is not recommended |
+| Try get | Try.get should be replaced with safe patter matching |
+| Unused method parameter | checks for unused method parameters |
 | Var use | description needed |
 
