@@ -13,6 +13,7 @@ class AsInstanceOf extends Inspection {
         case Select(_, TermName("asInstanceOf")) =>
           reporter.warn("Use of asInstanceOf", tree, Levels.Warning,
             "asInstanceOf used near " + tree.toString().take(500))
+        case DefDef(modifiers, _, _, _, _, _) if modifiers.hasFlag(Flag.SYNTHETIC) => // no further
         case _ => super.traverse(tree)
       }
     }

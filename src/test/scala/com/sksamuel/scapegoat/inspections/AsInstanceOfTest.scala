@@ -8,7 +8,7 @@ class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginR
 
   override val inspections = Seq(new AsInstanceOf)
 
-  "return keyword use" - {
+  "AsInstanceOf" - {
     "should report warning" in {
       val code = """class Test {
                       def hello : Unit = {
@@ -19,6 +19,11 @@ class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginR
 
       compileCodeSnippet(code)
       compiler.scapegoat.reporter.warnings.size shouldBe 1
+    }
+    "should ignore case classes synthetic methods" in {
+      val code = """case class MappingCharFilter(name: String, mappings: (String, String)*)""".stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.reporter.warnings.size shouldBe 0
     }
   }
 }
