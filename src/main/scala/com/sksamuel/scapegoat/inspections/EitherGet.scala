@@ -12,9 +12,9 @@ class EitherGet extends Inspection {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {
         case Select(Select(_, TermName("right")), TermName("get")) =>
-          reporter.warn("Use of Either Right Projection get", tree, Levels.Error)
+          reporter.warn("Use of Either Right Projection get", tree, Levels.Error, tree.toString().take(500))
         case Select(Select(_, TermName("left")), TermName("get")) =>
-          reporter.warn("Use of Either Left Projection get", tree, Levels.Error)
+          reporter.warn("Use of Either Left Projection get", tree, Levels.Error, tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }
