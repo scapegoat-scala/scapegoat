@@ -14,6 +14,7 @@ class ExpressionAsStatement extends Inspection {
     private def checkStatements(statements: Seq[Tree]): Unit = {
       statements foreach {
         case Apply(Select(_, name), _) if name.toString == "<init>" =>
+        case Assign(_, _) =>
         case stmt if stmt.isDef =>
         case stmt if stmt.tpe != null && !(stmt.tpe =:= typeOf[Unit]) =>
           reporter.warn("Expression as statement",

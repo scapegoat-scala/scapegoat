@@ -18,7 +18,8 @@ class UnusedMethodParameter extends Inspection {
 
     override def traverse(tree: Tree): Unit = {
       tree match {
-        case DefDef(modifiers, name, tparams, vparamss, tpt, rhs) =>
+        // ignore constructors, those params become fields
+        case DefDef(modifiers, name, tparams, vparamss, tpt, rhs) if name.toString != "<init>" =>
           for ( vparams <- vparamss;
                 vparam <- vparams ) {
             if (!usesParameter(vparam, rhs))
