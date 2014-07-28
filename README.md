@@ -48,6 +48,7 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Option Get | checks for improper use of Option.get |
 | Parameterless method returns unit | checks for procedures (methods returning null) that don't declare a params list |
 | Prefer set empty | checks for use of Set.empty rather than Set() |
+| Prefer seq empty | checks for use of Seq.empty rather than Seq() |
 | Return use | using return in Scala is not recommended |
 | Try get | Try.get should be replaced with safe patter matching |
 | Unused method parameter | checks for unused method parameters |
