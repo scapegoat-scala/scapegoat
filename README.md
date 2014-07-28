@@ -27,12 +27,13 @@ The currently implemented inspections are as follows. Most of the descriptions n
 |Name|Description|
 |----|-----------|
 | As instance of | description needed |
+| Blocking actor | check for use Await.result and Await.ready in actor |
 | Broken oddness | description needed |
 | Catching NPE | description needed |
 | Collection promotion to any | description needed |
 | Comparing floating point types | description needed |
 | Comparison with self | description needed |
-| Constant if | description needed |
+| Constant if | checks for code where the expression on conditionals compiles to a constant |
 | Either get | description needed |
 | Empty Catch Block | description needed |
 | Empty If Block | description needed |
@@ -42,10 +43,10 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Expresson as statement | description needed |
 | Java conversions use | description needed |
 | Mod one | description needed |
-| Null use | description needed |
-| Option Get| description needed |
-| Parameterless method returns unit | description needed |
-| Prefer set empty | description needed |
+| Null use | checks for use of null |
+| Option Get | checks for improper use of Option.get |
+| Parameterless method returns unit | checks for procedures (methods returning null) that don't declare a params list |
+| Prefer set empty | checks for use of Set.empty rather than Set[X]() |
 | Return use | description needed |
 | Try get | description needed |
 | Unused method parameter | description needed |
