@@ -17,6 +17,7 @@ object ScapegoatConfig extends App {
     new JavaConversionsUse,
     new NullUse,
     new OptionGet,
+    new ParameterlessMethodReturnsUnit,
     new ReturnUse,
     new UnusedMethodParameter,
     new VarUse)
