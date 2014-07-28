@@ -21,6 +21,7 @@ class NullUse extends Inspection {
             reporter.warn("null use", tree, Levels.Error, "null as method argument: " + tree.toString().take(300))
         case Literal(Constant(null)) =>
           reporter.warn("null use", tree, Levels.Error, "null used on line " + tree.pos.line)
+        case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
         case _ => super.traverse(tree)
       }
     }

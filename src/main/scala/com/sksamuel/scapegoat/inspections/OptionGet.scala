@@ -1,19 +1,20 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Reporter, Inspection}
-
-import scala.reflect.runtime._
-import scala.reflect.runtime.universe._
+import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 
 /** @author Stephen Samuel */
 class OptionGet extends Inspection {
+
+  import scala.reflect.runtime.universe._
+
   val optionSymbol = rootMirror.staticClass("scala.Option")
-  override def traverser(reporter: Reporter) = new universe.Traverser {
-    override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
+
+  override def traverser(reporter: Reporter) = new Traverser {
+    override def traverse(tree: Tree): Unit = {
       tree match {
         case Select(left, TermName("get")) =>
           if (left.tpe.typeSymbol.fullName == optionSymbol.asType.fullName)
-            reporter.warn("Use of Option.get", tree, level = Levels.Error)
+            reporter.warn("Use of Option.get", tree, level = Levels.Error, tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }
