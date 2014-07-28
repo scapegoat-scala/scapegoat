@@ -4,11 +4,11 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class EmptyFinallyBlockTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class EmptyIfBlockTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
 
-  override val inspections = Seq(new EmptyFinallyBlock)
+  override val inspections = Seq(new EmptyIfBlock)
 
-  "EmptyFinallyBlockTest" - {
+  "EmptyIfBlock" - {
     "should report warning" in {
 
       val code = """object Test {

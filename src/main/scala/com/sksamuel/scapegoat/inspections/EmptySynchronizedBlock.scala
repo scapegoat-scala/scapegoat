@@ -2,19 +2,18 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 
-import scala.reflect.runtime._
-
 /** @author Stephen Samuel */
-class EmptyElseBlock extends Inspection {
+class EmptySynchronizedBlock extends Inspection {
 
-  import universe._
+  import scala.reflect.runtime.universe._
 
   override def traverser(reporter: Reporter) = new Traverser {
     override def traverse(tree: Tree): Unit = {
       tree match {
-        case i@If(cond, thenp, elsep) =>
-          if (elsep.children.isEmpty)
-            reporter.warn("Empty else block", tree, Levels.Warning, "Empty else block " + cond.toString().take(100))
+        case If(cond, thenp, elsep) =>
+          if (thenp.children.isEmpty)
+            reporter.warn("Empty if statement", tree, level = Levels.Warning,
+              "Empty if statement " + tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }

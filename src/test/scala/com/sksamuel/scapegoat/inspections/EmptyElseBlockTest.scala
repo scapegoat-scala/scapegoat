@@ -13,17 +13,16 @@ class EmptyElseBlockTest extends FreeSpec with ASTSugar with Matchers with Plugi
 
       val code = """object Test {
 
-                   |                      if (true) {
-                   |                        println("sammy")
-                   |                      }
-                   |
-                   |
                       if (true) {
-                        println("sammy")
+                        println("a")
+                      }
+
+                      if (1 > 2) {
+                        println("b")
                       } else {
                       }
 
-                      if (true) {
+                      if ("sam" == "sam") {
                         println("sammy")
                       } else {
                         println("snakes")

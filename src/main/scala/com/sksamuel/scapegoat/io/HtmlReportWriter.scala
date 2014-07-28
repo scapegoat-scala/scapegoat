@@ -68,12 +68,12 @@ object HtmlReportWriter {
             {source}
           </div>
           <div class="title">
-            {warning.text}
-          </div>{warning.level match {
-          case Levels.Info => <span class="label label-info">Info</span>
-          case Levels.Warning => <span class="label label-warning">Warning</span>
-          case Levels.Error => <span class="label label-danger">Error</span>
-        }}<div class="snippet">
+            {warning.level match {
+            case Levels.Info => <span class="label label-info">Info</span>
+            case Levels.Warning => <span class="label label-warning">Warning</span>
+            case Levels.Error => <span class="label label-danger">Error</span>
+          }}&nbsp;{warning.text}
+          </div> <div class="snippet">
           {warning.snippet.orNull}
         </div>
         </div>
