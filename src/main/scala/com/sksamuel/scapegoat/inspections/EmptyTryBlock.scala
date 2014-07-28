@@ -10,10 +10,8 @@ class EmptyTryBlock extends Inspection {
   override def traverser(reporter: Reporter) = new Traverser {
     override def traverse(tree: Tree): Unit = {
       tree match {
-        case If(cond, thenp, elsep) =>
-          if (thenp.children.isEmpty)
-            reporter.warn("Empty if statement", tree, Levels.Warning,
-              "Empty if statement " + tree.toString().take(500))
+        case Try(Literal(Constant(())), _, _) =>
+          reporter.warn("Empty try block", tree, Levels.Warning, tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }

@@ -15,6 +15,7 @@ object ScapegoatConfig extends App {
     //new EmptyElseBlock,
     new EmptyIfBlock,
     new EmptyCatchBlock,
+    new EmptyTryBlock,
     //new ExpressionAsStatement,
     new JavaConversionsUse,
     new NullUse,

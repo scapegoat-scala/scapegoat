@@ -8,25 +8,26 @@ class EmptyIfBlockTest extends FreeSpec with ASTSugar with Matchers with PluginR
 
   override val inspections = Seq(new EmptyIfBlock)
 
-  "EmptyIfBlock" - {
+  "empty if block" - {
     "should report warning" in {
 
       val code = """object Test {
-                      try {
-                        println("sammy")
-                      } finally {
+
+                      if (true) {
                       }
 
-                      try {
+                      if (true) {
+                        ()
+                      }
+
+                      if (1 > 2) {
                         println("sammy")
-                      } finally {
-                        println("snakes")
                       }
 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.reporter.warnings.size shouldBe 2
     }
   }
 }
