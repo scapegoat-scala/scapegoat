@@ -2,7 +2,7 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-version := "0.2.0"
+version := "0.3.0"
 
 scalaVersion := "2.11.2"
 
@@ -31,7 +31,7 @@ libraryDependencies += {
 publishTo <<= version {
   (v: String) =>
     val nexus = "https://oss.sonatype.org/"
-    if (v.trim.endsWith("SNAPSHOT"))r
+    if (v.trim.endsWith("SNAPSHOT"))
       Some("snapshots" at nexus + "content/repositories/snapshots")
     else
       Some("releases" at nexus + "service/local/staging/deploy/maven2")
