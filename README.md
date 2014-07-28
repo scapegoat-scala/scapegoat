@@ -8,11 +8,17 @@ A static code anaylzer is a tool that flag suspicious langage usage in code. Thi
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
-See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat)
+See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration
+
+### Screenshot
+
+Here is a screen shot of the type of report scapegoat generates.
+
+![screenshot](https://raw.githubusercontent.com/sksamuel/scapegoat/master/screenshot1.png)
 
 ### Inspections
 
-The currently implemented descriptions are as follows.
+The currently implemented inspections are as follows. Most of the descriptions need to be completed, but they should be self explanatary anyway from the name.
 
 |Name|Description|
 |----|-----------|
