@@ -13,7 +13,7 @@ class JavaConversionsUse extends Inspection {
           reporter
             .warn("Java conversions",
             tree,
-            level = Levels.Major,
+            level = Levels.Error,
             "Use of java conversions " + tree.toString().take(100))
         case _ => super.traverse(tree)
       }

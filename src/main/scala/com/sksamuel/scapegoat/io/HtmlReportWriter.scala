@@ -13,7 +13,7 @@ object HtmlReportWriter {
   def body(reporter: Reporter) =
     <body>
       <h1>Scapegoat Inspections
-        {reporter.warnings(Levels.Major).size.toString}
+        {reporter.warnings(Levels.Error).size.toString}
         Major
         {reporter.warnings(Levels.Medium).size.toString}
         Medium

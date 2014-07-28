@@ -11,7 +11,7 @@ class NullUse extends Inspection {
   override def traverser(reporter: Reporter) = new universe.Traverser {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {
-        case Literal(Constant(null)) => reporter.warn("null use", tree, level = Levels.Major)
+        case Literal(Constant(null)) => reporter.warn("null use", tree, level = Levels.Error)
         case _ => super.traverse(tree)
       }
     }

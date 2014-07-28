@@ -13,7 +13,7 @@ class OptionGet extends Inspection {
       tree match {
         case Select(left, TermName("get")) =>
           if (left.tpe.typeSymbol.fullName == optionSymbol.asType.fullName)
-            reporter.warn("Use of Option.get", tree, level = Levels.Major)
+            reporter.warn("Use of Option.get", tree, level = Levels.Error)
         case _ => super.traverse(tree)
       }
     }
