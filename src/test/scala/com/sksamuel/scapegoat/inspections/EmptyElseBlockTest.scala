@@ -12,6 +12,12 @@ class EmptyElseBlockTest extends FreeSpec with ASTSugar with Matchers with Plugi
     "should report warning" in {
 
       val code = """object Test {
+
+                   |                      if (true) {
+                   |                        println("sammy")
+                   |                      }
+                   |
+                   |
                       if (true) {
                         println("sammy")
                       } else {

@@ -25,4 +25,6 @@ object Levels {
    * A warning will not stop the build.
    */
   case object Warning extends Level
+
+  case object Info extends Level
 }
