@@ -1,7 +1,5 @@
 package com.sksamuel.scapegoat
 
-import java.util.concurrent.BrokenBarrierException
-
 import com.sksamuel.scapegoat.inspections._
 
 /** @author Stephen Samuel */
@@ -11,9 +9,11 @@ object ScapegoatConfig extends App {
     new CatchNpe,
     new ComparisonWithSelf,
     new ComparingFloatingPointTypes,
+    new EitherGet,
     new EmptyElseBlock,
-    new EmptyFinallyBlock,
+    new EmptyCatchBlock,
     new JavaConversionsUse,
+    new ExpressionAsStatement,
     new NullUse,
     new OptionGet,
     new ReturnUse,
