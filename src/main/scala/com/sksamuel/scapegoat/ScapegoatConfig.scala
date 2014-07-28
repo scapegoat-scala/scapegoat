@@ -19,6 +19,7 @@ object ScapegoatConfig extends App {
     new EmptySynchronizedBlock,
     //new ExpressionAsStatement,
     new JavaConversionsUse,
+    new ModOne,
     new NullUse,
     new OptionGet,
     new ParameterlessMethodReturnsUnit,
