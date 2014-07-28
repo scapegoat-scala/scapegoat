@@ -23,6 +23,7 @@ object ScapegoatConfig extends App {
     new OptionGet,
     new ParameterlessMethodReturnsUnit,
     new ReturnUse,
+    new TryGet,
     new UnusedMethodParameter,
     new VarUse)
   //    def names: Seq[String] = {

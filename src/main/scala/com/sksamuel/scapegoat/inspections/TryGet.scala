@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 
 /** @author Stephen Samuel */
-class OptionGet extends Inspection {
+class TryGet extends Inspection {
 
   import scala.reflect.runtime.universe._
 
@@ -11,8 +11,8 @@ class OptionGet extends Inspection {
     override def traverse(tree: Tree): Unit = {
       tree match {
         case Select(left, TermName("get")) =>
-          if (left.tpe.typeSymbol.fullName.toString == "scala.Option")
-            reporter.warn("Use of Option.get", tree, level = Levels.Error, tree.toString().take(500))
+          if (left.tpe.typeSymbol.fullName.toString == "scala.util.Try")
+            reporter.warn("Use of Try.get", tree, Levels.Error, tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }

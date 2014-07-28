@@ -1,13 +1,12 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
+import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 
 import scala.reflect.runtime._
 import scala.reflect.runtime.universe._
 
 /** @author Stephen Samuel */
 class EitherGet extends Inspection {
-  val optionSymbol = rootMirror.staticClass("scala.Option")
   override def traverser(reporter: Reporter) = new universe.Traverser {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {
