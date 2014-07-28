@@ -46,7 +46,7 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Null use | checks for use of null |
 | Option Get | checks for improper use of Option.get |
 | Parameterless method returns unit | checks for procedures (methods returning null) that don't declare a params list |
-| Prefer set empty | checks for use of Set.empty rather than new Set() |
+| Prefer set empty | checks for use of Set.empty rather than Set() |
 | Return use | description needed |
 | Try get | description needed |
 | Unused method parameter | description needed |
