@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Level, Inspection, Reporter}
+import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 
 import scala.reflect.runtime._
 
@@ -13,10 +13,7 @@ class EmptyElseBlock extends Inspection {
         case universe.If(cond, thenp, elsep) =>
           if (elsep.children.isEmpty)
             reporter
-              .warn("Empty else block",
-                tree,
-                level = Levels.Warning,
-                "Empty else block " + cond.toString().take(100))
+              .warn("Empty else block", tree, level = Levels.Warning, "Empty else block " + cond.toString().take(100))
         case _ => super.traverse(tree)
       }
     }

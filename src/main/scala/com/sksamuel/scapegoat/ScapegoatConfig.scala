@@ -1,10 +1,13 @@
 package com.sksamuel.scapegoat
 
+import java.util.concurrent.BrokenBarrierException
+
 import com.sksamuel.scapegoat.inspections._
 
 /** @author Stephen Samuel */
 object ScapegoatConfig extends App {
   def inspections: Seq[Inspection] = Seq(new AsInstanceOf,
+    new BrokenOddness,
     new CatchNpe,
     new ComparisonWithSelf,
     new ComparingFloatingPointTypes,
