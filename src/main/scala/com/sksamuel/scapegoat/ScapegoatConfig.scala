@@ -14,7 +14,7 @@ object ScapegoatConfig extends App {
     new EmptyCatchBlock,
     new ExpressionAsStatement,
     new JavaConversionsUse,
-    new SeqSeqColonAdd,
+    new CollectionPromotionToAny,
     new NullUse,
     new OptionGet,
     new ReturnUse,

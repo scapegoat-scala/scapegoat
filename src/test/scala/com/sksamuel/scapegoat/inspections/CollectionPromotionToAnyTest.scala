@@ -4,9 +4,9 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class SeqSeqColonAddTest extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
+class CollectionPromotionToAnyTest extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
 
-  override val inspections = Seq(new SeqSeqColonAdd)
+  override val inspections = Seq(new CollectionPromotionToAny)
 
   "lists using colon add with list" - {
     "should report warning" in {
@@ -60,11 +60,11 @@ class SeqSeqColonAddTest extends FreeSpec with ASTSugar with Matchers with Plugi
     }
   }
 
-  "seqs using colon add with non seq" - {
+  "Vectors using colon add with non seq" - {
     "should not report warning" in {
       val code = """object Test {
-                   |        val a = Seq(1, 2, 3)
-                   |        val b = "string"
+                   |        val a = Vector(1, 2, 3)
+                   |        val b = 6
                    |        val c = a :+ b
                     } """.stripMargin
 
@@ -77,6 +77,19 @@ class SeqSeqColonAddTest extends FreeSpec with ASTSugar with Matchers with Plugi
     "should not report warning" in {
       val code = """object Test {
                    |        val a = List(1, 2, 3)
+                   |        val b = 4
+                   |        val c = a :+ b
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.reporter.warnings.size shouldBe 0
+    }
+  }
+
+  "list[any] using colon add" - {
+    "should not report warning" in {
+      val code = """object Test {
+                   |        val a = List[Any](1, 2, 3)
                    |        val b = "string"
                    |        val c = a :+ b
                     } """.stripMargin
