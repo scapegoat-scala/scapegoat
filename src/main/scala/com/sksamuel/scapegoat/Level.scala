@@ -5,26 +5,38 @@ trait Level
 object Levels {
 
   /**
-   * Major level warnings are for code that is potentially unsafe or incorrect. Major indicates
-   * that the flagged code may have buggy behaviour.
+   * Errors indicate code that is potentially unsafe or likely to lead to bugs.
    *
    * An example is use of nulls. Use of nulls can lead to NullPointerExceptions and should be avoided.
-   *
-   * An Error will stop the build.
    */
   case object Error extends Level
 
   /**
-   * Medium level warnings are reserved for code that has bad semantics or usage
-   * which won't by itself cause a bug but could indicate a misunderstanding or a mistake.
+   * Warnings are reserved for code that has bad semantics.
+   * This by itself does not necessarily mean the code is buggy, but could mean the developer
+   * made a mistake or does not fully understand the contructs or best practice.
    *
-   * An example is an empty finally block. While this is perfectly legal, it is also pointless. It
-   * could indicate the developer meant to add code to the finalizer which is missing, or it could
-   * mean the developer does not understand what a finally block is for.
+   * An example is an expression as a statement. While this is perfectly legal, it could indicate
+   * that the developer meant to assign the result to or otherwise use it.
    *
-   * A warning will not stop the build.
+   * Another example is a constant if. You can do things like if (true) { } if you want, but since the block
+   * will always evaluate, the if statement perhaps indicates a mistake.
    */
   case object Warning extends Level
 
+  /**
+   * Infos are used for code which is semantically fine, but there exists a more idomatic way of writing it.
+   *
+   * An example would be using an if statement to return true or false as the last statement in a block.
+   * Eg,
+   *
+   * def foo = {
+   *   if (a) true else false
+   * }
+   *
+   * Can be re-written as
+   *
+   * def foo = a
+   */
   case object Info extends Level
 }
