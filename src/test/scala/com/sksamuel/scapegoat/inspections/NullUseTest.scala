@@ -8,7 +8,7 @@ class NullUseTest extends FreeSpec with ASTSugar with Matchers with PluginRunner
 
   override val inspections = Seq(new NullUse)
 
-  import scala.reflect.runtime.{currentMirror => m, universe => u}
+  import scala.reflect.runtime.{currentMirror => m, universe}
   import scala.tools.reflect.ToolBox
 
   val rep = new Reporter()
@@ -16,18 +16,18 @@ class NullUseTest extends FreeSpec with ASTSugar with Matchers with PluginRunner
 
   "null use" - {
     "should report warning" in {
-      val expr = u.reify {
+      val expr = universe.reify {
         println(null)
       }
-      println(u showRaw expr.tree)
+      println(universe showRaw expr.tree)
       new NullUse().traverser(rep).traverse(expr.tree)
       rep.warnings.size shouldBe 1
     }
     "should have full snippet for method param" in {
-      val expr = u.reify {
+      val expr = universe.reify {
         println(null)
       }
-      println(u showRaw expr.tree)
+      println(universe showRaw expr.tree)
       new NullUse().traverser(rep).traverse(expr.tree)
       rep.warnings.size shouldBe 1
       rep.warnings.forall(_.snippet.get.contains("method argument"))

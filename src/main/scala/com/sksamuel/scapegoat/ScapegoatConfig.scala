@@ -16,7 +16,6 @@ object ScapegoatConfig extends App {
     new EmptyIfBlock,
     new EmptyCatchBlock,
     new EmptyTryBlock,
-    new PreferSetEmpty,
     new EmptySynchronizedBlock,
     new ExpressionAsStatement,
     new JavaConversionsUse,
@@ -24,7 +23,10 @@ object ScapegoatConfig extends App {
     new NullUse,
     new OptionGet,
     new ParameterlessMethodReturnsUnit,
+    new PreferSetEmpty,
+    new PreferSeqEmpty,
     new ReturnUse,
+    new RedundantFinalizer,
     new TryGet,
     new UnusedMethodParameter,
     new VarUse)
