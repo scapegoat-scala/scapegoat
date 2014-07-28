@@ -16,24 +16,24 @@ The currently implemented descriptions are as follows.
 
 |Name|Description|
 |----|-----------|
-| As instance of | todo |
-| Broken oddness | todo |
-| Catching NPE | todo |
-| Collection promotion to any | todo |
-| Comparing floating point types | todo |
-| Comparison with self | todo |
-| Constant if | todo |
-| Either get | todo |
-| Empty Catch Block | todo |
-| Empty If Block | todo |
-| Empty Synchronized Block | todo |
-| Empty Method | todo |
-| Empty Try Block | todo |
-| Expresson as statement | todo |
-| Java conversions use | todo |
-| Null use | todo |
-| Option Get| todo |
-| Parameterless method returns unit | todo |
-| Unused method parameter | todo |
-| Var use | todo |
+| As instance of | description needed |
+| Broken oddness | description needed |
+| Catching NPE | description needed |
+| Collection promotion to any | description needed |
+| Comparing floating point types | description needed |
+| Comparison with self | description needed |
+| Constant if | description needed |
+| Either get | description needed |
+| Empty Catch Block | description needed |
+| Empty If Block | description needed |
+| Empty Synchronized Block | description needed |
+| Empty Method | description needed |
+| Empty Try Block | description needed |
+| Expresson as statement | description needed |
+| Java conversions use | description needed |
+| Null use | description needed |
+| Option Get| description needed |
+| Parameterless method returns unit | description needed |
+| Unused method parameter | description needed |
+| Var use | description needed |
 
