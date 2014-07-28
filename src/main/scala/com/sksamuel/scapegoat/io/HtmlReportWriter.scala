@@ -2,12 +2,15 @@ package com.sksamuel.scapegoat.io
 
 import com.sksamuel.scapegoat.{Levels, Reporter}
 
+import scala.xml.Unparsed
+
 /** @author Stephen Samuel */
 object HtmlReportWriter {
 
   def header =
     <head>
-      <title>Scapegoat Inspection Reporter</title>
+      <title>Scapegoat Inspection Reporter</title>{Unparsed(
+      "<link href=\"//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css\" rel=\"stylesheet\">")}
     </head>
 
   def body(reporter: Reporter) =
@@ -28,14 +31,13 @@ object HtmlReportWriter {
       <div class="snippet">
         {warning.snippet}
       </div>
-      <div class="line">
+      <div class="source">
+        {warning.sourceFile}
+        :
         {warning.line.toString}
       </div>
       <div class="level">
         {warning.level.toString}
-      </div>
-      <div class="file">
-        {warning.sourceFile}
       </div>
     </div>
   )
