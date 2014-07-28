@@ -12,8 +12,7 @@ class EmptySynchronizedBlock extends Inspection {
       tree match {
         case If(cond, thenp, elsep) =>
           if (thenp.children.isEmpty)
-            reporter.warn("Empty if statement", tree, level = Levels.Warning,
-              "Empty if statement " + tree.toString().take(500))
+            reporter.warn("Empty synchronized block", tree, level = Levels.Warning, tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }
