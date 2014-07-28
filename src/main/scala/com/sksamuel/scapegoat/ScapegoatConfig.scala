@@ -12,7 +12,7 @@ object ScapegoatConfig extends App {
     new ComparisonWithSelf,
     new ComparingFloatingPointTypes,
     new EitherGet,
-    //new EmptyElseBlock,
+    new EmptyMethod,
     new EmptyIfBlock,
     new EmptyCatchBlock,
     new EmptyTryBlock,
