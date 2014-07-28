@@ -11,7 +11,8 @@ class AsInstanceOf extends Inspection {
     override def traverse(tree: universe.Tree): Unit = {
       tree match {
         case Select(_, TermName("asInstanceOf")) =>
-          reporter.warn("Use of asInstanceOf", tree, Levels.Warning)
+          reporter.warn("Use of asInstanceOf", tree, Levels.Warning,
+            "asInstanceOf used near " + tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }

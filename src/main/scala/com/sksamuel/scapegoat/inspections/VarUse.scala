@@ -11,8 +11,8 @@ class VarUse extends Inspection {
   override def traverser(reporter: Reporter) = new Traverser {
     override def traverse(tree: Tree): Unit = {
       tree match {
-        case universe.ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
-          reporter.warn("Use of var", tree, level = Levels.Warning)
+        case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
+          reporter.warn("Use of var", tree, Levels.Warning, "var used: " + tree.toString().take(300))
         case _ => super.traverse(tree)
       }
     }
