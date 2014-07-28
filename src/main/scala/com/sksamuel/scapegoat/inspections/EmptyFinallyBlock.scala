@@ -14,7 +14,7 @@ class EmptyFinallyBlock extends Inspection {
           if (finalizer.children.isEmpty)
             reporter.warn("Empty finalizer",
               tree,
-              level = Levels.Minor,
+              level = Levels.Warning,
               "Empty finalizer near " + body.toString().take(100))
         case _ => super.traverse(tree)
       }

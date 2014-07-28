@@ -15,7 +15,7 @@ class EmptyElseBlock extends Inspection {
             reporter
               .warn("Empty else block",
                 tree,
-                level = Levels.Minor,
+                level = Levels.Warning,
                 "Empty else block " + cond.toString().take(100))
         case _ => super.traverse(tree)
       }

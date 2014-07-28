@@ -17,7 +17,7 @@ class CatchNpe extends Inspection {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {
         case universe.Try(block, catches, finalizer) if catchesNpe(catches) =>
-          reporter.warn("Catching NPE", tree, level = Levels.Medium)
+          reporter.warn("Catching NPE", tree, level = Levels.Error)
         case _ => super.traverse(tree)
       }
     }

@@ -10,7 +10,7 @@ class VarUse extends Inspection {
     override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
       tree match {
         case universe.ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(universe.Flag.MUTABLE) =>
-          reporter.warn("Use of var", tree, level = Levels.Medium)
+          reporter.warn("Use of var", tree, level = Levels.Warning)
         case _ => super.traverse(tree)
       }
     }

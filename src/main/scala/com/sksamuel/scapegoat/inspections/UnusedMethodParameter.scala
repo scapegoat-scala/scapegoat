@@ -25,7 +25,7 @@ class UnusedMethodParameter extends Inspection {
             if (!usesParameter(vparam, rhs))
               reporter.warn("Unused method parameter",
                 tree,
-                level = Levels.Medium,
+                level = Levels.Warning,
                 "Unused method parameter " + name.toString.take(100))
           }
         case _ => super.traverse(tree)
