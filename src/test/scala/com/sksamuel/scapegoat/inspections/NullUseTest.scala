@@ -21,5 +21,14 @@ class NullUseTest extends FreeSpec with ASTSugar with Matchers {
       new NullUse().traverser(reporter).traverse(expr.tree)
       reporter.warnings.size shouldBe 1
     }
+    "should have full snippet for method param" in {
+      val expr = u.reify {
+        println(null)
+      }
+      println(u showRaw expr.tree)
+      new NullUse().traverser(reporter).traverse(expr.tree)
+      reporter.warnings.size shouldBe 1
+      reporter.warnings.forall(_.snippet.get.contains("method argument"))
+    }
   }
 }

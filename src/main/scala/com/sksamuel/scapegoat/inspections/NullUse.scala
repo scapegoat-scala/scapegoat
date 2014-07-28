@@ -5,19 +5,22 @@ import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 /** @author Stephen Samuel */
 class NullUse extends Inspection {
 
-  import scala.reflect.runtime.universe
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter) = new universe.Traverser {
+  override def traverser(reporter: Reporter) = new Traverser {
 
-    def containsNull(trees: List[universe.Tree]) = trees.contains(Literal(Constant(null)))
+    def containsNull(trees: List[Tree]) = trees exists {
+      case Literal(Constant(null)) => true
+      case _ => false
+    }
 
-    override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
+    override def traverse(tree: Tree): Unit = {
       tree match {
-        case Apply(_, args) if containsNull(args) =>
-          reporter.warn("null use", tree, Levels.Error, "null used near: " + tree.toString().take(300))
+        case Apply(_, args) =>
+          if (containsNull(args))
+            reporter.warn("null use", tree, Levels.Error, "null as method argument: " + tree.toString().take(300))
         case Literal(Constant(null)) =>
-          reporter.warn("null use", tree, Levels.Error, "null used: " + tree.toString().take(300))
+          reporter.warn("null use", tree, Levels.Error, "null used on line " + tree.pos.line)
         case _ => super.traverse(tree)
       }
     }
