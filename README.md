@@ -5,6 +5,10 @@ Scapegoat is a Scala static code anaylzer, what is more colloquially known as a 
 
 A static code anaylzer is a tool that flag suspicious langage usage in code. This can include behavior likely to lead or bugs, non idiomatic usage of a language, or just code that doesn't conform to specified style guidelines.
 
+*What's the difference between this project and Scalastyle?*
+
+Scalastyle is a similar linting tool which focuses mostly on enforcing style/code standards. Scapegoat focuses mostly on static analysis at compile time. This means both projects are complimentary as they can detect different problems, although you might find both projects occassionally have a similar inspection.
+
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
