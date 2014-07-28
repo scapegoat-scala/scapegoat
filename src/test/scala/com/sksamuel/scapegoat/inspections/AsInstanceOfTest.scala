@@ -25,5 +25,18 @@ class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginR
       compileCodeSnippet(code)
       compiler.scapegoat.reporter.warnings.size shouldBe 0
     }
+    "should ignore partial functions" in {
+      val code =
+        """object Test {
+          |val pf :PartialFunction[Any,Unit] = {
+          |  case s : String => println(s)
+          |  case i : Int if i == 4 => println(i)
+          |  case _ => println("no match :(")
+          |}
+          |}
+        """.stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.reporter.warnings.size shouldBe 0
+    }
   }
 }

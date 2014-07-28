@@ -2,7 +2,10 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
 
-/** @author Stephen Samuel */
+/** @author Stephen Samuel
+  *
+  *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#FI_USELESS
+  **/
 class RedundantFinalizer extends Inspection {
 
   import scala.reflect.runtime.universe._
