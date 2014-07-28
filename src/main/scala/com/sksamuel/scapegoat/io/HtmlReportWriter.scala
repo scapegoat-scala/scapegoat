@@ -29,7 +29,7 @@ object HtmlReportWriter {
         {warning.text}
       </div>
       <div class="snippet">
-        {warning.snippet}
+        {warning.snippet.orNull}
       </div>
       <div class="source">
         {warning.sourceFile}

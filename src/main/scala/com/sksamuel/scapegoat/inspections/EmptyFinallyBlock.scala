@@ -7,8 +7,10 @@ import scala.reflect.runtime._
 /** @author Stephen Samuel */
 class EmptyFinallyBlock extends Inspection {
 
-  override def traverser(reporter: Reporter) = new universe.Traverser {
-    override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
+  import universe._
+
+  override def traverser(reporter: Reporter) = new Traverser {
+    override def traverse(tree: Tree): Unit = {
       tree match {
         case universe.Try(body, catches, finalizer) =>
           if (finalizer.children.isEmpty)

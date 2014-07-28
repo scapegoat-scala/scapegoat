@@ -13,21 +13,13 @@ class UnusedMethodParameterTest extends FreeSpec with ASTSugar with Matchers wit
   "UnusedMethodParameter" - {
     "should report warning" in {
 
-      val code = """object Test {
+      val code = """class Test {
+                      val initstuff = "sammy"
                       def foo(a:String, b:Int, c:Int) {
                         println(b)
                         foo(a,b,b)
                       }
                     } """.stripMargin
-
-
-      val expr = universe.reify {
-        def foo(a: String, b: Int, c: Int) {
-          println(b)
-          foo(a, b, b)
-        }
-      }
-      println(universe showRaw expr.tree)
 
       compileCodeSnippet(code)
       compiler.scapegoat.reporter.warnings.size shouldBe 1
