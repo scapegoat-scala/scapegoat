@@ -1,12 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers}
-
-import scala.reflect.runtime._
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
-class UnusedMethodParameterTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class UnusedMethodParameterTest
+  extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new UnusedMethodParameter)
 
@@ -23,6 +22,15 @@ class UnusedMethodParameterTest extends FreeSpec with ASTSugar with Matchers wit
 
       compileCodeSnippet(code)
       compiler.scapegoat.reporter.warnings.size shouldBe 1
+    }
+    "should ignore abstract method" in {
+
+      val code = """abstract class Test {
+                      def foo(name:String) : String
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.reporter.warnings.size shouldBe 0
     }
   }
 }

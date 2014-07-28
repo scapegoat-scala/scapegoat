@@ -20,8 +20,10 @@ class UnusedMethodParameter extends Inspection {
       tree match {
         // ignore abstract methods obv.
         case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.ABSTRACT) =>
+        case d@DefDef(mods, _, _, _, _, _) if d.symbol != null && d.symbol.isAbstract =>
         // ignore constructors, those params become fields
-        case DefDef(_, name, _, vparamss, _, rhs) if name.toString != "<init>" =>
+        case DefDef(_, name, _, _, _, _) if name.toString == "<init>" =>
+        case d@DefDef(_, name, _, vparamss, _, rhs) =>
           for ( vparams <- vparamss;
                 vparam <- vparams ) {
             if (!usesParameter(vparam, rhs))
