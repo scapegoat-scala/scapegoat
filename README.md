@@ -46,7 +46,7 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Option Get| description needed |
 | Parameterless method returns unit | description needed |
 | Prefer set empty | description needed |
-| Try empty | description needed |
+| Try get | description needed |
 | Unused method parameter | description needed |
 | Var use | description needed |
 
