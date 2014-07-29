@@ -32,6 +32,7 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Catching NPE | checks for case clause catching NPE |
 | Collection promotion to any | description needed |
 | Comparing floating point types | description needed |
+| Comparing unrelated types | description needed |
 | Comparison with self | description needed |
 | Constant if | checks for code where the expression on conditionals compiles to a constant |
 | Either get | description needed |
@@ -42,6 +43,7 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Empty Try Block | description needed |
 | Expresson as statement | executing an expression as a statement could be a mistake |
 | filter.size instead of count | .filter(x => Bool).size can be replaced more concisely with with count(x => Bool) |
+| Iterable.head | checks for unsafe use of iterable.head |
 | Java conversions use | description needed |
 | Mod one | checks for redundant x % 1 which always returns 0 |
 | Null use | checks for use of null |
@@ -49,6 +51,7 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Parameterless method returns unit | checks for procedures (methods returning unit) that don't declare a params list |
 | Prefer set empty | checks for use of Set.empty rather than Set() |
 | Prefer seq empty | checks for use of Seq.empty rather than Seq() |
+| Redundant finalizer | checks for empty finalizers |
 | Return use | using return in Scala is not recommended |
 | Try get | Try.get should be replaced with safe patter matching |
 | Unused method parameter | checks for unused method parameters |
