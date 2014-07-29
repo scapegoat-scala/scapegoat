@@ -24,6 +24,7 @@ object ScapegoatConfig extends App {
     new ModOne,
     new NullUse,
     new OptionGet,
+    new OptionHead,
     new ParameterlessMethodReturnsUnit,
     new PreferSeqEmpty,
     new PreferSetEmpty,

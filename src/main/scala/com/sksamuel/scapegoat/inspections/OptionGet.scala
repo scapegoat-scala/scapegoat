@@ -12,7 +12,7 @@ class OptionGet extends Inspection {
       tree match {
         case Select(left, TermName("get")) =>
           if (left.tpe.typeSymbol.fullName.toString == "scala.Option")
-            reporter.warn("Use of Option.get", tree, level = Levels.Error, tree.toString().take(500))
+            reporter.warn("Use of Option.get", tree, Levels.Error, tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }
