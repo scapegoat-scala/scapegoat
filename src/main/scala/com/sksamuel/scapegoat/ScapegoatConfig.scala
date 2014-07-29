@@ -11,6 +11,7 @@ object ScapegoatConfig extends App {
     new CollectionPromotionToAny,
     new ComparingFloatingPointTypes,
     new ComparisonWithSelf,
+    new ComparingUnrelatedTypes,
     new ConstantIf,
     new EitherGet,
     new EmptyCatchBlock,
