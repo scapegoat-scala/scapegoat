@@ -1,13 +1,13 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
+import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
 
 /** @author Stephen Samuel */
 class ComparingUnrelatedTypes extends Inspection {
 
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
     override def traverse(tree: Tree): Unit = {
       tree match {
         case Apply(Select(l, TermName("$eq$eq")), r) =>

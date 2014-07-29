@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
+import com.sksamuel.scapegoat._
 
 import scala.reflect.runtime._
 

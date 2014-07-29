@@ -9,7 +9,7 @@ class ComparisonWithSelf extends Inspection {
 
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
 
     def containsAssignment(tree: Tree) = tree match {
       case universe.Assign(_, _) => true

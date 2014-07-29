@@ -7,7 +7,7 @@ class PreferSeqEmpty extends Inspection {
 
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
     override def traverse(tree: Tree): Unit = {
       tree match {
         case TypeApply(Select(Select(_, TermName("Seq")), TermName("apply")), _) =>

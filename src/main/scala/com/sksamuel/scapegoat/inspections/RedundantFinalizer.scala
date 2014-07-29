@@ -5,12 +5,12 @@ import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
 /** @author Stephen Samuel
   *
   *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#FI_USELESS
-  **/
+  * */
 class RedundantFinalizer extends Inspection {
 
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
     override def traverse(tree: Tree): Unit = {
       tree match {
         case dd@DefDef(mods, name, _, _, tpt, _)

@@ -7,7 +7,7 @@ class UnusedMethodParameter extends Inspection {
 
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter): Traverser = new Traverser {
+  override def traverser(reporter: Reporter): Traverser = new Traverser with SuppressAwareTraverser {
 
     private def usesParameter(param: ValDef, rhs: Tree): Boolean = {
       rhs match {

@@ -6,8 +6,6 @@ import org.scalatest.{FreeSpec, Matchers}
 /** @author Stephen Samuel */
 class RedundantFinalizerTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
 
-
-
   override val inspections = Seq(new RedundantFinalizer)
 
   "redundant finalizer" - {

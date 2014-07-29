@@ -7,7 +7,7 @@ class CatchNpe extends Inspection {
 
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
 
     private def catchesNpe(cases: List[CaseDef]): Boolean = {
       cases.exists(_.pat.tpe.toString == "NullPointerException")

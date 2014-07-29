@@ -7,10 +7,10 @@ import scala.reflect.runtime._
 /** @author Stephen Samuel
   *
   *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#INT_BAD_REM_BY_1
-  * */
+  **/
 class ModOne extends Inspection {
 
-  override def traverser(reporter: Reporter) = new universe.Traverser {
+  override def traverser(reporter: Reporter) = new universe.Traverser with SuppressAwareTraverser {
 
     import scala.reflect.runtime.universe._
 

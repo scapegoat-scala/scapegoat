@@ -7,7 +7,7 @@ class NullUse extends Inspection {
 
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
 
     def containsNull(trees: List[Tree]) = trees exists {
       case Literal(Constant(null)) => true

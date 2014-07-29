@@ -32,5 +32,18 @@ class UnusedMethodParameterTest
       compileCodeSnippet(code)
       compiler.scapegoat.reporter.warnings.size shouldBe 0
     }
+    "should ignore @SuppressWarnings" in {
+
+      val code = """class Test {
+                      @SuppressWarnings(Array("I know this is broken"))
+                      def foo(a:String, b:Int, c:Int) {
+                        println(b)
+                        foo(a,b,b)
+                      }
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.reporter.warnings.size shouldBe 0
+    }
   }
 }

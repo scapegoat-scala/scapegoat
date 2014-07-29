@@ -1,13 +1,13 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class AsInstanceOf extends Inspection {
 
   import scala.reflect.runtime.universe._
 
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
     override def traverse(tree: Tree): Unit = {
       tree match {
         case TypeApply(Select(_, TermName("asInstanceOf")), _) =>

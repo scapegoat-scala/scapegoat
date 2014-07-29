@@ -9,7 +9,7 @@ class JavaConversionsUse extends Inspection {
 
   import universe._
 
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
     override def traverse(tree: Tree): Unit = {
       tree match {
         case Select(_, TermName("JavaConversions")) =>

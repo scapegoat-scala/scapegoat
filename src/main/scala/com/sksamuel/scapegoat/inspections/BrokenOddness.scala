@@ -7,10 +7,10 @@ import scala.reflect.runtime._
 /** @author Stephen Samuel
   *
   *         Inspired by http://codenarc.sourceforge.net/codenarc-rules-basic.html#BrokenOddnessCheck
-  **/
+  * */
 class BrokenOddness extends Inspection {
 
-  override def traverser(reporter: Reporter) = new universe.Traverser {
+  override def traverser(reporter: Reporter) = new universe.Traverser with SuppressAwareTraverser {
 
     import scala.reflect.runtime.universe._
 

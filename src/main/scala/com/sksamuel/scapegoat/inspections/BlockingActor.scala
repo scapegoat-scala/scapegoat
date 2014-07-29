@@ -8,7 +8,7 @@ class BlockingActor extends Inspection {
   import scala.reflect.runtime.universe._
 
   // todo check for Await.result and Await.ready in actor's receive
-  override def traverser(reporter: Reporter) = new Traverser {
+  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
 
     override def traverse(tree: Tree): Unit = {
       tree match {

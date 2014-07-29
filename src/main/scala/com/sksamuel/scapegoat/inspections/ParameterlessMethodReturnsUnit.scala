@@ -6,7 +6,7 @@ import scala.reflect.runtime._
 
 /** @author Stephen Samuel */
 class ParameterlessMethodReturnsUnit extends Inspection {
-  override def traverser(reporter: Reporter) = new universe.Traverser {
+  override def traverser(reporter: Reporter) = new universe.Traverser with SuppressAwareTraverser {
 
     import scala.reflect.runtime.universe._
 
