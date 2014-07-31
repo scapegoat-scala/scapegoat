@@ -36,7 +36,8 @@ object ScapegoatConfig extends App {
     new ReturnUse,
     new TryGet,
     new UnusedMethodParameter,
-    new VarUse)
+    new VarUse,
+    new WhileLoop)
   //  def names: Seq[String] = {
   //    val conf = ConfigFactory.load()
   //    conf.getObject("scapegoat").keySet.asScala.toSeq
