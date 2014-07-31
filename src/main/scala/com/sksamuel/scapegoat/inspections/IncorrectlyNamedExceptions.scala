@@ -8,7 +8,7 @@ import scala.tools.nsc.Global
   *
   *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#NM_CLASS_NOT_EXCEPTION
   * */
-class NotExceptionNamedException extends Inspection {
+class IncorrectlyNamedExceptions extends Inspection {
 
   override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 

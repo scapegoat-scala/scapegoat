@@ -4,9 +4,9 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class NotExceptionNamedExceptionTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class IncorrectlyNamedExceptionsTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
 
-  override val inspections = Seq(new NotExceptionNamedException)
+  override val inspections = Seq(new IncorrectlyNamedExceptions)
 
   "incorrectly named exceptions" - {
     "should report warning" in {
