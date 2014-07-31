@@ -45,7 +45,7 @@ class ExpressionAsStatementTest extends FreeSpec with ASTSugar with Matchers wit
            } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 8
+      compiler.scapegoat.feedback.warnings.size shouldBe 8
     }
   }
 
@@ -53,7 +53,7 @@ class ExpressionAsStatementTest extends FreeSpec with ASTSugar with Matchers wit
     "should not generate warning" in {
       val code = """case class Person(name:String, age:Int=3)""".stripMargin
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 }

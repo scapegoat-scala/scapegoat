@@ -1,17 +1,20 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
+import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
+
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 class EmptyMethod extends Inspection {
 
-  import scala.reflect.runtime.universe._
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
+    import global._
+
     override def traverse(tree: Tree): Unit = {
       tree match {
         case DefDef(mods, _, _, _, _, Literal(Constant(()))) if !mods.hasFlag(Flag.SYNTHETIC) =>
-          reporter.warn("Empty method", tree, Levels.Warning, "Empty if statement " + tree.toString().take(500))
+          feedback.warn("Empty method", tree.pos, Levels.Warning, "Empty if statement " + tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }

@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.io
 
 import java.io.{BufferedWriter, File, FileWriter}
 
-import com.sksamuel.scapegoat.Reporter
+import com.sksamuel.scapegoat.Feedback
 
 /** @author Stephen Samuel */
 object IOUtils {
@@ -16,7 +16,7 @@ object IOUtils {
     out.close()
   }
 
-  def writeHTMLReport(targetDir: File, reporter: Reporter): File = {
+  def writeHTMLReport(targetDir: File, reporter: Feedback): File = {
     targetDir.mkdirs()
     val html = HtmlReportWriter.generate(reporter)
     val file = new File(targetDir.getAbsolutePath + "/" + HtmlFile)
@@ -24,7 +24,7 @@ object IOUtils {
     file
   }
 
-  def writeXMLReport(targetDir: File, reporter: Reporter): File = {
+  def writeXMLReport(targetDir: File, reporter: Feedback): File = {
     targetDir.mkdirs()
     val html = XmlReportWriter.toXML(reporter)
     val file = new File(targetDir.getAbsolutePath + "/" + XmlFile)

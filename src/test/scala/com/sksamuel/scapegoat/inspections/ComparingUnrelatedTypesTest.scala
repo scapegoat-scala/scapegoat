@@ -24,7 +24,7 @@ class ComparingUnrelatedTypesTest extends FreeSpec with ASTSugar with Matchers w
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 3
+      compiler.scapegoat.feedback.warnings.size shouldBe 3
     }
   }
 }

@@ -21,7 +21,7 @@ class CatchNpeTest extends FreeSpec with ASTSugar with Matchers with PluginRunne
                     } """.stripMargin
 
       compileCodeSnippet(code1)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
     "should use @SuppressWarnings annotation" in {
 
@@ -36,7 +36,7 @@ class CatchNpeTest extends FreeSpec with ASTSugar with Matchers with PluginRunne
                     } """.stripMargin
 
       compileCodeSnippet(code1)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
   "catching non npe" - {
@@ -52,7 +52,7 @@ class CatchNpeTest extends FreeSpec with ASTSugar with Matchers with PluginRunne
                     } """.stripMargin
 
       compileCodeSnippet(code2)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 }

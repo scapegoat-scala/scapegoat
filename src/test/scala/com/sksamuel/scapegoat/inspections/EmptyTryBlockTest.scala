@@ -31,7 +31,7 @@ class EmptyTryBlockTest extends FreeSpec with ASTSugar with Matchers with Plugin
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
 }

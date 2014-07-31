@@ -1,19 +1,22 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
+import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
+
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 class IterableHead extends Inspection {
 
-  import scala.reflect.runtime.universe._
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
+    import global._
+
     override def traverse(tree: Tree): Unit = {
       tree match {
         case Select(left, TermName("head")) =>
           println(left.tpe.typeSymbol.fullName.toString)
           if (left.tpe.typeSymbol.fullName.toString == "scala.collection.Iterable")
-            reporter.warn("Use of Option.head", tree, Levels.Error, tree.toString().take(500))
+            feedback.warn("Use of Option.head", tree.pos, Levels.Error, tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }

@@ -25,7 +25,7 @@ class ConstantIfTest extends FreeSpec with ASTSugar with Matchers with PluginRun
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 4
+      compiler.scapegoat.feedback.warnings.size shouldBe 4
     }
   }
 }

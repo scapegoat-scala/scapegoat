@@ -2,15 +2,15 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat._
 
-import scala.reflect.runtime._
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel
   *         This inspection was inspired by http://p5wscala.wordpress.com/scalaprocessing-gotchas/#t2
   * */
 class CollectionPromotionToAny extends Inspection {
-  override def traverser(reporter: Reporter) = new universe.Traverser {
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-    import scala.reflect.runtime.universe._
+    import global._
 
     private def isSeq(symbol: Symbol): Boolean = {
       val full = symbol.typeSignature.resultType.typeSymbol.fullName
@@ -26,11 +26,11 @@ class CollectionPromotionToAny extends Inspection {
       case _ => false
     }
 
-    override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
+    override def traverse(tree: Tree): Unit = {
       tree match {
         case TypeApply(Select(l, TermName("$colon$plus")), List(a, r)) =>
           if (!isAnySeq(l) && isAny(a))
-            reporter.warn("Collection promotion to any", tree, Levels.Warning, tree.toString().take(100))
+            feedback.warn("Collection promotion to any", tree.pos, Levels.Warning, tree.toString().take(100))
         case _ => super.traverse(tree)
       }
     }

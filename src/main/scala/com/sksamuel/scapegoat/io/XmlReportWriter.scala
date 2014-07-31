@@ -1,13 +1,13 @@
 package com.sksamuel.scapegoat.io
 
-import com.sksamuel.scapegoat.{Reporter, Warning}
+import com.sksamuel.scapegoat.{Feedback, Warning}
 
 import scala.xml.Node
 
 /** @author Stephen Samuel */
 object XmlReportWriter {
 
-  def toXML(reporter: Reporter): Node = {
+  def toXML(reporter: Feedback): Node = {
     <scapegoat count={reporter.warnings.size.toString}>
       {reporter.warnings.map(warning2xml)}
     </scapegoat>

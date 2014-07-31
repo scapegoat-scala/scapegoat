@@ -21,7 +21,7 @@ class UnusedMethodParameterTest
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
     "should ignore abstract method" in {
 
@@ -30,7 +30,7 @@ class UnusedMethodParameterTest
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
     "should ignore @SuppressWarnings" in {
 
@@ -43,7 +43,7 @@ class UnusedMethodParameterTest
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 }

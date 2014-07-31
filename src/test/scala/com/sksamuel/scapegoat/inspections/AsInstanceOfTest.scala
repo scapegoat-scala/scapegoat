@@ -18,12 +18,12 @@ class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginR
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
     "should ignore case classes synthetic methods" in {
       val code = """case class MappingCharFilter(name: String, mappings: (String, String)*)""".stripMargin
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
     "should ignore partial functions" in {
       val code =
@@ -36,7 +36,7 @@ class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginR
           |}
         """.stripMargin
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
     "should ignore @SuppressWarnings when all is set" in {
       val code = """class Test {
@@ -48,7 +48,7 @@ class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginR
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
     "should ignore @SuppressWarnings when this inspection is set" in {
       val code = """class Test {
@@ -60,7 +60,7 @@ class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginR
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 }

@@ -17,7 +17,7 @@ class IterableHeadTest extends FreeSpec with ASTSugar with Matchers with PluginR
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 2
+      compiler.scapegoat.feedback.warnings.size shouldBe 2
     }
   }
 }

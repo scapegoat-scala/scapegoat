@@ -37,9 +37,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   import global._
 
-  import scala.reflect.runtime.{universe => u}
-
-  val reporter = new Reporter()
+  val feedback = new Feedback()
   var dataDir: File = new File(".")
 
   override val phaseName: String = "scapegoat"
@@ -50,11 +48,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     override def run(): Unit = {
       println("[info] [scapegoat]: Begin anaylsis...")
       super.run()
-      val count = reporter.warnings.size
+      val count = feedback.warnings.size
       println(s"[warn] [scapegoat]: Anaylsis complete - $count warnings found.")
-      val html = IOUtils.writeHTMLReport(dataDir, reporter)
+      val html = IOUtils.writeHTMLReport(dataDir, feedback)
       println(s"[info] [scapegoat]: Written HTML report [$html]")
-      val xml = IOUtils.writeXMLReport(dataDir, reporter)
+      val xml = IOUtils.writeXMLReport(dataDir, feedback)
       println(s"[info] [scapegoat]: Written XML report [$xml]")
     }
   }
@@ -64,7 +62,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: Tree) = {
       require(inspections != null)
-      inspections.foreach(_.traverser(reporter).traverse(tree.asInstanceOf[u.Tree]))
+      inspections.foreach(_.traverser(global, feedback).traverse(tree))
       tree
     }
   }

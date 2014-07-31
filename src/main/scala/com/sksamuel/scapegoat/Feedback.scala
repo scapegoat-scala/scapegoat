@@ -3,20 +3,25 @@ package com.sksamuel.scapegoat
 import scala.collection.mutable.ListBuffer
 
 /** @author Stephen Samuel */
-class Reporter {
+class Feedback {
 
   val warnings = new ListBuffer[Warning]
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
-  def warn(text: String, tree: scala.reflect.runtime.universe.Tree, level: Level): Unit = {
-    warn(text, tree, level, None)
+  def warn(text: String, pos: scala.reflect.internal.util.Position, level: Level): Unit = {
+    warn(text, pos, level, None)
   }
-  def warn(text: String, tree: scala.reflect.runtime.universe.Tree, level: Level, snippet: String): Unit = {
-    warn(text, tree, level, Option(snippet))
+
+  def warn(text: String, pos: scala.reflect.internal.util.Position, level: Level, snippet: String): Unit = {
+    warn(text, pos, level, Option(snippet))
   }
-  def warn(text: String, tree: scala.reflect.runtime.universe.Tree, level: Level, snippet: Option[String]): Unit = {
-    val sourceFile = normalizeSourceFile(tree.pos.source.file.path)
-    warnings.append(Warning(text, tree.pos.line, level, sourceFile, snippet))
+
+  private def warn(text: String,
+                   pos: scala.reflect.internal.util.Position,
+                   level: Level,
+                   snippet: Option[String]): Unit = {
+    val sourceFile = normalizeSourceFile(pos.source.file.path)
+    warnings.append(Warning(text, pos.line, level, sourceFile, snippet))
   }
 
   private def normalizeSourceFile(sourceFile: String): String = {

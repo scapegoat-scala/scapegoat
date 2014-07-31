@@ -1,13 +1,15 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
+import com.sksamuel.scapegoat.{Inspection, Levels, Feedback}
+
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 class CatchNpe extends Inspection {
 
-  import scala.reflect.runtime.universe._
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
+    import global._
 
     private def catchesNpe(cases: List[CaseDef]): Boolean = {
       cases.exists(_.pat.tpe.toString == "NullPointerException")
@@ -16,7 +18,7 @@ class CatchNpe extends Inspection {
     override def traverse(tree: Tree): Unit = {
       tree match {
         case Try(block, catches, finalizer) if catchesNpe(catches) =>
-          reporter.warn("Catching NPE", tree, level = Levels.Error)
+          feedback.warn("Catching NPE", tree.pos, level = Levels.Error)
         case _ => super.traverse(tree)
       }
     }

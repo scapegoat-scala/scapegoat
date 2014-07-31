@@ -17,7 +17,7 @@ class CollectionPromotionToAnyTest extends FreeSpec with ASTSugar with Matchers 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
 
@@ -30,7 +30,7 @@ class CollectionPromotionToAnyTest extends FreeSpec with ASTSugar with Matchers 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
 
@@ -43,7 +43,7 @@ class CollectionPromotionToAnyTest extends FreeSpec with ASTSugar with Matchers 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
 
@@ -56,7 +56,7 @@ class CollectionPromotionToAnyTest extends FreeSpec with ASTSugar with Matchers 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
 
@@ -69,7 +69,7 @@ class CollectionPromotionToAnyTest extends FreeSpec with ASTSugar with Matchers 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 
@@ -82,7 +82,7 @@ class CollectionPromotionToAnyTest extends FreeSpec with ASTSugar with Matchers 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 
@@ -95,7 +95,7 @@ class CollectionPromotionToAnyTest extends FreeSpec with ASTSugar with Matchers 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 }

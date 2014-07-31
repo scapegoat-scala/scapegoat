@@ -1,47 +1,47 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{PluginRunner, Reporter}
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import com.sksamuel.scapegoat.PluginRunner
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
-class NullUseTest extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
+class NullUseTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new NullUse)
 
-  import scala.reflect.runtime.{currentMirror => m, universe}
-  import scala.tools.reflect.ToolBox
-
-  val rep = new Reporter()
-  val tb = m.mkToolBox()
-
   "null use" - {
     "should report warning" in {
-      val expr = universe.reify {
-        println(null)
-      }
-      println(universe showRaw expr.tree)
-      new NullUse().traverser(rep).traverse(expr.tree)
-      rep.warnings.size shouldBe 1
+
+      val code = """object Test {
+                      println(null)
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
+
+      //      val expr = universe.reify {
+      //        println(null)
+      //      }
+      //      println(universe showRaw expr.tree)
     }
     "should have full snippet for method param" in {
-      val expr = universe.reify {
-        println(null)
-      }
-      println(universe showRaw expr.tree)
-      new NullUse().traverser(rep).traverse(expr.tree)
-      rep.warnings.size shouldBe 1
-      rep.warnings.forall(_.snippet.get.contains("method argument"))
+      val code = """object Test {
+                      println(null)
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.forall(_.snippet.get.contains("method argument"))
     }
     "should handle override val in case class" in {
       val code = """abstract class Super(val name: String)
                     case class Boo(override val name: String) extends Super(name) """
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
     "should handler var args" in {
       val code = """class Birds(names:String*))"""
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 }

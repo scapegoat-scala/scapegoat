@@ -1,19 +1,19 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
+import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
 
-import scala.reflect.runtime._
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 class EmptyIfBlock extends Inspection {
 
-  import scala.reflect.runtime.universe._
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
+    import global._
     override def traverse(tree: Tree): Unit = {
       tree match {
         case If(_, Literal(Constant(())), _) =>
-          reporter.warn("Empty if statement", tree, level = Levels.Warning, tree.toString().take(500))
+          feedback.warn("Empty if statement", tree.pos, level = Levels.Warning, tree.toString().take(500))
         case _ => super.traverse(tree)
       }
     }

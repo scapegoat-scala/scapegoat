@@ -1,25 +1,25 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
+import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
 
-import scala.reflect.runtime._
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 class EmptyCatchBlock extends Inspection {
 
-  override def traverser(reporter: Reporter) = new universe.Traverser with SuppressAwareTraverser {
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-    import scala.reflect.runtime.universe._
+    import global._
 
     def checkCatch(cd: CaseDef): Unit = {
       if (cd.body.toString == "()")
-        reporter.warn("Empty finalizer", cd, Levels.Warning,
+        feedback.warn("Empty finalizer", cd.pos, Levels.Warning,
           "Empty finalizer near " + cd.toString().take(100))
     }
 
     def checkCatches(defs: List[CaseDef]) = defs.foreach(cd => checkCatch(cd))
 
-    override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
+    override def traverse(tree: Tree): Unit = {
       tree match {
         case Try(body, catches, finalizer) => checkCatches(catches)
         case _ => super.traverse(tree)

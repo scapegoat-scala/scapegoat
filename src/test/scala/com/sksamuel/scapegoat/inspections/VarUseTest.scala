@@ -16,7 +16,7 @@ class VarUseTest extends FreeSpec with ASTSugar with Matchers with PluginRunner 
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
 }

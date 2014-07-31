@@ -1,27 +1,24 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.Reporter
+import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class ModOneTest extends FreeSpec with ASTSugar with Matchers {
+class ModOneTest extends FreeSpec with PluginRunner with Matchers {
 
-  import scala.reflect.runtime.{currentMirror => m, universe => u}
-  import scala.tools.reflect.ToolBox
-
-  val reporter = new Reporter()
-  val tb = m.mkToolBox()
+  override val inspections = Seq(new ModOne)
 
   "mod one use" - {
     "should report warning" in {
-      val expr = u.reify {
-        var i = 15
-        def odd(a: Int) = a % 1
-        val odd2 = i % 1
-      }
-      println(u showRaw expr.tree)
-      new ModOne().traverser(reporter).traverse(expr.tree)
-      reporter.warnings.size shouldBe 2
+
+      val code = """object Test {
+                   |  var i = 15
+                   |        def odd(a: Int) = a % 1
+                   |        val odd2 = i % 1
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 2
     }
   }
 }

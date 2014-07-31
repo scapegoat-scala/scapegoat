@@ -24,7 +24,7 @@ class EmptyMethodTest extends FreeSpec with ASTSugar with Matchers with PluginRu
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 2
+      compiler.scapegoat.feedback.warnings.size shouldBe 2
     }
   }
 }

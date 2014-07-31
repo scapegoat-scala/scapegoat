@@ -18,7 +18,7 @@ class EitherGetTest extends FreeSpec with ASTSugar with Matchers with PluginRunn
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 2
+      compiler.scapegoat.feedback.warnings.size shouldBe 2
     }
   }
 }

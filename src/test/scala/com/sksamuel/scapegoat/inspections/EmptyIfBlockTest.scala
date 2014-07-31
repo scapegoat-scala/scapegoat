@@ -27,7 +27,7 @@ class EmptyIfBlockTest extends FreeSpec with ASTSugar with Matchers with PluginR
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 2
+      compiler.scapegoat.feedback.warnings.size shouldBe 2
     }
     "should use @SuppressWarnings" in {
 
@@ -50,7 +50,7 @@ class EmptyIfBlockTest extends FreeSpec with ASTSugar with Matchers with PluginR
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 0
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 }

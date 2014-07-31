@@ -27,6 +27,7 @@ object ScapegoatConfig extends App {
     new IterableHead,
     new JavaConversionsUse,
     new ModOne,
+    new NotExceptionNamedException,
     new NullUse,
     new OptionGet,
     new ParameterlessMethodReturnsUnit,

@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
+import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
 
-import scala.reflect.runtime._
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel
   *
@@ -10,16 +10,16 @@ import scala.reflect.runtime._
   **/
 class ModOne extends Inspection {
 
-  override def traverser(reporter: Reporter) = new universe.Traverser with SuppressAwareTraverser {
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-    import scala.reflect.runtime.universe._
+    import global._
 
-    override def traverse(tree: scala.reflect.runtime.universe.Tree): Unit = {
+    override def traverse(tree: Tree): Unit = {
       tree match {
         case Apply(Select(Apply(Select(_, TermName("$percent")), List(Literal(Constant(1)))),
         TermName("$eq$eq")), List(Literal(Constant(1)))) =>
-          reporter.warn("Integer mod one", tree, level = Levels.Warning,
-            "Any expression x % 1 will always return 0. " + tree.toString().take(100))
+          feedback.warn("Integer mod one", tree.pos, Levels.Warning,
+            "Any expression x % 1 will always return 0. " + tree.toString().take(300))
         case _ => super.traverse(tree)
       }
     }

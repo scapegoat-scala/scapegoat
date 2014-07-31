@@ -1,6 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
+import com.sksamuel.scapegoat.{Levels, Inspection, Feedback}
+
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel
   *
@@ -8,17 +10,14 @@ import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
   */
 class FilterSizeToCount extends Inspection {
 
-  import scala.reflect.runtime.universe._
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
+    import global._
 
     override def traverse(tree: Tree): Unit = {
       tree match {
         case Select(Apply(Select(_, TermName("filter")), _), TermName("size")) =>
-          reporter
-            .warn("filter().size() instead of count()",
-              tree,
-              Levels.Info,
+          feedback.warn("filter().size() instead of count()", tree.pos, Levels.Info,
               ".filter(x => Bool).size can be replaced with count(x => Bool): " + tree.toString().take(500))
         case _ => super.traverse(tree)
       }

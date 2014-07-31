@@ -1,19 +1,25 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Reporter}
+import com.sksamuel.scapegoat.{Levels, Inspection, Feedback}
 
 import scala.reflect.runtime._
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 class JavaConversionsUse extends Inspection {
 
-  import universe._
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
+    import global._
+
     override def traverse(tree: Tree): Unit = {
       tree match {
         case Select(_, TermName("JavaConversions")) =>
-          reporter.warn("Java conversions", tree, Levels.Error, "Use of java conversions " + tree.toString().take(100))
+          feedback.warn("Java conversions",
+            tree.pos, Levels.Error,
+            "Use of java conversions can lead to unusual implicit behaviour. It is recommended to use JavaConverters: " + tree
+              .toString()
+              .take(400))
         case _ => super.traverse(tree)
       }
     }

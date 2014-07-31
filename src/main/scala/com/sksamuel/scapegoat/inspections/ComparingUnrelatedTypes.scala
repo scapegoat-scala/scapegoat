@@ -1,20 +1,23 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, Levels, Reporter}
+import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
+
+import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 class ComparingUnrelatedTypes extends Inspection {
 
-  import scala.reflect.runtime.universe._
+  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
-  override def traverser(reporter: Reporter) = new Traverser with SuppressAwareTraverser {
+    import global._
+
     override def traverse(tree: Tree): Unit = {
       tree match {
         case Apply(Select(l, TermName("$eq$eq")), r) =>
           val left = rootMirror.staticClass(l.tpe.erasure.typeSymbol.fullName).toType.erasure
           val right = rootMirror.staticClass(r.head.tpe.erasure.typeSymbol.fullName).toType.erasure
           if (!(left <:< right || right <:< left)) {
-            reporter.warn("Comparing unrelated types", tree, Levels.Error, tree.toString().take(500))
+            feedback.warn("Comparing unrelated types", tree.pos, Levels.Error, tree.toString().take(500))
           }
         case _ => super.traverse(tree)
       }

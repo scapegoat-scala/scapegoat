@@ -19,7 +19,7 @@ class ParameterlessMethodReturnsUnitTest extends FreeSpec with ASTSugar with Mat
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.reporter.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
 }

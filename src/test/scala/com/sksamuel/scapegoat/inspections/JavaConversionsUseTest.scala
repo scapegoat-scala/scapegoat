@@ -21,7 +21,7 @@ class JavaConversionsUseTest extends FreeSpec with ASTSugar with Matchers with P
 
       compileCodeSnippet(code)
       // one for import 2 for ussage
-      compiler.scapegoat.reporter.warnings.size shouldBe 3
+      compiler.scapegoat.feedback.warnings.size shouldBe 3
     }
   }
 }

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.io
 
-import com.sksamuel.scapegoat.{Levels, Reporter}
+import com.sksamuel.scapegoat.{Levels, Feedback}
 
 import scala.xml.Unparsed
 
@@ -61,7 +61,7 @@ object HtmlReportWriter {
     </style>
     </head>
 
-  def body(reporter: Reporter) =
+  def body(reporter: Feedback) =
     <body>
       <h1>Scapegoat Inspections</h1>
       <h3>
@@ -72,7 +72,7 @@ object HtmlReportWriter {
       </h3>{warnings(reporter)}
     </body>
 
-  def warnings(reporter: Reporter) = {
+  def warnings(reporter: Feedback) = {
     reporter.warnings.map {
       case warning =>
         val source = warning.sourceFile + ":" + warning.line
@@ -97,7 +97,7 @@ object HtmlReportWriter {
     }
   }
 
-  def generate(reporter: Reporter) = <html>
+  def generate(reporter: Feedback) = <html>
     {header}{body(reporter)}
   </html>
 }
