@@ -1,9 +1,6 @@
 package com.sksamuel.scapegoat
 
 import com.sksamuel.scapegoat.inspections._
-import com.typesafe.config.ConfigFactory
-
-import scala.collection.JavaConverters._
 
 /** @author Stephen Samuel */
 object ScapegoatConfig extends App {

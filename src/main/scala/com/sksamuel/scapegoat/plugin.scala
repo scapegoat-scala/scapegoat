@@ -62,7 +62,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: Tree) = {
       require(inspections != null)
-      inspections.foreach(_.traverser(global, feedback).traverse(tree))
+      inspections.map(new SuppressAwareInspection(_)).foreach(_.traverser(global, feedback).traverse(tree))
       tree
     }
   }
