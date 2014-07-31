@@ -11,19 +11,20 @@ trait Inspection {
 
   trait SuppressAwareTraverser extends universe.Traverser {
 
-    def isSuppressed(defDef: universe.DefDef) = {
-      defDef.symbol != null &&
-        defDef.symbol.annotations.nonEmpty &&
-        defDef.symbol.annotations.head.tree.tpe.typeSymbol.fullName == classOf[SuppressWarnings].getCanonicalName &&
-        (defDef.symbol.annotations.head.javaArgs.head._2.toString.toLowerCase.contains(inspection.getClass.getSimpleName.toLowerCase) ||
-          defDef.symbol.annotations.head.javaArgs.head._2.toString.toLowerCase.contains("\"all\""))
+    def isSuppressed(symbol: Symbol) = {
+      symbol != null &&
+        symbol.annotations.nonEmpty &&
+        symbol.annotations.head.tree.tpe.typeSymbol.fullName == classOf[SuppressWarnings].getCanonicalName &&
+        (symbol.annotations.head.javaArgs.head._2.toString.toLowerCase.contains(inspection.getClass.getSimpleName.toLowerCase) ||
+          symbol.annotations.head.javaArgs.head._2.toString.toLowerCase.contains("\"all\""))
     }
 
     abstract override def traverse(tree: universe.Tree): Unit = {
       tree match {
-        case dd@DefDef(mods, _, _, _, _, _) if isSuppressed(dd) =>
-        case block@Block(statements, expressions) =>
-          super.traverse(block)
+        case dd@DefDef(_, _, _, _, _, _) if isSuppressed(dd.symbol) =>
+        case block@Block(_, _) if isSuppressed(block.symbol) =>
+        case iff@If(_,_,_) if isSuppressed(iff.symbol) =>
+        case tri@Try(_,_,_) if isSuppressed(tri.symbol) =>
         case _ => super.traverse(tree)
       }
     }

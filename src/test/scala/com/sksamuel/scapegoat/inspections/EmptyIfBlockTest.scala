@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class EmptyIfBlockTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class EmptyIfBlockTest extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new EmptyIfBlock)
 
@@ -28,6 +28,29 @@ class EmptyIfBlockTest extends FreeSpec with ASTSugar with Matchers with PluginR
 
       compileCodeSnippet(code)
       compiler.scapegoat.reporter.warnings.size shouldBe 2
+    }
+    "should use @SuppressWarnings" in {
+
+      val code = """object Test {
+
+                      @SuppressWarnings(Array("all"))
+                      if (true) {
+                      }
+
+                      @SuppressWarnings(Array("all"))
+                      if (true) {
+                        ()
+                      }
+
+                      @SuppressWarnings(Array("all"))
+                      if (1 > 2) {
+                        println("sammy")
+                      }
+
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.reporter.warnings.size shouldBe 0
     }
   }
 }
