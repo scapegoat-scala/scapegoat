@@ -38,9 +38,21 @@ class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginR
       compileCodeSnippet(code)
       compiler.scapegoat.reporter.warnings.size shouldBe 0
     }
-    "should ignore @SuppressWarnings" in {
+    "should ignore @SuppressWarnings when all is set" in {
       val code = """class Test {
-                      @SuppressWarnings(Array("I know this is broken"))
+                      @SuppressWarnings(Array("all"))
+                      def hello : Unit = {
+                        val s : Any = "sammy"
+                        println(s.asInstanceOf[String])
+                      }
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.reporter.warnings.size shouldBe 0
+    }
+    "should ignore @SuppressWarnings when this inspection is set" in {
+      val code = """class Test {
+                      @SuppressWarnings(Array("asinstanceof"))
                       def hello : Unit = {
                         val s : Any = "sammy"
                         println(s.asInstanceOf[String])

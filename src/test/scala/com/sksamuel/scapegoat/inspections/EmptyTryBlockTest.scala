@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
-class EmptyTryBlockTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class EmptyTryBlockTest extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new EmptyTryBlock)
 
