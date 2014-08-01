@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class ComparingFloatingPointTypesTest

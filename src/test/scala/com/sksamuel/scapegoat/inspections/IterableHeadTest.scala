@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class IterableHeadTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class IterableHeadTest extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new IterableHead)
 

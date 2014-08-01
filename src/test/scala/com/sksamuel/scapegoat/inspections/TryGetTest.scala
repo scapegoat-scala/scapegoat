@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class TryGetTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class TryGetTest extends FreeSpec with PluginRunner with Matchers {
 
   override val inspections = Seq(new TryGet)
 

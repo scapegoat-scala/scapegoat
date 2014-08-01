@@ -5,7 +5,8 @@ import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class UnusedMethodParameterTest
-  extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
+  extends FreeSpec
+  with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new UnusedMethodParameter)
 
@@ -35,7 +36,7 @@ class UnusedMethodParameterTest
     "should ignore @SuppressWarnings" in {
 
       val code = """class Test {
-                      @SuppressWarnings(Array("I know this is broken"))
+                      @SuppressWarnings(Array("all"))
                       def foo(a:String, b:Int, c:Int) {
                         println(b)
                         foo(a,b,b)

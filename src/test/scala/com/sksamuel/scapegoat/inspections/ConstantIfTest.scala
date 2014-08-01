@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class ConstantIfTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class ConstantIfTest extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new ConstantIf)
 

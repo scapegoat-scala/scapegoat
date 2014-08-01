@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class CatchNpeTest extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
+class CatchNpeTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new CatchNpe)
 

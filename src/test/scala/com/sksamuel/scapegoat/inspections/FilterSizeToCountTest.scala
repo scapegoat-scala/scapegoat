@@ -5,7 +5,7 @@ import org.scalatest.{Matchers, FreeSpec}
 
 /** @author Stephen Samuel */
 class FilterSizeToCountTest
-  extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+  extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new FilterSizeToCount)
 

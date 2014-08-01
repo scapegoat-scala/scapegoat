@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
-class AsInstanceOfTest extends FreeSpec with ASTSugar with Matchers with PluginRunner with OneInstancePerTest {
+class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new AsInstanceOf)
 

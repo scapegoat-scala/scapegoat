@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class JavaConversionsUseTest extends FreeSpec with ASTSugar with Matchers with PluginRunner {
+class JavaConversionsUseTest extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new JavaConversionsUse)
 
