@@ -11,14 +11,14 @@ class DivideByOne extends Inspection {
 
     import global._
 
-    def isNumber(tree: Tree) = {
+    private def isNumber(tree: Tree) = {
       tree.tpe <:< typeOf[Int] ||
         tree.tpe <:< typeOf[Long] ||
         tree.tpe <:< typeOf[Double] ||
         tree.tpe <:< typeOf[Float]
     }
 
-    def isOne(value: Any): Boolean = value match {
+    private def isOne(value: Any): Boolean = value match {
       case i: Int => i == 1
       case _ => false
     }

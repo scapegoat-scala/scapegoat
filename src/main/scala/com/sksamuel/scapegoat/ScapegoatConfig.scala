@@ -62,6 +62,7 @@ object ScapegoatConfig extends App {
     new UnnecessaryReturnUse,
     new UnsafeContains,
     new UnusedMethodParameter,
+    new UseSqrt,
     new VarUse,
     new WhileTrue)
   //  def names: Seq[String] = {
