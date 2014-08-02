@@ -21,6 +21,7 @@ object ScapegoatConfig extends App {
     new EmptySynchronizedBlock,
     new EmptyTryBlock,
     new ExpressionAsStatement,
+    new FilterHeadOption,
     new FilterIsEmpty,
     new FilterSize,
     new IllegalFormatString,
