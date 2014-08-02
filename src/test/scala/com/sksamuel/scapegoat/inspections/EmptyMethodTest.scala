@@ -8,7 +8,7 @@ class EmptyMethodTest extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new EmptyMethod)
 
-  "empty empty" - {
+  "empty method" - {
     "should report warning" in {
 
       val code = """object Test {

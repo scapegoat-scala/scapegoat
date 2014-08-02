@@ -4,7 +4,7 @@ import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 trait Inspection {
-  def traverser(global: Global, reporter: Feedback): global.Traverser
+  def traverser(global: Global, feedback: Feedback): global.Traverser
 }
 
 class SuppressAwareInspection(wrapped: Inspection) extends Inspection {
