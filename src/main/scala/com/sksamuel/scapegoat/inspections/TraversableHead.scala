@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
 import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
-class IterableHead extends Inspection {
+class TraversableHead extends Inspection {
 
   override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 

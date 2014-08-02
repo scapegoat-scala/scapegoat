@@ -4,9 +4,9 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class IterableHeadTest extends FreeSpec with Matchers with PluginRunner {
+class TraversableHeadTest extends FreeSpec with Matchers with PluginRunner {
 
-  override val inspections = Seq(new IterableHead)
+  override val inspections = Seq(new TraversableHead)
 
   "option.head use" - {
     "should report warning" in {
