@@ -1,6 +1,15 @@
 package com.sksamuel.scapegoat
 
 import com.sksamuel.scapegoat.inspections._
+import com.sksamuel.scapegoat.inspections.collections._
+import com.sksamuel.scapegoat.inspections.empty._
+import com.sksamuel.scapegoat.inspections.equality.{ComparisonWithSelf, ComparingUnrelatedTypes, ComparingFloatingPointTypes}
+import com.sksamuel.scapegoat.inspections.math.{BrokenOddness, BigDecimalDoubleConstructor, ModOne}
+import com.sksamuel.scapegoat.inspections.option.{OptionGet, OptionSize, EitherGet}
+import com.sksamuel.scapegoat.inspections.string.{InvalidRegex, IncorrectNumberOfArgsToFormat, IllegalFormatString, ArraysToString}
+import com.sksamuel.scapegoat.inspections.style.{ParameterlessMethodReturnsUnit, IncorrectlyNamedExceptions}
+import com.sksamuel.scapegoat.inspections.unneccesary._
+import com.sksamuel.scapegoat.inspections.unsafe._
 
 /** @author Stephen Samuel */
 object ScapegoatConfig extends App {
@@ -49,7 +58,7 @@ object ScapegoatConfig extends App {
     new UnncessaryIf,
     new UnsafeContains,
     new UnusedMethodParameter,
-    new UseExistsNotFindAndIsDefined,
+    new FindIsDefined,
     new VarUse,
     new WhileTrue)
   //  def names: Seq[String] = {
