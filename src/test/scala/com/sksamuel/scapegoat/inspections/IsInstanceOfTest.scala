@@ -8,6 +8,8 @@ class IsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
 
   override val inspections = Seq(new IsInstanceOf)
 
+  List(1).size
+
   "isInstanceOf" - {
     "should report warning" in {
       val code = """class Test {

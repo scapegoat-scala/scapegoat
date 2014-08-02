@@ -5,6 +5,7 @@ import com.sksamuel.scapegoat.inspections._
 /** @author Stephen Samuel */
 object ScapegoatConfig extends App {
   def inspections: Seq[Inspection] = Seq(
+    new ArraysToString,
     new AsInstanceOf,
     new BigDecimalDoubleConstructor,
     new BrokenOddness,
@@ -42,7 +43,7 @@ object ScapegoatConfig extends App {
     new PreferSeqEmpty,
     new PreferSetEmpty,
     new RedundantFinalizer,
-    new ReturnUse,
+    new UnnecessaryReturnUse,
     new TraversableHead,
     new TryGet,
     new UnncessaryIf,

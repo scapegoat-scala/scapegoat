@@ -4,9 +4,9 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class ReturnUseTest extends FreeSpec with Matchers with PluginRunner {
+class UnnecessaryReturnUseTest extends FreeSpec with Matchers with PluginRunner {
 
-  override val inspections = Seq(new ReturnUse)
+  override val inspections = Seq(new UnnecessaryReturnUse)
 
   "return keyword use" - {
     "should report warning" in {
