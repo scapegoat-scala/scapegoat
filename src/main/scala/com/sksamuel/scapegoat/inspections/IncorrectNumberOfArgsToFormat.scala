@@ -8,7 +8,7 @@ import scala.tools.nsc.Global
 class IncorrectNumberOfArgsToFormat extends Inspection {
 
   // format is: %[argument_index$][flags][width][.precision][t]conversion
-  private final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d?(\\.\\d+)?[tT]?[a-zA-Z]".r
+  final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d?(\\.\\d+)?[tT]?[a-zA-Z]".r
 
   override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 

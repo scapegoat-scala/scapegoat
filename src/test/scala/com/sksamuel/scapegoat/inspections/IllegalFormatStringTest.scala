@@ -63,4 +63,26 @@ class IllegalFormatStringTest extends FreeSpec with Matchers with PluginRunner w
       compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
+  "no previous argument for format string" - {
+    "should report warning" in {
+
+      val code = """object Test {
+                      "%<s %s".format("sam", "sam")
+                   } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
+    }
+  }
+  "valid format string" - {
+    "should not report warning" in {
+
+      val code = """object Test {
+                      "%.2f %s".format(14.5, "sammmmmmmmm")
+                   } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+  }
 }
