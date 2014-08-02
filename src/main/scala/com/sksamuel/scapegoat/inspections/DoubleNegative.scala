@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
 /** @author Stephen Samuel */
-class AnyInferred {
+class DoubleNegative {
 
 }
