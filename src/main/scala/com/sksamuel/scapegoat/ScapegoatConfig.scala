@@ -6,6 +6,7 @@ import com.sksamuel.scapegoat.inspections._
 object ScapegoatConfig extends App {
   def inspections: Seq[Inspection] = Seq(
     new AsInstanceOf,
+    new BigDecimalDoubleConstructor,
     new BrokenOddness,
     new CatchNpe,
     new CollectionNamingConfusion,
@@ -48,7 +49,7 @@ object ScapegoatConfig extends App {
     new UnusedMethodParameter,
     new UseExistsNotFindAndIsDefined,
     new VarUse,
-    new WhileLoop)
+    new WhileTrue)
   //  def names: Seq[String] = {
   //    val conf = ConfigFactory.load()
   //    conf.getObject("scapegoat").keySet.asScala.toSeq
