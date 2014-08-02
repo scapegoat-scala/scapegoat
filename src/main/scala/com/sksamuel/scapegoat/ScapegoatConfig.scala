@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparisonWithSelf, ComparingUnrelatedTypes, ComparingFloatingPointTypes}
 import com.sksamuel.scapegoat.inspections.math.{NanComparison, BrokenOddness, BigDecimalDoubleConstructor, ModOne}
 import com.sksamuel.scapegoat.inspections.option.{OptionGet, OptionSize, EitherGet}
-import com.sksamuel.scapegoat.inspections.string.{InvalidRegex, IncorrectNumberOfArgsToFormat, IllegalFormatString, ArraysToString}
+import com.sksamuel.scapegoat.inspections.string._
 import com.sksamuel.scapegoat.inspections.style.{ParameterlessMethodReturnsUnit, IncorrectlyNamedExceptions}
 import com.sksamuel.scapegoat.inspections.unneccesary._
 import com.sksamuel.scapegoat.inspections.unsafe._
@@ -30,6 +30,7 @@ object ScapegoatConfig extends App {
     new EitherGet,
     new EmptyCatchBlock,
     new EmptyIfBlock,
+    new EmptyInterpolatedString,
     new EmptyMethod,
     new EmptySynchronizedBlock,
     new EmptyTryBlock,
