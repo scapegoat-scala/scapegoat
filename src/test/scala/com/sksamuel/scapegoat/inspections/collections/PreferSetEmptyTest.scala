@@ -1,8 +1,7 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import com.sksamuel.scapegoat.inspections.collections.PreferSetEmpty
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class PreferSetEmptyTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {

@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.inspections._
 import com.sksamuel.scapegoat.inspections.collections._
 import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparisonWithSelf, ComparingUnrelatedTypes, ComparingFloatingPointTypes}
-import com.sksamuel.scapegoat.inspections.math.{BrokenOddness, BigDecimalDoubleConstructor, ModOne}
+import com.sksamuel.scapegoat.inspections.math.{NanComparison, BrokenOddness, BigDecimalDoubleConstructor, ModOne}
 import com.sksamuel.scapegoat.inspections.option.{OptionGet, OptionSize, EitherGet}
 import com.sksamuel.scapegoat.inspections.string.{InvalidRegex, IncorrectNumberOfArgsToFormat, IllegalFormatString, ArraysToString}
 import com.sksamuel.scapegoat.inspections.style.{ParameterlessMethodReturnsUnit, IncorrectlyNamedExceptions}
@@ -46,6 +46,7 @@ object ScapegoatConfig extends App {
     new IsInstanceOf,
     new JavaConversionsUse,
     new ModOne,
+    new NanComparison,
     new NullUse,
     new OptionGet,
     new OptionSize,
