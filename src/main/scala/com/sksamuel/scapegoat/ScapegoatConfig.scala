@@ -8,6 +8,7 @@ object ScapegoatConfig extends App {
     new AsInstanceOf,
     new BrokenOddness,
     new CatchNpe,
+    new CollectionNegativeIndex,
     new CollectionPromotionToAny,
     new ComparingFloatingPointTypes,
     new ComparingUnrelatedTypes,
