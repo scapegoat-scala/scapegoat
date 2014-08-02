@@ -8,7 +8,7 @@ import scala.tools.nsc.Global
   *
   *         Inspired by IntelliJ
   */
-class FilterSizeToCount extends Inspection {
+class FilterSize extends Inspection {
 
   override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 

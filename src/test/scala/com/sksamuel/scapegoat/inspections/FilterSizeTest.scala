@@ -4,10 +4,10 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{Matchers, FreeSpec}
 
 /** @author Stephen Samuel */
-class FilterSizeToCountTest
+class FilterSizeTest
   extends FreeSpec with Matchers with PluginRunner {
 
-  override val inspections = Seq(new FilterSizeToCount)
+  override val inspections = Seq(new FilterSize)
 
   "filter then size" - {
     "should report warning" in {
