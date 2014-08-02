@@ -23,10 +23,11 @@ class BigDecimalDoubleConstructorTest
           | val f = 0.1f
           | BigDecimal(f)
           | BigDecimal(100) // ok not a double
+          | new java.math.BigDecimal(0.5d) // check java ones
           |} """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 4
+      compiler.scapegoat.feedback.warnings.size shouldBe 5
     }
   }
 }
