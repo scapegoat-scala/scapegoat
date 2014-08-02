@@ -20,8 +20,7 @@ class JavaConversionsUseTest extends FreeSpec with Matchers with PluginRunner {
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      // one for import 2 for ussage
-      compiler.scapegoat.feedback.warnings.size shouldBe 3
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
 }

@@ -1,8 +1,7 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, Feedback}
+import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
 
-import scala.reflect.runtime._
 import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
@@ -14,12 +13,10 @@ class JavaConversionsUse extends Inspection {
 
     override def traverse(tree: Tree): Unit = {
       tree match {
-        case Select(_, TermName("JavaConversions")) =>
+        case Import(expr, selectors) if expr.symbol.fullName == "scala.collection.JavaConversions" =>
           feedback.warn("Java conversions",
             tree.pos, Levels.Error,
-            "Use of java conversions can lead to unusual implicit behaviour. It is recommended to use JavaConverters: " + tree
-              .toString()
-              .take(400))
+            "Use of java conversions can lead to unusual behaviour. It is recommended to use JavaConverters")
         case _ => super.traverse(tree)
       }
     }
