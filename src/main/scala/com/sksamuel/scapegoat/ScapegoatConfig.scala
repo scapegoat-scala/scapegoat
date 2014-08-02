@@ -44,6 +44,7 @@ object ScapegoatConfig extends App {
     new ReturnUse,
     new TryGet,
     new UnncessaryIf,
+    new UnsafeContains,
     new UnusedMethodParameter,
     new UseExistsNotFindAndIsDefined,
     new VarUse,
