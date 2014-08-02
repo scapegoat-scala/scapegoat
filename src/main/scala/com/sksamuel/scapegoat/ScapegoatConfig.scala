@@ -13,6 +13,7 @@ object ScapegoatConfig extends App {
     new ComparingUnrelatedTypes,
     new ComparisonWithSelf,
     new ConstantIf,
+    new DuplicateMapKey,
     new EitherGet,
     new EmptyCatchBlock,
     new EmptyIfBlock,

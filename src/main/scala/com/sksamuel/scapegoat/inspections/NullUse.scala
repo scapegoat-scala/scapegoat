@@ -8,7 +8,9 @@ import scala.tools.nsc.Global
 class NullUse extends Inspection {
 
   override def traverser(global: Global, feedback: Feedback): global.Traverser = {
+
     import global._
+
     new Traverser {
 
       def containsNull(trees: List[Tree]) = trees exists {
