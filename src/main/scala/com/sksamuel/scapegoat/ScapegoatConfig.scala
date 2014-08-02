@@ -25,6 +25,7 @@ object ScapegoatConfig extends App {
     new IllegalFormatString,
     new IncorrectlyNamedExceptions,
     new IncorrectNumberOfArgsToFormat,
+    new InvalidRegex,
     new IterableHead,
     new JavaConversionsUse,
     new ModOne,
