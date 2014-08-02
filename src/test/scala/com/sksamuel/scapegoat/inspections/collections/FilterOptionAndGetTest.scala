@@ -1,19 +1,19 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{Matchers, FreeSpec}
+import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class FilterSizeTest
+class FilterOptionAndGetTest
   extends FreeSpec with Matchers with PluginRunner {
 
-  override val inspections = Seq(new FilterSize)
+  override val inspections = Seq(new FilterOptionAndGet)
 
   "filter then size" - {
     "should report warning" in {
 
       val code = """object Test {
-                      val list = List(1,2,3,4).filter(_ % 2 == 0).size
+                      val a = List(None, Some("sam")).filter(_.isDefined).map(_.get)
                     } """.stripMargin
 
       compileCodeSnippet(code)

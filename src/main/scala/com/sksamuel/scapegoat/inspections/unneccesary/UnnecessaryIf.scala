@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
 import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
-class UnncessaryIf extends Inspection {
+class UnnecessaryIf extends Inspection {
 
   override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
 
