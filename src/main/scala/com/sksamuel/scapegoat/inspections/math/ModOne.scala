@@ -16,8 +16,7 @@ class ModOne extends Inspection {
 
     override def traverse(tree: Tree): Unit = {
       tree match {
-        case Apply(Select(Apply(Select(_, TermName("$percent")), List(Literal(Constant(1)))),
-        TermName("$eq$eq")), List(Literal(Constant(1)))) =>
+        case Apply(Select(lhs, TermName("$percent")), List(Literal(Constant(1)))) if lhs.tpe <:< typeOf[Int] =>
           feedback.warn("Integer mod one", tree.pos, Levels.Warning,
             "Any expression x % 1 will always return 0. " + tree.toString().take(300))
         case _ => super.traverse(tree)

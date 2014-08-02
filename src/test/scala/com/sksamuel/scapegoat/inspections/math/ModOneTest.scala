@@ -12,9 +12,9 @@ class ModOneTest extends FreeSpec with PluginRunner with Matchers {
     "should report warning" in {
 
       val code = """object Test {
-                   |  var i = 15
-                   |        def odd(a: Int) = a % 1
-                   |        val odd2 = i % 1
+                     var i = 15
+                     def odd(a: Int) = a % 1
+                     val odd2 = i % 1
                     } """.stripMargin
 
       compileCodeSnippet(code)
