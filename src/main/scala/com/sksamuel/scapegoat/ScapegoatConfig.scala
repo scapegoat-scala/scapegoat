@@ -1,7 +1,5 @@
 package com.sksamuel.scapegoat
 
-import java.io.InputStream
-
 import com.sksamuel.scapegoat.inspections._
 import com.sksamuel.scapegoat.inspections.collections._
 import com.sksamuel.scapegoat.inspections.empty._
@@ -16,7 +14,7 @@ import com.sksamuel.scapegoat.inspections.unsafe._
 /** @author Stephen Samuel */
 object ScapegoatConfig extends App {
 
-  private def inspections: Seq[Inspection] = Seq(
+  def inspections: Seq[Inspection] = Seq(
     new ArraysToString,
     new AsInstanceOf,
     new BigDecimalDoubleConstructor,
@@ -70,7 +68,4 @@ object ScapegoatConfig extends App {
     new VarUse,
     new WhileTrue)
 
-  private def load(is: InputStream): Seq[String] = scala.io.Source.fromInputStream(is).getLines().toSeq
-  lazy private val disabled = Option(getClass.getResourceAsStream("/scapegoat/disabled_inspections")).map(load).getOrElse(Nil)
-  def enabledInspections = inspections.filterNot(disabled.contains)
 }

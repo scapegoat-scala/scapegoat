@@ -12,33 +12,41 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val name: String = "scapegoat"
   override val description: String = "scapegoat compiler plugin"
-  val component = new ScapegoatComponent(global, ScapegoatConfig.enabledInspections)
+  val component = new ScapegoatComponent(global, ScapegoatConfig.inspections)
   override val components: List[PluginComponent] = List(component)
 
   override def init(options: List[String], error: String => Unit): Boolean = {
+    options.find(_.startsWith("disabled:")) match {
+      case Some(option) =>
+        component.disabled = option.drop("disabled:".length).split(',')
+      case _ =>
+    }
     options.find(_.startsWith("dataDir:")) match {
       case Some(option) =>
         component.dataDir = new File(option.drop("dataDir:".length))
         true
       case None =>
-        error("-P:scapegoat:dataDir:<pathtodatadir> not specified")
+        error("-P:scapegoat:dataDir not specified")
         false
     }
   }
 
   override val optionsHelp: Option[String] = Some(Seq(
-    "-P:scapegoat:dataDir:<pathtodatadir>    where the report should be written\n"
+    "-P:scapegoat:dataDir:<pathtodatadir>    where the report should be written\n" +
+      "-P:scapegoat:disabled:<listofinspections>    comma separated list of disabled inspections\n"
   ).mkString("\n"))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   extends PluginComponent with TypingTransformers with Transform {
+
   require(inspections != null)
 
   import global._
 
   val feedback = new Feedback()
   var dataDir: File = new File(".")
+  var disabled: Seq[String] = Nil
 
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")
@@ -62,7 +70,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: Tree) = {
       require(inspections != null)
-      inspections.map(new SuppressAwareInspection(_)).foreach(_.traverser(global, feedback).traverse(tree))
+      inspections
+        .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+        .map(new SuppressAwareInspection(_))
+        .foreach(_.traverser(global, feedback).traverse(tree))
       tree
     }
   }
