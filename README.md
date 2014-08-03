@@ -30,7 +30,7 @@ The currently implemented inspections are as follows. An overview list is given,
 | ArraysToString| Checks for explicit toString calls on arrays |
 | AsInstanceOf| Checks for use of `asInstanceOf` |
 | BigDecimalDoubleConstructor| Checks for use of `BigDecimal(double)` which can be unsafe |
-| BrokenOddness| Checks for invalid oddness checks |
+| BrokenOddness| checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
 | CatchNpe| Checks for try blocks that catch null pointer exceptions |
 | CollectionNamingConfusion| Checks for variables that are confusingly named |
 | CollectionNegativeIndex| Checks for negative access on a sequence |
@@ -50,60 +50,42 @@ The currently implemented inspections are as follows. An overview list is given,
 | EmptyTryBlock| |
 | ExpressionAsStatement| |
 | FilterHeadOption| |
-| FilterIsEmpty| |
-| FilterOptionAndGet| |
-| FilterSize| |
-| FindIsDefined| |
+| FilterIsEmpty| `.filter(x => Bool).isEmpty` can be replaced with `!exists(x => Bool)` |
+| FilterOptionAndGet| `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
+| FilterSize| `.filter(x => Bool).size` can be replaced more concisely with with `count(x => Bool)` |
+| FindIsDefined| `find(x => Bool).isDefined` can be replaced with `exist(x => Bool)` |
 | IllegalFormatString| |
 | IncorrectlyNamedExceptions| |
-| IncorrectNumberOfArgsToFormat| |
-| InvalidRegex| |
-| IsInstanceOf| |
-| JavaConversionsUse| |
-| ListSize| Checks for .size on an instance of List. |
-| ModOne| |
-| NanComparison| |
-| NullUse| |
-| OptionGet| |
-| OptionSize| |
-| ParameterlessMethodReturnsUnit| |
-| PreferSeqEmpty| |
-| PreferSetEmpty| |
+| IncorrectNumberOfArgsToFormat| Checks for wrong number of arguments to `String.format` |
+| InvalidRegex| Checks for invalid regex literals |
+| IsInstanceOf| Checks for use of `isInstanceOf` |
+| JavaConversionsUse| Checks for use of implicit Java conversions |
+| ListSize| Checks for `List.size` which is O(n). |
+| ModOne| Checks for `x % 1` which will always return `1` |
+| NanComparison| Checks for `x == Double.NaN` which will always fail |
+| NullUse| Checks for use of `null` |
+| OptionGet| Checks for `Option.get` |
+| OptionSize| Checks for `Option.size` |
+| ParameterlessMethodReturnsUnit| Checks for `def foo : Unit` |
+| PreferSeqEmpty| Checks for Seq() when could use Seq.empty |
+| PreferSetEmpty| Checks for Set() when could use Set.empty |
 | ProductWithSerializableInferred| |
 | RedundantFinalizer| Checks for empty finalizers. |
 | TraversableHead| |
-| TryGet| |
-| UnnecessaryIf| |
-| UnnecessaryReturnUse| |
-| UnsafeContains| |
-| UnusedMethodParameter| |
-| UseSqrt| |
-| VarUse| |
+| TryGet| Checks for use of `Try.get` |
+| UnnecessaryIf| Checks for code like `if (expr) true else false` |
+| UnnecessaryReturnUse| Checks for use of `return` keyword in blocks |
+| UnsafeContains| Checks for Tra |
+| UnusedMethodParameter| Checks for unused method parameters |
+| UseSqrt| Checks for use of Math.pow for calculating sqrt |
+| VarUse| Checks for use of `var` |
 | WhileTrue| Checks for code that uses a `while(true)` or `do { } while(true)` block. |
-| ZeroNumerator
-| As instance of | description needed |
-| Blocking actor | check for use Await.result and Await.ready in actor |
-| Broken oddness | checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
-| Catching NPE | checks for case clause catching NPE |
-| Collection promotion to any | description needed |
-| Comparing floating point types | description needed |
-| Comparing unrelated types | description needed |
-| Comparison with self | description needed |
-| Constant if | checks for code where the expression on conditionals compiles to a constant |
-| Either get | description needed |
-| Empty Catch Block | description needed |
-| Empty If Block | description needed |
-| Empty Synchronized Block | description needed |
-| Empty Method | description needed |
-| Empty Try Block | description needed |
-| Expresson as statement | executing an expression as a statement could be a mistake |
-| filter.size instead of count | .filter(x => Bool).size can be replaced more concisely with with count(x => Bool) |
-| Iterable.head | checks for unsafe use of iterable.head |
-| Java conversions use | description needed |
-| Mod one | checks for redundant x % 1 which always returns 0 |
-| Null use | checks for use of null |
-| Option Get | checks for improper use of Option.get |
-| Parameterless method returns unit | checks for procedures (methods returning unit) that don't declare a params list |
+| ZeroNumerator | Checks for
+
+
+
+|  |  |
+
 | Prefer set empty | checks for use of Set.empty rather than Set() |
 | Prefer seq empty | checks for use of Seq.empty rather than Seq() |
 | Redundant finalizer | checks for empty finalizers |
