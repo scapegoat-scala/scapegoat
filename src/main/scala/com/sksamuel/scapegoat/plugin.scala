@@ -12,7 +12,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val name: String = "scapegoat"
   override val description: String = "scapegoat compiler plugin"
-  val component = new ScapegoatComponent(global, ScapegoatConfig.inspections)
+  val component = new ScapegoatComponent(global, ScapegoatConfig.enabledInspections)
   override val components: List[PluginComponent] = List(component)
 
   override def init(options: List[String], error: String => Unit): Boolean = {

@@ -1,19 +1,22 @@
 package com.sksamuel.scapegoat
 
+import java.io.InputStream
+
 import com.sksamuel.scapegoat.inspections._
 import com.sksamuel.scapegoat.inspections.collections._
 import com.sksamuel.scapegoat.inspections.empty._
-import com.sksamuel.scapegoat.inspections.equality.{ComparisonWithSelf, ComparingUnrelatedTypes, ComparingFloatingPointTypes}
+import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf}
 import com.sksamuel.scapegoat.inspections.math._
-import com.sksamuel.scapegoat.inspections.option.{OptionGet, OptionSize, EitherGet}
+import com.sksamuel.scapegoat.inspections.option.{EitherGet, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
-import com.sksamuel.scapegoat.inspections.style.{ParameterlessMethodReturnsUnit, IncorrectlyNamedExceptions}
+import com.sksamuel.scapegoat.inspections.style.{IncorrectlyNamedExceptions, ParameterlessMethodReturnsUnit}
 import com.sksamuel.scapegoat.inspections.unneccesary._
 import com.sksamuel.scapegoat.inspections.unsafe._
 
 /** @author Stephen Samuel */
 object ScapegoatConfig extends App {
-  def inspections: Seq[Inspection] = Seq(
+
+  private def inspections: Seq[Inspection] = Seq(
     new ArraysToString,
     new AsInstanceOf,
     new BigDecimalDoubleConstructor,
@@ -66,10 +69,8 @@ object ScapegoatConfig extends App {
     new UseSqrt,
     new VarUse,
     new WhileTrue)
-  //  def names: Seq[String] = {
-  //    val conf = ConfigFactory.load()
-  //    conf.getObject("scapegoat").keySet.asScala.toSeq
-  //  }
-  //  def instance(name: String): Inspection = Class.forName(name).newInstance.asInstanceOf[Inspection]
-  //  def inspections: Seq[Inspection] = names.map(instance)
+
+  private def load(is: InputStream): Seq[String] = scala.io.Source.fromInputStream(is).getLines().toSeq
+  lazy private val disabled = Option(getClass.getResourceAsStream("/disabled_inspections")).map(load).getOrElse(Nil)
+  def enabledInspections = inspections.filterNot(disabled.contains)
 }
