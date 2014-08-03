@@ -19,13 +19,12 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
                       "sammy" == "bobby" // same type
                       a == b // superclass
                       a == "sammy" // warning 2
-                      Some("sam") == None // warning 3
                       Some("sam") == Option("laura") // ok
-                      Nil == Set.empty // warning 4
+                      Nil == Set.empty // warning 3
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 4
+      compiler.scapegoat.feedback.warnings.size shouldBe 3
     }
   }
 }
