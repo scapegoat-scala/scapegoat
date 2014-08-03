@@ -33,23 +33,27 @@ object HtmlReportWriter {
       |      }
       |
       |      .title {
-      |      	color: #717171;
+      |      	color: #616161;
       |      	font-size: 16px;
       |      }
       |
       |      .source {
       |        float: right;
-      |      	font-style: italic;
+      |      	 font-style: italic;
       |      }
       |
       |      .snippet {
       |        padding-top: 8px;
-      |        color: #474747;
+      |        color: #0C0C0C;
       |        font-weight: 300;
+      |        font-size: 12px;
       |      }
       |
       |      .inspection {
+      |        padding-left: 10px;
       |        font-style:italic;
+      |        color: #969696;
+      |        font-size: 12px;
       |      }
       |
       |
