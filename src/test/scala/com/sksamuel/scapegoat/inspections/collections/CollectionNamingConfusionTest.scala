@@ -20,7 +20,7 @@ class CollectionNamingConfusionTest extends FreeSpec with Matchers with PluginRu
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 3
+      compiler.scapegoat.feedback.warnings.size shouldBe 6
     }
   }
 }

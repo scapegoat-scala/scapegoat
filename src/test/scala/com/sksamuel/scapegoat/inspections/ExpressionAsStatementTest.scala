@@ -2,10 +2,10 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.ExpressionAsStatement
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class ExpressionAsStatementTest extends FreeSpec with Matchers with PluginRunner {
+class ExpressionAsStatementTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new ExpressionAsStatement)
 
@@ -20,25 +20,18 @@ class ExpressionAsStatementTest extends FreeSpec with Matchers with PluginRunner
                4 // nowarning
              }
              def a = true
-
-             {
-               "nested blocks" // 4 warnings
-             }
-
-             new Some("b") // 5 warnings
              val e = new Some("b")
            }
            class Test2 {
              val b = false
              lazy val c = "boo"
              var d = b
-             isInstanceOf[Test2] // 6 warnings
+             isInstanceOf[Test2] // 5 warnings
              def foo : Boolean = {
-               new String("sammy") // 7 warnings
                true // nowarning
              }
              try {
-                hashCode() // 8 warnings
+                hashCode() // 6 warnings
                 println("hello")
              } catch {
                case e : Exception =>
@@ -46,7 +39,7 @@ class ExpressionAsStatementTest extends FreeSpec with Matchers with PluginRunner
            } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 8
+      compiler.scapegoat.feedback.warnings.size shouldBe 5
     }
   }
 
