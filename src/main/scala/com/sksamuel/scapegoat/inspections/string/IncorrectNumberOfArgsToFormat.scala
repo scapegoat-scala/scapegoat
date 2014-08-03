@@ -19,7 +19,7 @@ class IncorrectNumberOfArgsToFormat extends Inspection {
           TermName("format")), args) =>
             val argCount = argRegex.findAllIn(format.toString).matchData.size
             if (argCount > args.size)
-              context.warn("Incorrect number of args for format", tree.pos, Levels.Error, tree.toString().take(500))
+              context.warn("Incorrect number of args for format", tree.pos, Levels.Error, tree.toString().take(500), IncorrectNumberOfArgsToFormat.this)
           case _ => continue(tree)
         }
       }

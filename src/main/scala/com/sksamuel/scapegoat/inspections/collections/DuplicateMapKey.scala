@@ -21,7 +21,7 @@ class DuplicateMapKey extends Inspection {
 
       private def warn(tree: Tree) = {
         context.warn("Duplicated map key", tree.pos, Levels.Warning,
-          "A map key is overwriten by a later entry: " + tree.toString().take(100))
+          "A map key is overwriten by a later entry: " + tree.toString().take(100), DuplicateMapKey.this)
       }
 
       override def inspect(tree: Tree): Unit = {

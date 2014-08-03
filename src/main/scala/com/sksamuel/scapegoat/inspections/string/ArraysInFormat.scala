@@ -15,7 +15,11 @@ class ArraysInFormat extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("format")), args) if containsArrayType(args) =>
-            context.warn("Incorrect number of args for format", tree.pos, Levels.Error, tree.toString().take(500))
+            context.warn("Incorrect number of args for format",
+              tree.pos,
+              Levels.Error,
+              tree.toString().take(500),
+              ArraysInFormat.this)
           case _ => continue(tree)
         }
       }

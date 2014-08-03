@@ -14,7 +14,7 @@ class TraversableHead extends Inspection {
         tree match {
           case Select(left, TermName("head")) =>
             if (left.tpe <:< typeOf[Traversable[_]])
-              context.warn("Use of Traversable.head", tree.pos, Levels.Error, tree.toString().take(500))
+              context.warn("Use of Traversable.head", tree.pos, Levels.Error, tree.toString().take(500), TraversableHead.this)
           case _ => continue(tree)
         }
       }

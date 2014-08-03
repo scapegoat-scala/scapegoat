@@ -14,7 +14,8 @@ class FindIsDefined extends Inspection {
         tree match {
           case Select(Apply(Select(_, TermName("find")), _), TermName("isDefined")) =>
             context.warn("use exists() not find().isDefined()", tree.pos, Levels.Info,
-              ".find(x => Bool).isDefined can be replaced with exists(x => Bool): " + tree.toString().take(500))
+              ".find(x => Bool).isDefined can be replaced with exists(x => Bool): " + tree.toString().take(500),
+              FindIsDefined.this)
           case _ => continue(tree)
         }
       }

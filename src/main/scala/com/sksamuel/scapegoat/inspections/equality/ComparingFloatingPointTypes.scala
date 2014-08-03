@@ -18,7 +18,7 @@ class ComparingFloatingPointTypes extends Inspection {
             val leftFloating = leftType == "scala.Double" || leftType == "scala.Float"
             val rightFloating = rightType == "scala.Double" || rightType == "scala.Float"
             if (leftFloating && rightFloating)
-              context.warn("Floating type comparison", tree.pos, Levels.Error)
+              context.warn("Floating type comparison", tree.pos, Levels.Error, ComparingFloatingPointTypes.this)
           case _ => continue(tree)
         }
       }

@@ -19,10 +19,14 @@ class CollectionNamingConfusion extends Inspection {
         tree match {
           case ValDef(_, TermName(name), tpt, _) if isSet(tpt.tpe) && isNamedList(name) =>
             context.warn("A Set is named list", tree.pos, Levels.Info,
-              "An instanceof Set is confusingly referred to by a variable called/containing list: " + tree.toString().take(300))
+              "An instanceof Set is confusingly referred to by a variable called/containing list: " +
+                tree.toString().take(300),
+              CollectionNamingConfusion.this)
           case v@ValDef(_, TermName(name), tpt, _) if isList(tpt.tpe) && isNamedSet(name) =>
             context.warn("A List is named set", tree.pos, Levels.Info,
-              "An instanceof List is confusingly referred to by a variable called/containing set: " + tree.toString().take(300))
+              "An instanceof List is confusingly referred to by a variable called/containing set: " +
+                tree.toString().take(300),
+              CollectionNamingConfusion.this)
           case _ => continue(tree)
         }
       }

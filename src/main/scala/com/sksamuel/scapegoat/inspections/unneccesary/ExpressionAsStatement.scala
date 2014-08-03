@@ -17,7 +17,7 @@ class ExpressionAsStatement extends Inspection {
           case stmt if stmt.isDef =>
           case stmt if stmt.tpe != null && stmt.tpe.toString != "Unit" =>
             context.warn("Expression as statement", stmt.pos, Levels.Warning,
-              "Expression as statement at " + stmt.toString().take(100))
+              "Expression as statement at " + stmt.toString().take(100), ExpressionAsStatement.this)
           case _ =>
         }
       }

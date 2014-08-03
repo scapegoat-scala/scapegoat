@@ -16,7 +16,7 @@ class ComparingUnrelatedTypes extends Inspection {
             val left = rootMirror.staticClass(l.tpe.erasure.typeSymbol.fullName).toType.erasure
             val right = rootMirror.staticClass(r.head.tpe.erasure.typeSymbol.fullName).toType.erasure
             if (!(left <:< right || right <:< left)) {
-              context.warn("Comparing unrelated types", tree.pos, Levels.Error, tree.toString().take(500))
+              context.warn("Comparing unrelated types", tree.pos, Levels.Error, tree.toString().take(500), ComparingUnrelatedTypes.this)
             }
           case _ => continue(tree)
         }

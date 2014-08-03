@@ -13,20 +13,21 @@ class Feedback {
   def warns = warnings(Levels.Warning)
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
-  def warn(text: String, pos: Position, level: Level): Unit = {
-    warn(text, pos, level, None)
+  def warn(text: String, pos: Position, level: Level, inspection: Inspection): Unit = {
+    warn(text, pos, level, None, inspection)
   }
 
-  def warn(text: String, pos: Position, level: Level, snippet: String): Unit = {
-    warn(text, pos, level, Option(snippet))
+  def warn(text: String, pos: Position, level: Level, snippet: String, inspection: Inspection): Unit = {
+    warn(text, pos, level, Option(snippet), inspection)
   }
 
   private def warn(text: String,
                    pos: Position,
                    level: Level,
-                   snippet: Option[String]): Unit = {
+                   snippet: Option[String],
+                   inspection: Inspection): Unit = {
     val sourceFile = normalizeSourceFile(pos.source.file.path)
-    warnings.append(Warning(text, pos.line, level, sourceFile, snippet))
+    warnings.append(Warning(text, pos.line, level, sourceFile, snippet, inspection.getClass.getCanonicalName))
   }
 
   private def normalizeSourceFile(sourceFile: String): String = {
@@ -36,4 +37,9 @@ class Feedback {
   }
 }
 
-case class Warning(text: String, line: Int, level: Level, sourceFile: String, snippet: Option[String])
+case class Warning(text: String,
+                   line: Int,
+                   level: Level,
+                   sourceFile: String,
+                   snippet: Option[String],
+                   inspection: String)

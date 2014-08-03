@@ -16,11 +16,11 @@ class WhileTrue extends Inspection {
           case LabelDef(name, _, If(cond, _, _))
             if isWhile(name) && isConstantCondition(cond) =>
             context.warn("While true loop", tree.pos, Levels.Warning,
-              "A while true loop is unlikely to be meant for production:" + tree.toString().take(500))
+              "A while true loop is unlikely to be meant for production:" + tree.toString().take(500), WhileTrue.this)
           case LabelDef(name, _, Block(_, If(cond, _, _)))
             if isWhile(name) && isConstantCondition(cond) =>
             context.warn("While true loop", tree.pos, Levels.Warning,
-              "A do while true loop is unlikely to be meant for production:" + tree.toString().take(500))
+              "A do while true loop is unlikely to be meant for production:" + tree.toString().take(500), WhileTrue.this)
           case _ => continue(tree)
         }
       }

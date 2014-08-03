@@ -14,7 +14,7 @@ class FilterHeadOption extends Inspection {
         tree match {
           case Select(Apply(Select(_, TermName("filter")), _), TermName("headOption")) =>
             context.warn("filter().headOption instead of find()", tree.pos, Levels.Info,
-              ".filter(x => Bool).headOption can be replaced with find(x => Bool): " + tree.toString().take(500))
+              ".filter(x => Bool).headOption can be replaced with find(x => Bool): " + tree.toString().take(500), FilterHeadOption.this)
           case _ => continue(tree)
         }
       }

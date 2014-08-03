@@ -21,10 +21,10 @@ class IncorrectlyNamedExceptions extends Inspection {
             (isNamedException, isException) match {
               case (true, false) =>
                 context.warn("Class named exception does not derive from Exception",
-                  tree.pos, Levels.Error, tree.toString().take(500))
+                  tree.pos, Levels.Error, tree.toString().take(500), IncorrectlyNamedExceptions.this)
               case (false, true) =>
                 context.warn("Class derived from Exception is not named *Exception",
-                  tree.pos, Levels.Error, tree.toString().take(500))
+                  tree.pos, Levels.Error, tree.toString().take(500), IncorrectlyNamedExceptions.this)
               case _ =>
             }
           case _ =>

@@ -15,7 +15,8 @@ class UseSqrt extends Inspection {
           case Apply(Select(pack, TermName("pow")), List(_, Literal(Constant(0.5d))))
             if pack.toString() == "java.this.lang.Math" =>
             context.warn("Use Math.sqrt", tree.pos, Levels.Info,
-              "Math.sqrt is clearer and more performance than Math.pow(x, 0.5)")
+              "Math.sqrt is clearer and more performance than Math.pow(x, 0.5)",
+              UseSqrt.this)
           case _ => continue(tree)
         }
       }

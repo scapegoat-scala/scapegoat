@@ -17,15 +17,15 @@ class UnnecessaryIf extends Inspection {
               tree.pos,
               Levels.Info,
               "If comparision is not needed. Use the condition. Eg, instead of if (a ==b) true else false, simply use a == b. : " + tree
-                .toString()
-                .take(500))
+                .toString().take(500),
+              UnnecessaryIf.this)
           case If(cond, Literal(Constant(false)), Literal(Constant(true))) =>
             context.warn("Unncessary if condition.",
               tree.pos,
               Levels.Info,
               "If comparision is not needed. Use the negated condition. Eg, instead of if (a ==b) false else true, simply use !(a == b). : " + tree
-                .toString()
-                .take(500))
+                .toString().take(500),
+              UnnecessaryIf.this)
           case _ => continue(tree)
         }
       }

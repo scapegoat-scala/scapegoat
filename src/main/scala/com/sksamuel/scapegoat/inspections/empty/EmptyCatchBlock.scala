@@ -12,8 +12,8 @@ class EmptyCatchBlock extends Inspection {
 
       def checkCatch(cd: CaseDef): Unit = {
         if (cd.body.toString == "()")
-          context.warn("Empty finalizer", cd.pos, Levels.Warning,
-            "Empty finalizer near " + cd.toString().take(100))
+          context.warn("Empty catch block", cd.pos, Levels.Warning,
+            "Empty catch block " + cd.toString().take(100), EmptyCatchBlock.this)
       }
 
       def checkCatches(defs: List[CaseDef]) = defs.foreach(cd => checkCatch(cd))

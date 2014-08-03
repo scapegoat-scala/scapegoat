@@ -13,7 +13,11 @@ class EmptySynchronizedBlock extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(_, TermName("synchronized")), _), List(Literal(Constant(())))) =>
-            context.warn("Empty synchronized block", tree.pos, Levels.Warning, tree.toString().take(500))
+            context.warn("Empty synchronized block",
+              tree.pos,
+              Levels.Warning,
+              tree.toString().take(500),
+              EmptySynchronizedBlock.this)
           case _ => continue(tree)
         }
       }

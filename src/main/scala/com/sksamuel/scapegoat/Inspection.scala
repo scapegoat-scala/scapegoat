@@ -14,8 +14,12 @@ abstract class Inspector(val context: InspectionContext) {
 
 case class InspectionContext(global: Global, feedback: Feedback) {
 
-  def warn(text: String, pos: Position, level: Level) = feedback.warn(text, pos, level)
-  def warn(text: String, pos: Position, level: Level, snippet: String) = feedback.warn(text, pos, level, snippet)
+  def warn(text: String, pos: Position, level: Level, inspection: Inspection) = {
+    feedback.warn(text, pos, level, inspection)
+  }
+  def warn(text: String, pos: Position, level: Level, snippet: String, inspection: Inspection) = {
+    feedback.warn(text, pos, level, snippet, inspection)
+  }
 
   trait Traverser extends global.Traverser {
 

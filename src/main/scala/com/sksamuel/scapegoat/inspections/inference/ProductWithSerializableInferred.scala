@@ -28,7 +28,8 @@ class ProductWithSerializableInferred extends Inspection {
           case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
           case ValDef(mods, name, tpt, rhs) if isProductWithSerializable(tpt.tpe) =>
             context.warn("Product with Serializable inferred", tree.pos, Levels.Warning,
-              "It is unlikely that this was your target type: " + tree.toString().take(300))
+              "It is unlikely that this was your target type: " + tree.toString().take(300),
+            ProductWithSerializableInferred.this)
           case _ => continue(tree)
         }
       }

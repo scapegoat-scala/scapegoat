@@ -17,7 +17,7 @@ class FilterSize extends Inspection {
         tree match {
           case Select(Apply(Select(_, TermName("filter")), _), TermName("size")) =>
             context.warn("filter().size() instead of count()", tree.pos, Levels.Info,
-              ".filter(x => Bool).size can be replaced with count(x => Bool): " + tree.toString().take(500))
+              ".filter(x => Bool).size can be replaced with count(x => Bool): " + tree.toString().take(500), FilterSize.this)
           case _ => continue(tree)
         }
       }

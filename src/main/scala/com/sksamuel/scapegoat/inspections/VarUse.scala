@@ -14,7 +14,7 @@ class VarUse extends Inspection {
         tree match {
           case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.SYNTHETIC) =>
           case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
-            context.warn("Use of var", tree.pos, Levels.Warning, "var used: " + tree.toString().take(300))
+            context.warn("Use of var", tree.pos, Levels.Warning, "var used: " + tree.toString().take(300), VarUse.this)
           case _ => continue(tree)
         }
       }

@@ -13,7 +13,7 @@ class EmptyTryBlock extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Try(Literal(Constant(())), _, _) =>
-            context.warn("Empty try block", tree.pos, Levels.Warning, tree.toString().take(500))
+            context.warn("Empty try block", tree.pos, Levels.Warning, tree.toString().take(500), EmptyTryBlock.this)
           case _ => continue(tree)
         }
       }

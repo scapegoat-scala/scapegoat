@@ -36,7 +36,8 @@ class NanComparison extends Inspection {
 
       private def warn(tree: Tree) {
         context.warn("Nan comparision", tree.pos, Levels.Error,
-          "NaN comparision will always fail. Use value.isNan instead.")
+          "NaN comparision will always fail. Use value.isNan instead.",
+          NanComparison.this)
       }
     }
   }

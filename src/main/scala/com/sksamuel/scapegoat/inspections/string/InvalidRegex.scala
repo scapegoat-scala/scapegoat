@@ -19,7 +19,7 @@ class InvalidRegex extends Inspection {
               regex.toString.r
             } catch {
               case e: PatternSyntaxException =>
-                context.warn("Invalid regex", tree.pos, Levels.Info, e.getMessage)
+                context.warn("Invalid regex", tree.pos, Levels.Info, e.getMessage, InvalidRegex.this)
             }
           case _ => continue(tree)
         }

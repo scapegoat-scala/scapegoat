@@ -13,7 +13,12 @@ class EmptyInterpolatedString extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(lhs, TermName("apply")), List(string)), TermName("s")), Nil) =>
-            context.warn("Empty interpolated string", tree.pos, Levels.Warning, tree.toString().take(500))
+            context
+              .warn("Empty interpolated string",
+              tree.pos,
+              Levels.Warning,
+              tree.toString().take(500),
+              EmptyInterpolatedString.this)
           case _ => continue(tree)
         }
       }

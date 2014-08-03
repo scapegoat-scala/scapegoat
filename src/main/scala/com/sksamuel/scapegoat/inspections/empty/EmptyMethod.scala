@@ -13,7 +13,8 @@ class EmptyMethod extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(mods, _, _, _, _, Literal(Constant(()))) if !mods.hasFlag(Flag.SYNTHETIC) =>
-            context.warn("Empty method", tree.pos, Levels.Warning, "Empty if statement " + tree.toString().take(500))
+            context.warn("Empty method", tree.pos, Levels.Warning, "Empty if statement " + tree.toString().take(500),
+              EmptyMethod.this)
           case _ => continue(tree)
         }
       }

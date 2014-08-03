@@ -14,7 +14,7 @@ class FilterIsEmpty extends Inspection {
         tree match {
           case Select(Apply(Select(_, TermName("filter")), _), TermName("isEmpty")) =>
             context.warn("filter().isEmpty instead of !exists()", tree.pos, Levels.Info,
-              ".filter(x => Bool).isEmpty can be replaced with !exists(x => Bool): " + tree.toString().take(500))
+              ".filter(x => Bool).isEmpty can be replaced with !exists(x => Bool): " + tree.toString().take(500), FilterIsEmpty.this)
           case _ => continue(tree)
         }
       }

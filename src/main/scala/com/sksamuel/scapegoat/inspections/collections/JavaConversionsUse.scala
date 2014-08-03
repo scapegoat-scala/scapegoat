@@ -14,7 +14,8 @@ class JavaConversionsUse extends Inspection {
         tree match {
           case Import(expr, selectors) if expr.symbol.fullName == "scala.collection.JavaConversions" =>
             context.warn("Java conversions", tree.pos, Levels.Warning,
-              "Use of java conversions can lead to unusual behaviour. It is recommended to use JavaConverters")
+              "Use of java conversions can lead to unusual behaviour. It is recommended to use JavaConverters",
+              JavaConversionsUse.this)
           case _ => continue(tree)
         }
       }

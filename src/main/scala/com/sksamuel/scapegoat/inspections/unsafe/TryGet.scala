@@ -14,7 +14,7 @@ class TryGet extends Inspection {
         tree match {
           case Select(left, TermName("get")) =>
             if (left.tpe.typeSymbol.fullName.toString == "scala.util.Try")
-              context.warn("Use of Try.get", tree.pos, Levels.Error, tree.toString().take(500))
+              context.warn("Use of Try.get", tree.pos, Levels.Error, tree.toString().take(500), TryGet.this)
           case _ => continue(tree)
         }
       }

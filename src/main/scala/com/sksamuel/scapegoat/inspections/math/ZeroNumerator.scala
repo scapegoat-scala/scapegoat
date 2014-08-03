@@ -16,7 +16,11 @@ class ZeroNumerator extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("$div")), args) if isFloatingPointType(lhs) || isIntegralType(lhs) =>
-            context.warn("Zero numerator", tree.pos, Levels.Warning, "Dividing zero by any number will always return zero")
+            context.warn("Zero numerator",
+              tree.pos,
+              Levels.Warning,
+              "Dividing zero by any number will always return zero",
+              ZeroNumerator.this)
           case _ => continue(tree)
         }
       }

@@ -17,7 +17,7 @@ class RedundantFinalizer extends Inspection {
         tree match {
           case dd@DefDef(mods, name, _, _, tpt, _)
             if mods.hasFlag(Flag.OVERRIDE) && name.toString == "finalize" && tpt.toString() == "Unit" =>
-            context.warn("Redundant finalizer", tree.pos, Levels.Warning, tree.toString().take(500))
+            context.warn("Redundant finalizer", tree.pos, Levels.Warning, tree.toString().take(500), RedundantFinalizer.this)
           case _ => continue(tree)
         }
       }

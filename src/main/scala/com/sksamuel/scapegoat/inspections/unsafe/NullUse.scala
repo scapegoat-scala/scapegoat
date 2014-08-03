@@ -20,9 +20,9 @@ class NullUse extends Inspection {
           case Apply(_, args) =>
             if (containsNull(args))
               context
-                .warn("null use", tree.pos, Levels.Error, "null as method argument: " + tree.toString().take(300))
+                .warn("null use", tree.pos, Levels.Error, "null as method argument: " + tree.toString().take(300), NullUse.this)
           case Literal(Constant(null)) =>
-            context.warn("null use", tree.pos, Levels.Error, "null used on line " + tree.pos.line)
+            context.warn("null use", tree.pos, Levels.Error, "null used on line " + tree.pos.line, NullUse.this)
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
           case _ => continue(tree)
         }

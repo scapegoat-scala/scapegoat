@@ -13,7 +13,11 @@ class EmptyIfBlock extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case If(_, Literal(Constant(())), _) =>
-            context.warn("Empty if statement", tree.pos, level = Levels.Warning, tree.toString().take(500))
+            context.warn("Empty if statement",
+              tree.pos,
+              Levels.Warning,
+              tree.toString().take(500),
+              EmptyIfBlock.this)
           case _ => continue(tree)
         }
       }

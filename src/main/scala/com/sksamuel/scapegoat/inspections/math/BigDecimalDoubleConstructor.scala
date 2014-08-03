@@ -19,7 +19,8 @@ class BigDecimalDoubleConstructor extends Inspection {
         context.warn("Big decimal double constructor", tree.pos, Levels.Warning,
           "The results of this constructor can be somewhat unpredictable. " +
             "Eg, writing new BigDecimal(0.1) in Java creates a BigDecimal which is actually equal to 0.1000000000000000055511151231257827021181583404541015625. " +
-            "This is because 0.1 cannot be represented exactly as a double. " + tree.toString().take(100))
+            "This is because 0.1 cannot be represented exactly as a double. " + tree.toString().take(100),
+        BigDecimalDoubleConstructor.this)
       }
 
       override def inspect(tree: Tree): Unit = {

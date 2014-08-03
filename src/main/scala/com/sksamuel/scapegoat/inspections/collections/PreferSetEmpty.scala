@@ -15,7 +15,7 @@ class PreferSetEmpty extends Inspection {
           case TypeApply(Select(Select(_, TermName("Set")), TermName("apply")), _) =>
             context.warn("Prefer Set.empty", tree.pos, Levels.Info,
               "Set[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " +
-                tree.toString().take(500))
+                tree.toString().take(500), PreferSetEmpty.this)
           case _ => continue(tree)
         }
       }

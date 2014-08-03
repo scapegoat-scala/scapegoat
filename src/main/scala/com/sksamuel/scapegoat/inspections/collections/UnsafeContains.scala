@@ -14,7 +14,7 @@ class UnsafeContains extends Inspection {
         tree match {
           case Apply(TypeApply(Select(lhs, TermName("contains")), List(tpe)), List(arg)) =>
             if (lhs.tpe <:< typeOf[Seq[_]] && !(arg.tpe <:< lhs.tpe.typeArgs.head)) {
-              context.warn("Unsafe contains", tree.pos, Levels.Error, tree.toString().take(300))
+              context.warn("Unsafe contains", tree.pos, Levels.Error, tree.toString().take(300), UnsafeContains.this)
             }
           case _ => continue(tree)
         }

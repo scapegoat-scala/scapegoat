@@ -29,7 +29,8 @@ class IllegalFormatString extends Inspection {
                 context.warn("Illegal format string",
                   tree.pos,
                   Levels.Error,
-                  "A format string contains an illegal syntax: " + e.getMessage)
+                  "A format string contains an illegal syntax: " + e.getMessage,
+                  IllegalFormatString.this)
               case _ =>
             }
           case _ => continue(tree)
