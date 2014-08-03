@@ -18,7 +18,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override def init(options: List[String], error: String => Unit): Boolean = {
     options.find(_.startsWith("disabled:")) match {
       case Some(option) =>
-        component.disabled = option.drop("disabled:".length).split(',')
+        component.disabled = option.drop("disabled:".length).split(':')
       case _ =>
     }
     options.find(_.startsWith("dataDir:")) match {

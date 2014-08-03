@@ -48,6 +48,10 @@ object HtmlReportWriter {
       |        font-weight: 300;
       |      }
       |
+      |      .inspection {
+      |        font-style:italic;
+      |      }
+      |
       |
     """.stripMargin
 
@@ -85,7 +89,7 @@ object HtmlReportWriter {
             case Levels.Info => <span class="label label-info">Info</span>
             case Levels.Warning => <span class="label label-warning">Warning</span>
             case Levels.Error => <span class="label label-danger">Error</span>
-          }}&nbsp;{warning.text}
+          }}&nbsp;{warning.text}&nbsp;<span class="inspection">{warning.inspection}</span>
           </div>{warning.snippet match {
           case None =>
           case Some(snippet) =>
