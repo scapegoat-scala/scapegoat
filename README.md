@@ -24,10 +24,65 @@ Here is a screen shot of the type of report scapegoat generates.
 
 ### Inspections
 
-The currently implemented inspections are as follows. Most of the descriptions need to be completed, but they should be self explanatary anyway from the name.
+The currently implemented inspections are as follows. An overview list is given, followed by a more detailed description of each inspection after the list.
 
 |Name|Description|
 |----|-----------|
+| ArraysInFormat| |
+| ArraysToString| |
+| AsInstanceOf| |
+| BigDecimalDoubleConstructor| |
+| BrokenOddness| |
+| CatchNpe| |
+| CollectionNamingConfusion| |
+| CollectionNegativeIndex| |
+| CollectionPromotionToAny| |
+| ComparingFloatingPointTypes| |
+| ComparingUnrelatedTypes| |
+| ComparisonWithSelf| |
+| ConstantIf| |
+| DivideByOne| |
+| DuplicateMapKey| |
+| EitherGet| |
+| EmptyCatchBlock| |
+| EmptyIfBlock| |
+| EmptyInterpolatedString| |
+| EmptyMethod| |
+| EmptySynchronizedBlock| |
+| EmptyTryBlock| |
+| ExpressionAsStatement| |
+| FilterHeadOption| |
+| FilterIsEmpty| |
+| FilterOptionAndGet| |
+| FilterSize| |
+| FindIsDefined| |
+| IllegalFormatString| |
+| IncorrectlyNamedExceptions| |
+| IncorrectNumberOfArgsToFormat| |
+| InvalidRegex| |
+| IsInstanceOf| |
+| JavaConversionsUse| |
+| ListSize| |
+| ModOne| |
+| NanComparison| |
+| NullUse| |
+| OptionGet| |
+| OptionSize| |
+| ParameterlessMethodReturnsUnit| |
+| PreferSeqEmpty| |
+| PreferSetEmpty| |
+| ProductWithSerializableInferred| |
+| RedundantFinalizer| |
+| TraversableHead| |
+| TryGet| |
+| UnnecessaryIf| |
+| UnnecessaryReturnUse| |
+| UnsafeContains| |
+| UnusedMethodParameter| |
+| UseSqrt| |
+| VarUse| |
+| WhileTrue| |
+| ZeroNumerator
 | As instance of | description needed |
 | Blocking actor | check for use Await.result and Await.ready in actor |
 | Broken oddness | checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
