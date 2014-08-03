@@ -61,8 +61,38 @@ The currently implemented inspections are as follows. Most of the descriptions n
 
 ### Inspections
 
-#### While true
+##### Arrays to string
 
-This inspections checks for code that uses a `while(true)` or `do { } while(true)` block.
+Checks for explicit toString calls on arrays. Since toString on an array does not perform a deep toString, like say scala's List, this is usually a mistake.
+
+##### ComparingUnrelatedTypes
+
+Checks for equality comparions that cannot suceed because the types are unrelated. Eg `"string" == BigDecimal(1.0)`. The scala compiler has a less strict version of this inspection.
+
+##### ConstantIf
+
+Checks for if statements where the condition is always true or false. Not only checks for the boolean literals, but also any expression that the compiler is able to turn into a constant value. Eg, `if (0 < 1) then else that`
+
+##### IllegalFormatString
+
+Checks for a format string that is not invalid, such as invalid conversions, invalid flags, etc. Eg, `"% s"`, `"%qs"`, `%.-4f"`
+
+##### IncorrectNumberOfArgsToFormat
+
+Checks for an incorrect number of arguments to String.format. Eg, `"%s %s %f".format("need", "three")` flags an error because the format string specifies 3 parameters but the call only provides 2.
+
+##### List size
+
+Checks for .size on an instance of List. Eg, `val a = List(1,2,3); a.size`
+
+*Rationale* List.size is O(n) so for performance reasons if .size is needed on a list that could be large, consider using an alternative with O(1), eg Array, Vector or ListBuffer.
+
+##### Redundant finalizer
+
+Checks for empty finalizers. This is redundant code and should be removed. Eg, `override def finalize : Unit = { }`
+
+##### While true
+
+Checks for code that uses a `while(true)` or `do { } while(true)` block.
 
 *Rationale*: This type of code is usually not meant for production as it will not return normally. If you need to loop until interrupted then consider using a flag.
