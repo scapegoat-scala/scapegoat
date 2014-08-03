@@ -10,11 +10,11 @@ class NegativeSeqPad extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(lhs, TermName("padTo")), _), Literal(Constant(x)) :: tail) =>
             context.warn("Negative seq padTo", tree.pos, Levels.Error, tree.toString().take(500))
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

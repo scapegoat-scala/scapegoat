@@ -10,12 +10,12 @@ class TryGet extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Select(left, TermName("get")) =>
             if (left.tpe.typeSymbol.fullName.toString == "scala.util.Try")
               context.warn("Use of Try.get", tree.pos, Levels.Error, tree.toString().take(500))
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

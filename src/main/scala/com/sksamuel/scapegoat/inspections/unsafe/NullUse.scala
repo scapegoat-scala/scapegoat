@@ -15,7 +15,7 @@ class NullUse extends Inspection {
         case _ => false
       }
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Apply(_, args) =>
             if (containsNull(args))
@@ -24,7 +24,7 @@ class NullUse extends Inspection {
           case Literal(Constant(null)) =>
             context.warn("null use", tree.pos, Levels.Error, "null used on line " + tree.pos.line)
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

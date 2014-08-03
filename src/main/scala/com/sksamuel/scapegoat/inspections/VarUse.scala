@@ -10,12 +10,12 @@ class VarUse extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.SYNTHETIC) =>
           case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
             context.warn("Use of var", tree.pos, Levels.Warning, "var used: " + tree.toString().take(300))
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

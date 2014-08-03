@@ -14,11 +14,11 @@ class CatchNpe extends Inspection {
         cases.exists(_.pat.tpe.toString == "NullPointerException")
       }
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Try(block, catches, finalizer) if catchesNpe(catches) =>
             context.warn("Catching NPE", tree.pos, level = Levels.Error)
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

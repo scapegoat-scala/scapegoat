@@ -10,7 +10,7 @@ class ComparingUnrelatedTypes extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Apply(Select(l, TermName("$eq$eq")), r) =>
             val left = rootMirror.staticClass(l.tpe.erasure.typeSymbol.fullName).toType.erasure
@@ -18,7 +18,7 @@ class ComparingUnrelatedTypes extends Inspection {
             if (!(left <:< right || right <:< left)) {
               context.warn("Comparing unrelated types", tree.pos, Levels.Error, tree.toString().take(500))
             }
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

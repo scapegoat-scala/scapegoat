@@ -10,11 +10,11 @@ class ParameterlessMethodReturnsUnit extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case d@DefDef(_, name, _, vparamss, tpt, _) if tpt.tpe.toString == "Unit" && vparamss.isEmpty =>
             context.warn("Parameterless methods returns unit", tree.pos, Levels.Warning, name.toString.take(300))
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

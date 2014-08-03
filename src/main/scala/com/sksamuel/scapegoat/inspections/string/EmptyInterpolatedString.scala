@@ -10,11 +10,11 @@ class EmptyInterpolatedString extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(lhs, TermName("apply")), List(string)), TermName("s")), Nil) =>
             context.warn("Empty interpolated string", tree.pos, Levels.Warning, tree.toString().take(500))
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

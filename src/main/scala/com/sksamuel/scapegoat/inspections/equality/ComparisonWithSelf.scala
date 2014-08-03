@@ -15,12 +15,12 @@ class ComparisonWithSelf extends Inspection {
         case _ => false
       }
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Apply(Select(left, TermName("$eq$eq")), List(right)) =>
             if (left.toString() == right.toString())
               context.warn("Comparision with self", tree.pos, Levels.Warning, "Comparision with self will always yield true")
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

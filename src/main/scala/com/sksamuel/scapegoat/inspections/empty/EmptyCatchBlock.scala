@@ -18,10 +18,10 @@ class EmptyCatchBlock extends Inspection {
 
       def checkCatches(defs: List[CaseDef]) = defs.foreach(cd => checkCatch(cd))
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Try(body, catches, finalizer) => checkCatches(catches)
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

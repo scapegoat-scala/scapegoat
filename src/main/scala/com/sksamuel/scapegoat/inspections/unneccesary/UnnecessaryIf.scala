@@ -10,7 +10,7 @@ class UnnecessaryIf extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case If(cond, Literal(Constant(true)), Literal(Constant(false))) =>
             context.warn("Unncessary if condition.",
@@ -26,7 +26,7 @@ class UnnecessaryIf extends Inspection {
               "If comparision is not needed. Use the negated condition. Eg, instead of if (a ==b) false else true, simply use !(a == b). : " + tree
                 .toString()
                 .take(500))
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

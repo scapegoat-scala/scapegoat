@@ -10,7 +10,7 @@ class ComparingFloatingPointTypes extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Apply(Select(left, TermName("$eq$eq")), List(right)) =>
             val leftType = Option(left.tpe).map(_.typeSymbol).map(_.fullName).orNull
@@ -19,7 +19,7 @@ class ComparingFloatingPointTypes extends Inspection {
             val rightFloating = rightType == "scala.Double" || rightType == "scala.Float"
             if (leftFloating && rightFloating)
               context.warn("Floating type comparison", tree.pos, Levels.Error)
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

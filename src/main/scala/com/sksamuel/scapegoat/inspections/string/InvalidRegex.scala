@@ -12,7 +12,7 @@ class InvalidRegex extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(regex)))), TermName("r")) =>
             try {
@@ -21,7 +21,7 @@ class InvalidRegex extends Inspection {
               case e: PatternSyntaxException =>
                 context.warn("Invalid regex", tree.pos, Levels.Info, e.getMessage)
             }
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

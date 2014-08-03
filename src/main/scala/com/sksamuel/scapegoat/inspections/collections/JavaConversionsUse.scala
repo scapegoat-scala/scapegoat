@@ -10,12 +10,12 @@ class JavaConversionsUse extends Inspection {
 
       import context.global._
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Import(expr, selectors) if expr.symbol.fullName == "scala.collection.JavaConversions" =>
             context.warn("Java conversions", tree.pos, Levels.Warning,
               "Use of java conversions can lead to unusual behaviour. It is recommended to use JavaConverters")
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }

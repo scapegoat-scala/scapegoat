@@ -22,12 +22,12 @@ class DivideByOne extends Inspection {
         case _ => false
       }
 
-      override def inspect(tree: Tree): Unit = {
+      override def traverse(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("$div")), List(Literal(Constant(x)))) if isNumber(lhs) && isOne(x) =>
             context
               .warn("Divide by one", tree.pos, Levels.Warning, "Divide by one will always return the original value")
-          case _ => continue(tree)
+          case _ => super.traverse(tree)
         }
       }
     }
