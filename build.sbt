@@ -2,7 +2,7 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-version := "0.6.0"
+version := "0.7.0"
 
 scalaVersion := "2.11.2"
 
@@ -14,7 +14,6 @@ javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
 libraryDependencies ++= Seq(
   "org.scala-lang"                  %     "scala-reflect"         % "2.11.2",
-  "com.typesafe"                    %     "config"                % "1.2.1",
   "commons-io"                      %     "commons-io"            % "2.4"         % "test",
   "org.scalatest"                   %%    "scalatest"             % "2.1.6"       % "test",
   "com.typesafe.scala-logging"      %%    "scala-logging-slf4j"   % "2.1.2"       % "test",

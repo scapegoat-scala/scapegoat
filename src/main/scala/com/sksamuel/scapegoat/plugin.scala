@@ -57,7 +57,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       println("[info] [scapegoat]: Begin anaylsis...")
       super.run()
       val count = feedback.warnings.size
-      println(s"[warn] [scapegoat]: Anaylsis complete - $count warnings found.")
+      println(s"[warn] [scapegoat]: Anaylsis complete - $count warnings found")
       val html = IOUtils.writeHTMLReport(dataDir, feedback)
       println(s"[info] [scapegoat]: Written HTML report [$html]")
       val xml = IOUtils.writeXMLReport(dataDir, feedback)
