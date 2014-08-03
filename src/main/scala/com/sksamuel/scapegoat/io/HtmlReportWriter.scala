@@ -40,6 +40,7 @@ object HtmlReportWriter {
       |      .source {
       |        float: right;
       |      	 font-style: italic;
+      |        color: #868686;
       |      }
       |
       |      .snippet {
