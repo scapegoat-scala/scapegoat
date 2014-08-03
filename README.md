@@ -91,6 +91,10 @@ Checks for .size on an instance of List. Eg, `val a = List(1,2,3); a.size`
 
 Checks for empty finalizers. This is redundant code and should be removed. Eg, `override def finalize : Unit = { }`
 
+##### UnnecessaryReturnUse
+
+Checks for use of return in a function or method. Since the final expression of a block is always the return value, using return is unnecessary. Eg, `def foo = { println("hello"); return 12; }`
+
 ##### While true
 
 Checks for code that uses a `while(true)` or `do { } while(true)` block.
