@@ -1,7 +1,6 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.equality
 
 import com.sksamuel.scapegoat.PluginRunner
-import com.sksamuel.scapegoat.inspections.equality.ComparisonWithSelf
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */

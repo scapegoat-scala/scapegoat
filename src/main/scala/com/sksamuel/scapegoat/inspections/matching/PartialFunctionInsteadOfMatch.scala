@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.inspections.style
+package com.sksamuel.scapegoat.inspections.matching
 
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector}
 

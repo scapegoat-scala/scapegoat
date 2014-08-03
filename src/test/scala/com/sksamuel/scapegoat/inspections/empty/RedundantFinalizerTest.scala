@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.empty
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.RedundantFinalizer

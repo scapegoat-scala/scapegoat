@@ -2,6 +2,7 @@ package com.sksamuel.scapegoat
 
 import com.sksamuel.scapegoat.inspections._
 import com.sksamuel.scapegoat.inspections.collections._
+import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
 import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf}
 import com.sksamuel.scapegoat.inspections.inference.ProductWithSerializableInferred

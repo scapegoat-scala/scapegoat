@@ -1,7 +1,6 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.equality
 
 import com.sksamuel.scapegoat.PluginRunner
-import com.sksamuel.scapegoat.inspections.equality.ComparingUnrelatedTypes
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
@@ -22,10 +21,11 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
                       a == "sammy" // warning 2
                       Some("sam") == None // warning 3
                       Some("sam") == Option("laura") // ok
+                      Nil == Set.empty // warning 4
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 3
+      compiler.scapegoat.feedback.warnings.size shouldBe 4
     }
   }
 }

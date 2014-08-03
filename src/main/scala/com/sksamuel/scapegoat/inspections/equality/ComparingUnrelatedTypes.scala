@@ -12,10 +12,8 @@ class ComparingUnrelatedTypes extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(l, TermName("$eq$eq")), r) =>
-            val left = rootMirror.staticClass(l.tpe.erasure.typeSymbol.fullName).toType.erasure
-            val right = rootMirror.staticClass(r.head.tpe.erasure.typeSymbol.fullName).toType.erasure
-            if (!(left <:< right || right <:< left)) {
+          case Apply(Select(lhs, TermName("$eq$eq")), List(rhs)) =>
+            if (!(lhs.tpe <:< rhs.tpe || rhs.tpe <:< lhs.tpe)) {
               context.warn("Comparing unrelated types", tree.pos, Levels.Error, tree.toString().take(500), ComparingUnrelatedTypes.this)
             }
           case _ => continue(tree)

@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.controlflow
 
 import com.sksamuel.scapegoat._
 
