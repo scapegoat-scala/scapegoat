@@ -24,7 +24,7 @@ Here is a screen shot of the type of report scapegoat generates.
 
 The currently implemented inspections are as follows. An overview list is given, followed by a more detailed description of each inspection after the list.
 
-|Name|Description|
+|Name|Brief Description|
 |----|-----------|
 | ArraysInFormat| Checks for arrays passed to String.format |
 | ArraysToString| Checks for explicit toString calls on arrays |
@@ -44,18 +44,18 @@ The currently implemented inspections are as follows. An overview list is given,
 | EitherGet| Checks for use of .get on Left or Right |
 | EmptyCatchBlock| Checks for swallowing exceptions |
 | EmptyIfBlock| Checks for empty if blocks |
-| EmptyInterpolatedString| |
-| EmptyMethod| |
-| EmptySynchronizedBlock| |
-| EmptyTryBlock| |
-| ExpressionAsStatement| |
-| FilterHeadOption| |
+| EmptyInterpolatedString| Looks for interpolated strings that have no arguments |
+| EmptyMethod| Looks for empty methods |
+| EmptySynchronizedBlock| Looks for empty synchronized blocks |
+| EmptyTryBlock| Looks for empty try blocks |
+| ExpressionAsStatement| Looks for expressions executed for their side effects |
+| FilterHeadOption| `.filter(x => Bool).headOption` can be replaced with `find(x => Bool)` |
 | FilterIsEmpty| `.filter(x => Bool).isEmpty` can be replaced with `!exists(x => Bool)` |
 | FilterOptionAndGet| `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
 | FilterSize| `.filter(x => Bool).size` can be replaced more concisely with with `count(x => Bool)` |
 | FindIsDefined| `find(x => Bool).isDefined` can be replaced with `exist(x => Bool)` |
-| IllegalFormatString| |
-| IncorrectlyNamedExceptions| |
+| IllegalFormatString| Looks for invalid format strings |
+| IncorrectlyNamedExceptions| Checks for exceptions that are not called *Exception and vice versa |
 | IncorrectNumberOfArgsToFormat| Checks for wrong number of arguments to `String.format` |
 | InvalidRegex| Checks for invalid regex literals |
 | IsInstanceOf| Checks for use of `isInstanceOf` |
@@ -71,16 +71,16 @@ The currently implemented inspections are as follows. An overview list is given,
 | PreferSetEmpty| Checks for Set() when could use Set.empty |
 | ProductWithSerializableInferred| |
 | RedundantFinalizer| Checks for empty finalizers. |
-| TraversableHead| |
+| TraversableHead| Looks for unsafe usage of `Traversable.head` |
 | TryGet| Checks for use of `Try.get` |
 | UnnecessaryIf| Checks for code like `if (expr) true else false` |
 | UnnecessaryReturnUse| Checks for use of `return` keyword in blocks |
-| UnsafeContains| Checks for Tra |
+| UnsafeContains| Checks for `List.contains(value)` for invalid types |
 | UnusedMethodParameter| Checks for unused method parameters |
 | UseSqrt| Checks for use of Math.pow for calculating sqrt |
 | VarUse| Checks for use of `var` |
 | WhileTrue| Checks for code that uses a `while(true)` or `do { } while(true)` block. |
-| ZeroNumerator | Checks for
+| ZeroNumerator | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0` |
 
 
 
