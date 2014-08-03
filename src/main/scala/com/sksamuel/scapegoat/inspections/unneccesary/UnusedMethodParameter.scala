@@ -17,22 +17,19 @@ class UnusedMethodParameter extends Inspection {
         }
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override final def traverse(tree: Tree): Unit = {
         tree match {
           // ignore abstract methods obv.
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.ABSTRACT) =>
           case d@DefDef(mods, _, _, _, _, _) if d.symbol != null && d.symbol.isAbstract =>
           // ignore constructors, those params become fields
-          case DefDef(_, nme.CONSTRUCTOR, _, _, _, _) =>
+          case DefDef(_, name, _, _, _, _) if name.toString == "<init>" =>
           case d@DefDef(_, name, _, vparamss, _, rhs) =>
             for ( vparams <- vparamss;
                   vparam <- vparams ) {
-              if (!usesParameter(vparam, rhs)) {
+              if (!usesParameter(vparam, rhs))
                 context.warn("Unused method parameter", tree.pos, Levels.Warning,
                   s"Unused method parameter ($vparam) at " + name.toString.take(100))
-              } else {
-                super.traverse(tree)
-              }
             }
           case _ => super.traverse(tree)
         }

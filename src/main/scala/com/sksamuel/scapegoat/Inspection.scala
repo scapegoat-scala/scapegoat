@@ -33,10 +33,10 @@ case class InspectionContext(global: Global, feedback: Feedback) {
 
     abstract override def traverse(tree: Tree): Unit = {
       tree match {
-        case dd: DefDef if isSuppressed(dd.symbol) =>
-        case block: Block if isSuppressed(block.symbol) =>
-        case iff: If if isSuppressed(iff.symbol) =>
-        case tri: Try if isSuppressed(tri.symbol) =>
+        case dd@DefDef(_, _, _, _, _, _) if isSuppressed(dd.symbol) =>
+        case block@Block(_, _) if isSuppressed(block.symbol) =>
+        case iff@If(_, _, _) if isSuppressed(iff.symbol) =>
+        case tri@Try(_, _, _) if isSuppressed(tri.symbol) =>
         case _ => super.traverse(tree)
       }
     }
