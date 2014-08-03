@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class PartialFunctionInsteadOfMatch extends Inspection {
@@ -10,11 +10,27 @@ class PartialFunctionInsteadOfMatch extends Inspection {
 
       import context.global._
 
+      private def warn(tree: Tree) {
+        context.warn("Match instead of partial function",
+          tree.pos,
+          Levels.Info,
+          "A map match can be replaced with a partial function for greater readability: " + tree.toString().take(500),
+          PartialFunctionInsteadOfMatch.this)
+      }
+
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case _ =>
+          // _ match { case ...; case ... }
+          case Apply(_, List(Function(List(ValDef(mods, TermName("x$1"), _, EmptyTree)), Match(Ident(TermName("x$1")), _)))) =>
+            warn(tree)
+            // need to avoid the partial function style, they use x0$1
+          case Apply(_, List(Function(List(ValDef(mods, TermName("x0$1"), _, EmptyTree)), Match(Ident(TermName("x0$1")), _)))) =>
+          // a => a match { case ...; case ... }
+          case Apply(_, List(Function(List(ValDef(mods, x1, TypeTree(), EmptyTree)), Match(x2, _))))
+            if x1.toString == x2.toString() =>
+            warn(tree)
+          case _ => continue(tree)
         }
-        continue(tree)
       }
     }
   }

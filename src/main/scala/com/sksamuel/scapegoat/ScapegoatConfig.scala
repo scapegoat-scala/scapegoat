@@ -6,6 +6,7 @@ import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
 import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf}
 import com.sksamuel.scapegoat.inspections.inference.ProductWithSerializableInferred
+import com.sksamuel.scapegoat.inspections.matching.PartialFunctionInsteadOfMatch
 import com.sksamuel.scapegoat.inspections.math._
 import com.sksamuel.scapegoat.inspections.option.{EitherGet, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
@@ -60,6 +61,7 @@ object ScapegoatConfig extends App {
     new OptionGet,
     new OptionSize,
     new ParameterlessMethodReturnsUnit,
+    new PartialFunctionInsteadOfMatch,
     new PreferSeqEmpty,
     new PreferSetEmpty,
     new ProductWithSerializableInferred,
