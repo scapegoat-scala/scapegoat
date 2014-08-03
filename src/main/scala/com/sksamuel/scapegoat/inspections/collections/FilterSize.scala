@@ -13,7 +13,7 @@ class FilterSize extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(Select(_, TermName("filter")), _), TermName("size")) =>
             context.warn("filter().size() instead of count()", tree.pos, Levels.Info,

@@ -10,7 +10,7 @@ class IsInstanceOf extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case TypeApply(Select(_, TermName("isInstanceOf")), _) =>
             context.warn("Use of isInstanceOf", tree.pos, Levels.Warning,

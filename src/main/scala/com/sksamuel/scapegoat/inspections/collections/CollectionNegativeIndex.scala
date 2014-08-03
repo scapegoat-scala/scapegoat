@@ -12,7 +12,7 @@ class CollectionNegativeIndex extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("apply")), List(Literal(Constant(x: Int))))
             if lhs.tpe <:< typeOf[List[_]] && x < 0 =>

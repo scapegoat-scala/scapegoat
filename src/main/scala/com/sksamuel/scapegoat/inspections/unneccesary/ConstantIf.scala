@@ -2,8 +2,6 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 
 import com.sksamuel.scapegoat._
 
-import scala.tools.nsc.Global
-
 /** @author Stephen Samuel */
 class ConstantIf extends Inspection {
 
@@ -12,7 +10,7 @@ class ConstantIf extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case If(cond, thenp, elsep) =>
             if (cond.toString() == "false" || cond.toString() == "true")

@@ -13,7 +13,7 @@ class BrokenOddness extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("$percent")), List(Literal(Constant(2)))),
           TermName("$eq$eq")), List(Literal(Constant(1)))) =>

@@ -10,7 +10,7 @@ class ListSize extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(lhs, TermName("size")) if lhs.tpe <:< typeOf[List[_]] =>
             context.warn("List.size is O(n)", tree.pos, Levels.Info,

@@ -10,12 +10,7 @@ class UseSqrt extends Inspection {
 
       import context.global._
 
-      private def isOneOverTwo(value: Any): Boolean = value match {
-        case i: Int => i == 1
-        case _ => false
-      }
-
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(pack, TermName("pow")), List(_, Literal(Constant(0.5d))))
             if pack.toString() == "java.this.lang.Math" =>

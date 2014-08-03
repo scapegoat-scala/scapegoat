@@ -10,7 +10,7 @@ class AsInstanceOf extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case TypeApply(Select(_, TermName("asInstanceOf")), _) =>
             context.warn("Use of asInstanceOf", tree.pos, Levels.Warning,

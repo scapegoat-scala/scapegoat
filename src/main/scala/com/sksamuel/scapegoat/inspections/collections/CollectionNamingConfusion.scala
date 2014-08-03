@@ -13,7 +13,7 @@ class CollectionNamingConfusion extends Inspection {
       def isNamedSet(name: String): Boolean = name == "set" || name.contains("Set")
       def isNamedList(name: String): Boolean = name == "list" || name.contains("List")
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case ValDef(_, TermName(name), tpt, _) if tpt.tpe <:< typeOf[Set[_]] && isNamedList(name) =>
             context.warn("A Set is named list", tree.pos, Levels.Info,

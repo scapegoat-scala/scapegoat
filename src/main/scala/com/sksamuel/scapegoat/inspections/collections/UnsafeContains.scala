@@ -2,8 +2,6 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-import scala.tools.nsc.Global
-
 /** @author Stephen Samuel */
 class UnsafeContains extends Inspection {
 
@@ -12,7 +10,7 @@ class UnsafeContains extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(lhs, TermName("contains")), List(tpe)), List(arg)) =>
             if (lhs.tpe <:< typeOf[Seq[_]] && !(arg.tpe <:< lhs.tpe.typeArgs.head)) {

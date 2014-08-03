@@ -10,7 +10,7 @@ class EitherGet extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Select(_, TermName("right")), TermName("get")) =>
             context.warn("Use of Either Right Projection get", tree.pos, Levels.Error, tree.toString().take(500))

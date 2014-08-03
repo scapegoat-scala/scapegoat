@@ -15,7 +15,7 @@ class ComparisonWithSelf extends Inspection {
         case _ => false
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(left, TermName("$eq$eq")), List(right)) =>
             if (left.toString() == right.toString())

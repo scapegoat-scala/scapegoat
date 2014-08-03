@@ -17,9 +17,7 @@ case class InspectionContext(global: Global, feedback: Feedback) {
   def warn(text: String, pos: Position, level: Level) = feedback.warn(text, pos, level)
   def warn(text: String, pos: Position, level: Level, snippet: String) = feedback.warn(text, pos, level)
 
-  trait Traverser extends global.Traverser with SuppressAwareTraverser
-
-  trait SuppressAwareTraverser extends global.Traverser {
+  trait Traverser extends global.Traverser {
 
     import global._
 
@@ -31,13 +29,15 @@ case class InspectionContext(global: Global, feedback: Feedback) {
           symbol.annotations.head.javaArgs.head._2.toString.toLowerCase.contains("\"all\""))
     }
 
-    abstract override def traverse(tree: Tree): Unit = {
+    def inspect(tree: Tree): Unit
+
+    override final def traverse(tree: Tree): Unit = {
       tree match {
         case dd@DefDef(_, _, _, _, _, _) if isSuppressed(dd.symbol) =>
         case block@Block(_, _) if isSuppressed(block.symbol) =>
         case iff@If(_, _, _) if isSuppressed(iff.symbol) =>
         case tri@Try(_, _, _) if isSuppressed(tri.symbol) =>
-        case _ => super.traverse(tree)
+        case _ => inspect(tree)
       }
     }
   }

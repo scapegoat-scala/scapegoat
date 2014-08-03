@@ -12,7 +12,7 @@ class ArraysToString extends Inspection {
 
       private def isArray(tree: Tree) = tree.tpe <:< typeOf[Array[_]]
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("toString")), Nil) if isArray(lhs) =>
             context.warn("Use of Array.toString", tree.pos, Levels.Warning,

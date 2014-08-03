@@ -10,7 +10,7 @@ class TraversableHead extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(left, TermName("head")) =>
             println(left.tpe.typeSymbol.fullName.toString)

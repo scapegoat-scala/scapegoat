@@ -17,7 +17,7 @@ class UnusedMethodParameter extends Inspection {
         }
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override final def inspect(tree: Tree): Unit = {
         tree match {
           // ignore abstract methods obv.
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.ABSTRACT) =>

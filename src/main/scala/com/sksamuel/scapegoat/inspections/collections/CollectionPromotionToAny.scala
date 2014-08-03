@@ -26,7 +26,7 @@ class CollectionPromotionToAny extends Inspection {
         case _ => false
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case TypeApply(Select(l, TermName("$colon$plus")), List(a, r)) =>
             if (!isAnySeq(l) && isAny(a))

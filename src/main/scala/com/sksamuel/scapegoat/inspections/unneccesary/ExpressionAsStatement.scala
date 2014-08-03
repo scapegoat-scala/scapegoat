@@ -22,7 +22,7 @@ class ExpressionAsStatement extends Inspection {
         }
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Block(statements, _) => checkStatements(statements)
           case ClassDef(_, _, _, Template(_, _, statements)) => checkStatements(statements)

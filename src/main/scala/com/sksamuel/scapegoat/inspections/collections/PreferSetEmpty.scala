@@ -2,8 +2,6 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-import scala.tools.nsc.Global
-
 /** @author Stephen Samuel */
 class PreferSetEmpty extends Inspection {
 
@@ -12,7 +10,7 @@ class PreferSetEmpty extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case TypeApply(Select(Select(_, TermName("Set")), TermName("apply")), _) =>
             context.warn("Prefer Set.empty", tree.pos, Levels.Info,

@@ -2,8 +2,6 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-import scala.tools.nsc.Global
-
 /** @author Stephen Samuel */
 class FilterIsEmpty extends Inspection {
 
@@ -12,7 +10,7 @@ class FilterIsEmpty extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(Select(_, TermName("filter")), _), TermName("isEmpty")) =>
             context.warn("filter().isEmpty instead of !exists()", tree.pos, Levels.Info,

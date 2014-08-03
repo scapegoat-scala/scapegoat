@@ -10,7 +10,7 @@ class UnnecessaryReturnUse extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Block(_, Return(expr)) =>
             context.warn("Unnecessary return", tree.pos, Levels.Error,

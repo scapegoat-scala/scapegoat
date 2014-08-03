@@ -11,14 +11,14 @@ class NanComparison extends Inspection {
       import context.global._
       import definitions._
 
-      def isNan(value: Any): Boolean = {
+      private def isNan(value: Any): Boolean = {
         value match {
           case d: Double => d.isNaN
           case _ => false
         }
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("$eq$eq")), List(Literal(Constant(x))))
             if isFloatingPointType(lhs) && isNan(x) =>

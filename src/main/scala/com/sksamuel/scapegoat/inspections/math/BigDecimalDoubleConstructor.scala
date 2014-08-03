@@ -22,7 +22,7 @@ class BigDecimalDoubleConstructor extends Inspection {
             "This is because 0.1 cannot be represented exactly as a double. " + tree.toString().take(100))
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(pack, TermName("apply")), arg :: tail) if isBigDecimal(pack) && isFloatingPointType(arg) =>
             warn(tree)

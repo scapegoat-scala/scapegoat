@@ -13,7 +13,7 @@ class RedundantFinalizer extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case dd@DefDef(mods, name, _, _, tpt, _)
             if mods.hasFlag(Flag.OVERRIDE) && name.toString == "finalize" && tpt.toString() == "Unit" =>

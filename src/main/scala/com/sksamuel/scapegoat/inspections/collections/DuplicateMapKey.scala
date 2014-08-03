@@ -24,7 +24,7 @@ class DuplicateMapKey extends Inspection {
           "A map key is overwriten by a later entry: " + tree.toString().take(100))
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _),
           args) if isDuplicateKeys(args) =>

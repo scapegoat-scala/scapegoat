@@ -13,7 +13,7 @@ class IncorrectlyNamedExceptions extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case cdef@ClassDef(mods, name, _, impl) =>
             val isNamedException = name.toString.endsWith("Exception")

@@ -10,7 +10,7 @@ class OptionSize extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(option2Iterable, List(opt)), TermName("size")) =>
             if (option2Iterable.symbol.fullName == "scala.Option.option2Iterable")

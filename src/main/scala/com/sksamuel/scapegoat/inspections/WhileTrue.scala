@@ -11,7 +11,7 @@ class WhileTrue extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case LabelDef(name, _, If(cond, _, _))
             if isWhile(name) && isConstantCondition(cond) =>
