@@ -52,12 +52,20 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
+  def activeInspections = inspections.filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {
-      println("[info] [scapegoat]: Begin anaylsis...")
+
+      println(s"[info] [scapegoat]: ${activeInspections.size} activated inspections")
+      println("[info] [scapegoat]: Beginning anaylsis...")
       super.run()
-      val count = feedback.warnings.size
-      println(s"[warn] [scapegoat]: Anaylsis complete - $count warnings found")
+
+      val errors = feedback.errors.size
+      val warns = feedback.warns.size
+      val infos = feedback.infos.size
+
+      println(s"[warn] [scapegoat]: Anaylsis complete - $errors errors $warns warns $infos infos")
       val html = IOUtils.writeHTMLReport(dataDir, feedback)
       println(s"[info] [scapegoat]: Written HTML report [$html]")
       val xml = IOUtils.writeXMLReport(dataDir, feedback)
@@ -68,13 +76,9 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   protected def newTransformer(unit: CompilationUnit): Transformer = new Transformer(unit)
 
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
+
     override def transform(tree: global.Tree) = {
-
       val context = new InspectionContext(global, feedback)
-
-      require(inspections != null)
-      val activeInspections = inspections.filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
-      println(s"[info] [scapegoat]: ${activeInspections.size} activated inspections")
       activeInspections.foreach(inspection => {
         val inspector = inspection.inspector(context)
         inspector.traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
