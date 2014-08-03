@@ -66,6 +66,7 @@ object ScapegoatConfig extends App {
     new UnusedMethodParameter,
     new UseSqrt,
     new VarUse,
-    new WhileTrue)
+    new WhileTrue,
+    new ZeroNumerator)
 
 }
