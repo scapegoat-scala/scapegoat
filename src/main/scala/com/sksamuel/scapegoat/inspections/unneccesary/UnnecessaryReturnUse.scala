@@ -10,12 +10,12 @@ class UnnecessaryReturnUse extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Block(_, Return(expr)) =>
             context.warn("Unnecessary return", tree.pos, Levels.Error,
               "Scala returns the value of the last expression in a function. Use of return is not needed here")
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

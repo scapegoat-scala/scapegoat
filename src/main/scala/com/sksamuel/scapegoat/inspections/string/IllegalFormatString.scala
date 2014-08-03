@@ -15,7 +15,7 @@ class IllegalFormatString extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(format)))),
           TermName("format")), _) =>
@@ -32,7 +32,7 @@ class IllegalFormatString extends Inspection {
                   "A format string contains an illegal syntax: " + e.getMessage)
               case _ =>
             }
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

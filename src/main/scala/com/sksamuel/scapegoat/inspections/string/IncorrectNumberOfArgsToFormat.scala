@@ -15,14 +15,14 @@ class IncorrectNumberOfArgsToFormat extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(format)))),
           TermName("format")), args) =>
             val argCount = argRegex.findAllIn(format.toString).matchData.size
             if (argCount > args.size)
               context.warn("Incorrect number of args for format", tree.pos, Levels.Error, tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

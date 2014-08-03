@@ -17,7 +17,7 @@ class CollectionNamingConfusion extends Inspection {
       private def isSet(tpe: Type) = tpe <:< typeOf[mutable.Set[_]] || tpe <:< typeOf[immutable.Set[_]]
       private def isList(tpe: Type) = tpe <:< typeOf[immutable.List[_]]
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case ValDef(_, TermName(name), tpt, _) if isSet(tpt.tpe) && isNamedList(name) =>
             context.warn("A Set is named list", tree.pos, Levels.Info,
@@ -25,7 +25,7 @@ class CollectionNamingConfusion extends Inspection {
           case v@ValDef(_, TermName(name), tpt, _) if isList(tpt.tpe) && isNamedSet(name) =>
             context.warn("A List is named set", tree.pos, Levels.Info,
               "An instanceof List is confusingly referred to by a variable called/containing set: " + tree.toString().take(300))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

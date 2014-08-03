@@ -10,14 +10,14 @@ class FilterOptionAndGet extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(
           Select(Apply(Select(_, TermName("filter")), List(Function(_, Select(_, TermName("isDefined"))))),
           TermName("map")), args), List(Function(_, Select(_, TermName("get"))))) =>
             context.warn("filter(_.isDefined).map(_.get)", tree.pos, Levels.Info,
               ".filter(_.isDefined).map(_.get) can be replaced with flatten: " + tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

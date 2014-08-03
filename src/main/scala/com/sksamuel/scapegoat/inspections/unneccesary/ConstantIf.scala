@@ -10,13 +10,13 @@ class ConstantIf extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case If(cond, thenp, elsep) =>
             if (cond.toString() == "false" || cond.toString() == "true")
               context.warn("Constant if expression", tree.pos, Levels.Warning,
                 "Constant if expression " + tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

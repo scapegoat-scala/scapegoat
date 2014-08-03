@@ -18,7 +18,7 @@ class NanComparison extends Inspection {
         }
       }
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("$eq$eq")), List(Literal(Constant(x))))
             if isFloatingPointType(lhs) && isNan(x) =>
@@ -26,7 +26,7 @@ class NanComparison extends Inspection {
           case Apply(Select(Literal(Constant(x)), TermName("$eq$eq")), List(rhs))
             if isFloatingPointType(rhs) && isNan(x) =>
             warn(tree)
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
 

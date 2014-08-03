@@ -10,11 +10,11 @@ class PartialFunctionInsteadOfMatch extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case _ =>
         }
-        super.traverse(tree)
+        continue(tree)
       }
     }
   }

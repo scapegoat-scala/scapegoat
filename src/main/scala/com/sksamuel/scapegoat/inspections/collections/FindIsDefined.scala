@@ -10,12 +10,12 @@ class FindIsDefined extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(Select(_, TermName("find")), _), TermName("isDefined")) =>
             context.warn("use exists() not find().isDefined()", tree.pos, Levels.Info,
               ".find(x => Bool).isDefined can be replaced with exists(x => Bool): " + tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

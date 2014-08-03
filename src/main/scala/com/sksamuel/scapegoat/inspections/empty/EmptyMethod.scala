@@ -10,11 +10,11 @@ class EmptyMethod extends Inspection {
 
       import context.global._
 
-      override def traverse(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(mods, _, _, _, _, Literal(Constant(()))) if !mods.hasFlag(Flag.SYNTHETIC) =>
             context.warn("Empty method", tree.pos, Levels.Warning, "Empty if statement " + tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }
