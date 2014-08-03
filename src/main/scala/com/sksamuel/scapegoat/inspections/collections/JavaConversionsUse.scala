@@ -15,7 +15,7 @@ class JavaConversionsUse extends Inspection {
           case Import(expr, selectors) if expr.symbol.fullName == "scala.collection.JavaConversions" =>
             context.warn("Java conversions", tree.pos, Levels.Warning,
               "Use of java conversions can lead to unusual behaviour. It is recommended to use JavaConverters")
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

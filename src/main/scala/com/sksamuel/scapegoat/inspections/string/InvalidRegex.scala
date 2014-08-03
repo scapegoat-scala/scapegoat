@@ -21,7 +21,7 @@ class InvalidRegex extends Inspection {
               case e: PatternSyntaxException =>
                 context.warn("Invalid regex", tree.pos, Levels.Info, e.getMessage)
             }
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

@@ -16,7 +16,7 @@ class TraversableHead extends Inspection {
             println(left.tpe.typeSymbol.fullName.toString)
             if (left.tpe.typeSymbol.fullName.toString == "scala.collection.Iterable")
               context.warn("Use of Option.head", tree.pos, Levels.Error, tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

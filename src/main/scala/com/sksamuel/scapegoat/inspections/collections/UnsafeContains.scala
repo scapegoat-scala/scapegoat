@@ -16,7 +16,7 @@ class UnsafeContains extends Inspection {
             if (lhs.tpe <:< typeOf[Seq[_]] && !(arg.tpe <:< lhs.tpe.typeArgs.head)) {
               context.warn("Unsafe contains", tree.pos, Levels.Error, tree.toString().take(300))
             }
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

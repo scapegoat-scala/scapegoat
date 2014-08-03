@@ -15,7 +15,7 @@ class OptionGet extends Inspection {
           case Select(left, TermName("get")) =>
             if (left.tpe.typeSymbol.fullName.toString == "scala.Option")
               context.warn("Use of Option.get", tree.pos, Levels.Error, tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

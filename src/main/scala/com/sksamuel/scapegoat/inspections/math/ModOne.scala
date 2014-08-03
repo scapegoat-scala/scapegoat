@@ -18,7 +18,7 @@ class ModOne extends Inspection {
           case Apply(Select(lhs, TermName("$percent")), List(Literal(Constant(1)))) if lhs.tpe <:< typeOf[Int] =>
             context.warn("Integer mod one", tree.pos, Levels.Warning,
               "Any expression x % 1 will always return 0. " + tree.toString().take(300))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

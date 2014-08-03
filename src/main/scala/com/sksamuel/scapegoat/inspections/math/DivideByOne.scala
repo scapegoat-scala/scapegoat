@@ -27,7 +27,7 @@ class DivideByOne extends Inspection {
           case Apply(Select(lhs, TermName("$div")), List(Literal(Constant(x)))) if isNumber(lhs) && isOne(x) =>
             context
               .warn("Divide by one", tree.pos, Levels.Warning, "Divide by one will always return the original value")
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

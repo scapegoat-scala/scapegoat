@@ -14,7 +14,7 @@ class PartialFunctionInsteadOfMatch extends Inspection {
         tree match {
           case _ =>
         }
-        super.traverse(tree)
+        continue(tree)
       }
     }
   }

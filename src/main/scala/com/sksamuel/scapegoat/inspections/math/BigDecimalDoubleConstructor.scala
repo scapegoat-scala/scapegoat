@@ -29,7 +29,7 @@ class BigDecimalDoubleConstructor extends Inspection {
           case Apply(Select(New(pack), nme.CONSTRUCTOR),
           arg :: tail) if isBigDecimal(pack) && isFloatingPointType(arg) =>
             warn(tree)
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

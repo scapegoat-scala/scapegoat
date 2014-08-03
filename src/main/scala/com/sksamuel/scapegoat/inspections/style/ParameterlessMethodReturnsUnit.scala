@@ -14,7 +14,7 @@ class ParameterlessMethodReturnsUnit extends Inspection {
         tree match {
           case d@DefDef(_, name, _, vparamss, tpt, _) if tpt.tpe.toString == "Unit" && vparamss.isEmpty =>
             context.warn("Parameterless methods returns unit", tree.pos, Levels.Warning, name.toString.take(300))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

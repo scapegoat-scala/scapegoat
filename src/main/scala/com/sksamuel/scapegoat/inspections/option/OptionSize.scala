@@ -16,7 +16,7 @@ class OptionSize extends Inspection {
             if (option2Iterable.symbol.fullName == "scala.Option.option2Iterable")
               context.warn("Prefer Option.isDefined instead of Option.size",
                 tree.pos, Levels.Error, tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

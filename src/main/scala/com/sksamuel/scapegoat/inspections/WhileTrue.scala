@@ -21,7 +21,7 @@ class WhileTrue extends Inspection {
             if isWhile(name) && isConstantCondition(cond) =>
             context.warn("While true loop", tree.pos, Levels.Warning,
               "A do while true loop is unlikely to be meant for production:" + tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
 

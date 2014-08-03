@@ -20,7 +20,7 @@ class ComparisonWithSelf extends Inspection {
           case Apply(Select(left, TermName("$eq$eq")), List(right)) =>
             if (left.toString() == right.toString())
               context.warn("Comparision with self", tree.pos, Levels.Warning, "Comparision with self will always yield true")
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

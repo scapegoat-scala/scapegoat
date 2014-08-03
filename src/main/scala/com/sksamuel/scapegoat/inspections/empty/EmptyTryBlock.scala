@@ -14,7 +14,7 @@ class EmptyTryBlock extends Inspection {
         tree match {
           case Try(Literal(Constant(())), _, _) =>
             context.warn("Empty try block", tree.pos, Levels.Warning, tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

@@ -18,7 +18,7 @@ class IsInstanceOf extends Inspection {
           case DefDef(modifiers, _, _, _, _, _) if modifiers.hasFlag(Flag.SYNTHETIC) => // avoid partial function stuff
           case m@Match(selector, cases) => // ignore selector and process cases
             cases.foreach(traverse)
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

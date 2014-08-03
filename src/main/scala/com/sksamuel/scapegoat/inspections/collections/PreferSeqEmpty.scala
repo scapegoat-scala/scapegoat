@@ -16,7 +16,7 @@ class PreferSeqEmpty extends Inspection {
             context.warn("Prefer Seq.empty", tree.pos, Levels.Info,
               "Seq[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " +
                 tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

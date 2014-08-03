@@ -17,7 +17,7 @@ class ArraysToString extends Inspection {
           case Apply(Select(lhs, TermName("toString")), Nil) if isArray(lhs) =>
             context.warn("Use of Array.toString", tree.pos, Levels.Warning,
               "toString on an array does not perform a deep toString: " + tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

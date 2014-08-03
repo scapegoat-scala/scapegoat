@@ -22,7 +22,7 @@ class IncorrectNumberOfArgsToFormat extends Inspection {
             val argCount = argRegex.findAllIn(format.toString).matchData.size
             if (argCount > args.size)
               context.warn("Incorrect number of args for format", tree.pos, Levels.Error, tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

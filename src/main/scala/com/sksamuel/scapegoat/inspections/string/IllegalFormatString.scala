@@ -32,7 +32,7 @@ class IllegalFormatString extends Inspection {
                   "A format string contains an illegal syntax: " + e.getMessage)
               case _ =>
             }
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

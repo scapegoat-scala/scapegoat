@@ -29,7 +29,7 @@ class DuplicateMapKey extends Inspection {
           case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _),
           args) if isDuplicateKeys(args) =>
             warn(tree)
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

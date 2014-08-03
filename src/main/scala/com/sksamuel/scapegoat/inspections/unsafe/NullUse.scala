@@ -24,7 +24,7 @@ class NullUse extends Inspection {
           case Literal(Constant(null)) =>
             context.warn("null use", tree.pos, Levels.Error, "null used on line " + tree.pos.line)
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

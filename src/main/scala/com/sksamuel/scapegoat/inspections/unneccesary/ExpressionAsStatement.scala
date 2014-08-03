@@ -29,7 +29,7 @@ class ExpressionAsStatement extends Inspection {
           case ModuleDef(_, _, Template(_, _, statements)) => checkStatements(statements)
           case _ =>
         }
-        super.traverse(tree)
+        continue(tree)
       }
     }
   }

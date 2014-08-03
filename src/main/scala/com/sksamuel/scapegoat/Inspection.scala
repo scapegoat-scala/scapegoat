@@ -29,7 +29,9 @@ case class InspectionContext(global: Global, feedback: Feedback) {
           symbol.annotations.head.javaArgs.head._2.toString.toLowerCase.contains("\"all\""))
     }
 
-    def inspect(tree: Tree): Unit
+    protected def continue(tree: Tree) = super.traverse(tree)
+
+    protected def inspect(tree: Tree): Unit
 
     override final def traverse(tree: Tree): Unit = {
       tree match {

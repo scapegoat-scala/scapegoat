@@ -14,7 +14,7 @@ class EmptySynchronizedBlock extends Inspection {
         tree match {
           case Apply(TypeApply(Select(_, TermName("synchronized")), _), List(Literal(Constant(())))) =>
             context.warn("Empty synchronized block", tree.pos, Levels.Warning, tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

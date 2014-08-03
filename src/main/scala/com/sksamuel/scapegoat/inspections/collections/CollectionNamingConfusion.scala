@@ -21,7 +21,7 @@ class CollectionNamingConfusion extends Inspection {
           case v@ValDef(_, TermName(name), tpt, _) if tpt.tpe <:< typeOf[List[_]] && isNamedSet(name) =>
             context.warn("A List is named set", tree.pos, Levels.Info,
               "An instanceof List is confusingly referred to by a variable called set: " + tree.toString().take(300))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

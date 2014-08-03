@@ -18,7 +18,7 @@ class ComparingUnrelatedTypes extends Inspection {
             if (!(left <:< right || right <:< left)) {
               context.warn("Comparing unrelated types", tree.pos, Levels.Error, tree.toString().take(500))
             }
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

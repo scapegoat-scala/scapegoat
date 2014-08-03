@@ -26,7 +26,7 @@ class NanComparison extends Inspection {
           case Apply(Select(Literal(Constant(x)), TermName("$eq$eq")), List(rhs))
             if isFloatingPointType(rhs) && isNan(x) =>
             warn(tree)
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
 

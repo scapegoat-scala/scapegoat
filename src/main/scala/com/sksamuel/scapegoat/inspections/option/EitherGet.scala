@@ -16,7 +16,7 @@ class EitherGet extends Inspection {
             context.warn("Use of Either Right Projection get", tree.pos, Levels.Error, tree.toString().take(500))
           case Select(Select(_, TermName("left")), TermName("get")) =>
             context.warn("Use of Either Left Projection get", tree.pos, Levels.Error, tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

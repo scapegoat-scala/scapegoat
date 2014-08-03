@@ -17,7 +17,7 @@ class FilterOptionAndGet extends Inspection {
           TermName("map")), args), List(Function(_, Select(_, TermName("get"))))) =>
             context.warn("filter(_.isDefined).map(_.get)", tree.pos, Levels.Info,
               ".filter(_.isDefined).map(_.get) can be replaced with flatten: " + tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

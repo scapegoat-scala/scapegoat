@@ -21,7 +21,7 @@ class EmptyCatchBlock extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Try(body, catches, finalizer) => checkCatches(catches)
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

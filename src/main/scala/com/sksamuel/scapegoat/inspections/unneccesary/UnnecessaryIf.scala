@@ -26,7 +26,7 @@ class UnnecessaryIf extends Inspection {
               "If comparision is not needed. Use the negated condition. Eg, instead of if (a ==b) false else true, simply use !(a == b). : " + tree
                 .toString()
                 .take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

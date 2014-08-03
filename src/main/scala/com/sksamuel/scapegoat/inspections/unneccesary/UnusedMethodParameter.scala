@@ -31,7 +31,7 @@ class UnusedMethodParameter extends Inspection {
                 context.warn("Unused method parameter", tree.pos, Levels.Warning,
                   s"Unused method parameter ($vparam) at " + name.toString.take(100))
             }
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

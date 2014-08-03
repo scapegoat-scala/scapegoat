@@ -20,7 +20,7 @@ class BrokenOddness extends Inspection {
             context.warn("Broken odd check", tree.pos, Levels.Warning,
               "Potentially broken odd check. " + tree.toString().take(500) + "." +
                 "Code that attempts to check for oddness using x % 2 == 1 will fail on negative numbers. Consider using x % 2 != 0")
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

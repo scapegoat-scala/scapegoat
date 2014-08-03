@@ -16,7 +16,7 @@ class ConstantIf extends Inspection {
             if (cond.toString() == "false" || cond.toString() == "true")
               context.warn("Constant if expression", tree.pos, Levels.Warning,
                 "Constant if expression " + tree.toString().take(500))
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

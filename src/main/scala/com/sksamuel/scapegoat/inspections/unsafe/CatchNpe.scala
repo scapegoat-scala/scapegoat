@@ -18,7 +18,7 @@ class CatchNpe extends Inspection {
         tree match {
           case Try(block, catches, finalizer) if catchesNpe(catches) =>
             context.warn("Catching NPE", tree.pos, level = Levels.Error)
-          case _ => super.traverse(tree)
+          case _ => continue(tree)
         }
       }
     }

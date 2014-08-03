@@ -29,7 +29,7 @@ class IncorrectlyNamedExceptions extends Inspection {
             }
           case _ =>
         }
-        super.traverse(tree)
+        continue(tree)
       }
     }
   }
