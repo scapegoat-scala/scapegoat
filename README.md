@@ -100,3 +100,21 @@ Checks for use of return in a function or method. Since the final expression of 
 Checks for code that uses a `while(true)` or `do { } while(true)` block.
 
 *Rationale*: This type of code is usually not meant for production as it will not return normally. If you need to loop until interrupted then consider using a flag.
+
+### Other static analysis tools:
+
+Linter (Scala) - https://github.com/HairyFotr/linter
+WartRemover (Scala) - https://github.com/typelevel/wartremover
+ScalaStyle (Scala) - https://github.com/scalastyle/scalastyle/wiki
+Findbugs(JVM) - http://findbugs.sourceforge.net/bugDescriptions.html
+CheckStyle(Java) - http://checkstyle.sourceforge.net/availablechecks.html
+PMD(Java) - http://pmd.sourceforge.net/pmd-5.0.3/rules/index.html
+Error-prone(Java) - https://code.google.com/p/error-prone/wiki/BugPatterns
+CodeNarc(Groovy) - http://codenarc.sourceforge.net/codenarc-rule-index.html
+PVS-Studio(C++) - http://www.viva64.com/en/d/
+Coverity(C++) - http://www.slideshare.net/Coverity/static-analysis-primer-22874326 (6,7)
+CppCheck(C++) - http://cppcheck.sourceforge.net/
+OCLint (C++/ObjC) - http://docs.oclint.org/en/dev/rules/index.html
+JSLink (Javascript) - http://www.jshint.com/
+JavascriptLink (Javascript) - http://www.javascriptlint.com/
+ClosureLinkter (Javascript) - https://developers.google.com/closure/utilities/
