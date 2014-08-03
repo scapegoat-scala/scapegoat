@@ -18,6 +18,8 @@ object ScapegoatConfig extends App {
   def inspections: Seq[Inspection] = Seq(
     new ArraysInFormat,
     new ArraysToString,
+    new AvoidSizeEqualsZero,
+    new AvoidSizeNotEqualsZero,
     new AsInstanceOf,
     new BigDecimalDoubleConstructor,
     new BrokenOddness,
