@@ -13,7 +13,7 @@ class UnnecessaryReturnUse extends Inspection {
 
     override def traverse(tree: Tree): Unit = {
       tree match {
-        case Return(expr) =>
+        case Block(_, Return(expr)) =>
           feedback.warn("Unnecessary return", tree.pos, Levels.Error,
             "Scala returns the value of the last expression in a function. Use of return is not needed here")
         case _ => super.traverse(tree)
