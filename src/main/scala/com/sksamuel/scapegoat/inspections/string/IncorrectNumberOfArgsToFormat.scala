@@ -2,8 +2,6 @@ package com.sksamuel.scapegoat.inspections.string
 
 import com.sksamuel.scapegoat._
 
-import scala.tools.nsc.Global
-
 /** @author Stephen Samuel */
 class IncorrectNumberOfArgsToFormat extends Inspection {
 

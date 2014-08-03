@@ -15,6 +15,7 @@ import com.sksamuel.scapegoat.inspections.unsafe._
 object ScapegoatConfig extends App {
 
   def inspections: Seq[Inspection] = Seq(
+    new ArraysInFormat,
     new ArraysToString,
     new AsInstanceOf,
     new BigDecimalDoubleConstructor,
