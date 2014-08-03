@@ -13,9 +13,8 @@ class TraversableHead extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(left, TermName("head")) =>
-            println(left.tpe.typeSymbol.fullName.toString)
-            if (left.tpe.typeSymbol.fullName.toString == "scala.collection.Iterable")
-              context.warn("Use of Option.head", tree.pos, Levels.Error, tree.toString().take(500))
+            if (left.tpe <:< typeOf[Traversable[_]])
+              context.warn("Use of Traversable.head", tree.pos, Levels.Error, tree.toString().take(500))
           case _ => continue(tree)
         }
       }

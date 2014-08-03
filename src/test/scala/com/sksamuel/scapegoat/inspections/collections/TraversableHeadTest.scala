@@ -12,12 +12,14 @@ class TraversableHeadTest extends FreeSpec with Matchers with PluginRunner {
     "should report warning" in {
 
       val code = """class Test {
-                      val o = Option("sammy")
-                      o.head
+                      Seq("sam").head
+                      List("sam").head
+                      Vector("sam").head
+                      Iterable("sam").head
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 2
+      compiler.scapegoat.feedback.warnings.size shouldBe 4
     }
   }
 }
