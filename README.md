@@ -69,7 +69,7 @@ The currently implemented inspections are as follows. An overview list is given,
 | ParameterlessMethodReturnsUnit| Checks for `def foo : Unit` |
 | PreferSeqEmpty| Checks for Seq() when could use Seq.empty |
 | PreferSetEmpty| Checks for Set() when could use Set.empty |
-| ProductWithSerializableInferred| |
+| ProductWithSerializableInferred| Checks for vals that have `Product with Serializable` as their inferred type |
 | RedundantFinalizer| Checks for empty finalizers. |
 | TraversableHead| Looks for unsafe usage of `Traversable.head` |
 | TryGet| Checks for use of `Try.get` |
