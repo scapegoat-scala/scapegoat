@@ -4,6 +4,7 @@ import com.sksamuel.scapegoat.inspections._
 import com.sksamuel.scapegoat.inspections.collections._
 import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf}
+import com.sksamuel.scapegoat.inspections.inference.ProductWithSerializableInferred
 import com.sksamuel.scapegoat.inspections.math._
 import com.sksamuel.scapegoat.inspections.option.{EitherGet, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
@@ -58,6 +59,7 @@ object ScapegoatConfig extends App {
     new ParameterlessMethodReturnsUnit,
     new PreferSeqEmpty,
     new PreferSetEmpty,
+    new ProductWithSerializableInferred,
     new RedundantFinalizer,
     new TraversableHead,
     new TryGet,
