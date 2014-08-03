@@ -73,9 +73,9 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       val context = new InspectionContext(global, feedback)
 
       require(inspections != null)
-      inspections
-        .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
-        .foreach(inspection => {
+      val activeInspections = inspections.filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+      println(s"[info] [scapegoat]: ${activeInspections.size} activated inspections")
+      activeInspections.foreach(inspection => {
         val inspector = inspection.inspector(context)
         inspector.traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
       })
