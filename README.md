@@ -12,7 +12,7 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
-See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration
+See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
 ### Screenshot
 
@@ -56,4 +56,13 @@ The currently implemented inspections are as follows. Most of the descriptions n
 | Try get | Try.get should be replaced with safe patter matching |
 | Unused method parameter | checks for unused method parameters |
 | Var use | description needed |
+| Var use | description needed |
+| While true | description needed |
 
+### Inspections
+
+#### While true
+
+This inspections checks for code that uses a `while(true)` or `do { } while(true)` block.
+
+*Rationale*: This type of code is usually not meant for production as it will not return normally. If you need to loop until interrupted then consider using a flag.
