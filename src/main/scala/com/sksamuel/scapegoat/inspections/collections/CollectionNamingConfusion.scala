@@ -2,8 +2,6 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-import scala.collection._
-
 /** @author Stephen Samuel */
 class CollectionNamingConfusion extends Inspection {
 
@@ -14,8 +12,8 @@ class CollectionNamingConfusion extends Inspection {
 
       private def isNamedSet(name: String): Boolean = name.trim == "set" || name.trim.contains("Set")
       private def isNamedList(name: String): Boolean = name.trim == "list" || name.trim.contains("List")
-      private def isSet(tpe: Type) = tpe <:< typeOf[mutable.Set[_]] || tpe <:< typeOf[immutable.Set[_]]
-      private def isList(tpe: Type) = tpe <:< typeOf[immutable.List[_]]
+      private def isSet(tpe: Type) = tpe <:< typeOf[scala.collection.mutable.Set[_]] || tpe <:< typeOf[scala.collection.immutable.Set[_]]
+      private def isList(tpe: Type) = tpe <:< typeOf[scala.collection.immutable.List[_]]
 
       override def inspect(tree: Tree): Unit = {
         tree match {

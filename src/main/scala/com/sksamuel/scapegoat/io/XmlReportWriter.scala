@@ -8,7 +8,10 @@ import scala.xml.Node
 object XmlReportWriter {
 
   def toXML(reporter: Feedback): Node = {
-    <scapegoat count={reporter.warnings.size.toString}>
+    <scapegoat count={reporter.warnings.size.toString}
+               warns={reporter.warns.size.toString}
+               errors={reporter.errors.size.toString}
+               infos={reporter.infos.size.toString}>
       {reporter.warnings.map(warning2xml)}
     </scapegoat>
   }
@@ -18,6 +21,6 @@ object XmlReportWriter {
                text={warning.text}
                snippet={warning.snippet.orNull}
                level={warning.level.toString}
-               file={warning.sourceFile}/>
+               file={warning.sourceFile}>
   }
 }

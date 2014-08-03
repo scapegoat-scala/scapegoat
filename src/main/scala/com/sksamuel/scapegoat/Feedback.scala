@@ -7,6 +7,10 @@ import scala.reflect.api.Position
 class Feedback {
 
   val warnings = new ListBuffer[Warning]
+
+  def infos = warnings(Levels.Info)
+  def errors = warnings(Levels.Error)
+  def warns = warnings(Levels.Warning)
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
   def warn(text: String, pos: Position, level: Level): Unit = {
