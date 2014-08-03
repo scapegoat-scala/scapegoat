@@ -1,38 +1,36 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
-
-import scala.tools.nsc.Global
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class DuplicateMapKey extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
+      import context.global._
 
-    private def isDuplicateKeys(trees: List[Tree]): Boolean = {
-      val unique = trees.foldLeft(Set[String]())((set, tree) => tree match {
-        case Apply(TypeApply(Select(Apply(_, args), TermName("$minus$greater")), _), _) =>
-          set + args.head.toString()
-        case _ => set
-      })
-      unique.size < trees.size
-    }
+      private def isDuplicateKeys(trees: List[Tree]): Boolean = {
+        val unique = trees.foldLeft(Set[String]())((set, tree) => tree match {
+          case Apply(TypeApply(Select(Apply(_, args), TermName("$minus$greater")), _), _) =>
+            set + args.head.toString()
+          case _ => set
+        })
+        unique.size < trees.size
+      }
 
-    private def warn(tree: Tree) = {
-      feedback.warn("Duplicated map key",
-        tree.pos,
-        Levels.Error,
-        "A map key is overwriten by a later entry: " + tree.toString().take(100))
-    }
+      private def warn(tree: Tree) = {
+        context.warn("Duplicated map key", tree.pos, Levels.Warning,
+          "A map key is overwriten by a later entry: " + tree.toString().take(100))
+      }
 
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _),
-        args) if isDuplicateKeys(args) =>
-          warn(tree)
-        case _ => super.traverse(tree)
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _),
+          args) if isDuplicateKeys(args) =>
+            warn(tree)
+          case _ => super.traverse(tree)
+        }
       }
     }
   }

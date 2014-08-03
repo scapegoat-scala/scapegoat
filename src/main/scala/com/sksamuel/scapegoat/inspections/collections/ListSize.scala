@@ -1,22 +1,22 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Levels, Feedback, Inspection}
-
-import scala.tools.nsc.Global
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class ListSize extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
+      import context.global._
 
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case Select(lhs, TermName("size")) if lhs.tpe <:< typeOf[List[_]] =>
-          feedback.warn("List.size is O(n)", tree.pos, Levels.Info,
-            "List.size is O(n). Consider using a different data type with O(1) size lookup such as Vector or Array.")
-        case _ => super.traverse(tree)
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case Select(lhs, TermName("size")) if lhs.tpe <:< typeOf[List[_]] =>
+            context.warn("List.size is O(n)", tree.pos, Levels.Info,
+              "List.size is O(n). Consider using a different data type with O(1) size lookup such as Vector or Array.")
+          case _ => super.traverse(tree)
+        }
       }
     }
   }

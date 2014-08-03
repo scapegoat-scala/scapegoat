@@ -1,23 +1,25 @@
 package com.sksamuel.scapegoat.inspections.unneccesary
 
-import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
+import com.sksamuel.scapegoat._
 
 import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
 class ConstantIf extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
+      import context.global._
 
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case If(cond, thenp, elsep) =>
-          if (cond.toString() == "false" || cond.toString() == "true")
-            feedback.warn("Constant if expression", tree.pos, Levels.Warning,
-              "Constant if expression " + tree.toString().take(500))
-        case _ => super.traverse(tree)
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case If(cond, thenp, elsep) =>
+            if (cond.toString() == "false" || cond.toString() == "true")
+              context.warn("Constant if expression", tree.pos, Levels.Warning,
+                "Constant if expression " + tree.toString().take(500))
+          case _ => super.traverse(tree)
+        }
       }
     }
   }

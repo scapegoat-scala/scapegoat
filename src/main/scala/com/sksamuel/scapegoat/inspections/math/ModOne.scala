@@ -1,8 +1,6 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
-
-import scala.tools.nsc.Global
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel
   *
@@ -10,18 +8,19 @@ import scala.tools.nsc.Global
   **/
 class ModOne extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
+      import context.global._
 
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case Apply(Select(lhs, TermName("$percent")), List(Literal(Constant(1)))) if lhs.tpe <:< typeOf[Int] =>
-          feedback.warn("Integer mod one", tree.pos, Levels.Warning,
-            "Any expression x % 1 will always return 0. " + tree.toString().take(300))
-        case _ => super.traverse(tree)
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case Apply(Select(lhs, TermName("$percent")), List(Literal(Constant(1)))) if lhs.tpe <:< typeOf[Int] =>
+            context.warn("Integer mod one", tree.pos, Levels.Warning,
+              "Any expression x % 1 will always return 0. " + tree.toString().take(300))
+          case _ => super.traverse(tree)
+        }
       }
     }
   }
-
 }

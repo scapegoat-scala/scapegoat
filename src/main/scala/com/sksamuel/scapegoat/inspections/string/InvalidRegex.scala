@@ -2,28 +2,27 @@ package com.sksamuel.scapegoat.inspections.string
 
 import java.util.regex.PatternSyntaxException
 
-import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
-
-import scala.tools.nsc.Global
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class InvalidRegex extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
+      import context.global._
 
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(regex)))), TermName("r")) =>
-          try {
-            regex.toString.r
-          } catch {
-            case e: PatternSyntaxException =>
-              val f = e
-              feedback.warn("Invalid regex", tree.pos, Levels.Info, e.getMessage)
-          }
-        case _ => super.traverse(tree)
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(regex)))), TermName("r")) =>
+            try {
+              regex.toString.r
+            } catch {
+              case e: PatternSyntaxException =>
+                context.warn("Invalid regex", tree.pos, Levels.Info, e.getMessage)
+            }
+          case _ => super.traverse(tree)
+        }
       }
     }
   }

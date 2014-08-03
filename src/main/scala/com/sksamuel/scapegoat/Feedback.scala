@@ -1,6 +1,7 @@
 package com.sksamuel.scapegoat
 
 import scala.collection.mutable.ListBuffer
+import scala.reflect.api.Position
 
 /** @author Stephen Samuel */
 class Feedback {
@@ -8,16 +9,16 @@ class Feedback {
   val warnings = new ListBuffer[Warning]
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
-  def warn(text: String, pos: scala.reflect.internal.util.Position, level: Level): Unit = {
+  def warn(text: String, pos: Position, level: Level): Unit = {
     warn(text, pos, level, None)
   }
 
-  def warn(text: String, pos: scala.reflect.internal.util.Position, level: Level, snippet: String): Unit = {
+  def warn(text: String, pos: Position, level: Level, snippet: String): Unit = {
     warn(text, pos, level, Option(snippet))
   }
 
   private def warn(text: String,
-                   pos: scala.reflect.internal.util.Position,
+                   pos: Position,
                    level: Level,
                    snippet: Option[String]): Unit = {
     val sourceFile = normalizeSourceFile(pos.source.file.path)

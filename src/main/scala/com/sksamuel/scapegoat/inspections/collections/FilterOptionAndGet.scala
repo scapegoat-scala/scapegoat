@@ -1,24 +1,24 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
-
-import scala.tools.nsc.Global
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class FilterOptionAndGet extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
+      import context.global._
 
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case Apply(TypeApply(
-        Select(Apply(Select(_, TermName("filter")), List(Function(_, Select(_, TermName("isDefined"))))),
-        TermName("map")), args), List(Function(_, Select(_, TermName("get"))))) =>
-          feedback.warn("filter(_.isDefined).map(_.get)", tree.pos, Levels.Info,
-            ".filter(_.isDefined).map(_.get) can be replaced with flatten: " + tree.toString().take(500))
-        case _ => super.traverse(tree)
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case Apply(TypeApply(
+          Select(Apply(Select(_, TermName("filter")), List(Function(_, Select(_, TermName("isDefined"))))),
+          TermName("map")), args), List(Function(_, Select(_, TermName("get"))))) =>
+            context.warn("filter(_.isDefined).map(_.get)", tree.pos, Levels.Info,
+              ".filter(_.isDefined).map(_.get) can be replaced with flatten: " + tree.toString().take(500))
+          case _ => super.traverse(tree)
+        }
       }
     }
   }

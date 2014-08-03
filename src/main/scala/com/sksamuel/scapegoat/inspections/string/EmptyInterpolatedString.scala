@@ -1,23 +1,22 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
-
-import scala.tools.nsc.Global
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class EmptyInterpolatedString extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
+      import context.global._
 
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case Apply(Select(Apply(Select(lhs, TermName("apply")), List(string)), TermName("s")), Nil) =>
-          feedback.warn("Empty interpolated string", tree.pos, Levels.Warning, tree.toString().take(500))
-        case _ => super.traverse(tree)
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case Apply(Select(Apply(Select(lhs, TermName("apply")), List(string)), TermName("s")), Nil) =>
+            context.warn("Empty interpolated string", tree.pos, Levels.Warning, tree.toString().take(500))
+          case _ => super.traverse(tree)
+        }
       }
     }
   }
 }
-

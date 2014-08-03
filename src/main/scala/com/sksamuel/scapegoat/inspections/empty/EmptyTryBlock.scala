@@ -1,20 +1,21 @@
 package com.sksamuel.scapegoat.inspections.empty
 
-import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
-
-import scala.tools.nsc.Global
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class EmptyTryBlock extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case Try(Literal(Constant(())), _, _) =>
-          feedback.warn("Empty try block", tree.pos, Levels.Warning, tree.toString().take(500))
-        case _ => super.traverse(tree)
+      import context.global._
+
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case Try(Literal(Constant(())), _, _) =>
+            context.warn("Empty try block", tree.pos, Levels.Warning, tree.toString().take(500))
+          case _ => super.traverse(tree)
+        }
       }
     }
   }

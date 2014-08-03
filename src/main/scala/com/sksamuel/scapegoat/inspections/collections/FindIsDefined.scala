@@ -1,22 +1,22 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Feedback, Inspection, Levels}
-
-import scala.tools.nsc.Global
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class FindIsDefined extends Inspection {
 
-  override def traverser(global: Global, feedback: Feedback): global.Traverser = new global.Traverser {
+  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+    override def traverser = new context.Traverser {
 
-    import global._
+      import context.global._
 
-    override def traverse(tree: Tree): Unit = {
-      tree match {
-        case Select(Apply(Select(_, TermName("find")), _), TermName("isDefined")) =>
-          feedback.warn("use exists() not find().isDefined()", tree.pos, Levels.Info,
-            ".find(x => Bool).isDefined can be replaced with exists(x => Bool): " + tree.toString().take(500))
-        case _ => super.traverse(tree)
+      override def traverse(tree: Tree): Unit = {
+        tree match {
+          case Select(Apply(Select(_, TermName("find")), _), TermName("isDefined")) =>
+            context.warn("use exists() not find().isDefined()", tree.pos, Levels.Info,
+              ".find(x => Bool).isDefined can be replaced with exists(x => Bool): " + tree.toString().take(500))
+          case _ => super.traverse(tree)
+        }
       }
     }
   }
