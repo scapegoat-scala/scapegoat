@@ -71,6 +71,6 @@ object ScapegoatConfig extends App {
     new WhileTrue)
 
   private def load(is: InputStream): Seq[String] = scala.io.Source.fromInputStream(is).getLines().toSeq
-  lazy private val disabled = Option(getClass.getResourceAsStream("/disabled_inspections")).map(load).getOrElse(Nil)
+  lazy private val disabled = Option(getClass.getResourceAsStream("/scapegoat/disabled_inspections")).map(load).getOrElse(Nil)
   def enabledInspections = inspections.filterNot(disabled.contains)
 }
