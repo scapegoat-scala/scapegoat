@@ -20,6 +20,10 @@ Here is a screen shot of the type of report scapegoat generates.
 
 ![screenshot](https://raw.githubusercontent.com/sksamuel/scapegoat/master/screenshot1.png)
 
+### False positives
+
+Please note that scapegoat is a new project. While it's been tested on some common open source projects, there is still a good chance you'll find false positives. Please open up issues if you run into these so we can fix them.
+
 ### Inspections
 
 The currently implemented inspections are as follows. An overview list is given, followed by a more detailed description of each inspection after the list.
