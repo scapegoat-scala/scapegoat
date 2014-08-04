@@ -89,20 +89,6 @@ The currently implemented inspections are as follows. An overview list is given,
 | WhileTrue| Checks for code that uses a `while(true)` or `do { } while(true)` block. |
 | ZeroNumerator | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0` |
 
-
-
-|  |  |
-
-| Prefer set empty | checks for use of Set.empty rather than Set() |
-| Prefer seq empty | checks for use of Seq.empty rather than Seq() |
-| Redundant finalizer | checks for empty finalizers |
-| Return use | using return in Scala is not recommended |
-| Try get | Try.get should be replaced with safe patter matching |
-| Unused method parameter | checks for unused method parameters |
-| Var use | description needed |
-| Var use | description needed |
-| While true | description needed |
-
 ### Inspections
 
 ##### Arrays to string
