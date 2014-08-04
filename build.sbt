@@ -15,6 +15,7 @@ javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 libraryDependencies ++= Seq(
   "org.scala-lang"                  %     "scala-reflect"         % "2.11.2",
   "org.scala-lang.modules"          %     "scala-xml_2.11"        % "1.0.2",
+  "org.scala-lang.modules"          %     "scala-xml_2.11"        % "1.0.2"       % "test",
   "org.scala-lang"                  %     "scala-compiler"        % "2.11.2"      % "test",
   "commons-io"                      %     "commons-io"            % "2.4"         % "test",
   "org.scalatest"                   %%    "scalatest"             % "2.1.6"       % "test",
