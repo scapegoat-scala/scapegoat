@@ -32,6 +32,8 @@ The currently implemented inspections are as follows. An overview list is given,
 |----|-----------|
 | ArraysInFormat| Checks for arrays passed to String.format |
 | ArraysToString| Checks for explicit toString calls on arrays |
+| AvoidSizeEqualsZero | Traversable.size can be slow for some data structure, prefer .isEmpty |
+| AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty |
 | AsInstanceOf| Checks for use of `asInstanceOf` |
 | BigDecimalDoubleConstructor| Checks for use of `BigDecimal(double)` which can be unsafe |
 | BrokenOddness| checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
@@ -71,6 +73,7 @@ The currently implemented inspections are as follows. An overview list is given,
 | OptionGet| Checks for `Option.get` |
 | OptionSize| Checks for `Option.size` |
 | ParameterlessMethodReturnsUnit| Checks for `def foo : Unit` |
+| PartialFunctionInsteadOfMatch | Warns when you could use a partial function directly instead of a match block |
 | PreferSeqEmpty| Checks for Seq() when could use Seq.empty |
 | PreferSetEmpty| Checks for Set() when could use Set.empty |
 | ProductWithSerializableInferred| Checks for vals that have `Product with Serializable` as their inferred type |
