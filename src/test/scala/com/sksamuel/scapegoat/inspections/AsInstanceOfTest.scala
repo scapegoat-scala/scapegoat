@@ -51,17 +51,17 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
-    //    "should ignore @SuppressWarnings when this inspection is set" in {
-    //      val code = """class Test {
-    //                      @SuppressWarnings(Array("asinstanceof"))
-    //                      def hello : Unit = {
-    //                        val s : Any = "sammy"
-    //                        println(s.asInstanceOf[String])
-    //                      }
-    //                    } """.stripMargin
-    //
-    //      compileCodeSnippet(code)
-    //      compiler.scapegoat.feedback.warnings.size shouldBe 0
-    //    }
+    "should ignore @SuppressWarnings when this inspection is set" in {
+      val code = """class Test {
+                          @SuppressWarnings(Array("asinstanceof"))
+                          def hello : Unit = {
+                            val s : Any = "sammy"
+                            println(s.asInstanceOf[String])
+                          }
+                        } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
   }
 }

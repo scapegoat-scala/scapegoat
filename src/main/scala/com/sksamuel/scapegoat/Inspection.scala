@@ -25,12 +25,24 @@ case class InspectionContext(global: Global, feedback: Feedback) {
 
     import global._
 
+    private val SuppressWarnings = typeOf[SuppressWarnings]
+
+    private def inspectionClass(klass: Class[_]): Class[_] = Option(klass.getEnclosingClass) match {
+      case None => klass
+      case Some(k) => inspectionClass(k)
+    }
+
+    private def isAllDisabled(an: AnnotationInfo) = {
+      an.javaArgs.head._2.toString.toLowerCase.contains("\"all\"")
+    }
+
+    private def isThisDisabled(an: AnnotationInfo) = {
+      an.javaArgs.head._2.toString.toLowerCase.contains(inspectionClass(getClass).getSimpleName.toLowerCase)
+    }
+
     private def isSuppressed(symbol: Symbol) = {
-      symbol != null &&
-        symbol.annotations.nonEmpty &&
-        symbol.annotations.head.tree.tpe.typeSymbol.fullName == classOf[SuppressWarnings].getCanonicalName &&
-        (symbol.annotations.head.javaArgs.head._2.toString.toLowerCase.contains(getClass.getSimpleName.toLowerCase) ||
-          symbol.annotations.head.javaArgs.head._2.toString.toLowerCase.contains("\"all\""))
+      symbol != null && symbol.annotations.exists(an =>
+        an.tree.tpe =:= SuppressWarnings && (isAllDisabled(an) || isThisDisabled(an)))
     }
 
     protected def continue(tree: Tree) = super.traverse(tree)
