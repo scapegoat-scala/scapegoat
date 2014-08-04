@@ -10,8 +10,12 @@ class VarUse extends Inspection {
 
       import context.global._
 
+      private val xmlLiteralClassNames = Seq("scala.xml.NamespaceBinding", "scala.xml.MetaData")
+      private def isXmlLiteral(tpe: Type) = xmlLiteralClassNames.contains(tpe.typeSymbol.fullName)
+
       override def inspect(tree: Tree): Unit = {
         tree match {
+          case ValDef(_, _, tpt, _) if isXmlLiteral(tpt.tpe) =>
           case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.SYNTHETIC) =>
           case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
             context.warn("Use of var", tree.pos, Levels.Warning, "var used: " + tree.toString().take(300), VarUse.this)
