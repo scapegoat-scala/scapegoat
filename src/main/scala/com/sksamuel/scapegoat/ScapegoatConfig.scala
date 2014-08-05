@@ -71,6 +71,7 @@ object ScapegoatConfig extends App {
     new ProductWithSerializableInferred,
     new RedundantFinalizer,
     new SwapSortFilter,
+    new SubstringZero,
     new TraversableHead,
     new TryGet,
     new UnnecessaryIf,
