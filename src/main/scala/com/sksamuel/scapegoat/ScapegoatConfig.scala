@@ -57,6 +57,8 @@ object ScapegoatConfig extends App {
     new ListSize,
     new ModOne,
     new NanComparison,
+    new NegationIsEmpty,
+    new NegationNonEmpty,
     new NullUse,
     new OptionGet,
     new OptionSize,
