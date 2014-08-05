@@ -26,6 +26,7 @@ object ScapegoatConfig extends App {
     new BigDecimalDoubleConstructor,
     new BrokenOddness,
     new CatchNpe,
+    new CatchThrowable,
     new CollectionNamingConfusion,
     new CollectionNegativeIndex,
     new CollectionPromotionToAny,
