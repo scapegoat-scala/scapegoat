@@ -54,6 +54,7 @@ object ScapegoatConfig extends App {
     new InvalidRegex,
     new IsInstanceOf,
     new JavaConversionsUse,
+    new ListAppend,
     new ListSize,
     new ModOne,
     new NanComparison,
