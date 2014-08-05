@@ -66,6 +66,7 @@ object ScapegoatConfig extends App {
     new PreferSetEmpty,
     new ProductWithSerializableInferred,
     new RedundantFinalizer,
+    new SwapSortFilter,
     new TraversableHead,
     new TryGet,
     new UnnecessaryIf,
