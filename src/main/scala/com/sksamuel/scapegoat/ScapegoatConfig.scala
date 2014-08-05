@@ -35,6 +35,7 @@ object ScapegoatConfig extends App {
     new ConstantIf,
     new DivideByOne,
     new DuplicateMapKey,
+    new DuplicateSetValue,
     new EitherGet,
     new EmptyCatchBlock,
     new EmptyIfBlock,

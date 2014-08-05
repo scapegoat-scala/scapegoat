@@ -8,13 +8,6 @@ class DuplicateMapKeyTest extends FreeSpec with Matchers with PluginRunner with 
 
   override val inspections = Seq(new DuplicateMapKey)
 
-  import scala.reflect.runtime.universe
-
-  val expr = universe.reify {
-    Map("name" -> "sam")
-  }
-  println(universe showRaw expr.tree)
-
   "duplicate map keys" - {
     "should report warning" in {
       val code = """object Test {
