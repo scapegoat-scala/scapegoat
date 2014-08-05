@@ -69,6 +69,8 @@ The currently implemented inspections are as follows. An overview list is given,
 | ListSize| Checks for `List.size` which is O(n). |
 | ModOne| Checks for `x % 1` which will always return `1` |
 | NanComparison| Checks for `x == Double.NaN` which will always fail |
+| NegationIsEmpty | `!Traversable.isEmpty` can be replaced with `Traversable.nonEmpty` |
+| NegationNonEmpty | `!Traversable.nonEmpty` can be replaced with `Traversable.isEmpty` |
 | NullUse| Checks for use of `null` |
 | OptionGet| Checks for `Option.get` |
 | OptionSize| Checks for `Option.size` |
@@ -78,6 +80,7 @@ The currently implemented inspections are as follows. An overview list is given,
 | PreferSetEmpty| Checks for Set() when could use Set.empty |
 | ProductWithSerializableInferred| Checks for vals that have `Product with Serializable` as their inferred type |
 | RedundantFinalizer| Checks for empty finalizers. |
+| SwapSortFilter| `sort.filter` can be replaced with `filter.sort` for performance |
 | TraversableHead| Looks for unsafe usage of `Traversable.head` |
 | TryGet| Checks for use of `Try.get` |
 | UnnecessaryIf| Checks for code like `if (expr) true else false` |
