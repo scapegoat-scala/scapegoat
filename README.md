@@ -92,8 +92,6 @@ The currently implemented inspections are as follows. An overview list is given,
 | WhileTrue| Checks for code that uses a `while(true)` or `do { } while(true)` block. |
 | ZeroNumerator | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0` |
 
-### Inspections
-
 ##### Arrays to string
 
 Checks for explicit toString calls on arrays. Since toString on an array does not perform a deep toString, like say scala's List, this is usually a mistake.
