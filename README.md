@@ -149,4 +149,4 @@ Checks for code that uses a `while(true)` or `do { } while(true)` block.
 * OCLint (C++/ObjC) - http://docs.oclint.org/en/dev/rules/index.html
 * JSLink (Javascript) - http://www.jshint.com/
 * JavascriptLink (Javascript) - http://www.javascriptlint.com/
-* ClosureLinkter (Javascript) - https://developers.google.com/closure/utilities/
+* ClosureLinter (Javascript) - https://developers.google.com/closure/utilities/
