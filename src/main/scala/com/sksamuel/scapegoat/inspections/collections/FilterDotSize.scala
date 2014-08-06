@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat._
   *
   *         Inspired by IntelliJ
   */
-class FilterSize extends Inspection {
+class FilterDotSize extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
@@ -17,7 +17,7 @@ class FilterSize extends Inspection {
         tree match {
           case Select(Apply(Select(_, TermName("filter")), _), TermName("size")) =>
             context.warn("filter().size() instead of count()", tree.pos, Levels.Info,
-              ".filter(x => Bool).size can be replaced with count(x => Bool): " + tree.toString().take(500), FilterSize.this)
+              ".filter(x => Bool).size can be replaced with count(x => Bool): " + tree.toString().take(500), FilterDotSize.this)
           case _ => continue(tree)
         }
       }

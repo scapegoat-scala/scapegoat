@@ -19,7 +19,7 @@ class AvoidSizeEqualsZero extends Inspection {
             context.warn("Avoid Traversable.size == 0",
               tree.pos,
               Levels.Warning,
-              "Traversable.size is slow for some implementations. Prefer list.isEmpty which is O(1): " + tree.toString().take(100),
+              "Traversable.size is slow for some implementations. Prefer .isEmpty which is O(1): " + tree.toString().take(100),
               AvoidSizeEqualsZero.this)
           case _ => continue(tree)
         }

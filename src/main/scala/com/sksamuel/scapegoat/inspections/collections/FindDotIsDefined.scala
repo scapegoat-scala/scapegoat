@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class FindIsDefined extends Inspection {
+class FindDotIsDefined extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
@@ -15,7 +15,7 @@ class FindIsDefined extends Inspection {
           case Select(Apply(Select(_, TermName("find")), _), TermName("isDefined")) =>
             context.warn("use exists() not find().isDefined()", tree.pos, Levels.Info,
               ".find(x => Bool).isDefined can be replaced with exists(x => Bool): " + tree.toString().take(500),
-              FindIsDefined.this)
+              FindDotIsDefined.this)
           case _ => continue(tree)
         }
       }

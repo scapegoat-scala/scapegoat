@@ -4,10 +4,10 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class FindIsDefinedTest
+class FindDotIsDefinedTest
   extends FreeSpec with Matchers with PluginRunner {
 
-  override val inspections = Seq(new FindIsDefined)
+  override val inspections = Seq(new FindDotIsDefined)
 
   "filter then size" - {
     "should report warning" in {

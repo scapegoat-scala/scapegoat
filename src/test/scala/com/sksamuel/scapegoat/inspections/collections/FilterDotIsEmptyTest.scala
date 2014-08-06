@@ -4,18 +4,18 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
-class FilterHeadOptionTest
+class FilterDotIsEmptyTest
   extends FreeSpec
   with Matchers
   with PluginRunner
   with OneInstancePerTest {
 
-  override val inspections = Seq(new FilterHeadOption)
+  override val inspections = Seq(new FilterDotIsEmpty)
 
   "self assignment" - {
     "should report warning" - {
       val code = """class Test {
-                     List(1,2,3).filter(_ < 0).headOption
+                     val empty = List(1,2,3).filter(_ < 0).isEmpty
                     } """.stripMargin
 
       compileCodeSnippet(code)
