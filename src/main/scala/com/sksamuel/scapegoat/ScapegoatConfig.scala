@@ -10,7 +10,7 @@ import com.sksamuel.scapegoat.inspections.matching.PartialFunctionInsteadOfMatch
 import com.sksamuel.scapegoat.inspections.math._
 import com.sksamuel.scapegoat.inspections.option.{EitherGet, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
-import com.sksamuel.scapegoat.inspections.style.{IncorrectlyNamedExceptions, ParameterlessMethodReturnsUnit}
+import com.sksamuel.scapegoat.inspections.style.{SimplifyBooleanExpression, IncorrectlyNamedExceptions, ParameterlessMethodReturnsUnit}
 import com.sksamuel.scapegoat.inspections.unneccesary._
 import com.sksamuel.scapegoat.inspections.unsafe._
 
@@ -72,8 +72,9 @@ object ScapegoatConfig extends App {
     new PreferSetEmpty,
     new ProductWithSerializableInferred,
     new RedundantFinalizer,
-    new SwapSortFilter,
+    new SimplifyBooleanExpression,
     new SubstringZero,
+    new SwapSortFilter,
     new TraversableHead,
     new TryGet,
     new UnnecessaryIf,
