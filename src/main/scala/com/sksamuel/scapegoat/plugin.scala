@@ -17,8 +17,11 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override def init(options: List[String], error: String => Unit): Boolean = {
     options.find(_.startsWith("disabledInspections:")) match {
-      case Some(option) =>
-        component.disabled = option.drop("disabledInspections:".length).split(':')
+      case Some(option) => component.disabled = option.drop("disabledInspections:".length).split(':')
+      case _ =>
+    }
+    options.find(_.startsWith("consoleOutput:")) match {
+      case Some(option) => component.consoleOutput = option.drop("consoleOutput:".length).toBoolean
       case _ =>
     }
     options.find(_.startsWith("dataDir:")) match {
@@ -47,6 +50,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   val feedback = new Feedback()
   var dataDir: File = new File(".")
   var disabled: Seq[String] = Nil
+  var consoleOutput: Boolean = false
 
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")
@@ -60,6 +64,12 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       println(s"[info] [scapegoat]: ${activeInspections.size} activated inspections")
       println("[info] [scapegoat]: Beginning anaylsis...")
       super.run()
+
+      if (consoleOutput) {
+        for ( warning <- feedback.warnings ) {
+          println(s"[${warning.level}] [scapegoat] ${warning.snippet} - ${warning.sourceFile}:${warning.line}}")
+        }
+      }
 
       val errors = feedback.errors.size
       val warns = feedback.warns.size
