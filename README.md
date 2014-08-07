@@ -26,7 +26,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Inspections
 
-The currently implemented inspections are as follows. An overview list is given, followed by a more detailed description of each inspection after the list.
+There are currently 68 inspections. An overview list is given, followed by a more detailed description of each inspection after the list.
 
 |Name|Brief Description|
 |----|-----------|
