@@ -38,6 +38,7 @@ The currently implemented inspections are as follows. An overview list is given,
 | BigDecimalDoubleConstructor| Checks for use of `BigDecimal(double)` which can be unsafe |
 | BrokenOddness| checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
 | CatchNpe| Checks for try blocks that catch null pointer exceptions |
+| CatchThrowable | Checks for try blocks that catch Throwable |
 | CollectionNamingConfusion| Checks for variables that are confusingly named |
 | CollectionNegativeIndex| Checks for negative access on a sequence |
 | CollectionPromotionToAny| Checks for collection operations that promote the collection to `Any` |
@@ -47,6 +48,7 @@ The currently implemented inspections are as follows. An overview list is given,
 | ConstantIf| Checks for code where the if condition compiles to a constant |
 | DivideByOne| Checks for divide by one, which always returns the original value |
 | DuplicateMapKey| Checks for duplicate key names in Map literals |
+| DuplicateSetValue | Checks for duplicate values in set literals |
 | EitherGet| Checks for use of .get on Left or Right |
 | EmptyCatchBlock| Checks for swallowing exceptions |
 | EmptyIfBlock| Checks for empty if blocks |
@@ -54,18 +56,21 @@ The currently implemented inspections are as follows. An overview list is given,
 | EmptyMethod| Looks for empty methods |
 | EmptySynchronizedBlock| Looks for empty synchronized blocks |
 | EmptyTryBlock| Looks for empty try blocks |
+| ExistsSimplifableToContains | `exists(x => x == b)` replaceable with `contains(b)` |
 | ExpressionAsStatement| Looks for expressions executed for their side effects |
-| FilterHeadOption| `.filter(x => Bool).headOption` can be replaced with `find(x => Bool)` |
-| FilterIsEmpty| `.filter(x => Bool).isEmpty` can be replaced with `!exists(x => Bool)` |
+| FilterDotHeadOption| `.filter(x => Bool).headOption` can be replaced with `find(x => Bool)` |
+| FilterDotIsEmpty| `.filter(x => Bool).isEmpty` can be replaced with `!exists(x => Bool)` |
 | FilterOptionAndGet| `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
-| FilterSize| `.filter(x => Bool).size` can be replaced more concisely with with `count(x => Bool)` |
+| FilterDotSize| `.filter(x => Bool).size` can be replaced more concisely with with `count(x => Bool)` |
 | FindIsDefined| `find(x => Bool).isDefined` can be replaced with `exist(x => Bool)` |
 | IllegalFormatString| Looks for invalid format strings |
 | IncorrectlyNamedExceptions| Checks for exceptions that are not called *Exception and vice versa |
 | IncorrectNumberOfArgsToFormat| Checks for wrong number of arguments to `String.format` |
+| IntToInt | Checks for unncessary `.toInt` on an `Int` |
 | InvalidRegex| Checks for invalid regex literals |
 | IsInstanceOf| Checks for use of `isInstanceOf` |
 | JavaConversionsUse| Checks for use of implicit Java conversions |
+| ListAppend | Checks for List :+ which is O(n) |
 | ListSize| Checks for `List.size` which is O(n). |
 | ModOne| Checks for `x % 1` which will always return `1` |
 | NanComparison| Checks for `x == Double.NaN` which will always fail |
@@ -80,6 +85,8 @@ The currently implemented inspections are as follows. An overview list is given,
 | PreferSetEmpty| Checks for Set() when could use Set.empty |
 | ProductWithSerializableInferred| Checks for vals that have `Product with Serializable` as their inferred type |
 | RedundantFinalizer| Checks for empty finalizers. |
+| SimplifyBooleanExpression | `b == false` can be simplified to `!b` |
+| SubstringZero | Checks for `String.substring(0)` |
 | SwapSortFilter| `sort.filter` can be replaced with `filter.sort` for performance |
 | TraversableHead| Looks for unsafe usage of `Traversable.head` |
 | TryGet| Checks for use of `Try.get` |
