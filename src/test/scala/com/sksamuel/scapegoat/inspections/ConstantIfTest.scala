@@ -2,16 +2,15 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.ConstantIf
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class ConstantIfTest extends FreeSpec with Matchers with PluginRunner {
+class ConstantIfTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new ConstantIf)
 
   "ConstantIf" - {
     "should report warning" in {
-
       val code = """object Test {
                       if (1 < 2) {
                         println("sammy")
@@ -27,6 +26,13 @@ class ConstantIfTest extends FreeSpec with Matchers with PluginRunner {
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 4
+    }
+    "should not report warning" - {
+      "for while loops" in {
+        val code = """object Test { while ( true ) { println("sam") } } """
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }

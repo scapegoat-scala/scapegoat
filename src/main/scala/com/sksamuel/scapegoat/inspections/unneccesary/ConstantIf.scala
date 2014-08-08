@@ -12,6 +12,8 @@ class ConstantIf extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
+          // ignore while loops, this will be picked up by the WhileTrue inspection
+          case LabelDef(_, _, _) =>
           case If(cond, thenp, elsep) =>
             if (cond.toString() == "false" || cond.toString() == "true")
               context.warn("Constant if expression", tree.pos, Levels.Warning,
