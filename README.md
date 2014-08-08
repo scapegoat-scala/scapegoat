@@ -12,7 +12,7 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
-Latest Release: 0.90.5
+Latest Release: 0.90.8
 
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
@@ -28,7 +28,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Inspections
 
-There are currently 68 inspections. An overview list is given, followed by a more detailed description of each inspection after the list.
+There are currently 69 inspections. An overview list is given, followed by a more detailed description of each inspection after the list.
 
 |Name|Brief Description|
 |----|-----------|
@@ -52,6 +52,7 @@ There are currently 68 inspections. An overview list is given, followed by a mor
 | DuplicateMapKey| Checks for duplicate key names in Map literals |
 | DuplicateSetValue | Checks for duplicate values in set literals |
 | EitherGet| Checks for use of .get on Left or Right |
+| EmptyCaseClass | Checks for case classes like `case class Faceman()` |
 | EmptyCatchBlock| Checks for swallowing exceptions |
 | EmptyIfBlock| Checks for empty if blocks |
 | EmptyInterpolatedString| Looks for interpolated strings that have no arguments |
