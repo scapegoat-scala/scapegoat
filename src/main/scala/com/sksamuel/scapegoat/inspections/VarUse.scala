@@ -15,9 +15,9 @@ class VarUse extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
+          case ValDef(mods, _, _, _) if mods.isSynthetic || mods.isMacro =>
           case ValDef(_, _, tpt, _) if isXmlLiteral(tpt.tpe) =>
-          case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.SYNTHETIC) =>
-          case ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
+          case v@ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
             context.warn("Use of var", tree.pos, Levels.Warning, "var used: " + tree.toString().take(300), VarUse.this)
           case _ => continue(tree)
         }

@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class VarUseTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
@@ -17,6 +17,26 @@ class VarUseTest extends FreeSpec with Matchers with PluginRunner with OneInstan
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 1
+    }
+  }
+  "async macros" - {
+    "should be ignored" in {
+      val code =
+        """
+          |      import scala.async.Async._
+          |      import scala.concurrent.Future
+          |      import scala.concurrent.ExecutionContext.Implicits.global
+          |      object Test {
+          |       val result = async {
+          |       val a = await( Future { 1 } )
+          |       val b = await( Future { 2 } )
+          |       a + b
+          |       }
+          |      }
+        """.stripMargin
+      addToClassPath("org.scala-lang.modules", "scala-async_2.11", "0.9.2")
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
 

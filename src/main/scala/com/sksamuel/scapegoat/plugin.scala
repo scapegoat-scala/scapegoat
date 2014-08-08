@@ -24,6 +24,9 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       case Some(option) => component.consoleOutput = option.drop("consoleOutput:".length).toBoolean
       case _ =>
     }
+    for ( verbose <- options.find(_.startsWith("verbose:")) ) {
+      component.verbose = verbose.drop("verbose:".length).toBoolean
+    }
     options.find(_.startsWith("dataDir:")) match {
       case Some(option) =>
         component.dataDir = new File(option.drop("dataDir:".length))
@@ -51,6 +54,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var dataDir: File = new File(".")
   var disabled: Seq[String] = Nil
   var consoleOutput: Boolean = false
+  var verbose: Boolean = false
 
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")
