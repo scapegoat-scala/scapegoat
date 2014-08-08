@@ -29,7 +29,7 @@ class UnusedMethodParameter extends Inspection {
                   vparam <- vparams ) {
               if (!usesParameter(vparam, rhs))
                 context.warn("Unused method parameter", tree.pos, Levels.Warning,
-                  s"Unused method parameter ($vparam) at " + name.toString.take(100), UnusedMethodParameter.this)
+                  s"Unused method parameter ($vparam)", UnusedMethodParameter.this)
             }
           case _ => continue(tree)
         }

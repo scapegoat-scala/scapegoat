@@ -87,7 +87,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
     override def transform(tree: global.Tree) = {
       if (consoleOutput)
-        println(s"[debug] [scapegoat]: Inspecting compilation unit [$unit]")
+        println(s"[   info] [scapegoat]: Inspecting compilation unit [$unit]")
       val context = new InspectionContext(global, feedback)
       activeInspections.foreach(inspection => {
         val inspector = inspection.inspector(context)
