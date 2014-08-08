@@ -21,8 +21,6 @@ class PartialFunctionInsteadOfMatch extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           // _ match { case ...; case ... }
-          case Apply(_, _) =>
-            println(())
           case Apply(_, List(Function(List(ValDef(mods, TermName("x$1"), _, EmptyTree)), Match(Ident(TermName("x$1")), _)))) => warn(tree)
           case Apply(TypeApply(_, _), List(Function(List(ValDef(mods, TermName("x$1"), _, EmptyTree)), Match(Ident(TermName("x$1")), _)))) => warn(tree)
           case TypeApply(_, List(Function(List(ValDef(mods, TermName("x$1"), _, EmptyTree)), Match(Ident(TermName("x$1")), _)))) => warn(tree)
