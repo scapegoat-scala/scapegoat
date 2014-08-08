@@ -3,6 +3,8 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
+import scala.concurrent.Future
+
 /** @author Stephen Samuel */
 class PartialFunctionInsteadOfMatchTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
@@ -35,11 +37,23 @@ class PartialFunctionInsteadOfMatchTest extends FreeSpec with Matchers with Plug
 
       val code = """object Test {
 
+                    import scala.concurrent.Future
+                    import scala.concurrent.ExecutionContext.Implicits.global
+
                      val list = List(1,"sam")
                      list.map {
                        case i: Int =>
                        case s: String =>
                      }
+
+                     val future = Future { }
+                     future onComplete {
+                       case _ =>
+                     }
+                    future onSuccess {
+                      case _ =>
+                     }
+
 
                     } """.stripMargin
 

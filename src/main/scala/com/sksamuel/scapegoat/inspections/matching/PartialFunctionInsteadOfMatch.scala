@@ -21,10 +21,15 @@ class PartialFunctionInsteadOfMatch extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           // _ match { case ...; case ... }
-          case Apply(_, List(Function(List(ValDef(mods, TermName("x$1"), _, EmptyTree)), Match(Ident(TermName("x$1")), _)))) =>
-            warn(tree)
-            // need to avoid the partial function style, they use x0$1
+          case Apply(_, _) =>
+            println(())
+          case Apply(_, List(Function(List(ValDef(mods, TermName("x$1"), _, EmptyTree)), Match(Ident(TermName("x$1")), _)))) => warn(tree)
+          case Apply(TypeApply(_, _), List(Function(List(ValDef(mods, TermName("x$1"), _, EmptyTree)), Match(Ident(TermName("x$1")), _)))) => warn(tree)
+          case TypeApply(_, List(Function(List(ValDef(mods, TermName("x$1"), _, EmptyTree)), Match(Ident(TermName("x$1")), _)))) => warn(tree)
+          // need to not warn on the partial function style, they use x0$1
           case Apply(_, List(Function(List(ValDef(mods, TermName("x0$1"), _, EmptyTree)), Match(Ident(TermName("x0$1")), _)))) =>
+          case Apply(TypeApply(_, _), List(Function(List(ValDef(mods, TermName("x0$1"), _, EmptyTree)), Match(Ident(TermName("x0$1")), _)))) =>
+          case TypeApply(_, List(Function(List(ValDef(mods, TermName("x0$1"), _, EmptyTree)), Match(Ident(TermName("x0$1")), _)))) =>
           // a => a match { case ...; case ... }
           case Apply(_, List(Function(List(ValDef(mods, x1, TypeTree(), EmptyTree)), Match(x2, _))))
             if x1.toString == x2.toString() =>
