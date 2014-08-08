@@ -24,6 +24,7 @@ class UnusedMethodParameterTest
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warns.size shouldBe 1
     }
     "should ignore abstract method" in {
 
@@ -33,6 +34,20 @@ class UnusedMethodParameterTest
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+    "overriden method should report as info" in {
+      val code = """object Test {
+                      trait Foo {
+                        def foo(name:String):String
+                      }
+                      object Fool extends Foo {
+                        override def foo(name:String) : String = "sam"
+                      }
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warns.size shouldBe 0
+      compiler.scapegoat.feedback.infos.size shouldBe 1
     }
     "should ignore @SuppressWarnings" in {
 
