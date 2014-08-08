@@ -22,5 +22,16 @@ class UnnecessaryIfTest
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 2
     }
+    "should not report warning" - {
+      "in empty case classes" in {
+        val code =
+          """object Test {
+               case class DebuggerShutdownEvent()
+             }
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+    }
   }
 }
