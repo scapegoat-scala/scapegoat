@@ -4,15 +4,15 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
-class PreferSetEmptyTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class PreferSeqEmptyTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
-  override val inspections = Seq(new PreferSetEmpty)
+  override val inspections = Seq(new PreferSeqEmpty)
 
-  "set apply" - {
+  "empty seq apply" - {
     "should report warning" in {
 
       val code = """object Test {
-                      val a = Set[String]()
+                      val a = Seq[String]()
                       val b = Set.empty
                     } """.stripMargin
 
@@ -20,11 +20,11 @@ class PreferSetEmptyTest extends FreeSpec with Matchers with PluginRunner with O
       compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
-  "non empty set apply" - {
+  "non empty seq apply" - {
     "should not report warning" in {
 
       val code = """object Test {
-                      val a = Set("sam")
+                      val a = Seq("sam")
                     } """.stripMargin
 
       compileCodeSnippet(code)

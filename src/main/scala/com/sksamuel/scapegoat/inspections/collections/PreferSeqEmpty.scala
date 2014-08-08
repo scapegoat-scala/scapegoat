@@ -10,14 +10,20 @@ class PreferSeqEmpty extends Inspection {
 
       import context.global._
 
+      private val ApplyTerm = TermName("apply")
+      private val SeqTerm = TermName("Seq")
+
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case TypeApply(Select(Select(_, TermName("Seq")), TermName("apply")), _) =>
-            context.warn("Prefer Seq.empty", tree.pos, Levels.Info,
-              "Seq[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " +
-                tree.toString().take(500), PreferSeqEmpty.this)
+          case Apply(TypeApply(Select(Select(_, SeqTerm), ApplyTerm), _), List()) => warn(tree)
           case _ => continue(tree)
         }
+      }
+
+      private def warn(tree: Tree) {
+        context.warn("Prefer Seq.empty", tree.pos, Levels.Info,
+          "Seq[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " +
+            tree.toString().take(500), PreferSeqEmpty.this)
       }
     }
   }
