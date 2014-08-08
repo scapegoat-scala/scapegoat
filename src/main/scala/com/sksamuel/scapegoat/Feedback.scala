@@ -4,7 +4,7 @@ import scala.collection.mutable.ListBuffer
 import scala.reflect.api.Position
 
 /** @author Stephen Samuel */
-class Feedback {
+class Feedback(consoleOutput: Boolean) {
 
   val warnings = new ListBuffer[Warning]
 
@@ -27,8 +27,10 @@ class Feedback {
                    snippet: Option[String],
                    inspection: Inspection): Unit = {
     val sourceFile = normalizeSourceFile(pos.source.file.path)
-    warnings.append(Warning(text, pos.line, level, sourceFile, snippet, inspection.getClass.getCanonicalName))
-  }
+    val warning = Warning(text, pos.line, level, sourceFile, snippet, inspection.getClass.getCanonicalName)
+    warnings.append(warning)
+    if (consoleOutput)
+      println(s"[${"%7s".format(warning.level.toString.toLowerCase)}] [scapegoat] ${warning.text} - ${warning.sourceFile}:${warning.line}")
 
   private def normalizeSourceFile(sourceFile: String): String = {
     val indexOf = sourceFile.indexOf("src/main/scala/")

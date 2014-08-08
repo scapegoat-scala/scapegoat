@@ -50,7 +50,6 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   import global._
 
-  val feedback = new Feedback()
   var dataDir: File = new File(".")
   var disabled: Seq[String] = Nil
   var consoleOutput: Boolean = false
@@ -61,6 +60,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override val runsBefore = List[String]("patmat")
 
   def activeInspections = inspections.filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+  lazy val feedback = new Feedback(consoleOutput)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {
@@ -68,12 +68,6 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       println(s"[info] [scapegoat]: ${activeInspections.size} activated inspections")
       println("[info] [scapegoat]: Beginning anaylsis...")
       super.run()
-
-      if (consoleOutput) {
-        for ( warning <- feedback.warnings ) {
-          println(s"[${"%7s".format(warning.level.toString.toLowerCase)}] [scapegoat] ${warning.text} - ${warning.sourceFile}:${warning.line}")
-        }
-      }
 
       val errors = feedback.errors.size
       val warns = feedback.warns.size
@@ -91,15 +85,12 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
 
-    if (verbose)
-      println(s"[debug] [scapegoat]: Inspecting compilation unit [$unit]")
-
     override def transform(tree: global.Tree) = {
+      if (consoleOutput)
+        println(s"[debug] [scapegoat]: Inspecting compilation unit [$unit]")
       val context = new InspectionContext(global, feedback)
       activeInspections.foreach(inspection => {
         val inspector = inspection.inspector(context)
-        if (verbose)
-          println(s"[debug] [scapegoat]: Inspector $inspector traversing $tree]")
         inspector.traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
       })
       tree
