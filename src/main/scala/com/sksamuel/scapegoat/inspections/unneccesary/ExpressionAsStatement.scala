@@ -12,10 +12,14 @@ class ExpressionAsStatement extends Inspection {
 
       private def checkStatements(statements: Seq[Tree]): Unit = {
         statements foreach {
-          case Apply(Select(_, name), _) if name.toString == "<init>" =>
+          // ignore super calls
+          case Apply(Select(_, nme.CONSTRUCTOR), _) =>
           case Assign(_, _) =>
+          // seems to be some odd cases where empty trees with no source appear
+          // https://github.com/sksamuel/sbt-scapegoat/issues/3
+          case EmptyTree =>
           case stmt if stmt.isDef =>
-          case stmt if stmt.tpe != null && stmt.tpe.toString != "Unit" =>
+          case stmt if stmt.tpe != null && !(stmt.tpe <:< typeOf[Unit]) =>
             context.warn("Expression as statement", stmt.pos, Levels.Warning,
               "Expression as statement at " + stmt.toString().take(500), ExpressionAsStatement.this)
           case _ =>
