@@ -67,7 +67,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
       if (consoleOutput) {
         for ( warning <- feedback.warnings ) {
-          println(s"[${"%7s".format(warning.level)}] [scapegoat] ${warning.text} - ${warning.sourceFile}:${warning.line}")
+          println(s"[${"%7s".format(warning.level.toString.toLowerCase)}] [scapegoat] ${warning.text} - ${warning.sourceFile}:${warning.line}")
         }
       }
 
