@@ -13,8 +13,8 @@ class UnnecessaryReturnUse extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Block(_, Return(expr)) =>
-            context.warn("Unnecessary return", tree.pos, Levels.Error,
-              "Scala returns the value of the last expression in a function. Use of return is not needed here",
+            context.warn("Unnecessary return", tree.pos, Levels.Info,
+              "Scala returns the value of the last expression in a block. Use of return here is not idomatic scala",
               UnnecessaryReturnUse.this)
           case _ => continue(tree)
         }
