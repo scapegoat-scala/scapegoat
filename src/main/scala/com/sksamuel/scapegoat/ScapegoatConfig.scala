@@ -38,6 +38,7 @@ object ScapegoatConfig extends App {
     new DuplicateMapKey,
     new DuplicateSetValue,
     new EitherGet,
+    new EmptyCaseClassInspection,
     new EmptyCatchBlock,
     new EmptyIfBlock,
     new EmptyInterpolatedString,
