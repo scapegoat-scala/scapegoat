@@ -16,9 +16,22 @@ Latest Release: 0.90.8
 
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
-### Screenshot
+### Reports
 
-Here is a screen shot of the type of report scapegoat generates.
+Here is sample output from the console during the build for a project with warnings/errors:
+
+```
+[warning] [scapegoat] Unused method parameter - org.ensime.util.ClassIterator.scala:46
+[warning] [scapegoat] Unused method parameter - org.ensime.util.ClassIterator.scala:137
+[warning] [scapegoat] Use of var - org.ensime.util.ClassIterator.scala:22
+[warning] [scapegoat] Use of var - org.ensime.util.ClassIterator.scala:157
+[   info] [scapegoat]: Inspecting compilation unit [FileUtil.scala]
+[warning] [scapegoat] Empty if statement - org.ensime.util.FileUtil.scala:157
+[warning] [scapegoat] Expression as statement - org.ensime.util.FileUtil.scala:180
+
+```
+
+And if you prefer a prettier repoert, here is a screen shot of the type of HTML report scapegoat generates:
 
 ![screenshot](https://raw.githubusercontent.com/sksamuel/scapegoat/master/screenshot1.png)
 
