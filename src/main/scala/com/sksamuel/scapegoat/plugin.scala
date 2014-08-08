@@ -91,10 +91,15 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
 
+    if (verbose)
+      println(s"[debug] [scapegoat]: Inspecting compilation unit [$unit]")
+
     override def transform(tree: global.Tree) = {
       val context = new InspectionContext(global, feedback)
       activeInspections.foreach(inspection => {
         val inspector = inspection.inspector(context)
+        if (verbose)
+          println(s"[debug] [scapegoat]: Inspector $inspector traversing $tree]")
         inspector.traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
       })
       tree
