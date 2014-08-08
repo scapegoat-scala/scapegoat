@@ -31,7 +31,7 @@ Here is sample output from the console during the build for a project with warni
 
 ```
 
-And if you prefer a prettier repoert, here is a screen shot of the type of HTML report scapegoat generates:
+And if you prefer a prettier report, here is a screen shot of the type of HTML report scapegoat generates:
 
 ![screenshot](https://raw.githubusercontent.com/sksamuel/scapegoat/master/screenshot1.png)
 
