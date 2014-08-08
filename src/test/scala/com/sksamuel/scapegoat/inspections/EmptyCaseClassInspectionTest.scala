@@ -29,6 +29,15 @@ class EmptyCaseClassInspectionTest extends FreeSpec with Matchers with PluginRun
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for case objects" in {
+        val code = """object Test {
+                      case object Empty
+                    }
+                   """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }

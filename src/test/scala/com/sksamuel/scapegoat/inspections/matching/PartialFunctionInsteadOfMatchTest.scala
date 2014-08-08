@@ -6,7 +6,11 @@ import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 import scala.concurrent.Future
 
 /** @author Stephen Samuel */
-class PartialFunctionInsteadOfMatchTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class PartialFunctionInsteadOfMatchTest
+  extends FreeSpec
+  with Matchers
+  with PluginRunner
+  with OneInstancePerTest {
 
   override val inspections = Seq(new PartialFunctionInsteadOfMatch)
 
@@ -50,7 +54,7 @@ class PartialFunctionInsteadOfMatchTest extends FreeSpec with Matchers with Plug
                      future onComplete {
                        case _ =>
                      }
-                    future onSuccess {
+                     future onSuccess {
                       case _ =>
                      }
 
