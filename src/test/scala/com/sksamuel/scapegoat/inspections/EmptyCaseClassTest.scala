@@ -4,9 +4,9 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class EmptyCaseClassInspectionTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class EmptyCaseClassTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
-  override val inspections = Seq(new EmptyCaseClassInspection)
+  override val inspections = Seq(new EmptyCaseClass)
 
   "empty class classes" - {
     "should report warning" in {
@@ -23,6 +23,15 @@ class EmptyCaseClassInspectionTest extends FreeSpec with Matchers with PluginRun
       "for empty classes" in {
         val code = """object Test {
                       class Empty()
+                    }
+                   """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for none empty case classes" in {
+        val code = """object Test {
+                      case class Empty(name:String)
                     }
                    """.stripMargin
 
