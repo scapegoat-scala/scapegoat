@@ -52,6 +52,7 @@ object ScapegoatConfig extends App {
     new FilterDotIsEmpty,
     new FilterOptionAndGet,
     new FilterDotSize,
+    new FinalizerWithoutSuper,
     new FindDotIsDefined,
     new IllegalFormatString,
     new IncorrectlyNamedExceptions,

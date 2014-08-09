@@ -2,7 +2,11 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/** @author Stephen Samuel
+  *
+  *         Checks for if statements where the condition evalutes to a constant true or a constant false.
+  *
+  **/
 class ConstantIf extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
