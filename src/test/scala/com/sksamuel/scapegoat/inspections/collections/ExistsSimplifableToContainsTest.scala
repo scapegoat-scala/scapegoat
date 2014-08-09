@@ -26,7 +26,7 @@ class ExistsSimplifableToContainsTest extends FreeSpec with Matchers with Plugin
     "should not report warning" in {
       val code =
         """object Test {
-          |val exists1 = List(1,2,3).exists(x => x == "sam")
+          |val exists1 = List("sam").exists(x => x == new RuntimeException)
           |val list = List("sam", "spade")
           |val exists2 = list.exists(_ == 3)
           |} """.stripMargin

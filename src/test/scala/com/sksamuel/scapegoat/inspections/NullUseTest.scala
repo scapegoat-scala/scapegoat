@@ -18,11 +18,6 @@ class NullUseTest extends FreeSpec with Matchers with PluginRunner with OneInsta
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 1
-
-      //      val expr = universe.reify {
-      //        println(null)
-      //      }
-      //      println(universe showRaw expr.tree)
     }
     "should have full snippet for method param" in {
       val code = """object Test {
@@ -39,8 +34,8 @@ class NullUseTest extends FreeSpec with Matchers with PluginRunner with OneInsta
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
-    "should handler var args" in {
-      val code = """class Birds(names:String*))"""
+    "should handle var args" in {
+      val code = """class Birds(names:String*)"""
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
