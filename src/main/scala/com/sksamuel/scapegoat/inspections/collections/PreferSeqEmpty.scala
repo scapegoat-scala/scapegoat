@@ -22,7 +22,7 @@ class PreferSeqEmpty extends Inspection {
 
       private def warn(tree: Tree) {
         context.warn("Prefer Seq.empty", tree.pos, Levels.Info,
-          "Seq[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " +
+          "Seq[T]() creates a new instance. Consider Seq.empty which does not allocate a new object. " +
             tree.toString().take(500), PreferSeqEmpty.this)
       }
     }
