@@ -12,7 +12,7 @@ class RepeatedCasePattern extends Inspection {
 
       import context.global._
 
-      private def isUnreachable(cases: List[CaseDef]): Boolean = {
+      private def isRepeated(cases: List[CaseDef]): Boolean = {
         val patterns = mutable.HashSet[String]()
         for ( casedef <- cases ) {
           patterns add casedef.pat.toString() + casedef.guard.toString()
@@ -22,7 +22,7 @@ class RepeatedCasePattern extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Match(_, cases) if isUnreachable(cases) =>
+          case Match(_, cases) if isRepeated(cases) =>
             context
               .warn("Unreachable case pattern",
                 tree.pos,

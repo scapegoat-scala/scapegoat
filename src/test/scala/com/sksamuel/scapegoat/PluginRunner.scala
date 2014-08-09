@@ -45,6 +45,10 @@ trait PluginRunner {
     reporter.flush()
     val command = new scala.tools.nsc.CompilerCommand(files.map(_.getAbsolutePath).toList, settings)
     new compiler.Run().compile(command.files)
+    if (reporter.hasErrors)
+      throw new RuntimeException
+    if (reporter.hasWarnings)
+      throw new RuntimeException
     compiler
   }
 
