@@ -12,7 +12,7 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
-Latest Release: 0.90.8
+Latest Release: 0.90.9
 
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
@@ -41,7 +41,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Inspections
 
-There are currently 69 inspections. An overview list is given, followed by a more detailed description of each inspection after the list.
+There are currently 76 inspections. An overview list is given, followed by a more detailed description of each inspection after the list.
 
 |Name|Brief Description|
 |----|-----------|
@@ -51,6 +51,7 @@ There are currently 69 inspections. An overview list is given, followed by a mor
 | AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty |
 | AsInstanceOf| Checks for use of `asInstanceOf` |
 | BigDecimalDoubleConstructor| Checks for use of `BigDecimal(double)` which can be unsafe |
+| BoundedByFinalType | Looks for types with upper bounds of a final type |
 | BrokenOddness| checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
 | CatchNpe| Checks for try blocks that catch null pointer exceptions |
 | CatchThrowable | Checks for try blocks that catch Throwable |
@@ -72,18 +73,21 @@ There are currently 69 inspections. An overview list is given, followed by a mor
 | EmptyMethod| Looks for empty methods |
 | EmptySynchronizedBlock| Looks for empty synchronized blocks |
 | EmptyTryBlock| Looks for empty try blocks |
+| EmptyWhileBlock | Looks for empty while loops |
 | ExistsSimplifableToContains | `exists(x => x == b)` replaceable with `contains(b)` |
 | ExpressionAsStatement| Looks for expressions executed for their side effects |
 | FilterDotHeadOption| `.filter(x => Bool).headOption` can be replaced with `find(x => Bool)` |
 | FilterDotIsEmpty| `.filter(x => Bool).isEmpty` can be replaced with `!exists(x => Bool)` |
 | FilterOptionAndGet| `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
 | FilterDotSize| `.filter(x => Bool).size` can be replaced more concisely with with `count(x => Bool)` |
+| FinalizerWithoutSuper | Checks for overriden finalizers that do not call super |
 | FindIsDefined| `find(x => Bool).isDefined` can be replaced with `exist(x => Bool)` |
 | IllegalFormatString| Looks for invalid format strings |
 | IncorrectlyNamedExceptions| Checks for exceptions that are not called *Exception and vice versa |
 | IncorrectNumberOfArgsToFormat| Checks for wrong number of arguments to `String.format` |
 | IntToInt | Checks for unncessary `.toInt` on an `Int` |
 | InvalidRegex| Checks for invalid regex literals |
+| ImpossibleOptionSizeCondition | Checks for code like `option.size > 2` which can never be true |
 | IsInstanceOf| Checks for use of `isInstanceOf` |
 | JavaConversionsUse| Checks for use of implicit Java conversions |
 | ListAppend | Checks for List :+ which is O(n) |
@@ -99,8 +103,10 @@ There are currently 69 inspections. An overview list is given, followed by a mor
 | PartialFunctionInsteadOfMatch | Warns when you could use a partial function directly instead of a match block |
 | PreferSeqEmpty| Checks for Seq() when could use Seq.empty |
 | PreferSetEmpty| Checks for Set() when could use Set.empty |
+| PreferVectorEmpty| Checks for Vector() when could use Vector.empty |
 | ProductWithSerializableInferred| Checks for vals that have `Product with Serializable` as their inferred type |
 | RedundantFinalizer| Checks for empty finalizers. |
+| RepeatedCaseBody | Checks for case statements which have the same body |
 | SimplifyBooleanExpression | `b == false` can be simplified to `!b` |
 | SubstringZero | Checks for `String.substring(0)` |
 | SwapSortFilter| `sort.filter` can be replaced with `filter.sort` for performance |
