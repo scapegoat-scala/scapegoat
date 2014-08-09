@@ -8,7 +8,7 @@ import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes,
 import com.sksamuel.scapegoat.inspections.inference.ProductWithSerializableInferred
 import com.sksamuel.scapegoat.inspections.matching.{RepeatedCaseBody, PartialFunctionInsteadOfMatch}
 import com.sksamuel.scapegoat.inspections.math._
-import com.sksamuel.scapegoat.inspections.option.{EitherGet, OptionGet, OptionSize}
+import com.sksamuel.scapegoat.inspections.option.{ImpossibleOptionSizeCondition, EitherGet, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
 import com.sksamuel.scapegoat.inspections.style.{SimplifyBooleanExpression, IncorrectlyNamedExceptions, ParameterlessMethodReturnsUnit}
 import com.sksamuel.scapegoat.inspections.unneccesary._
@@ -58,6 +58,7 @@ object ScapegoatConfig extends App {
     new IncorrectNumberOfArgsToFormat,
     new IntToInt,
     new InvalidRegex,
+    new ImpossibleOptionSizeCondition,
     new IsInstanceOf,
     new JavaConversionsUse,
     new ListAppend,
