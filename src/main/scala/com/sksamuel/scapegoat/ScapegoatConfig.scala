@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.inspections.collections._
 import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
 import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf}
-import com.sksamuel.scapegoat.inspections.inference.ProductWithSerializableInferred
+import com.sksamuel.scapegoat.inspections.inference.{BoundedByFinalType, ProductWithSerializableInferred}
 import com.sksamuel.scapegoat.inspections.matching.{PartialFunctionInsteadOfMatch, RepeatedCaseBody}
 import com.sksamuel.scapegoat.inspections.math._
 import com.sksamuel.scapegoat.inspections.option.{EitherGet, ImpossibleOptionSizeCondition, OptionGet, OptionSize}
@@ -24,6 +24,7 @@ object ScapegoatConfig extends App {
     new AvoidSizeNotEqualsZero,
     new AsInstanceOf,
     new BigDecimalDoubleConstructor,
+    new BoundedByFinalType,
     new BrokenOddness,
     new CatchNpe,
     new CatchThrowable,
