@@ -76,6 +76,7 @@ There are currently 76 inspections. An overview list is given, followed by a mor
 | EmptyWhileBlock | Looks for empty while loops |
 | ExistsSimplifableToContains | `exists(x => x == b)` replaceable with `contains(b)` |
 | ExpressionAsStatement| Looks for expressions executed for their side effects |
+| FilterDotHead| `.filter(x => Bool).head` can be replaced with `find(x => Bool) match { .. } ` |
 | FilterDotHeadOption| `.filter(x => Bool).headOption` can be replaced with `find(x => Bool)` |
 | FilterDotIsEmpty| `.filter(x => Bool).isEmpty` can be replaced with `!exists(x => Bool)` |
 | FilterOptionAndGet| `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
