@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
 import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf}
 import com.sksamuel.scapegoat.inspections.inference.ProductWithSerializableInferred
-import com.sksamuel.scapegoat.inspections.matching.{RepeatedCaseBody, PartialFunctionInsteadOfMatch}
+import com.sksamuel.scapegoat.inspections.matching.{UnreachableCasePattern, RepeatedCaseBody, PartialFunctionInsteadOfMatch}
 import com.sksamuel.scapegoat.inspections.math._
 import com.sksamuel.scapegoat.inspections.option.{ImpossibleOptionSizeCondition, EitherGet, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
@@ -84,6 +84,7 @@ object ScapegoatConfig extends App {
     new TryGet,
     new UnnecessaryIf,
     new UnnecessaryReturnUse,
+    new UnreachableCasePattern,
     new UnsafeContains,
     new UnusedMethodParameter,
     new UseSqrt,
