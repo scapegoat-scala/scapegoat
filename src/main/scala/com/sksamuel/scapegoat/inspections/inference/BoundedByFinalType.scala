@@ -14,7 +14,7 @@ class BoundedByFinalType extends Inspection {
         tree match {
           case t@TypeDef(_, _, _, rhs) if rhs.tpe.bounds.hi.isFinalType =>
             context.warn("Bounded by final type", tree.pos, Levels.Warning,
-              "Pointless type bound by final type: " + tree.toString().take(300),
+              "Pointless type bound by final type. Type parameter can only be a single value: " + tree.toString().take(300),
               BoundedByFinalType.this)
           case _ => continue(tree)
         }
