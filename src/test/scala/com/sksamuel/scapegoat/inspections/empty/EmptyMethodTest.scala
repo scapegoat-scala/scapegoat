@@ -18,7 +18,7 @@ class EmptyMethodTest extends FreeSpec with Matchers with PluginRunner {
                         ()
                       }
                       def foo4 = {
-                        "sammy"
+                        println("sammy")
                         ()
                       }
                     } """.stripMargin

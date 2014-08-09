@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unsafe.CatchNpe
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class CatchNpeTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
@@ -23,21 +23,6 @@ class CatchNpeTest extends FreeSpec with Matchers with PluginRunner with OneInst
 
       compileCodeSnippet(code1)
       compiler.scapegoat.feedback.warnings.size shouldBe 1
-    }
-    "should use @SuppressWarnings annotation" in {
-
-      val code1 = """object Test {
-                        @SuppressWarnings(Array("CatchNpe"))
-                        try {
-                          var s : String = null
-                          s.toString
-                        } catch {
-                          case e : NullPointerException =>
-                        }
-                    } """.stripMargin
-
-      compileCodeSnippet(code1)
-      compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
   "catching non npe" - {
