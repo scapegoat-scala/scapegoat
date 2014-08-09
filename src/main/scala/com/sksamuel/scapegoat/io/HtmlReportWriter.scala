@@ -78,6 +78,8 @@ object HtmlReportWriter {
         {reporter.warnings(Levels.Error).size.toString}
         Warnings
         {reporter.warnings(Levels.Warning).size.toString}
+        Infos
+        {reporter.warnings(Levels.Info).size.toString}
       </h3>{warnings(reporter)}
     </body>
 
