@@ -45,6 +45,7 @@ object ScapegoatConfig extends App {
     new EmptyMethod,
     new EmptySynchronizedBlock,
     new EmptyTryBlock,
+    new EmptyWhileBlock,
     new ExistsSimplifableToContains,
     new ExpressionAsStatement,
     new FilterDotHead,
