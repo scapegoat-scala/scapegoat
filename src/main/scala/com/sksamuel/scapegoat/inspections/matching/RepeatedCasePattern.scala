@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class UnreachableCasePattern extends Inspection {
+class RepeatedCasePattern extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
@@ -28,7 +28,7 @@ class UnreachableCasePattern extends Inspection {
                 tree.pos,
                 Levels.Error,
                 tree.toString().take(300),
-                UnreachableCasePattern.this)
+                RepeatedCasePattern.this)
           case _ => continue(tree)
         }
       }

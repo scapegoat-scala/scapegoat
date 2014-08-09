@@ -4,13 +4,13 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
-class UnreachableCasePatternTest
+class RepeatedCasePatternTest
   extends FreeSpec
   with Matchers
   with PluginRunner
   with OneInstancePerTest {
 
-  override val inspections = Seq(new UnreachableCasePattern)
+  override val inspections = Seq(new RepeatedCasePattern)
 
   "repeated case patterns (without guards)" - {
     "should report warning" in {
