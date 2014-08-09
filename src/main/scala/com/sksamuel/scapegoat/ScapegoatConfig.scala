@@ -75,6 +75,7 @@ object ScapegoatConfig extends App {
     new PartialFunctionInsteadOfMatch,
     new PreferSeqEmpty,
     new PreferSetEmpty,
+    new PreferVectorEmpty,
     new ProductWithSerializableInferred,
     new RedundantFinalizer,
     new RepeatedCaseBody,
