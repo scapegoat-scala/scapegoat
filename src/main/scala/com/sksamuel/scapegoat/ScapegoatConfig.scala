@@ -5,6 +5,7 @@ import com.sksamuel.scapegoat.inspections.collections._
 import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
 import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf}
+import com.sksamuel.scapegoat.inspections.exception.{UnreachableCatch, CatchThrowable, CatchNpe}
 import com.sksamuel.scapegoat.inspections.inference.{BoundedByFinalType, ProductWithSerializableInferred}
 import com.sksamuel.scapegoat.inspections.matching.{PartialFunctionInsteadOfMatch, RepeatedCaseBody}
 import com.sksamuel.scapegoat.inspections.math._
@@ -89,6 +90,7 @@ object ScapegoatConfig extends App {
     new UnnecessaryReturnUse,
     new UnnecessaryToInt,
     new UnnecessaryToString,
+    new UnreachableCatch,
     new UnsafeContains,
     new UnusedMethodParameter,
     new UseSqrt,

@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.exception
 
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
