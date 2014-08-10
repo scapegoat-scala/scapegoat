@@ -45,6 +45,7 @@ object ScapegoatConfig extends App {
     new EitherGet,
     new EmptyCaseClass,
     new EmptyCatchBlock,
+    new EmptyFor,
     new EmptyIfBlock,
     new EmptyInterpolatedString,
     new EmptyMethod,

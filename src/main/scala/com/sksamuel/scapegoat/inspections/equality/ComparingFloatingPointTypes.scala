@@ -10,9 +10,11 @@ class ComparingFloatingPointTypes extends Inspection {
 
       import context.global._
 
+      private val EqEq = TermName("$eq$eq")
+
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(left, TermName("$eq$eq")), List(right)) =>
+          case Apply(Select(left, EqEq), List(right)) =>
             val leftType = Option(left.tpe).map(_.typeSymbol).map(_.fullName).orNull
             val rightType = Option(left.tpe).map(_.typeSymbol).map(_.fullName).orNull
             val leftFloating = leftType == "scala.Double" || leftType == "scala.Float"

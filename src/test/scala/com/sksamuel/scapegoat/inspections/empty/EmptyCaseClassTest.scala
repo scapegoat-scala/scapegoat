@@ -1,7 +1,8 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.empty
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import com.sksamuel.scapegoat.inspections.EmptyCaseClass
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class EmptyCaseClassTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
