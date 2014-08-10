@@ -38,6 +38,7 @@ object ScapegoatConfig extends App {
     new ComparisonWithSelf,
     new ConstantIf,
     new DivideByOne,
+    new DoubleNegation,
     new DuplicateMapKey,
     new DuplicateSetValue,
     new EitherGet,
