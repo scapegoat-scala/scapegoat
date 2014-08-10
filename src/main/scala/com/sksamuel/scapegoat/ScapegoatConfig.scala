@@ -86,6 +86,7 @@ object ScapegoatConfig extends App {
     new SwapSortFilter,
     new TraversableHead,
     new TryGet,
+    new TypeShadowing,
     new UnnecessaryIf,
     new UnnecessaryReturnUse,
     new UnnecessaryToInt,
