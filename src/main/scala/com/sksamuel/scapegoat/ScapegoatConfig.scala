@@ -94,6 +94,7 @@ object ScapegoatConfig extends App {
     new UnsafeContains,
     new UnusedMethodParameter,
     new UseSqrt,
+    new VarCouldBeVal,
     new VarUse,
     new WhileTrue,
     new ZeroNumerator)
