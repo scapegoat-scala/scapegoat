@@ -166,6 +166,12 @@ Checks for code that uses a `while(true)` or `do { } while(true)` block.
 
 *Rationale*: This type of code is usually not meant for production as it will not return normally. If you need to loop until interrupted then consider using a flag.
 
+### Changelog
+
+* 0.90.10 - Aded Added type shadowing inspection, Added var could be val inspection,Added unreachable catch, inspection, Added unnecessary toString inspection
+* 0.90.09 - Added new inspections: bounded by final type, empty while block, prefer vector empty, finalizer without super, impossible option size condition, filter dot head, repeated case body. Added `infos` to HTML output header
+* 0.90.8 - Fixed erroneous partial functions inspection. Added inspection for empty case classe. Changed levels in output to lowercase. Added console output option. Fixed seq empty on non empty seq. Changed return usage to info. Fixed odd issue with empty tree. Changed unused parameter in override to be info. Ignoring all synthetic method added to case classes. Fixed while(true) being detected by ConstantIf
+
 ### Other static analysis tools:
 
 * ScalaStyle (Scala) - https://github.com/scalastyle/scalastyle/wiki
