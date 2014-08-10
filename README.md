@@ -45,10 +45,10 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 
 |Name|Brief Description|
 |----|-----------|
-| ArrayEquals | |
+| ArrayEquals | Checks for comparison of arrays using `==` which will always return false |
 | ArraysInFormat| Checks for arrays passed to String.format |
 | ArraysToString| Checks for explicit toString calls on arrays |
-| AvoidOperatorOverload | | 
+| AvoidOperatorOverload | Checks for mental symbolic method names | 
 | AvoidSizeEqualsZero | Traversable.size can be slow for some data structure, prefer .isEmpty |
 | AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty |
 | AsInstanceOf| Checks for use of `asInstanceOf` |
@@ -70,8 +70,8 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 | EitherGet| Checks for use of .get on Left or Right |
 | EmptyCaseClass | Checks for case classes like `case class Faceman()` |
 | EmptyCatchBlock| Checks for swallowing exceptions |
-| EmptyFor | |
-| EmptyIfBlock| Checks for empty if blocks |
+| EmptyFor | Checks for empty `for` loops |
+| EmptyIfBlock| Checks for empty `if` blocks |
 | EmptyInterpolatedString| Looks for interpolated strings that have no arguments |
 | EmptyMethod| Looks for empty methods |
 | EmptySynchronizedBlock| Looks for empty synchronized blocks |
