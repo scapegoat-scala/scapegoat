@@ -15,9 +15,10 @@ class RepeatedCaseBody extends Inspection {
       private def isRepeated(cases: List[CaseDef]): Boolean = {
         val bodies = mutable.HashSet[String]()
         for ( casedef <- cases ) {
-          bodies add casedef.body.toString()
+          if (casedef.guard == EmptyTree)
+            bodies add casedef.body.toString()
         }
-        bodies.size < cases.size
+        bodies.size < cases.count(_.guard == EmptyTree)
       }
 
       override def inspect(tree: Tree): Unit = {
