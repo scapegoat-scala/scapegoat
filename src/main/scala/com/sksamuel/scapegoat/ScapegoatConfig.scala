@@ -66,6 +66,7 @@ object ScapegoatConfig extends App {
     new JavaConversionsUse,
     new ListAppend,
     new ListSize,
+    new LonelySealedTrait,
     new ModOne,
     new NanComparison,
     new NegationIsEmpty,

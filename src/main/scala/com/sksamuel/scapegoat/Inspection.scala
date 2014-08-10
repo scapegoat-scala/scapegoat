@@ -10,6 +10,7 @@ trait Inspection {
 
 abstract class Inspector(val context: InspectionContext) {
   def traverser: context.Traverser
+  def postInspection(): Unit = ()
 }
 
 case class InspectionContext(global: Global, feedback: Feedback) {

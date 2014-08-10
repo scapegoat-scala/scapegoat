@@ -91,7 +91,9 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       val context = new InspectionContext(global, feedback)
       activeInspections.foreach(inspection => {
         val inspector = inspection.inspector(context)
-        inspector.traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
+        val traverser = inspector.traverser
+        traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
+        inspector.postInspection()
       })
       tree
     }
