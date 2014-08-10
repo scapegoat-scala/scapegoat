@@ -86,7 +86,6 @@ There are currently 76 inspections. An overview list is given, followed by a mor
 | IllegalFormatString| Looks for invalid format strings |
 | IncorrectlyNamedExceptions| Checks for exceptions that are not called *Exception and vice versa |
 | IncorrectNumberOfArgsToFormat| Checks for wrong number of arguments to `String.format` |
-| IntToInt | Checks for unncessary `.toInt` on an `Int` |
 | InvalidRegex| Checks for invalid regex literals |
 | ImpossibleOptionSizeCondition | Checks for code like `option.size > 2` which can never be true |
 | IsInstanceOf| Checks for use of `isInstanceOf` |
