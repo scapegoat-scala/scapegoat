@@ -50,7 +50,7 @@ object ScapegoatConfig extends App {
     new EmptyTryBlock,
     new EmptyWhileBlock,
     new ExistsSimplifableToContains,
-    new ExpressionAsStatement,
+    // new ExpressionAsStatement,
     new FilterDotHead,
     new FilterDotHeadOption,
     new FilterDotIsEmpty,
