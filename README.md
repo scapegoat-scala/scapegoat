@@ -115,9 +115,13 @@ There are currently 76 inspections. An overview list is given, followed by a mor
 | TryGet| Checks for use of `Try.get` |
 | UnnecessaryIf| Checks for code like `if (expr) true else false` |
 | UnnecessaryReturnUse| Checks for use of `return` keyword in blocks |
+| UnnecessaryToInt | Checks for unnecessary `toInt` on instances of Int |
+| UnnecessaryToString | Checks for unnecessary `toString` on instances of String |
+| UnreachableCatch | Checks for catch clauses that cannot be reached |
 | UnsafeContains| Checks for `List.contains(value)` for invalid types |
 | UnusedMethodParameter| Checks for unused method parameters |
 | UseSqrt| Checks for use of Math.pow for calculating sqrt |
+| VarCouldBeVal | Checks for `var`s that could be declared as `val`s |
 | VarUse| Checks for use of `var` |
 | WhileTrue| Checks for code that uses a `while(true)` or `do { } while(true)` block. |
 | ZeroNumerator | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0` |
