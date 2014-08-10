@@ -23,7 +23,11 @@ class RepeatedCaseBody extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Match(_, cases) if isRepeated(cases) =>
-            context.warn("Repeated case body", tree.pos, Levels.Warning, tree.toString().take(500), RepeatedCaseBody.this)
+            context.warn("Repeated case body",
+              tree.pos,
+              Levels.Warning,
+              "Case body is repeated. Consider merging pattern clauses together: " + tree.toString().take(500),
+              RepeatedCaseBody.this)
           case _ => continue(tree)
         }
       }
