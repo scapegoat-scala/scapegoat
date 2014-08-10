@@ -112,6 +112,7 @@ There are currently 76 inspections. An overview list is given, followed by a mor
 | SwapSortFilter| `sort.filter` can be replaced with `filter.sort` for performance |
 | TraversableHead| Looks for unsafe usage of `Traversable.head` |
 | TryGet| Checks for use of `Try.get` |
+| TypeShadowing | Checks for shadowed type parameters in methods |
 | UnnecessaryIf| Checks for code like `if (expr) true else false` |
 | UnnecessaryReturnUse| Checks for use of `return` keyword in blocks |
 | UnnecessaryToInt | Checks for unnecessary `toInt` on instances of Int |
