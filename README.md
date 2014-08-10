@@ -45,8 +45,10 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 
 |Name|Brief Description|
 |----|-----------|
+| ArrayEquals | |
 | ArraysInFormat| Checks for arrays passed to String.format |
 | ArraysToString| Checks for explicit toString calls on arrays |
+| AvoidOperatorOverload | | 
 | AvoidSizeEqualsZero | Traversable.size can be slow for some data structure, prefer .isEmpty |
 | AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty |
 | AsInstanceOf| Checks for use of `asInstanceOf` |
@@ -68,6 +70,7 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 | EitherGet| Checks for use of .get on Left or Right |
 | EmptyCaseClass | Checks for case classes like `case class Faceman()` |
 | EmptyCatchBlock| Checks for swallowing exceptions |
+| EmptyFor | |
 | EmptyIfBlock| Checks for empty if blocks |
 | EmptyInterpolatedString| Looks for interpolated strings that have no arguments |
 | EmptyMethod| Looks for empty methods |
@@ -75,14 +78,13 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 | EmptyTryBlock| Looks for empty try blocks |
 | EmptyWhileBlock | Looks for empty while loops |
 | ExistsSimplifableToContains | `exists(x => x == b)` replaceable with `contains(b)` |
-| ExpressionAsStatement| Looks for expressions executed for their side effects |
 | FilterDotHead| `.filter(x => ).head` can be replaced with `find(x => ) match { .. } ` |
 | FilterDotHeadOption| `.filter(x =>).headOption` can be replaced with `find(x => )` |
 | FilterDotIsEmpty| `.filter(x => Bool).isEmpty` can be replaced with `!exists(x => Bool)` |
 | FilterOptionAndGet| `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
 | FilterDotSize| `.filter(x => Bool).size` can be replaced more concisely with with `count(x => Bool)` |
 | FinalizerWithoutSuper | Checks for overriden finalizers that do not call super |
-| FindIsDefined| `find(x => Bool).isDefined` can be replaced with `exist(x => Bool)` |
+| FindDotIsDefined| `find(x => Bool).isDefined` can be replaced with `exist(x => Bool)` |
 | IllegalFormatString| Looks for invalid format strings |
 | IncorrectlyNamedExceptions| Checks for exceptions that are not called *Exception and vice versa |
 | IncorrectNumberOfArgsToFormat| Checks for wrong number of arguments to `String.format` |
@@ -92,6 +94,7 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 | JavaConversionsUse| Checks for use of implicit Java conversions |
 | ListAppend | Checks for List :+ which is O(n) |
 | ListSize| Checks for `List.size` which is O(n). |
+| LonelySealedTrait | Checks for sealed traits which have no implementation |
 | ModOne| Checks for `x % 1` which will always return `1` |
 | NanComparison| Checks for `x == Double.NaN` which will always fail |
 | NegationIsEmpty | `!Traversable.isEmpty` can be replaced with `Traversable.nonEmpty` |
