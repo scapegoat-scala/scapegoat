@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.inspections.style
+package com.sksamuel.scapegoat.inspections.exception
 
 import com.sksamuel.scapegoat._
 
