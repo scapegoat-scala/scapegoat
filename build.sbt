@@ -2,7 +2,7 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-version := "0.90.11"
+version := "0.90.12"
 
 scalaVersion := "2.11.1"
 

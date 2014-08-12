@@ -1,24 +1,12 @@
 package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.inspections.akka.AkkaSenderClosure
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class AkkaSenderClosureTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
-  override val inspections = Seq(new VarClosure)
+  override val inspections = Seq(new AkkaSenderClosure)
 
-  "AkkaSenderClosure" - {
-    "should report warning" - {
-      "for closing over sender()" in {
-
-        val code =
-          """import scala.concurrent.Future
-             class ActorTest extends Actor""".stripMargin
-
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
-      }
-    }
-  }
 }
