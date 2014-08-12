@@ -24,13 +24,45 @@ class AvoidOperatorOverloadTest extends FreeSpec with Matchers with PluginRunner
       }
     }
     "should not report warning" - {
-      "for simple symbol method names" in {
+      "for single character symbol method names" in {
 
         val code = """object Test {
                       def ! = println("fair nuff")
                       def ? = println("go on mate")
                     }
                    """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for case classes synthetic methods" in {
+
+        val code = """case class Test()""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for case class getter and setters" in {
+
+        val code = """case class Test(name:String)""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for class fields" in {
+
+        val code = """class Test(val name:String)""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for local vars" in {
+
+        val code =
+          """class Test {
+            | var name : String = _
+            |}
+          """.stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
