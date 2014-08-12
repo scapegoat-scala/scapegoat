@@ -19,8 +19,8 @@ class RepeatedCaseBodyTest
         val code = """object Test {
                       val s : Any = null
                       s match {
-                       case "sam" => println("foo")
-                       case "bam" => println("foo")
+                       case "sam" => println("foo"); println("foo"); println("foo")
+                       case "bam" => println("foo"); println("foo"); println("foo")
                        case _ =>
                       }
                     } """.stripMargin
@@ -33,9 +33,9 @@ class RepeatedCaseBodyTest
         val code = """object Test {
                       val s : Any = null
                       s match {
-                       case str : String if str.length == 3 => println("foo")
-                       case str : String => println("foo")
-                       case i : Int=> println("foo")
+                       case str : String if str.length == 3 => println("foo"); println("foo"); println("foo")
+                       case str : String => println("foo"); println("foo"); println("foo")
+                       case i : Int=> println("foo"); println("foo"); println("foo")
                        case _ =>
                       }
                     } """.stripMargin
@@ -50,8 +50,8 @@ class RepeatedCaseBodyTest
         val code = """object Test {
                       val s = "sam"
                       s match {
-                       case "sam" => println("foo")
-                       case "bam" => println("fool")
+                       case "sam" => println("foo"); println("foo"); println("foo")
+                       case "bam" => println("foo"); println("boo"); println("foo")
                        case _ =>
                       }
                     } """.stripMargin
@@ -64,9 +64,22 @@ class RepeatedCaseBodyTest
         val code = """object Test {
                       val s = "sam"
                       s match {
-                       case s : String if s.length == 3 => println("foo")
-                       case s : String => println("foo")
+                       case s : String if s.length == 3 => println("foo"); println("foo"); println("foo")
+                       case s : String => println("foo"); println("foo"); println("foo")
                        case _ =>
+                      }
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for bodies with two or less statements" in {
+
+        val code = """object Test {
+                      val s = "sam"
+                      s match {
+                       case s : String => println("foo");
+                       case _ => println("foo");
                       }
                     } """.stripMargin
 

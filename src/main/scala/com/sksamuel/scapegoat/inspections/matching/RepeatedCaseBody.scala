@@ -13,12 +13,12 @@ class RepeatedCaseBody extends Inspection {
       import context.global._
 
       private def isRepeated(cases: List[CaseDef]): Boolean = {
+        val _cases = cases.filter(casedef => casedef.guard == EmptyTree && casedef.body.children.size > 2)
         val bodies = mutable.HashSet[String]()
-        for ( casedef <- cases ) {
-          if (casedef.guard == EmptyTree)
-            bodies add casedef.body.toString()
+        for ( casedef <- _cases ) {
+          bodies add casedef.body.toString()
         }
-        bodies.size < cases.count(_.guard == EmptyTree)
+        bodies.size < _cases.size
       }
 
       override def inspect(tree: Tree): Unit = {
