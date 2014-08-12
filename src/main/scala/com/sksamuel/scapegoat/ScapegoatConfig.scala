@@ -40,6 +40,7 @@ object ScapegoatConfig extends App {
     new ConstantIf,
     new DivideByOne,
     new DoubleNegation,
+    new DuplicateImport,
     new DuplicateMapKey,
     new DuplicateSetValue,
     new EitherGet,
