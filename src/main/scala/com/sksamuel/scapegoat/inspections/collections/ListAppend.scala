@@ -19,7 +19,7 @@ class ListAppend extends Inspection {
             context.warn("List append is slow",
               tree.pos,
               Levels.Info,
-              "List append is O(n). For large lists, consider using prepend and reversing the list or another data structure such as ListBuffer or Vector",
+              "List append is O(n). For large lists, consider using cons (::) or another data structure such as ListBuffer or Vector and converting to a List once built.",
               ListAppend.this)
           case _ => continue(tree)
         }
