@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-/** @author Stephen Samuel */
-class NoSuperClone {
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector}
 
-}
+/** @author Stephen Samuel */
+class NoSuperClone

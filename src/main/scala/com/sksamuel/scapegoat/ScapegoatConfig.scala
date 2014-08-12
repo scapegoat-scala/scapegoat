@@ -71,6 +71,7 @@ object ScapegoatConfig extends App {
     new ListAppend,
     new ListSize,
     new LonelySealedTrait,
+    new MaxParameters,
     new MethodReturningAny,
     new ModOne,
     new NanComparison,
