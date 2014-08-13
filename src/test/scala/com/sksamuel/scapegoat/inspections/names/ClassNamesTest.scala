@@ -32,5 +32,21 @@ class ClassNamesTest
         compiler.scapegoat.feedback.warnings.size shouldBe 2
       }
     }
+    "should not report warning" - {
+      "for anon classes" in {
+        val code =
+          """
+            |class Test {
+            |    import java.util.{Observer, Observable}
+            |    val observable = new Observable {}
+            |    observable.addObserver(new Observer {
+            |      override def update(o: Observable, arg: scala.Any): Unit = ()
+            |    })
+            |}
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+    }
   }
 }
