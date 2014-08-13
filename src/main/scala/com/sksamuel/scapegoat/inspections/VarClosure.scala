@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{Levels, Inspection, InspectionContext, Inspector}
 
 /** @author Stephen Samuel */
 class VarClosure extends Inspection {
