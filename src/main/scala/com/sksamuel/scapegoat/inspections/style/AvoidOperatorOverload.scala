@@ -18,7 +18,6 @@ class AvoidOperatorOverload extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          // body should have constructor only, and with synthetic methods it has 10 in total
           case DefDef(mods, name, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) | mods.hasFlag(Flags.GetterFlags) =>
           case DefDef(_, name, _, _, _, _) if name.toChars.count(_ == '$') > 1 =>
             context.warn("Avoid operator overload",

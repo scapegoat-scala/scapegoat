@@ -67,6 +67,21 @@ class AvoidOperatorOverloadTest extends FreeSpec with Matchers with PluginRunner
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for case classes with parameters and extends trait" in {
+        val code =
+          """trait SymbolSearchResult {
+            |  val name: String
+            |  val localName: String
+            |  val declaredAs: scala.Symbol
+            |  val pos: Option[(String, Int)]
+            |}
+            |case class TypeSearchResult(name: String,
+                localName: String,
+                declaredAs: scala.Symbol,
+                pos: Option[(String, Int)]) extends SymbolSearchResult""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
