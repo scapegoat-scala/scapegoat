@@ -159,6 +159,10 @@ Checks for a format string that is not invalid, such as invalid conversions, inv
 
 Checks for an incorrect number of arguments to String.format. Eg, `"%s %s %f".format("need", "three")` flags an error because the format string specifies 3 parameters but the call only provides 2.
 
+##### InvalidRegex
+
+Checks for invalid regex literals that would fail at compile time. Either dangling metacharacters, or unclosed escape characters, etc that kind of thing.
+
 ##### List size
 
 Checks for .size on an instance of List. Eg, `val a = List(1,2,3); a.size`
@@ -169,9 +173,21 @@ Checks for .size on an instance of List. Eg, `val a = List(1,2,3); a.size`
 
 Checks for empty finalizers. This is redundant code and should be removed. Eg, `override def finalize : Unit = { }`
 
+##### PreferSetEmpty
+
+Indicates where code using Set() could be replaced with Set.empty. Set() instantiates a new instance each time it is invoked, whereas Set.emtpy returns a pre-instantiated instance.
+
 ##### UnnecessaryReturnUse
 
 Checks for use of return in a function or method. Since the final expression of a block is always the return value, using return is unnecessary. Eg, `def foo = { println("hello"); return 12; }`
+
+##### UnreachableCatch
+
+Checks for catch clauses that cannot be reached. This means the exception is dead and if you want that exception to take precedence you should move up further up the case list.
+
+##### UnsafeContains
+
+Checks for `List.contains(value)` for invalid types. The method for contains accepts any types. This inspection finds situations when you have a list of type A and you are checking for contains on type B which cannot hold.
 
 ##### While true
 
