@@ -183,8 +183,11 @@ Checks for code that uses a `while(true)` or `do { } while(true)` block.
 * **0.90.12** - New inspections: unnecessary override, duplicate import, pointless type bounds, max parameters, var closure, method returning any. Updated repeated case body to ignore bodies with two or less statements #28. Removed false positives on getter/setter #27.
 
 * **0.90.11** - Added empty for inspection, AnyUse inspection, Added ArrayEquals inspection, Added double negation inspection, Disabled expession as statement inspection by default, Added avoid operator overload inspection, #25 improving repeated case bodies, Added lonely sealed trait. Added postInspection call to inspections
+
 * **0.90.10** - Aded Added type shadowing inspection, Added var could be val inspection,Added unreachable catch, inspection, Added unnecessary toString inspection
+
 * **0.90.09** - Added new inspections: bounded by final type, empty while block, prefer vector empty, finalizer without super, impossible option size condition, filter dot head, repeated case body. Added `infos` to HTML output header
+
 * **0.90.8** - Fixed erroneous partial functions inspection. Added inspection for empty case classe. Changed levels in output to lowercase. Added console output option. Fixed seq empty on non empty seq. Changed return usage to info. Fixed odd issue with empty tree. Changed unused parameter in override to be info. Ignoring all synthetic method added to case classes. Fixed while(true) being detected by ConstantIf
 
 ### Other static analysis tools:
