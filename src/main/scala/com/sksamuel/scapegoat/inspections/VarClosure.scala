@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector}
 
 /** @author Stephen Samuel */
 class VarClosure extends Inspection {
@@ -14,15 +14,14 @@ class VarClosure extends Inspection {
       private def capturesVar(tree: Tree): Unit = tree match {
         case Block(stmt, expr) => (stmt :+ expr).foreach(capturesVar)
         case Apply(Select(_, _), args) =>
-          args.foreach(arg => if (arg.symbol.isMethod && arg.symbol.isGetter && !arg.symbol.isStable) {
+          args.filter(_.symbol != null)
+            .foreach(arg => if (arg.symbol.isMethod && arg.symbol.isGetter && !arg.symbol.isStable) {
             context.warn("VarClosure",
               tree.pos,
               Levels.Warning,
               "Closing over a var can lead to subtle bugs: " + tree.toString().take(500),
               VarClosure.this)
           })
-          val a = args
-          println(args)
         case _ =>
       }
 
