@@ -10,9 +10,11 @@ class EmptySynchronizedBlock extends Inspection {
 
       import context.global._
 
+      private val Sync = TermName("synchronized")
+
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(_, TermName("synchronized")), _), List(Literal(Constant(())))) =>
+          case Apply(TypeApply(Select(_, Sync), _), List(Literal(Constant(())))) =>
             context.warn("Empty synchronized block",
               tree.pos,
               Levels.Warning,

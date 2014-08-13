@@ -10,11 +10,12 @@ class SubstringZero extends Inspection {
 
       import context.global._
 
+      private val Substring = TermName("substring")
       private val StringType = typeOf[String]
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("substring")), List(Literal(Constant(0)))) if lhs.tpe <:< StringType =>
+          case Apply(Select(lhs, Substring), List(Literal(Constant(0)))) if lhs.tpe <:< StringType =>
             context.warn("String.substring(0)",
               tree.pos,
               Levels.Info,

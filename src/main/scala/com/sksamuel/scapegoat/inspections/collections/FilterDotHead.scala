@@ -10,9 +10,12 @@ class FilterDotHead extends Inspection {
 
       import context.global._
 
+      private val Filter = TermName("filter")
+      private val Head = TermName("head")
+
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(Apply(Select(_, TermName("filter")), _), TermName("head")) =>
+          case Select(Apply(Select(_, Filter), _), Head) =>
             context.warn("filter().head can throw an exception; use find()",
               tree.pos,
               Levels.Info,

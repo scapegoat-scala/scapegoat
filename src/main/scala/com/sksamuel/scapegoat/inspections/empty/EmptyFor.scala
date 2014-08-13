@@ -10,9 +10,11 @@ class EmptyFor extends Inspection {
 
       import context.global._
 
+      private val Foreach = TermName("foreach")
+
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(_, TermName("foreach")), _), List(Function(List(ValDef(mods, _, _, EmptyTree)), Literal(Constant(()))))) =>
+          case Apply(TypeApply(Select(_, Foreach), _), List(Function(List(ValDef(mods, _, _, EmptyTree)), Literal(Constant(()))))) =>
             context.warn("Empty for loop", tree.pos, Levels.Warning, tree.toString().take(500), EmptyFor.this)
           case _ => continue(tree)
         }
