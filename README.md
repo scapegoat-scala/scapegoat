@@ -99,7 +99,8 @@ There are currently 93 inspections. An overview list is given, followed by a mor
 | ListAppend | Checks for List :+ which is O(n) |
 | ListSize| Checks for `List.size` which is O(n). |
 | LonelySealedTrait | Checks for sealed traits which have no implementation |
-| MaxParameters | |
+| MaxParameters | Checks for methods that have over 10 parameters |
+| MethodReturningAny | Checks for defs that are defined or inferred to return `Any` |
 | ModOne| Checks for `x % 1` which will always return `1` |
 | NanComparison| Checks for `x == Double.NaN` which will always fail |
 | NegationIsEmpty | `!Traversable.isEmpty` can be replaced with `Traversable.nonEmpty` |
