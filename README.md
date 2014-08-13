@@ -51,20 +51,24 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 | AvoidOperatorOverload | Checks for mental symbolic method names | 
 | AvoidSizeEqualsZero | Traversable.size can be slow for some data structure, prefer .isEmpty |
 | AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty |
+| AvoidToMinusOne | Checks for loops that use `x to n-1` instead of `x until n` |
 | AsInstanceOf| Checks for use of `asInstanceOf` |
 | BigDecimalDoubleConstructor| Checks for use of `BigDecimal(double)` which can be unsafe |
 | BoundedByFinalType | Looks for types with upper bounds of a final type |
 | BrokenOddness| checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
 | CatchNpe| Checks for try blocks that catch null pointer exceptions |
 | CatchThrowable | Checks for try blocks that catch Throwable |
+| ClassNames | Ensures class names adhere to the style guidelines |
 | CollectionNamingConfusion| Checks for variables that are confusingly named |
-| CollectionNegativeIndex| Checks for negative access on a sequence |
+| CollectionNegativeIndex| Checks for negative access on a sequence eg `list.get(-1)` |
 | CollectionPromotionToAny| Checks for collection operations that promote the collection to `Any` |
 | ComparingFloatingPointTypes| Checks for equality checks on floating point types |
 | ComparingUnrelatedTypes| Checks for equality comparisons that cannot succeed |
 | ComparisonWithSelf| Checks for equality checks with itself |
 | ConstantIf| Checks for code where the if condition compiles to a constant |
 | DivideByOne| Checks for divide by one, which always returns the original value |
+| DoubleNegation | Checks for code like `!(!b)` |
+| DuplicateImport | Checks for import statements that import the same selector |
 | DuplicateMapKey| Checks for duplicate key names in Map literals |
 | DuplicateSetValue | Checks for duplicate values in set literals |
 | EitherGet| Checks for use of .get on Left or Right |
@@ -95,15 +99,18 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 | ListAppend | Checks for List :+ which is O(n) |
 | ListSize| Checks for `List.size` which is O(n). |
 | LonelySealedTrait | Checks for sealed traits which have no implementation |
+| MaxParameters | |
 | ModOne| Checks for `x % 1` which will always return `1` |
 | NanComparison| Checks for `x == Double.NaN` which will always fail |
 | NegationIsEmpty | `!Traversable.isEmpty` can be replaced with `Traversable.nonEmpty` |
 | NegationNonEmpty | `!Traversable.nonEmpty` can be replaced with `Traversable.isEmpty` |
 | NullUse| Checks for use of `null` |
+| ObjectNames | Ensures object names adhere to style guidelines |
 | OptionGet| Checks for `Option.get` |
 | OptionSize| Checks for `Option.size` |
 | ParameterlessMethodReturnsUnit| Checks for `def foo : Unit` |
 | PartialFunctionInsteadOfMatch | Warns when you could use a partial function directly instead of a match block |
+| PointlessTypeBounds | Finds type bounds of the form `[A <: Any]` or `[A >: Nothing]`
 | PreferSeqEmpty| Checks for Seq() when could use Seq.empty |
 | PreferSetEmpty| Checks for Set() when could use Set.empty |
 | PreferVectorEmpty| Checks for Vector() when could use Vector.empty |
@@ -117,6 +124,7 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 | TryGet| Checks for use of `Try.get` |
 | TypeShadowing | Checks for shadowed type parameters in methods |
 | UnnecessaryIf| Checks for code like `if (expr) true else false` |
+| UnneccessryOverride | Checks for code that overrides parent method but simply calls super |
 | UnnecessaryReturnUse| Checks for use of `return` keyword in blocks |
 | UnnecessaryToInt | Checks for unnecessary `toInt` on instances of Int |
 | UnnecessaryToString | Checks for unnecessary `toString` on instances of String |
@@ -124,6 +132,7 @@ There are currently 80 inspections. An overview list is given, followed by a mor
 | UnsafeContains| Checks for `List.contains(value)` for invalid types |
 | UnusedMethodParameter| Checks for unused method parameters |
 | UseSqrt| Checks for use of Math.pow for calculating sqrt |
+| VarClosure | Finds closures that reference var |
 | VarCouldBeVal | Checks for `var`s that could be declared as `val`s |
 | VarUse| Checks for use of `var` |
 | WhileTrue| Checks for code that uses a `while(true)` or `do { } while(true)` block. |
