@@ -9,7 +9,7 @@ import com.sksamuel.scapegoat.inspections.exception.{IncorrectlyNamedExceptions,
 import com.sksamuel.scapegoat.inspections.inference.{PointlessTypeBounds, MethodReturningAny, BoundedByFinalType, ProductWithSerializableInferred}
 import com.sksamuel.scapegoat.inspections.matching.{PartialFunctionInsteadOfMatch, RepeatedCaseBody}
 import com.sksamuel.scapegoat.inspections.math._
-import com.sksamuel.scapegoat.inspections.naming.ClassNames
+import com.sksamuel.scapegoat.inspections.naming.{ObjectNames, ClassNames}
 import com.sksamuel.scapegoat.inspections.option.{EitherGet, ImpossibleOptionSizeCondition, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
 import com.sksamuel.scapegoat.inspections.style.{AvoidOperatorOverload, ParameterlessMethodReturnsUnit, SimplifyBooleanExpression}
@@ -82,6 +82,7 @@ object ScapegoatConfig extends App {
     new NegationIsEmpty,
     new NegationNonEmpty,
     new NullUse,
+    new ObjectNames,
     new OptionGet,
     new OptionSize,
     new ParameterlessMethodReturnsUnit,
