@@ -1,7 +1,6 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.akka
 
 import com.sksamuel.scapegoat.PluginRunner
-import com.sksamuel.scapegoat.inspections.akka.AkkaSenderClosure
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */

@@ -1,4 +1,4 @@
-package com.sksamuel.scapegoat.inspections
+package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
