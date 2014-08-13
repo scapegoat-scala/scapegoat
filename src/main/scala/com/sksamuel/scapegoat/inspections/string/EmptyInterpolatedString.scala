@@ -15,10 +15,10 @@ class EmptyInterpolatedString extends Inspection {
           case Apply(Select(Apply(Select(lhs, TermName("apply")), List(string)), TermName("s")), Nil) =>
             context
               .warn("Empty interpolated string",
-              tree.pos,
-              Levels.Warning,
-              tree.toString().take(500),
-              EmptyInterpolatedString.this)
+                tree.pos,
+                Levels.Error,
+                "String declared as interpolated but has no parameters: " + tree.toString().take(500),
+                EmptyInterpolatedString.this)
           case _ => continue(tree)
         }
       }
