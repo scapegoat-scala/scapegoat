@@ -47,6 +47,19 @@ class ClassNamesTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for implicit classes" in {
+        val code =
+          """
+            |class Test {
+            |  implicit class ClintEaswood(name:String) {
+            |    def magnum = "boom"
+            |  }
+            |  "sammy".magnum
+            |}
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
