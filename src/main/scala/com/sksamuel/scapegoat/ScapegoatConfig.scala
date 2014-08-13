@@ -25,6 +25,7 @@ object ScapegoatConfig extends App {
     new AvoidOperatorOverload,
     new AvoidSizeEqualsZero,
     new AvoidSizeNotEqualsZero,
+    new AvoidToMinusOne,
     new AsInstanceOf,
     new BigDecimalDoubleConstructor,
     new BoundedByFinalType,
