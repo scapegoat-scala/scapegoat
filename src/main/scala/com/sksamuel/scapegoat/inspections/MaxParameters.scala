@@ -12,6 +12,8 @@ class MaxParameters extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
+          case DefDef(_, name, _, _, _, _) if name == nme.CONSTRUCTOR =>
+          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
           case DefDef(_, _, _, vparamss, _, _) if vparamss.foldLeft(0)((a, b) => a + b.size) > 10 =>
             context.warn("Max parameters",
               tree.pos,
