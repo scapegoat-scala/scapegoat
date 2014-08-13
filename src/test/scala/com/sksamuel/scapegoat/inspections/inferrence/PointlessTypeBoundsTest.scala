@@ -51,6 +51,19 @@ class PointlessTypeBoundsTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+      "for implicit class with nothing lower bound" in {
+
+        val code =
+          """class Test {
+            |  implicit class Monster[T >: Nothing](t:T) {
+            |   def bite : T = t
+            |  }
+            |  "bfg".bite
+            |} """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 2
+      }
     }
     "should not report warning" - {
       "for class with upper bound only" in {
@@ -94,6 +107,19 @@ class PointlessTypeBoundsTest
         val code =
           """object Test {
             |  def foo = {}
+            |} """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for implicit class with no type bound" in {
+
+        val code =
+          """class Test {
+            |  implicit class Monster[T](t:T) {
+            |   def bite : T = t
+            |  }
+            |  "bfg".bite
             |} """.stripMargin
 
         compileCodeSnippet(code)
