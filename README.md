@@ -55,7 +55,7 @@ There are currently 93 inspections. An overview list is given, followed by a mor
 | AsInstanceOf| Checks for use of `asInstanceOf` |
 | BigDecimalDoubleConstructor| Checks for use of `BigDecimal(double)` which can be unsafe |
 | BoundedByFinalType | Looks for types with upper bounds of a final type |
-| BrokenOddness| checks for a % 2 == 1 for oddness, but this breaks for negative numbers |
+| BrokenOddness| checks for a % 2 == 1 for oddness because this fails on negative numbers |
 | CatchNpe| Checks for try blocks that catch null pointer exceptions |
 | CatchThrowable | Checks for try blocks that catch Throwable |
 | ClassNames | Ensures class names adhere to the style guidelines |
