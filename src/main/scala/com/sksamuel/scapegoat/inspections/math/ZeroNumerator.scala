@@ -10,12 +10,9 @@ class ZeroNumerator extends Inspection {
       import context.global._
       import definitions._
 
-      private def isFloatingPointType(tree: Tree) = tree.tpe <:< FloatClass.tpe || tree.tpe <:< DoubleClass.tpe
-      private def isIntegralType(tree: Tree) = tree.tpe <:< IntClass.tpe || tree.tpe <:< LongClass.tpe
-
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("$div")), args) if isFloatingPointType(lhs) || isIntegralType(lhs) =>
+          case Apply(Select(Literal(Constant(0)), TermName("$div")), args) =>
             context.warn("Zero numerator",
               tree.pos,
               Levels.Warning,
