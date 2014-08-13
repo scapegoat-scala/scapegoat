@@ -10,15 +10,17 @@ class MaxParameters extends Inspection {
 
       import context.global._
 
+      private def count(vparamss: List[List[ValDef]]) = vparamss.foldLeft(0)((a, b) => a + b.size) > 10
+
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(_, name, _, _, _, _) if name == nme.CONSTRUCTOR =>
           case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
-          case DefDef(_, _, _, vparamss, _, _) if vparamss.foldLeft(0)((a, b) => a + b.size) > 10 =>
+          case DefDef(_, name, _, vparamss, _, _) if count(vparamss) =>
             context.warn("Max parameters",
               tree.pos,
               Levels.Info,
-              "Method $name has ${vparams.size} parameters. Consider refactoring to a containing instance.",
+              s"Method $name has ${count(vparamss)} parameters. Consider refactoring to a containing instance.",
               MaxParameters.this)
           case _ => continue(tree)
         }
