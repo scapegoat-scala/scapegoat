@@ -65,19 +65,19 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {
 
-      println(s"[info] [scapegoat]: ${activeInspections.size} activated inspections")
-      println("[info] [scapegoat]: Beginning anaylsis...")
+      println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
+      println("[info] [scapegoat] Beginning anaylsis...")
       super.run()
 
       val errors = feedback.errors.size
       val warns = feedback.warns.size
       val infos = feedback.infos.size
 
-      println(s"[warn] [scapegoat]: Anaylsis complete - $errors errors $warns warns $infos infos")
+      println(s"[warn] [scapegoat] Anaylsis complete - $errors errors $warns warns $infos infos")
       val html = IOUtils.writeHTMLReport(dataDir, feedback)
-      println(s"[info] [scapegoat]: Written HTML report [$html]")
+      println(s"[info] [scapegoat] Written HTML report [$html]")
       val xml = IOUtils.writeXMLReport(dataDir, feedback)
-      println(s"[info] [scapegoat]: Written XML report [$xml]")
+      println(s"[info] [scapegoat] Written XML report [$xml]")
     }
   }
 
@@ -87,7 +87,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
     override def transform(tree: global.Tree) = {
       if (consoleOutput)
-        println(s"[   info] [scapegoat]: Inspecting compilation unit [$unit]")
+        println(s"[   info] [scapegoat] Inspecting compilation unit [$unit]")
       val context = new InspectionContext(global, feedback)
       activeInspections.foreach(inspection => {
         val inspector = inspection.inspector(context)
