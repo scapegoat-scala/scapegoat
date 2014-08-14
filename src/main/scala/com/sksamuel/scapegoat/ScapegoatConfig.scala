@@ -39,6 +39,7 @@ object ScapegoatConfig extends App {
     new CollectionPromotionToAny,
     new ComparingFloatingPointTypes,
     new ComparingUnrelatedTypes,
+    new ComparisonToEmptyList,
     new ComparisonWithSelf,
     new ConstantIf,
     new DivideByOne,

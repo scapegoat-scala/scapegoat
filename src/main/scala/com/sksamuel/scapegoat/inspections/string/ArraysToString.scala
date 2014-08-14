@@ -10,7 +10,7 @@ class ArraysToString extends Inspection {
 
       import context.global._
 
-      private def ToString = TermName("toString")
+      private val ToString = TermName("toString")
       private def isArray(tree: Tree) = tree.tpe <:< typeOf[Array[_]]
 
       override def inspect(tree: Tree): Unit = {
