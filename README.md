@@ -64,6 +64,7 @@ There are currently 93 inspections. An overview list is given, followed by a mor
 | CollectionPromotionToAny| Checks for collection operations that promote the collection to `Any` |
 | ComparingFloatingPointTypes| Checks for equality checks on floating point types |
 | ComparingUnrelatedTypes| Checks for equality comparisons that cannot succeed |
+| ComparisonToEmptyList | |
 | ComparisonWithSelf| Checks for equality checks with itself |
 | ConstantIf| Checks for code where the if condition compiles to a constant |
 | DivideByOne| Checks for divide by one, which always returns the original value |
@@ -98,6 +99,7 @@ There are currently 93 inspections. An overview list is given, followed by a mor
 | JavaConversionsUse| Checks for use of implicit Java conversions |
 | ListAppend | Checks for List :+ which is O(n) |
 | ListSize| Checks for `List.size` which is O(n). |
+| LooksLikeInterpolatedString | |
 | LonelySealedTrait | Checks for sealed traits which have no implementation |
 | MaxParameters | Checks for methods that have over 10 parameters |
 | MethodReturningAny | Checks for defs that are defined or inferred to return `Any` |
@@ -120,6 +122,7 @@ There are currently 93 inspections. An overview list is given, followed by a mor
 | RepeatedCaseBody | Checks for case statements which have the same body |
 | SimplifyBooleanExpression | `b == false` can be simplified to `!b` |
 | SubstringZero | Checks for `String.substring(0)` |
+| SuspiciousMatchOnClassObject | |
 | SwapSortFilter| `sort.filter` can be replaced with `filter.sort` for performance |
 | TraversableHead| Looks for unsafe usage of `Traversable.head` |
 | TryGet| Checks for use of `Try.get` |
