@@ -12,9 +12,14 @@ class VarUse extends Inspection {
 
       private val xmlLiteralClassNames = Seq("scala.xml.NamespaceBinding", "scala.xml.MetaData")
       private def isXmlLiteral(tpe: Type) = xmlLiteralClassNames.contains(tpe.typeSymbol.fullName)
+      private var actor = false
+
+      def isActor(tree: Tree): Boolean = tree.toString == "Actor"
 
       override def inspect(tree: Tree): Unit = {
         tree match {
+          case ClassDef(_, name, _, Template(parents, _, _)) if parents.exists(isActor) =>
+          case ModuleDef(_, _, Template(parents, _, _)) if parents.exists(isActor) =>
           case ValDef(mods, _, _, _) if mods.isSynthetic || mods.isMacro =>
           case ValDef(_, _, tpt, _) if isXmlLiteral(tpt.tpe) =>
           case v@ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
