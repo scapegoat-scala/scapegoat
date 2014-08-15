@@ -7,7 +7,7 @@ import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality.{ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf}
 import com.sksamuel.scapegoat.inspections.exception.{IncorrectlyNamedExceptions, UnreachableCatch, CatchThrowable, CatchNpe}
 import com.sksamuel.scapegoat.inspections.inference.{PointlessTypeBounds, MethodReturningAny, BoundedByFinalType, ProductWithSerializableInferred}
-import com.sksamuel.scapegoat.inspections.matching.{PartialFunctionInsteadOfMatch, RepeatedCaseBody}
+import com.sksamuel.scapegoat.inspections.matching.{SuspiciousMatchOnClassObject, PartialFunctionInsteadOfMatch, RepeatedCaseBody}
 import com.sksamuel.scapegoat.inspections.math._
 import com.sksamuel.scapegoat.inspections.naming.{ObjectNames, ClassNames}
 import com.sksamuel.scapegoat.inspections.option.{EitherGet, ImpossibleOptionSizeCondition, OptionGet, OptionSize}
@@ -97,6 +97,7 @@ object ScapegoatConfig extends App {
     new RepeatedCaseBody,
     new SimplifyBooleanExpression,
     new SubstringZero,
+    new SuspiciousMatchOnClassObject,
     new SwapSortFilter,
     new TraversableHead,
     new TryGet,
