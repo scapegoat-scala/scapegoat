@@ -75,6 +75,7 @@ object ScapegoatConfig extends App {
     new JavaConversionsUse,
     new ListAppend,
     new ListSize,
+    new LooksLikeInterpolatedString,
     new LonelySealedTrait,
     new MaxParameters,
     new MethodReturningAny,
@@ -116,5 +117,4 @@ object ScapegoatConfig extends App {
     new VarUse,
     new WhileTrue,
     new ZeroNumerator)
-
 }
