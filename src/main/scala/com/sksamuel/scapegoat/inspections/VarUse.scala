@@ -12,7 +12,7 @@ class VarUse extends Inspection {
 
       private val xmlLiteralClassNames = Seq("scala.xml.NamespaceBinding", "scala.xml.MetaData")
       private def isXmlLiteral(tpe: Type) = xmlLiteralClassNames.contains(tpe.typeSymbol.fullName)
-      private def isActor(tree: Tree): Boolean = tree.toString == "Actor"
+      private def isActor(tree: Tree): Boolean = tree.toString == "akka.actor.Actor"
 
       override def inspect(tree: Tree): Unit = {
         tree match {
