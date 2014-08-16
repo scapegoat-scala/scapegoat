@@ -13,12 +13,14 @@ class UseSqrtTest extends FreeSpec with Matchers with PluginRunner {
 
       val code = """object Test {
                         val a = 2
-                        Math.pow(2, 0.5)
+                        math.pow(2, 0.5)
+                        math.pow(2, 1/2d)
                         Math.pow(2, 1/2d)
+                        StrictMath.pow(2, 1/2d)
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 2
+      compiler.scapegoat.feedback.warnings.size shouldBe 4
     }
   }
 }
