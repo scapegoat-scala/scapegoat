@@ -3,12 +3,12 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
-/** @author Stephen Samuel */
+/** @author Matic Potočnik */
 class UseCbrtTest extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new UseCbrt)
 
-  "broken odd use" - {
+  "using pow instead of cbrt" - {
     "should report warning" in {
 
       val code = """object Test {

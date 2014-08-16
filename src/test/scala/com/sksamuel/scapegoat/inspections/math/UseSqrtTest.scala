@@ -8,7 +8,7 @@ class UseSqrtTest extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new UseSqrt)
 
-  "broken odd use" - {
+  "using pow instead of sqrt" - {
     "should report warning" in {
 
       val code = """object Test {

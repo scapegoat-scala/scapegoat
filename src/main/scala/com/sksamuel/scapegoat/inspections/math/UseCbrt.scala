@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/** @author Matic Potočnik */
 class UseCbrt extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
