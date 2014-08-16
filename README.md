@@ -12,7 +12,7 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
-Latest Release: 0.90.17
+Latest Release: 0.91.0
 
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
@@ -65,6 +65,7 @@ There are currently 95 inspections. An overview list is given, followed by a mor
 | ComparingFloatingPointTypes| Checks for equality checks on floating point types |
 | ComparingUnrelatedTypes| Checks for equality comparisons that cannot succeed |
 | ComparisonToEmptyList | |
+| ComparisonToEmptySet | |
 | ComparisonWithSelf| Checks for equality checks with itself |
 | ConstantIf| Checks for code where the if condition compiles to a constant |
 | DivideByOne| Checks for divide by one, which always returns the original value |
@@ -140,6 +141,7 @@ There are currently 95 inspections. An overview list is given, followed by a mor
 | VarCouldBeVal | Checks for `var`s that could be declared as `val`s |
 | VarUse| Checks for use of `var` |
 | WhileTrue| Checks for code that uses a `while(true)` or `do { } while(true)` block. |
+| WildcardImport | Checks for wildcard imports |
 | ZeroNumerator | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0` |
 
 ##### Arrays to string
