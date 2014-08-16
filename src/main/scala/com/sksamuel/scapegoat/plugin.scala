@@ -17,7 +17,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override def init(options: List[String], error: String => Unit): Boolean = {
     options.find(_.startsWith("disabledInspections:")) match {
-      case Some(option) => component.disabled = option.drop("disabledInspections:".length).split(':')
+      case Some(option) => component.disabled = option.drop("disabledInspections:".length).split(':').toList
       case _ =>
     }
     options.find(_.startsWith("consoleOutput:")) match {
@@ -25,7 +25,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       case _ =>
     }
     options.find(_.startsWith("ignoredFiles:")) match {
-      case Some(option) => component.ignoredFiles = option.drop("ignoredFiles:".length).split(':')
+      case Some(option) => component.ignoredFiles = option.drop("ignoredFiles:".length).split(':').toList
       case _ =>
     }
     for ( verbose <- options.find(_.startsWith("verbose:")) ) {
@@ -55,8 +55,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   import global._
 
   var dataDir: File = new File(".")
-  var disabled: Seq[String] = Nil
-  var ignoredFiles: Seq[String] = Nil
+  var disabled: List[String] = Nil
+  var ignoredFiles: List[String] = Nil
   var consoleOutput: Boolean = false
   var verbose: Boolean = false
 
@@ -71,7 +71,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     override def run(): Unit = {
 
       println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
-      println(s"[info] [scapegoat] ${ignoredFiles} ignored file patterns")
+      println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
       println("[info] [scapegoat] Beginning anaylsis...")
       super.run()
 
@@ -92,10 +92,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: global.Tree) = {
       if (ignoredFiles.exists(unit.source.path.matches)) {
-        println(s"[info] [scapegoat] Ignoring compilation unit [$unit]")
+        println(s"[info] Skipping scapegoat [$unit]")
         tree
       } else {
-        println(s"[info] [scapegoat] Inspecting compilation unit [$unit]")
+        println(s"[info] Scapegoat analysis [$unit] .....")
         val context = new InspectionContext(global, feedback)
         activeInspections.foreach(inspection => {
           val inspector = inspection.inspector(context)

@@ -30,8 +30,7 @@ class Feedback(consoleOutput: Boolean) {
     val warning = Warning(text, pos.line, level, sourceFile, snippet, inspection.getClass.getCanonicalName)
     warnings.append(warning)
     if (consoleOutput)
-      println(s"[${warning.level.toString.toLowerCase}] [scapegoat] " +
-        s"${warning.text} - ${warning.sourceFile}:${warning.line}")
+      println(s"[${warning.level.toString.toLowerCase}] ${warning.text} - ${warning.sourceFile}:${warning.line}")
   }
 
   private def normalizeSourceFile(sourceFile: String): String = {
