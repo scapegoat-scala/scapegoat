@@ -40,6 +40,7 @@ object ScapegoatConfig extends App {
     new ComparingFloatingPointTypes,
     new ComparingUnrelatedTypes,
     new ComparisonToEmptyList,
+    new ComparisonToEmptySet,
     new ComparisonWithSelf,
     new ConstantIf,
     new DivideByOne,
