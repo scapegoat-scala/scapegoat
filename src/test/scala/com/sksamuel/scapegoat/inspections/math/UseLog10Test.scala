@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{FreeSpec, Matchers}
 
-/** @author Stephen Samuel */
+/** @author Matic Potočnik */
 class UseLog10Test extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new UseLog10)
