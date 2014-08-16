@@ -13,9 +13,12 @@ class UseSqrt extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(pack, TermName("pow")), List(_, Literal(Constant(0.5d))))
-            if pack.toString() == "java.this.lang.Math" =>
-            context.warn("Use Math.sqrt", tree.pos, Levels.Info,
-              "Math.sqrt is clearer and more performance than Math.pow(x, 0.5)",
+            if pack.toString() == "scala.math.`package`"
+            || pack.toString() == "java.this.lang.Math"
+            || pack.toString() == "java.this.lang.StrictMath" =>
+            val math = pack.toString().stripPrefix("java.this.lang.").stripPrefix("scala.").stripSuffix(".`package`")
+            context.warn(s"Use ${math}.sqrt", tree.pos, Levels.Info,
+              s"${math}.sqrt is clearer and more performant than ${math}.pow(x, 0.5)",
               UseSqrt.this)
           case _ => continue(tree)
         }
