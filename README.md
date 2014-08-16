@@ -202,6 +202,10 @@ Checks for code that uses a `while(true)` or `do { } while(true)` block.
 
 ### Changelog
 
+* **0.91.0** - Updated logging format to include less [scapegoat] everywhere, Addded scala.math and java.StrictMath to useSqrt, Added ignored files patterns option, Added wildcard import inspection, Added comparison to empty set inspection
+
+* **0.90.17** - Added looks like interpolated string inspection, Added SuspiciousMatchOnClassObject inspection, Updated varuse to not warn on vars in actors #46, Added comparison to empty list inspection, #37 Changed emptyinterpolated string to error, #37 Fixed warning on max parameters
+
 * **0.90.14** - Bunch of bug fixes for false positives. No new inspections.
 
 * **0.90.13** - Fixed NPE in VarClosure inspection, Added Object Names inspection, Added classnames inspection, Added avoid to minus one inspection.
