@@ -71,7 +71,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     override def run(): Unit = {
 
       println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
-      println(s"[info] [scapegoat] ${ignoredFiles.size} ignored files")
+      println(s"[info] [scapegoat] ${ignoredFiles} ignored file patterns")
       println("[info] [scapegoat] Beginning anaylsis...")
       super.run()
 
@@ -90,10 +90,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   protected def newTransformer(unit: CompilationUnit): Transformer = new Transformer(unit)
 
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
-
     override def transform(tree: global.Tree) = {
-
-      if (ignoredFiles.exists(unit.source.path.contains)) {
+      if (ignoredFiles.exists(unit.source.path.matches)) {
         println(s"[info] [scapegoat] Ignoring compilation unit [$unit]")
         tree
       } else {
