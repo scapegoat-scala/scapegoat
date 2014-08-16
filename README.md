@@ -58,7 +58,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 * **0.90.09** - Added new inspections: bounded by final type, empty while block, prefer vector empty, finalizer without super, impossible option size condition, filter dot head, repeated case body. Added `infos` to HTML output header
 
 * **0.90.8** - Fixed erroneous partial functions inspection. Added inspection for empty case classe. Changed levels in output to lowercase. Added console output option. Fixed seq empty on non empty seq. Changed return usage to info. Fixed odd issue with empty tree. Changed unused parameter in override to be info. Ignoring all synthetic method added to case classes. Fixed while(true) being detected by ConstantIf
-* 
+
 ### Inspections
 
 There are currently 98 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
