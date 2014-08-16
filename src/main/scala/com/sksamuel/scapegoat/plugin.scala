@@ -24,6 +24,10 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       case Some(option) => component.consoleOutput = option.drop("consoleOutput:".length).toBoolean
       case _ =>
     }
+    options.find(_.startsWith("ignoredFiles:")) match {
+      case Some(option) => component.ignoredFiles = option.drop("ignoredFiles:".length).split(':')
+      case _ =>
+    }
     for ( verbose <- options.find(_.startsWith("verbose:")) ) {
       component.verbose = verbose.drop("verbose:".length).toBoolean
     }
@@ -52,6 +56,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   var dataDir: File = new File(".")
   var disabled: Seq[String] = Nil
+  var ignoredFiles: Seq[String] = Nil
   var consoleOutput: Boolean = false
   var verbose: Boolean = false
 
@@ -66,6 +71,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     override def run(): Unit = {
 
       println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
+      println(s"[info] [scapegoat] ${ignoredFiles.size} ignored files")
       println("[info] [scapegoat] Beginning anaylsis...")
       super.run()
 
@@ -86,16 +92,21 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
 
     override def transform(tree: global.Tree) = {
-      if (consoleOutput)
-        println(s"[   info] [scapegoat] Inspecting compilation unit [$unit]")
-      val context = new InspectionContext(global, feedback)
-      activeInspections.foreach(inspection => {
-        val inspector = inspection.inspector(context)
-        val traverser = inspector.traverser
-        traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
-        inspector.postInspection()
-      })
-      tree
+
+      if (ignoredFiles.exists(unit.source.path.contains)) {
+        println(s"[info] [scapegoat] Ignoring compilation unit [$unit]")
+        tree
+      } else {
+        println(s"[info] [scapegoat] Inspecting compilation unit [$unit]")
+        val context = new InspectionContext(global, feedback)
+        activeInspections.foreach(inspection => {
+          val inspector = inspection.inspector(context)
+          val traverser = inspector.traverser
+          traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
+          inspector.postInspection()
+        })
+        tree
+      }
     }
   }
 }
