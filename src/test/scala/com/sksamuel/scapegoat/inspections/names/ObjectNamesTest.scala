@@ -15,14 +15,6 @@ class ObjectNamesTest
 
   "ObjectNames" - {
     "should report warning" - {
-      "for objects beginning with lowercase" in {
-        val code =
-          """object aClass
-            |case object bClass
-          """.stripMargin
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 2
-      }
       "for objects containing underscore" in {
         val code =
           """object My_class
