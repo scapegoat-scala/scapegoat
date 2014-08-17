@@ -1,7 +1,6 @@
 package com.sksamuel.scapegoat.inspections.imports
 
 import com.sksamuel.scapegoat.PluginRunner
-import com.sksamuel.scapegoat.inspections.imports.DuplicateImport
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
