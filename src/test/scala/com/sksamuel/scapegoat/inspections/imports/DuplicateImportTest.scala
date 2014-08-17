@@ -30,20 +30,20 @@ class DuplicateImportTest extends FreeSpec with Matchers with PluginRunner with 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
-      "for duplicated nested imports" in {
-
-        val code =
-          """import scala.collection.immutable.Set
-             object Test {
-              def foo = {
-                import scala.collection.immutable.Set
-                Set.empty
-              }
-             }""".stripMargin
-
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
-      }
+      //      "for duplicated nested imports" in {
+      //
+      //        val code =
+      //          """import scala.collection.immutable.Set
+      //             object Test {
+      //              def foo = {
+      //                import scala.collection.immutable.Set
+      //                Set.empty
+      //              }
+      //             }""".stripMargin
+      //
+      //        compileCodeSnippet(code)
+      //        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      //      }
     }
   }
 }
