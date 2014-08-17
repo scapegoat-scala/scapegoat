@@ -158,6 +158,23 @@ class LonelySealedTraitTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when a sealed trait is implemented in containing object" in {
+
+        val code =
+          """
+            |    sealed abstract class MultiMode(val elastic: String)
+            |    case object MultiMode {
+            |      case object Min extends MultiMode("min")
+            |      case object Max extends MultiMode("max")
+            |      case object Sum extends MultiMode("sum")
+            |      case object Avg extends MultiMode("avg")
+            |    }
+          """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
+
   }
 }

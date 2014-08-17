@@ -35,8 +35,9 @@ class LonelySealedTrait extends Inspection {
             parents.foreach(parent => implementedClasses.add(parent.toString()))
           case ModuleDef(_, name, Template(parents, _, _)) =>
             parents.foreach(parent => implementedClasses.add(parent.toString()))
-          case _ => continue(tree)
+          case _ =>
         }
+        continue(tree)
       }
     }
   }

@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class TraversableHeadTest extends FreeSpec with Matchers with PluginRunner {
+class TraversableHeadTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new TraversableHead)
 
@@ -20,6 +20,13 @@ class TraversableHeadTest extends FreeSpec with Matchers with PluginRunner {
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 4
+    }
+    "should not report warning" - {
+      "for var args" in {
+        val code = """class F(args:String*)""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
