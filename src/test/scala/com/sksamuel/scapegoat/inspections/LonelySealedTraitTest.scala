@@ -15,7 +15,9 @@ class LonelySealedTraitTest
   "LonelySealedTrait" - {
     "should report warning" - {
       "when a sealed trait has no implementations" in {
-        val code = """sealed trait ATeam"""
+        val code =
+          """package com.sammy
+            |sealed trait ATeam""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
@@ -24,7 +26,8 @@ class LonelySealedTraitTest
       "when a sealed trait has object implementation" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              object Hannibal extends ATeam
           """.stripMargin
 
@@ -34,7 +37,8 @@ class LonelySealedTraitTest
       "when a sealed trait has case object implementation" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              case object Hannibal extends ATeam
           """.stripMargin
 
@@ -44,7 +48,8 @@ class LonelySealedTraitTest
       "when a sealed trait has case object implementation with multiple parents" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              case object Hannibal extends Serializable with ATeam
           """.stripMargin
 
@@ -54,7 +59,8 @@ class LonelySealedTraitTest
       "when a sealed trait has case class implementation with no parameters" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              case class Hannibal() extends ATeam
           """.stripMargin
 
@@ -64,7 +70,8 @@ class LonelySealedTraitTest
       "when a sealed trait has class implementation with no parameters" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              class Hannibal extends ATeam
           """.stripMargin
 
@@ -74,7 +81,8 @@ class LonelySealedTraitTest
       "when a sealed trait has case class implementation with multiple parents" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              case class Hannibal(name:String) extends Serializable with ATeam
           """.stripMargin
 
@@ -84,7 +92,8 @@ class LonelySealedTraitTest
       "when a sealed trait has class implementation with multiple parents" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              class Hannibal(name:String) extends Serializable with ATeam
           """.stripMargin
 
@@ -94,7 +103,8 @@ class LonelySealedTraitTest
       "when a sealed trait has case class implementation with parameters" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              case class Hannibal(name:String) extends ATeam
           """.stripMargin
 
@@ -104,7 +114,8 @@ class LonelySealedTraitTest
       "when a sealed trait has class implementation with parameters" in {
 
         val code =
-          """sealed trait ATeam
+          """package com.sammy
+             sealed trait ATeam
              class Hannibal(name:String) extends ATeam
           """.stripMargin
 
@@ -114,7 +125,9 @@ class LonelySealedTraitTest
       "when a sealed trait has implementations mixed in the code" in {
 
         val code =
-          """sealed trait ATeam
+          """
+            |package com.sammy
+            |sealed trait ATeam
              sealed trait BTeam
              case class Hannibal(name:String) extends ATeam
              case class Faceman(name:String) extends BTeam
@@ -126,7 +139,7 @@ class LonelySealedTraitTest
       "when a sealed trait has parents" in {
 
         val code =
-          """
+          """package com.sammy
             |trait AnalyzerFilter {
             |  def name: String
             |}
@@ -161,7 +174,7 @@ class LonelySealedTraitTest
       "when a sealed trait is implemented in containing object" in {
 
         val code =
-          """
+          """    package com.sammy
             |    sealed abstract class MultiMode(val elastic: String)
             |    case object MultiMode {
             |      case object Min extends MultiMode("min")
@@ -177,7 +190,7 @@ class LonelySealedTraitTest
       "when a sealed trait has type parameters" in {
 
         val code =
-          """
+          """package com.sammy
             |    sealed trait A[S]
             |    case object B extends A[String]
             |    case object C extends A[BigDecimal]
@@ -189,41 +202,13 @@ class LonelySealedTraitTest
       "when a sealed abstract class has case object implementations" in {
 
         val code =
-          """
+          """package com.sammy
+            |
             |sealed abstract class IndexOptions(val value: String)
             |object IndexOptions {
             |  case object Docs extends IndexOptions("docs")
             |  case object Freqs extends IndexOptions("freqs")
             |  case object Positions extends IndexOptions("positions")
-            |}
-            |
-            |sealed abstract class PostingsFormat(val value: String)
-            |object PostingsFormat {
-            |  case object Direct extends PostingsFormat("direct")
-            |  case object Memory extends PostingsFormat("memory")
-            |  case object Pulsing extends PostingsFormat("pulsing")
-            |  case object BloomDefault extends PostingsFormat("bloom_default")
-            |  case object BloomPulsing extends PostingsFormat("bloom_pulsing")
-            |  case object Default extends PostingsFormat("default")
-            |}
-            |
-            |sealed abstract class DocValuesFormat(val value: String)
-            |object DocValuesFormat {
-            |  case object Memory extends DocValuesFormat("memory")
-            |  case object Disk extends DocValuesFormat("disk")
-            |  case object Default extends DocValuesFormat("default")
-            |}
-            |
-            |sealed abstract class Similarity(val value: String)
-            |object Similarity {
-            |  case object Default extends Similarity("default")
-            |  case object BM25 extends Similarity("BM25")
-            |}
-            |
-            |sealed abstract class PrefixTree(val value: String)
-            |object PrefixTree {
-            |  case object Geohash extends PrefixTree("geohash")
-            |  case object Quadtree extends PrefixTree("quadtree")
             |}
             |
           """.stripMargin

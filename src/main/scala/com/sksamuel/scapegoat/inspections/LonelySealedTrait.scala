@@ -34,11 +34,13 @@ class LonelySealedTrait extends Inspection {
             sealedClasses.put(cdef.name.toString, cdef)
           case ClassDef(_, name, _, Template(parents, _, _)) =>
             parents.foreach {
-              case parent => implementedClasses.add(parent.tpe.typeConstructor.toString())
+              case parent =>
+                implementedClasses.add(parent.tpe.typeSymbol.name.toString)
             }
           case ModuleDef(_, name, Template(parents, _, _)) =>
             parents.foreach {
-              case parent => implementedClasses.add(parent.tpe.typeConstructor.toString())
+              case parent =>
+                implementedClasses.add(parent.tpe.typeSymbol.name.toString)
             }
           case _ =>
         }
