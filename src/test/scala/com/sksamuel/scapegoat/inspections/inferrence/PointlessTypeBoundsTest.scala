@@ -13,7 +13,7 @@ class PointlessTypeBoundsTest
 
   override val inspections = Seq(new PointlessTypeBounds)
 
-  "BoundedByNothing" - {
+  "PointlessTypeBounds" - {
     "should report warning" - {
       "for class with Nothing lower bound" in {
 
@@ -51,7 +51,7 @@ class PointlessTypeBoundsTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
-      "for implicit class with nothing lower bound" in {
+      "for implicit class with Nothing lower bound" in {
 
         val code =
           """class Test {
@@ -62,7 +62,20 @@ class PointlessTypeBoundsTest
             |} """.stripMargin
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 2
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
+      "for implicit class with Any upper bound" in {
+
+        val code =
+          """class Test {
+            |  implicit class Monster[T <: Any](t:T) {
+            |   def bite : T = t
+            |  }
+            |  "bfg".bite
+            |} """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
     }
     "should not report warning" - {
