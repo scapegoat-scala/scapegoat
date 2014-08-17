@@ -64,7 +64,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Inspections
 
-There are currently 98 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 104 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 |Name|Brief Description|
 |----|-----------|
@@ -87,8 +87,8 @@ There are currently 98 inspections. An overview list is given, followed by a mor
 | CollectionPromotionToAny| Checks for collection operations that promote the collection to `Any` |
 | ComparingFloatingPointTypes| Checks for equality checks on floating point types |
 | ComparingUnrelatedTypes| Checks for equality comparisons that cannot succeed |
-| ComparisonToEmptyList | |
-| ComparisonToEmptySet | |
+| ComparisonToEmptyList | Checks for code like `a == List()` or `a == Nil` |
+| ComparisonToEmptySet | Checks for code like `a == Set()` or `a == Set.empty` |
 | ComparisonWithSelf| Checks for equality checks with itself |
 | ConstantIf| Checks for code where the if condition compiles to a constant |
 | DivideByOne| Checks for divide by one, which always returns the original value |
@@ -142,11 +142,13 @@ There are currently 98 inspections. An overview list is given, followed by a mor
 | PreferSetEmpty| Checks for Set() when could use Set.empty |
 | PreferVectorEmpty| Checks for Vector() when could use Vector.empty |
 | ProductWithSerializableInferred| Checks for vals that have `Product with Serializable` as their inferred type |
+| PublicFinalizer | Checks for overriden finalizes that are public |
 | RedundantFinalizer| Checks for empty finalizers. |
 | RepeatedCaseBody | Checks for case statements which have the same body |
 | SimplifyBooleanExpression | `b == false` can be simplified to `!b` |
 | SubstringZero | Checks for `String.substring(0)` |
-| SuspiciousMatchOnClassObject | |
+| SuspiciousMatchOnClassObject | Finds code where matching is taking place on class literals |
+| SwallowedException | Finds catch blocks that don't handle caught exceptions | 
 | SwapSortFilter| `sort.filter` can be replaced with `filter.sort` for performance |
 | TraversableHead| Looks for unsafe usage of `Traversable.head` |
 | TryGet| Checks for use of `Try.get` |
