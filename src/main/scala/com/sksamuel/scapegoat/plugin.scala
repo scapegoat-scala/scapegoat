@@ -72,14 +72,14 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
       println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
       println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
-      println("[info] [scapegoat] Beginning anaylsis...")
+      println("[info] [scapegoat] Beginning analysis...")
       super.run()
 
       val errors = feedback.errors.size
       val warns = feedback.warns.size
       val infos = feedback.infos.size
 
-      println(s"[warn] [scapegoat] Anaylsis complete - $errors errors $warns warns $infos infos")
+      println(s"[warn] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
       val html = IOUtils.writeHTMLReport(dataDir, feedback)
       println(s"[info] [scapegoat] Written HTML report [$html]")
       val xml = IOUtils.writeXMLReport(dataDir, feedback)

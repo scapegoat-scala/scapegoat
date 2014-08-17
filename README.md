@@ -1,9 +1,9 @@
 Scapegoat ![travis image](https://travis-ci.org/sksamuel/scalac-scapegoat-plugin.svg?branch=master)
 ==========
 
-Scapegoat is a Scala static code anaylzer, what is more colloquially known as a code lint tool or linter. Scapegoat works in a similar vein to Java's [FindBugs](http://findbugs.sourceforge.net/) or [checkstyle](http://checkstyle.sourceforge.net/), or Scala's [Scalastyle](https://github.com/scalastyle/scalastyle).
+Scapegoat is a Scala static code analyzer, what is more colloquially known as a code lint tool or linter. Scapegoat works in a similar vein to Java's [FindBugs](http://findbugs.sourceforge.net/) or [checkstyle](http://checkstyle.sourceforge.net/), or Scala's [Scalastyle](https://github.com/scalastyle/scalastyle).
 
-A static code anaylzer is a tool that flag suspicious language usage in code. This can include behavior likely to lead or bugs, non idiomatic usage of a language, or just code that doesn't conform to specified style guidelines.
+A static code analyzer is a tool that flag suspicious language usage in code. This can include behavior likely to lead or bugs, non idiomatic usage of a language, or just code that doesn't conform to specified style guidelines.
 
 **What's the difference between this project and Scalastyle (or others)?**
 
@@ -156,7 +156,11 @@ There are currently 98 inspections. An overview list is given, followed by a mor
 | UnreachableCatch | Checks for catch clauses that cannot be reached |
 | UnsafeContains| Checks for `List.contains(value)` for invalid types |
 | UnusedMethodParameter| Checks for unused method parameters |
-| UseSqrt| Checks for use of Math.pow for calculating sqrt |
+| UseCbrt| Checks for use of `math.pow` for calculating `math.cbrt` |
+| UseExpM1| Checks for use of `math.exp(x) - 1` instead of `math.expm1(x)` |
+| UseLog10| Checks for use of `math.log(x)/math.log(10)` instead of `math.log10(x)` |
+| UseLog1P| Checks for use of `math.log(x + 1)` instead of `math.log1p(x)` |
+| UseSqrt| Checks for use of `math.pow` for calculating `math.sqrt` |
 | VarClosure | Finds closures that reference var |
 | VarCouldBeVal | Checks for `var`s that could be declared as `val`s |
 | VarUse| Checks for use of `var` |
@@ -236,5 +240,5 @@ Checks for code that uses a `while(true)` or `do { } while(true)` block.
 * CppCheck (C++) - http://cppcheck.sourceforge.net/
 * OCLint (C++/ObjC) - http://docs.oclint.org/en/dev/rules/index.html
 * JSHint (Javascript) - http://www.jshint.com/
-* JavascriptLink (Javascript) - http://www.javascriptlint.com/
+* JavascriptLint (Javascript) - http://www.javascriptlint.com/
 * ClosureLinter (Javascript) - https://developers.google.com/closure/utilities/
