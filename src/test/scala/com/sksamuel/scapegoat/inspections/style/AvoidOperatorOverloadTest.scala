@@ -67,6 +67,13 @@ class AvoidOperatorOverloadTest extends FreeSpec with Matchers with PluginRunner
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for traits" in {
+        val code = """trait A {
+                     |  def foo(indices: String*) = ()
+                     |}""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
       "for case classes with parameters and extends trait" in {
         val code =
           """trait SymbolSearchResult {

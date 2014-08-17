@@ -111,6 +111,53 @@ class LonelySealedTraitTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when a sealed trait has implementations mixed in the code" in {
+
+        val code =
+          """sealed trait ATeam
+             sealed trait BTeam
+             case class Hannibal(name:String) extends ATeam
+             case class Faceman(name:String) extends BTeam
+          """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "when a sealed trait has parents" in {
+
+        val code =
+          """
+            |trait AnalyzerFilter {
+            |  def name: String
+            |}
+            |
+            |trait AnalyzerFilterDefinition {
+            |  def filterType: String
+            |}
+            |
+            |sealed trait CharFilter extends AnalyzerFilter
+            |
+            |sealed trait CharFilterDefinition extends CharFilter with AnalyzerFilterDefinition
+            |
+            |case object HtmlStripCharFilter extends CharFilter {
+            |  val name = "html_strip"
+            |}
+            |
+            |case class MappingCharFilter(name: String, mappings: (String, String)*)
+            |    extends CharFilterDefinition {
+            |  val filterType = "mapping"
+            |}
+            |
+            |case class PatternReplaceCharFilter(name: String, pattern: String, replacement: String)
+            |    extends CharFilterDefinition {
+            |  val filterType = "pattern_replace"
+            |}
+            |
+          """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
