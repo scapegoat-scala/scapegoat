@@ -14,7 +14,7 @@ class AnyUseTest
 
   "AnyUse" - {
     "should report warning" - {
-      "for methods returning any ==" in {
+      "for methods returning any" in {
 
         val code = """class Test {
                        def foo =  {
@@ -29,7 +29,7 @@ class AnyUseTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
-      "for vals returning any ==" in {
+      "for vals returning any" in {
 
         val code = """class Test {
                        val foo =  {
@@ -44,7 +44,7 @@ class AnyUseTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
-      "for lazy vals returning any ==" in {
+      "for lazy vals returning any" in {
 
         val code = """class Test {
                        lazy val foo =  {
@@ -59,7 +59,7 @@ class AnyUseTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
-      "for vars returning any ==" in {
+      "for vars returning any" in {
 
         val code = """class Test {
                        var foo =  {
