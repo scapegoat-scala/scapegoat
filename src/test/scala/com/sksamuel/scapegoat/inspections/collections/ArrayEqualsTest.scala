@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
+import org. scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class ArrayEqualsTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
@@ -31,6 +31,11 @@ class ArrayEqualsTest extends FreeSpec with Matchers with PluginRunner with OneI
                      println(a.deep == b.deep)
                     } """.stripMargin
 
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for arrays parameters to a case class" in {
+        val code = """case class StemmerOverrideTokenFilter(name: String, rules: Array[String])"""
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }

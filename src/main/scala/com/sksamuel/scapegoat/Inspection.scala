@@ -52,8 +52,8 @@ case class InspectionContext(global: Global, feedback: Feedback) {
 
     override final def traverse(tree: Tree): Unit = {
       tree match {
-        // ignore synthetic methods added to case classes
-        case DefDef(mods, _, _, _, _, _) if mods.isCase && mods.isSynthetic =>
+        // ignore synthetic methods added
+        case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
         case dd@DefDef(_, _, _, _, _, _) if isSuppressed(dd.symbol) =>
         case block@Block(_, _) if isSuppressed(block.symbol) =>
         case iff@If(_, _, _) if isSuppressed(iff.symbol) =>
