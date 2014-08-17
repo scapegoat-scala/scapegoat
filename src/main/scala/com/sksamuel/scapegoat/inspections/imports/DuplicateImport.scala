@@ -25,6 +25,7 @@ class DuplicateImport extends Inspection {
               }
               imports.add(name)
             })
+          case DefDef(_, _, _, _, _, _) => // check imports inside defs
           case _ => continue(tree)
         }
       }
