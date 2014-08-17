@@ -59,6 +59,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var ignoredFiles: List[String] = Nil
   var consoleOutput: Boolean = false
   var verbose: Boolean = false
+  var disableXML = false
+  var disableHTML = false
 
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")
@@ -71,8 +73,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     override def run(): Unit = {
 
       println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
-      println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
-      println("[info] [scapegoat] Beginning analysis...")
+      if (ignoredFiles.size > 0)
+        println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
       super.run()
 
       val errors = feedback.errors.size
@@ -80,10 +82,14 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       val infos = feedback.infos.size
 
       println(s"[warn] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
-      val html = IOUtils.writeHTMLReport(dataDir, feedback)
-      println(s"[info] [scapegoat] Written HTML report [$html]")
-      val xml = IOUtils.writeXMLReport(dataDir, feedback)
-      println(s"[info] [scapegoat] Written XML report [$xml]")
+      if (!disableHTML) {
+        val html = IOUtils.writeHTMLReport(dataDir, feedback)
+        println(s"[info] [scapegoat] Written HTML report [$html]")
+      }
+      if (!disableXML) {
+        val xml = IOUtils.writeXMLReport(dataDir, feedback)
+        println(s"[info] [scapegoat] Written XML report [$xml]")
+      }
     }
   }
 
