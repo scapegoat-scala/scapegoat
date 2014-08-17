@@ -72,16 +72,21 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {
 
-      println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
-      if (ignoredFiles.size > 0)
-        println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
+      if (verbose) {
+        println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
+        if (ignoredFiles.size > 0)
+          println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
+      }
       super.run()
 
       val errors = feedback.errors.size
       val warns = feedback.warns.size
       val infos = feedback.infos.size
 
-      println(s"[warn] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
+      if (verbose) {
+        println(s"[warn] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
+      }
+
       if (!disableHTML) {
         val html = IOUtils.writeHTMLReport(dataDir, feedback)
         println(s"[info] [scapegoat] Written HTML report [$html]")
@@ -98,10 +103,14 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: global.Tree) = {
       if (ignoredFiles.exists(unit.source.path.matches)) {
-        println(s"[info] Skipping scapegoat [$unit]")
+        if (verbose) {
+          println(s"[info] Skipping scapegoat [$unit]")
+        }
         tree
       } else {
-        println(s"[info] Scapegoat analysis [$unit] .....")
+        if (verbose) {
+          println(s"[info] Scapegoat analysis [$unit] .....")
+        }
         val context = new InspectionContext(global, feedback)
         activeInspections.foreach(inspection => {
           val inspector = inspection.inspector(context)
