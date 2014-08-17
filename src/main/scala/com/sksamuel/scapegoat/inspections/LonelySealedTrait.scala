@@ -30,11 +30,16 @@ class LonelySealedTrait extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case cdef@ClassDef(mods, name, _, _) if mods.isSealed => sealedClasses.put(cdef.name.toString, cdef)
+          case cdef@ClassDef(mods, name, _, _) if mods.isSealed =>
+            sealedClasses.put(cdef.name.toString, cdef)
           case ClassDef(_, name, _, Template(parents, _, _)) =>
-            parents.foreach(parent => implementedClasses.add(parent.toString()))
+            parents.foreach {
+              case parent => implementedClasses.add(parent.tpe.typeConstructor.toString())
+            }
           case ModuleDef(_, name, Template(parents, _, _)) =>
-            parents.foreach(parent => implementedClasses.add(parent.toString()))
+            parents.foreach {
+              case parent => implementedClasses.add(parent.tpe.typeConstructor.toString())
+            }
           case _ =>
         }
         continue(tree)

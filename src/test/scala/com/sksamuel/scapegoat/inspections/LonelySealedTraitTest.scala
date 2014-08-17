@@ -174,7 +174,21 @@ class LonelySealedTraitTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when a sealed trait has type parameters" in {
+
+        val code =
+          """
+            |    sealed trait A[S]
+            |    case object B extends A[String]
+            |    case object C extends A[BigDecimal]
+          """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
+
+
 
   }
 }
