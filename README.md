@@ -12,7 +12,7 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
-Latest Release: 0.92.0
+Latest Release: 0.92.1
 
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
@@ -41,8 +41,9 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Changelog
 
-* **0.92.0** - Added swallowed exception inspection, Added public finalizer inspection, Added use expm1(x) instead of exp(x) - 1 inspection, Added use log1p(x) instead of log(x + 1) inspection, Added use log10(x) instead of log(x)/log(10) inspection, Added use cbrt inspection
+* **0.92.1** - Fixed a load of false positives.
 
+* **0.92.0** - Added swallowed exception inspection, Added public finalizer inspection, Added use expm1(x) instead of exp(x) - 1 inspection, Added use log1p(x) instead of log(x + 1) inspection, Added use log10(x) instead of log(x)/log(10) inspection, Added use cbrt inspection
 
 * **0.91.0** - Updated logging format to include less [scapegoat] everywhere, Addded scala.math and java.StrictMath to useSqrt, Added ignored files patterns option, Added wildcard import inspection, Added comparison to empty set inspection
 
