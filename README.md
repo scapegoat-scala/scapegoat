@@ -57,7 +57,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 * **0.90.11** - Added empty for inspection, AnyUse inspection, Added ArrayEquals inspection, Added double negation inspection, Disabled expession as statement inspection by default, Added avoid operator overload inspection, #25 improving repeated case bodies, Added lonely sealed trait. Added postInspection call to inspections
 
-* **0.90.10** - Aded Added type shadowing inspection, Added var could be val inspection,Added unreachable catch, inspection, Added unnecessary toString inspection
+* **0.90.10** - Added type shadowing inspection, var could be val inspection, unreachable catch inspection and unnecessary toString inspection
 
 * **0.90.09** - Added new inspections: bounded by final type, empty while block, prefer vector empty, finalizer without super, impossible option size condition, filter dot head, repeated case body. Added `infos` to HTML output header
 
@@ -124,7 +124,7 @@ There are currently 104 inspections. An overview list is given, followed by a mo
 | JavaConversionsUse| Checks for use of implicit Java conversions |
 | ListAppend | Checks for List :+ which is O(n) |
 | ListSize| Checks for `List.size` which is O(n). |
-| LooksLikeInterpolatedString | |
+| LooksLikeInterpolatedString | Finds strings that look like they should be interpolated but are not |
 | LonelySealedTrait | Checks for sealed traits which have no implementation |
 | MaxParameters | Checks for methods that have over 10 parameters |
 | MethodReturningAny | Checks for defs that are defined or inferred to return `Any` |
