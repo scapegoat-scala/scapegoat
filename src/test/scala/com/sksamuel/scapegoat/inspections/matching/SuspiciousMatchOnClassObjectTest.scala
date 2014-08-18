@@ -14,13 +14,28 @@ class SuspiciousMatchOnClassObjectTest
 
   "SuspiciousMatchOnClassObject" - {
     "should report warning" - {
-      "for matching class object" in {
+      "for matching on object for case class with params" in {
 
         val code = """
                       trait Machine
                       case class Terminator(name:String) extends Machine
-                      case class Android(name:String) extends Machine
-                      case class Man(name:String, gender:String) extends Machine
+
+                      class Test {
+                        def b : Any = 4
+                        b match {
+                           case Terminator =>
+                           case _ =>
+                        }
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
+      "for matching on object for case class with no params" in {
+
+        val code = """
+                      trait Machine
+                      case class Terminator() extends Machine
 
                       class Test {
                         def b : Any = 4
@@ -58,12 +73,29 @@ class SuspiciousMatchOnClassObjectTest
                       trait Machine
                       case class Terminator(name:String) extends Machine
                       case class Android(name:String) extends Machine
-                      case class Man(name:String, gender:String) extends Machine
 
                       object Test {
                         val b : Any = Terminator("arnie")
                         b match {
                            case Android("data") => println("yay data")
+                           case _ =>
+                        }
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for case objects" in {
+        val code = """
+                      trait Android
+                      case object Lal extends Android
+                      case object Data extends Android
+
+                      object Test {
+                        val b : Any = Data
+                        b match {
+                           case Data => println("Yes captain")
+                           case Lal => println("Yes dad")
                            case _ =>
                         }
                     } """.stripMargin
