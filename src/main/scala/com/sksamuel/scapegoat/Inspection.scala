@@ -58,6 +58,8 @@ case class InspectionContext(global: Global, feedback: Feedback) {
         case block@Block(_, _) if isSuppressed(block.symbol) =>
         case iff@If(_, _, _) if isSuppressed(iff.symbol) =>
         case tri@Try(_, _, _) if isSuppressed(tri.symbol) =>
+        case mod: ModuleDef if isSuppressed(mod.symbol) =>
+        case classdef: ClassDef if isSuppressed(classdef.symbol) =>
         case _ => inspect(tree)
       }
     }
