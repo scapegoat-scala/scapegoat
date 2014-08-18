@@ -13,7 +13,7 @@ class UseExpM1 extends Inspection {
       def isMathPackage(pack: String) = 
           (pack == "scala.math.`package`"
         || pack == "java.this.lang.Math"
-        || pack == "java.this.lang.StrictMath" || true)
+        || pack == "java.this.lang.StrictMath")
 
       override def inspect(tree: Tree): Unit = {
         tree match {
