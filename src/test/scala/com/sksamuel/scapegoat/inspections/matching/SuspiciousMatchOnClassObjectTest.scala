@@ -103,6 +103,37 @@ class SuspiciousMatchOnClassObjectTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for top level case objects" in {
+        val code = """
+                     |trait TestTrait
+                     |object TestObject extends TestTrait
+                     |
+                     |object Go {
+                     |  def test(t: TestTrait): Unit = t match {
+                     |    case TestObject ⇒ println("ok")
+                     |  }
+                     |}
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for nested case objects" in {
+        val code = """
+                     |object Go {
+                     |  trait TestTrait
+                     |  object TestObject extends TestTrait
+                     |
+                     |  def test(t: TestTrait): Unit = t match {
+                     |    case TestObject ⇒ println("ok")
+                     |  }
+                     |}
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
+
