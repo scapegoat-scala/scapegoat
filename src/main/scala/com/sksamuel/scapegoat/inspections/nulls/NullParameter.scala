@@ -1,9 +1,9 @@
-package com.sksamuel.scapegoat.inspections.unsafe
+package com.sksamuel.scapegoat.inspections.nulls
 
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class NullUse extends Inspection {
+class NullParameter extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def traverser = new context.Traverser {
@@ -20,16 +20,17 @@ class NullUse extends Inspection {
           case Apply(_, _) if tree.tpe.toString == "scala.xml.Elem" =>
           case Apply(_, args) =>
             if (containsNull(args))
-              context.warn("Null use",
-                tree.pos,
-                Levels.Warning,
-                "null as method argument: " + tree.toString().take(300),
-                NullUse.this)
-          case Literal(Constant(null)) =>
-            context.warn("Null use", tree.pos, Levels.Warning, "null used on line " + tree.pos.line, NullUse.this)
+              warn(tree)
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
           case _ => continue(tree)
         }
+      }
+      private def warn(tree: Tree) {
+        context.warn("Null use",
+          tree.pos,
+          Levels.Warning,
+          "null as method argument: " + tree.toString().take(300),
+          NullParameter.this)
       }
     }
   }

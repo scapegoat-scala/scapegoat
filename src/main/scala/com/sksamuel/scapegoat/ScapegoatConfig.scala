@@ -11,6 +11,7 @@ import com.sksamuel.scapegoat.inspections.inference.{PointlessTypeBounds, Method
 import com.sksamuel.scapegoat.inspections.matching.{SuspiciousMatchOnClassObject, PartialFunctionInsteadOfMatch, RepeatedCaseBody}
 import com.sksamuel.scapegoat.inspections.math._
 import com.sksamuel.scapegoat.inspections.naming.{ObjectNames, ClassNames}
+import com.sksamuel.scapegoat.inspections.nulls.{NullAssignment, NullParameter}
 import com.sksamuel.scapegoat.inspections.option.{EitherGet, ImpossibleOptionSizeCondition, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
 import com.sksamuel.scapegoat.inspections.style.{AvoidOperatorOverload, ParameterlessMethodReturnsUnit, SimplifyBooleanExpression}
@@ -85,7 +86,8 @@ object ScapegoatConfig extends App {
     new NanComparison,
     new NegationIsEmpty,
     new NegationNonEmpty,
-    new NullUse,
+    new NullAssignment,
+    new NullParameter,
     new OptionGet,
     new OptionSize,
     new ParameterlessMethodReturnsUnit,
