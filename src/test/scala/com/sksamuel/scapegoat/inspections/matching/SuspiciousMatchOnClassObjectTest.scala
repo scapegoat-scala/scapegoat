@@ -112,8 +112,7 @@ class SuspiciousMatchOnClassObjectTest
                      |  def test(t: TestTrait): Unit = t match {
                      |    case TestObject ⇒ println("ok")
                      |  }
-                     |}
-                    } """.stripMargin
+                     |} """.stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
@@ -127,8 +126,7 @@ class SuspiciousMatchOnClassObjectTest
                      |  def test(t: TestTrait): Unit = t match {
                      |    case TestObject ⇒ println("ok")
                      |  }
-                     |}
-                    } """.stripMargin
+                     |} """.stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
