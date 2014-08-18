@@ -15,11 +15,11 @@ class PointlessTypeBounds extends Inspection {
           case t@TypeDef(_, _, _, rhs)
             if rhs.tpe.bounds.isEmptyBounds
               && rhs.pos != null
-              && (rhs.pos.lineContent.contains("<:") || rhs.pos.lineContent.contains(">:")) =>
+              && (rhs.pos.lineContent.contains("<: Any") || rhs.pos.lineContent.contains(">: Nothing")) =>
             context.warn("Pointless Type Bounds",
               tree.pos,
               Levels.Warning,
-              "Pointless type bound resolves to Nothing <: T <: Any. Did you mean to put in other bounds: " +
+              "Type bound resolves to Nothing <: T <: Any. Did you mean to put in other bounds: " +
                 tree.toString().take(300),
               PointlessTypeBounds.this)
           case _ => continue(tree)

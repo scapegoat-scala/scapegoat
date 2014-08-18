@@ -95,6 +95,34 @@ class PointlessTypeBoundsTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for class with multiple type params" in {
+
+        val code =
+          """class Test[A,B]""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for class with multiple type params and single bounds" in {
+
+        val code =
+          """trait Foo
+            |class Test[A,B <: Foo]""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for class with multiple type params and multiple bounds" in {
+
+        val code =
+          """package com.sammy
+            |trait Foo
+            |trait Boo
+            |class Test[A >: Boo,B <: Foo]""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
       "for method with declared lower bound" in {
 
         val code =
