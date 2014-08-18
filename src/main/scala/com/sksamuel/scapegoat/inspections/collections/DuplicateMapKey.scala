@@ -10,9 +10,12 @@ class DuplicateMapKey extends Inspection {
 
       import context.global._
 
+      private val Arrow = TermName("$minus$greater")
+      private val UnicodeArrow = TermName("$u2192")
+
       private def isDuplicateKeys(trees: List[Tree]): Boolean = {
         val unique = trees.foldLeft(Set[String]())((set, tree) => tree match {
-          case Apply(TypeApply(Select(Apply(_, args), TermName("$minus$greater")), _), _) =>
+          case Apply(TypeApply(Select(Apply(_, args), Arrow | UnicodeArrow), _), _) =>
             set + args.head.toString()
           case _ => set
         })

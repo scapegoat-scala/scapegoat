@@ -8,7 +8,7 @@ class DuplicateMapKeyTest extends FreeSpec with Matchers with PluginRunner with 
 
   override val inspections = Seq(new DuplicateMapKey)
 
-  "duplicate map keys" - {
+  "DuplicateMapKey" - {
     "should report warning" in {
       val code = """object Test {
                       Map("name" -> "sam", "location" -> "aylesbury", "name" -> "bob")
@@ -17,17 +17,33 @@ class DuplicateMapKeyTest extends FreeSpec with Matchers with PluginRunner with 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
-  }
-
-
-  "non duplicate map keys" - {
-    "should not report warning" in {
-      val code = """object Test {
+    "should not report warning" - {
+      "for duplicated strings" in {
+        val code = """object Test {
                       Map("name" -> "sam", "location" -> "aylesbury", "name2" -> "bob")
                     } """.stripMargin
 
-      compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 0
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for duplicated tuples using unicode" in {
+
+        val code = """object Test {
+                     |        Map(
+                     |          "hp" → "HP",
+                     |          "x" → "x",
+                     |          "xp" → "XP",
+                     |          "ie" → "IE",
+                     |          "gb" → "GB",
+                     |          "mb" → "MB",
+                     |          "kb" → "KB",
+                     |          "sp" → "SP",
+                     |          "nt" → "NT")
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
