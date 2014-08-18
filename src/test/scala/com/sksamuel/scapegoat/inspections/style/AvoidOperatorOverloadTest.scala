@@ -13,9 +13,9 @@ class AvoidOperatorOverloadTest extends FreeSpec with Matchers with PluginRunner
       "for user defined nutjob method names" in {
 
         val code = """object Test {
-                      def :: = println("wtf")
+                      def ::: = println("wtf")
                       def <<:>> = println("nutjob")
-                      def !><!() = println("omg")
+                      def !><! = println("omg")
                     }
                    """.stripMargin
 
@@ -29,6 +29,17 @@ class AvoidOperatorOverloadTest extends FreeSpec with Matchers with PluginRunner
         val code = """object Test {
                       def ! = println("fair nuff")
                       def ? = println("go on mate")
+                    }
+                   """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for double character symbol method names" in {
+
+        val code = """object Test {
+                      def !! = println("fair nuff")
+                      def :: = println("go on mate")
                     }
                    """.stripMargin
 
