@@ -9,7 +9,7 @@ class AkkaSenderClosure extends Inspection {
 
     import context.global._
 
-    override def traverser = new context.Traverser {
+    override def postTyperTraverser = Some apply  new context.Traverser {
 
       override def inspect(tree: Tree): Unit = {
         tree match {

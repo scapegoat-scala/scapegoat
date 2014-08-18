@@ -105,6 +105,7 @@ class SuspiciousMatchOnClassObjectTest
       }
       "for top level case objects" in {
         val code = """
+                     |package com.sammy
                      |trait TestTrait
                      |object TestObject extends TestTrait
                      |
@@ -119,6 +120,7 @@ class SuspiciousMatchOnClassObjectTest
       }
       "for nested case objects" in {
         val code = """
+                      package com.sammy
                      |object Go {
                      |  trait TestTrait
                      |  object TestObject extends TestTrait

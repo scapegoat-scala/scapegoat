@@ -8,7 +8,7 @@ import scala.reflect.internal.Flags
 class AnyUse extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def traverser = new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 

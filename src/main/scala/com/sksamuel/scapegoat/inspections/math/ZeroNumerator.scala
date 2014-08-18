@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{Levels, Inspector, InspectionContext, Inspection}
 /** @author Stephen Samuel */
 class ZeroNumerator extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def traverser = new context.Traverser {
+    override def postTyperTraverser = Some apply  new context.Traverser {
 
       import context.global._
       import definitions._

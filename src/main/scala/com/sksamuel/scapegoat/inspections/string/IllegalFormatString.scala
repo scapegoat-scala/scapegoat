@@ -11,7 +11,7 @@ class IllegalFormatString extends Inspection {
   final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d?(\\.\\d+)?[tT]?[a-zA-Z]".r
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def traverser = new context.Traverser {
+    override def postTyperTraverser = Some apply  new context.Traverser {
 
       import context.global._
 

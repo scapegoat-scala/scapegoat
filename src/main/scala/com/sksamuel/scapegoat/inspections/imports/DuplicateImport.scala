@@ -11,7 +11,7 @@ class DuplicateImport extends Inspection {
 
     private val imports = mutable.HashSet[String]()
 
-    override def traverser = new context.Traverser {
+    override def postTyperTraverser = Some apply  new context.Traverser {
 
       import context.global._
 
