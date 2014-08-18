@@ -67,8 +67,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
-  
-  val disableAll = disabled.exists(_.compareToIgnoreCase("all"))
+
+  val disableAll = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
   def activeInspections = inspections.filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
   lazy val feedback = new Feedback(consoleOutput)
@@ -86,7 +86,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
             println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
         }
         super.run()
-  
+
         if (summary) {
           val errors = feedback.errors.size
           val warns = feedback.warns.size
@@ -94,7 +94,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
           println(s"[$level] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
         }
-  
+
         if (!disableHTML) {
           val html = IOUtils.writeHTMLReport(dataDir, feedback)
           if (verbose)
@@ -112,25 +112,22 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   protected def newTransformer(unit: CompilationUnit): Transformer = new Transformer(unit)
 
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
-    override def transform(tree: global.Tree) = 
-      if (disableAll) {
-        if (ignoredFiles.exists(unit.source.path.matches)) {
-          if (debug) {
-            println(s"[debug] Skipping scapegoat [$unit]")
-          }
-          tree
-        } else {
-          if (debug) {
-            println(s"[debug] Scapegoat analysis [$unit] .....")
-          }
-          val context = new InspectionContext(global, feedback)
-          activeInspections.foreach(inspection => {
-            val inspector = inspection.inspector(context)
-            val traverser = inspector.traverser
-            traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
-            inspector.postInspection()
-          })
+    override def transform(tree: global.Tree) = {
+      if (ignoredFiles.exists(unit.source.path.matches)) {
+        if (debug) {
+          println(s"[debug] Skipping scapegoat [$unit]")
         }
+      } else {
+        if (debug) {
+          println(s"[debug] Scapegoat analysis [$unit] .....")
+        }
+        val context = new InspectionContext(global, feedback)
+        activeInspections.foreach(inspection => {
+          val inspector = inspection.inspector(context)
+          val traverser = inspector.traverser
+          traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
+          inspector.postInspection()
+        })
       }
       tree
     }
