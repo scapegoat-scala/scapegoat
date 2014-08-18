@@ -59,6 +59,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var ignoredFiles: List[String] = Nil
   var consoleOutput: Boolean = false
   var verbose: Boolean = false
+  var debug: Boolean = false
   var summary: Boolean = true
   var disableXML = false
   var disableHTML = false
@@ -90,11 +91,13 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
       if (!disableHTML) {
         val html = IOUtils.writeHTMLReport(dataDir, feedback)
-        println(s"[info] [scapegoat] Written HTML report [$html]")
+        if (verbose)
+          println(s"[info] [scapegoat] Written HTML report [$html]")
       }
       if (!disableXML) {
         val xml = IOUtils.writeXMLReport(dataDir, feedback)
-        println(s"[info] [scapegoat] Written XML report [$xml]")
+        if (verbose)
+          println(s"[info] [scapegoat] Written XML report [$xml]")
       }
     }
   }
@@ -104,13 +107,13 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: global.Tree) = {
       if (ignoredFiles.exists(unit.source.path.matches)) {
-        if (verbose) {
-          println(s"[info] Skipping scapegoat [$unit]")
+        if (debug) {
+          println(s"[debug] Skipping scapegoat [$unit]")
         }
         tree
       } else {
-        if (verbose) {
-          println(s"[info] Scapegoat analysis [$unit] .....")
+        if (debug) {
+          println(s"[debug] Scapegoat analysis [$unit] .....")
         }
         val context = new InspectionContext(global, feedback)
         activeInspections.foreach(inspection => {
