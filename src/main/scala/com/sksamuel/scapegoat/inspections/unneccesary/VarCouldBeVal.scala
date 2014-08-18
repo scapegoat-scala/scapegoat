@@ -12,22 +12,30 @@ class VarCouldBeVal extends Inspection {
 
       import context.global._
 
-      private def containsUnwrittenVar(trees: List[Tree]): Boolean = {
-        def containsUnwrittenVar(trees: List[Tree], vars: mutable.HashSet[String]): Boolean = {
-          // add var to the set when it is defined, then remove it when it's written to
-          // what's left are unwritten vars
-          trees.foreach {
-            case ValDef(mods, name, _, _) if mods.isMutable => vars.add(name.toString)
-            case Assign(lhs, _) =>
-              vars.remove(lhs.toString())
-            case DefDef(_, _, _, _, _, rhs) => rhs match {
-              case Block(stmt, expr) => containsUnwrittenVar(stmt :+ expr, vars)
-              case _ => containsUnwrittenVar(List(rhs), vars)
-            }
-            case tree => containsUnwrittenVar(tree.children, vars)
-          }
-          vars.nonEmpty
+      private def containsUnwrittenVar(tree: Tree, vars: mutable.HashSet[String]): Boolean = {
+        tree match {
+          case Block(stmt, expr) => containsUnwrittenVar(stmt :+ expr, vars)
+          case _ => containsUnwrittenVar(List(tree), vars)
         }
+      }
+
+      private def containsUnwrittenVar(trees: List[Tree], vars: mutable.HashSet[String]): Boolean = {
+        // add var to the set when it is defined, then remove it when it's written to
+        // what's left are unwritten vars
+        trees.foreach {
+          case ValDef(mods, name, _, _) if mods.isMutable => vars.add(name.toString)
+          case Assign(lhs, _) => vars.remove(lhs.toString())
+          case DefDef(_, _, _, _, _, rhs) => containsUnwrittenVar(rhs, vars)
+          case block: Block => containsUnwrittenVar(block, vars)
+          case If(cond, thenp, elsep) =>
+            containsUnwrittenVar(thenp, vars)
+            containsUnwrittenVar(elsep, vars)
+          case tree => containsUnwrittenVar(tree.children, vars)
+        }
+        vars.nonEmpty
+      }
+
+      private def containsUnwrittenVar(trees: List[Tree]): Boolean = {
         containsUnwrittenVar(trees, mutable.HashSet[String]())
       }
 

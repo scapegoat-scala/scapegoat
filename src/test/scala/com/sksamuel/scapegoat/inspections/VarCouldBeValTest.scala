@@ -136,6 +136,21 @@ class VarCouldBeValTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when var is written to inside an if " in {
+
+        val code =
+          """package com.sammy
+            |object Test {
+            |def test(b: Boolean): Int = {
+            |  var count = 0
+            |  if (b) count += 1
+            |  count
+            |}
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
