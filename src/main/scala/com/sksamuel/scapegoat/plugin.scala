@@ -83,9 +83,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       val warns = feedback.warns.size
       val infos = feedback.infos.size
 
-      if (verbose) {
-        println(s"[warn] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
-      }
+      val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
+      println(s"[$level] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
 
       if (!disableHTML) {
         val html = IOUtils.writeHTMLReport(dataDir, feedback)
