@@ -10,7 +10,7 @@ class ObjectNames extends Inspection {
 
       import context.global._
 
-      private val regex = "^[A-Z][A-Za-z0-9]*$"
+      private val regex = "^[A-Za-z0-9]*$"
 
       override def inspect(tree: Tree): Unit = {
         tree match {
@@ -18,7 +18,7 @@ class ObjectNames extends Inspection {
             context.warn("Object name not recommended",
               tree.pos,
               Levels.Info,
-              s"Object names should begin with uppercase letter (bad = $name)",
+              s"Object names should only contain alphanum chars (bad = $name)",
               ObjectNames.this)
           case _ => continue(tree)
         }
