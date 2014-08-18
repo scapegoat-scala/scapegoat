@@ -63,5 +63,18 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
+    //    "should ignore scaldi defs" in {
+    //      addToClassPath("org.scaldi", "scaldi_2.11", "0.4")
+    //      val code = """  import scaldi._
+    //                      trait FooService
+    //                      class ServicesModule extends Module {
+    //                        bind[FooService] to new FooServiceImpl() // class implementation
+    //                      }
+    //                      class FooServiceImpl(implicit injector: Injector) extends FooService with Injectable
+    //                 """.stripMargin
+    //
+    //      compileCodeSnippet(code)
+    //      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    //    }
   }
 }

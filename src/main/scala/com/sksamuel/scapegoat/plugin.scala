@@ -59,6 +59,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var ignoredFiles: List[String] = Nil
   var consoleOutput: Boolean = false
   var verbose: Boolean = false
+  var summary: Boolean = true
   var disableXML = false
   var disableHTML = false
 
@@ -79,12 +80,13 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       }
       super.run()
 
-      val errors = feedback.errors.size
-      val warns = feedback.warns.size
-      val infos = feedback.infos.size
-
-      val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
-      println(s"[$level] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
+      if (summary) {
+        val errors = feedback.errors.size
+        val warns = feedback.warns.size
+        val infos = feedback.infos.size
+        val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
+        println(s"[$level] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
+      }
 
       if (!disableHTML) {
         val html = IOUtils.writeHTMLReport(dataDir, feedback)

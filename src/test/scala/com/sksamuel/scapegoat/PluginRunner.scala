@@ -88,6 +88,7 @@ class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
   scapegoat.disableHTML = true
   scapegoat.disableXML = true
   scapegoat.verbose = false
+  scapegoat.summary = false
 
   override def computeInternalPhases() {
     val phs = List(
