@@ -17,12 +17,16 @@ class NullUse extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
+          case Apply(_, _) if tree.tpe.toString == "scala.xml.Elem" =>
           case Apply(_, args) =>
             if (containsNull(args))
-              context
-                .warn("null use", tree.pos, Levels.Error, "null as method argument: " + tree.toString().take(300), NullUse.this)
+              context.warn("Null use",
+                tree.pos,
+                Levels.Warning,
+                "null as method argument: " + tree.toString().take(300),
+                NullUse.this)
           case Literal(Constant(null)) =>
-            context.warn("null use", tree.pos, Levels.Error, "null used on line " + tree.pos.line, NullUse.this)
+            context.warn("Null use", tree.pos, Levels.Warning, "null used on line " + tree.pos.line, NullUse.this)
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
           case _ => continue(tree)
         }
