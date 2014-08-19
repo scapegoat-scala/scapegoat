@@ -128,7 +128,7 @@ There are currently 104 inspections. An overview list is given, followed by a mo
 | LonelySealedTrait | Checks for sealed traits which have no implementation |
 | MaxParameters | Checks for methods that have over 10 parameters |
 | MethodReturningAny | Checks for defs that are defined or inferred to return `Any` |
-| ModOne| Checks for `x % 1` which will always return `1` |
+| ModOne| Checks for `x % 1` which will always return `0` |
 | NanComparison| Checks for `x == Double.NaN` which will always fail |
 | NegationIsEmpty | `!Traversable.isEmpty` can be replaced with `Traversable.nonEmpty` |
 | NegationNonEmpty | `!Traversable.nonEmpty` can be replaced with `Traversable.isEmpty` |
