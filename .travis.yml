@@ -5,3 +5,6 @@ script:
    - sbt clean test
 jdk:
    - oraclejdk7
+before_script:
+ - "echo $JAVA_OPTS"
+ - "export JAVA_OPTS=-Xmx1024m"
