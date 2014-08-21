@@ -8,7 +8,7 @@ import scala.tools.nsc.reporters.ConsoleReporter
 /** @author Stephen Samuel */
 trait PluginRunner {
 
-  val scalaVersion = "2.11.1"
+  val scalaVersion = "2.11.2"
   val shortScalaVersion = scalaVersion.dropRight(2)
 
   val classPath = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
@@ -20,6 +20,7 @@ trait PluginRunner {
       s.Yrangepos.value = true
       s.Yposdebug.value = true
     }
+    s.stopAfter.value = List("refchecks") // no need to go all the way to generating classfiles
     s.classpath.value = classPath.mkString(":")
     s
   }
