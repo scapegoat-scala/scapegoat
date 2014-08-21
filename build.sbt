@@ -4,11 +4,26 @@ organization := "com.sksamuel.scapegoat"
 
 version := "0.93.0"
 
-scalaVersion := "2.11.1"
+scalaVersion := "2.11.2"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
 publishMavenStyle := true
+
+fullClasspath in console in Compile ++= (fullClasspath in Test).value // because that's where "PluginRunner" is
+
+initialCommands in console := s"""
+import com.sksamuel.scapegoat._
+def check(code: String) = {
+  val runner = new PluginRunner { val inspections = ScapegoatConfig.inspections }
+  // Not sufficient for reuse, not sure why.
+  // runner.reporter.reset
+  val c = runner compileCodeSnippet code
+  val feedback = c.scapegoat.feedback
+  feedback.warnings map (x => "%-40s  %s".format(x.text, x.snippet getOrElse "")) foreach println
+  feedback
+}
+"""
 
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
