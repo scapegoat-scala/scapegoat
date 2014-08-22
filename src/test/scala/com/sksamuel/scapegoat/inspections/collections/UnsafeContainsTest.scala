@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class UnsafeContainsTest extends FreeSpec with Matchers with PluginRunner {
+class UnsafeContainsTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new UnsafeContains)
 
@@ -30,6 +30,20 @@ class UnsafeContainsTest extends FreeSpec with Matchers with PluginRunner {
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 6
+    }
+    "should not report warning" - {
+      "for type parameter A in method, collection, and value" in {
+        val code = """
+                      package com.sam
+                     |class C {
+                     |  def f[A](xs: Seq[A], y: A) = xs contains y
+                     |}
+                     | """.stripMargin.trim
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+
+      }
     }
   }
 }
