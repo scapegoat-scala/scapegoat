@@ -26,6 +26,15 @@ class DuplicateMapKeyTest extends FreeSpec with Matchers with PluginRunner with 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for var args" in {
+        val code = """object Test {
+                          val tuples = List((1,2), (3,4))
+                          Map(tuples : _ *)
+                      } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
       "for duplicated tuples using unicode" in {
 
         val code = """object Test {

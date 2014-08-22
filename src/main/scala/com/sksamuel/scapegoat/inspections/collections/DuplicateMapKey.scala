@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat._
 class DuplicateMapKey extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -14,12 +14,12 @@ class DuplicateMapKey extends Inspection {
       private val UnicodeArrow = TermName("$u2192")
 
       private def isDuplicateKeys(trees: List[Tree]): Boolean = {
-        val unique = trees.foldLeft(Set[String]())((set, tree) => tree match {
+        val keys = trees.foldLeft(List.empty[String])((keys, tree) => tree match {
           case Apply(TypeApply(Select(Apply(_, args), Arrow | UnicodeArrow), _), _) =>
-            set + args.head.toString()
-          case _ => set
+            keys :+ args.head.toString()
+          case _ => keys
         })
-        unique.size < trees.size
+        keys.toSet.size < keys.size
       }
 
       private def warn(tree: Tree) = {
@@ -29,9 +29,8 @@ class DuplicateMapKey extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _),
-          args) if isDuplicateKeys(args) =>
-            warn(tree)
+          case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _), args)
+            if isDuplicateKeys(args) => warn(tree)
           case _ => continue(tree)
         }
       }
