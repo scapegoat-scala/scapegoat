@@ -10,11 +10,16 @@ class EmptyCaseClass extends Inspection {
 
       import context.global._
 
+      def accessors(trees: List[Tree]): List[ValDef] = {
+        trees.collect {
+          case v: ValDef => v
+        }.filter(_.mods.isCaseAccessor)
+      }
+
       override def inspect(tree: Tree): Unit = {
         tree match {
           // body should have constructor only, and with synthetic methods it has 10 in total
-          case ClassDef(mods, _, List(), Template(_, _, body))
-            if mods.isCase && body.size == 10 =>
+          case ClassDef(mods, _, List(), Template(_, _, body)) if mods.isCase && accessors(body).size == 0 =>
             context.warn("Empty case class", tree.pos, Levels.Info,
               "Empty case class can be rewritten as a case object",
               EmptyCaseClass.this)
