@@ -95,7 +95,6 @@ object ScapegoatConfig extends App {
     new PointlessTypeBounds,
     new PreferSeqEmpty,
     new PreferSetEmpty,
-    new PreferVectorEmpty,
     new ProductWithSerializableInferred,
     new PublicFinalizer,
     new RedundantFinalizer,
