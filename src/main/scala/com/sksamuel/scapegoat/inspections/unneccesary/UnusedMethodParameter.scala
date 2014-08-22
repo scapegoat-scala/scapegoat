@@ -9,6 +9,7 @@ class UnusedMethodParameter extends Inspection {
     override def postTyperTraverser = Some apply  new context.Traverser {
 
       import context.global._
+      import definitions._
 
       private def usesParameter(param: ValDef, rhs: Tree): Boolean = {
         rhs match {
@@ -24,6 +25,7 @@ class UnusedMethodParameter extends Inspection {
           case d@DefDef(_, _, _, _, _, _) if d.symbol != null && d.symbol.isAbstract =>
           // ignore constructors, those params become fields
           case DefDef(_, nme.CONSTRUCTOR, _, _, _, _) =>
+          case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= NothingTpe =>
           case d@DefDef(mods, _, _, vparamss, _, rhs) =>
             for ( vparams <- vparamss;
                   vparam <- vparams ) {

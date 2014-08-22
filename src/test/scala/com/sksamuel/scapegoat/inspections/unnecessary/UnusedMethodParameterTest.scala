@@ -12,28 +12,20 @@ class UnusedMethodParameterTest
   override val inspections = Seq(new UnusedMethodParameter)
 
   "UnusedMethodParameter" - {
-    "should report warning" in {
+    "should report warning" - {
+      "for unused parmaeters in concrete methods" in {
+        val code = """class Test {
+                        val initstuff = "sammy"
+                        def foo(a:String, b:Int, c:Int) {
+                          println(b)
+                          foo(a,b,b)
+                        }
+                      } """.stripMargin
 
-      val code = """class Test {
-                      val initstuff = "sammy"
-                      def foo(a:String, b:Int, c:Int) {
-                        println(b)
-                        foo(a,b,b)
-                      }
-                    } """.stripMargin
-
-      compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 1
-      compiler.scapegoat.feedback.warns.size shouldBe 1
-    }
-    "should ignore abstract method" in {
-
-      val code = """abstract class Test {
-                      def foo(name:String) : String
-                    } """.stripMargin
-
-      compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 0
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warns.size shouldBe 1
+      }
     }
     "overriden method should report as info" in {
       val code = """object Test {
@@ -62,5 +54,26 @@ class UnusedMethodParameterTest
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
+    "should not report warning" - {
+      "for abstract methods" in {
+
+        val code = """abstract class Test {
+                      def foo(name:String) : String
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for methods not returning" in {
+
+        val code = """class Test {
+                     |  def foo(name:String) = throw new RuntimeException
+                     |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+    }
   }
 }
+
