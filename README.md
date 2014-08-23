@@ -41,6 +41,12 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Changelog
 
+* **0.93.1** - #67 fixed var args in duplicate map check, #66 ignoring methods returning nothing when checking for unused params, #69 fixed extended classes false pos, #73 Removed incorrect inspection, #64 updated supression to use tree.symbol.isSynthetic instead of mods.synth, Merge pull request #77 from paulp/psp, Give access to the inspection logic through the sbt console, #76 Improve the contains test.
+
+* **0.93.0** - Added ability to define multiple traversers that run in seperate phases of the compiler, #58 Updated supression to work on objects and classes, #60 handling case objects in suspcious match on class object, Allow all inspections to be disabled, other fixes
+* 
+* **0.92.2** - Added debug option, Made summary optional and disabled in tests, Improved var could be val #54, Split null inspections into assignment and invocation #53, Bumped count on operators to > 2, loads of fixes, loads of verboseness removed.
+
 * **0.92.1** - Fixed a load of false positives.
 
 * **0.92.0** - Added swallowed exception inspection, Added public finalizer inspection, Added use expm1(x) instead of exp(x) - 1 inspection, Added use log1p(x) instead of log(x + 1) inspection, Added use log10(x) instead of log(x)/log(10) inspection, Added use cbrt inspection
