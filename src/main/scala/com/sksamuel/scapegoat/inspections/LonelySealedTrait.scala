@@ -26,22 +26,23 @@ class LonelySealedTrait extends Inspection {
       }
     }
 
+    private def inspectParents(parents: List[Tree]): Unit = {
+      parents.foreach {
+        case parent =>
+          for ( c <- parent.tpe.baseClasses )
+            implementedClasses.add(c.name.toString)
+      }
+    }
+
     override def postTyperTraverser = Some apply  new context.Traverser {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
           case cdef@ClassDef(mods, name, _, _) if mods.isSealed =>
             sealedClasses.put(cdef.name.toString, cdef)
-          case ClassDef(_, name, _, Template(parents, _, _)) =>
-            parents.foreach {
-              case parent =>
-                implementedClasses.add(parent.tpe.typeSymbol.name.toString)
-            }
-          case ModuleDef(_, name, Template(parents, _, _)) =>
-            parents.foreach {
-              case parent =>
-                implementedClasses.add(parent.tpe.typeSymbol.name.toString)
-            }
+          case ClassDef(_, name, _, Template(parents, _, _)) => inspectParents(parents)
+          case ModuleDef(_, name, Template(parents, _, _)) => inspectParents(parents)
+
           case _ =>
         }
         continue(tree)

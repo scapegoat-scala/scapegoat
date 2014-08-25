@@ -216,12 +216,45 @@ class LonelySealedTraitTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for a sealed trait heirarchy" in {
+
+        val code =
+          """package com.sammy
+            |sealed trait A
+            |sealed trait B extends A
+            |sealed trait C extends B
+            |object C1 extends C
+          """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for a sealed class heirarchy" in {
+
+        val code =
+          """package com.sammy
+            |sealed class A
+            |sealed class B extends A
+            |sealed class C extends B
+            |object C1 extends C
+          """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for a sealed class/trait heirarchy" in {
+
+        val code =
+          """package com.sammy
+            |sealed trait A
+            |sealed trait B extends A
+            |sealed class C extends B
+            |object C1 extends C
+          """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
-
-
-
-
-
-
   }
 }
