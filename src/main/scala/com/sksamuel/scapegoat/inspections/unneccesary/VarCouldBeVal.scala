@@ -45,7 +45,7 @@ class VarCouldBeVal extends Inspection {
             context.warn("Var could be val",
               tree.pos,
               Levels.Warning,
-              s"Var is never written to, so could be a val: " + tree.toString().take(200),
+              "Var is never written to, so could be a val: " + tree.toString().take(200),
               VarCouldBeVal.this)
           case _ => continue(tree)
         }
