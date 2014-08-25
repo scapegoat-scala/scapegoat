@@ -22,6 +22,7 @@ trait PluginRunner {
     }
     s.stopAfter.value = List("refchecks") // no need to go all the way to generating classfiles
     s.classpath.value = classPath.mkString(":")
+    s.feature.value = true
     s
   }
 

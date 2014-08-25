@@ -166,6 +166,14 @@ class PointlessTypeBoundsTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for higher kinded type bound" in {
+        val code =
+          """package com.sam
+             import scala.language.higherKinds
+             class A { def f[CC[X] <: Traversable[X], A](x: CC[A]) = {} }"""
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }

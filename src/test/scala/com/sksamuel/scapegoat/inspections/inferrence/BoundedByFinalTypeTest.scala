@@ -93,7 +93,7 @@ class BoundedByFinalTypeTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      "for higher kind type alias" in {
+      "for type constructor" in {
         val code = """class A {
                         type ListBuffer[A] = scala.collection.mutable.ListBuffer[A]
                       }"""
