@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections
 
 import scala.collection.mutable
 
-import com.sksamuel.scapegoat.{Levels, Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
 class TypeShadowing extends Inspection {
@@ -16,7 +16,7 @@ class TypeShadowing extends Inspection {
         val types = mutable.HashSet[String]()
         tparams.foreach(tparam => types.add(tparam.name.toString))
         trees.foreach {
-          case dd : DefDef if dd.symbol != null && dd.symbol.isSynthetic =>
+          case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic =>
           case dd @ DefDef(_, name, deftparams, _, _, _) =>
             deftparams.foreach(tparam => {
               if (types.contains(tparam.name.toString))

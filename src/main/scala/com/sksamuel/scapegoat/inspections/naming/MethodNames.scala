@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.naming
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class MethodNames extends Inspection {
@@ -15,7 +15,7 @@ class MethodNames extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic =>
-          case DefDef(_, nme.CONSTRUCTOR, _, _, _, _) =>
+          case DefDef(_, nme.CONSTRUCTOR, _, _, _, _)                   =>
           case DefDef(_, name, _, _, _, _) if !name.toString.matches(regex) =>
             context.warn("Method name not recommended",
               tree.pos,

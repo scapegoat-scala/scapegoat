@@ -16,8 +16,7 @@ class StripMarginOnRegex extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(Apply(_, List(Select(Apply(Select(_, Augment), List(Literal(Constant(str: String)))), StripMargin))), R)
-            if str.contains('|') =>
+          case Select(Apply(_, List(Select(Apply(Select(_, Augment), List(Literal(Constant(str: String)))), StripMargin))), R) if str.contains('|') =>
             context
               .warn("Strip margin on regex",
                 tree.pos,
