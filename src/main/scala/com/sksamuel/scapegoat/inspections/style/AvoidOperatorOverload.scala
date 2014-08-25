@@ -25,7 +25,7 @@ class AvoidOperatorOverload extends Inspection {
             context.warn("Avoid operator overload",
               tree.pos,
               Levels.Info,
-              s"Scala style guide advocates against routinely using operators as method names ($name)." +
+              s"Scala style guide advocates against routinely using operators as method names (${name.decode}})." +
                 "See http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names",
               AvoidOperatorOverload.this)
           case _ => continue(tree)
