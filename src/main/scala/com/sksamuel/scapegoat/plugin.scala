@@ -68,7 +68,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
-  val disableAll = disabled.exists(_.compareToIgnoreCase("all") == 0)
+  def disableAll = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
   def activeInspections = inspections.filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
   lazy val feedback = new Feedback(consoleOutput)
