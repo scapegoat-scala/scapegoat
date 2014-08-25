@@ -1,3 +1,5 @@
+import scalariform.formatter.preferences.{FormattingPreferences, AlignSingleLineCaseStatements, CompactControlReadability, DoubleIndentClassDeclaration, IndentLocalDefs, RewriteArrowSymbols}
+
 import sbt.Keys._
 
 name := "scalac-scapegoat-plugin"
@@ -54,6 +56,14 @@ publishTo <<= version {
     else
       Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
+
+scalariformSettings
+
+ScalariformKeys.preferences := FormattingPreferences()
+  .setPreference(AlignSingleLineCaseStatements, true)
+  .setPreference(CompactControlReadability, false)
+  .setPreference(DoubleIndentClassDeclaration, true)
+  .setPreference(IndentLocalDefs, true)
 
 publishMavenStyle := true
 
