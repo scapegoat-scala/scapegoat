@@ -12,7 +12,7 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
-Latest Release: 0.93.1
+Latest Release: 0.93.2
 
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
@@ -40,6 +40,8 @@ And if you prefer a prettier report, here is a screen shot of the type of HTML r
 Please note that scapegoat is a new project. While it's been tested on some common open source projects, there is still a good chance you'll find false positives. Please open up issues if you run into these so we can fix them.
 
 ### Changelog
+
+* **0.93.2** - Fixed false positives.
 
 * **0.93.1** - #67 fixed var args in duplicate map check, #66 ignoring methods returning nothing when checking for unused params, #69 fixed extended classes false pos, #73 Removed incorrect inspection, #64 updated supression to use tree.symbol.isSynthetic instead of mods.synth, Merge pull request #77 from paulp/psp, Give access to the inspection logic through the sbt console, #76 Improve the contains test.
 
