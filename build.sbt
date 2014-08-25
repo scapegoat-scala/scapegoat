@@ -1,3 +1,5 @@
+import sbt.Keys._
+
 name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
@@ -28,9 +30,10 @@ def check(code: String) = {
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
 libraryDependencies ++= Seq(
-  "org.scala-lang"                  %     "scala-reflect"         % "2.11.1",
+  "org.scala-lang"                  %     "scala-reflect"         % scalaVersion.value,
+  "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "provided",
   "org.scala-lang.modules"          %     "scala-xml_2.11"        % "1.0.2",
-  "org.scala-lang"                  %     "scala-compiler"        % "2.11.1"      % "test",
+  "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "test",
   "commons-io"                      %     "commons-io"            % "2.4"         % "test",
   "org.scalatest"                   %%    "scalatest"             % "2.1.6"       % "test",
   "com.typesafe.scala-logging"      %%    "scala-logging-slf4j"   % "2.1.2"       % "test",
@@ -42,10 +45,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka"               %%    "akka-actor"            % "2.3.4"       % "test",
   "org.scaldi"                      %%    "scaldi"                % "0.4"
 )
-
-libraryDependencies += {
-  "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided"
-}
 
 publishTo <<= version {
   (v: String) =>
