@@ -23,8 +23,8 @@ class BoundedByFinalTypeTest
       "for method with pointless type bound" in {
         val code =
           """object Test {
-            |  def foo[B <: Integer] = {}
-            |} """.stripMargin
+              def foo[B <: Integer] :Unit = {}
+            } """
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
@@ -66,31 +66,37 @@ class BoundedByFinalTypeTest
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for method with non final type bound" in {
-        val code =
-          """object Test {
-            |  def foo[B <: Thread] = {}
-            |} """.stripMargin
-
+        val code = """object Test {
+                     |  def foo[B <: Exception] = {}
+                     |} """.stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for method with any type bound" in {
-
-        val code =
-          """object Test {
-            |  def foo[B <: Any] = {}
-            |} """.stripMargin
-
+        val code = """object Test {
+                     |  def foo[B <: Any] = {}
+                     |} """.stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for method with no type bound" in {
-
-        val code =
-          """object Test {
-            |  def foo = {}
-            |} """.stripMargin
-
+        val code = """object Test {
+                     |  def foo = {}
+                     |} """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for type alias" in {
+        val code = """class A {
+                        type Texty = String
+                      }"""
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for higher kind type alias" in {
+        val code = """class A {
+                        type ListBuffer[A] = scala.collection.mutable.ListBuffer[A]
+                      }"""
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
