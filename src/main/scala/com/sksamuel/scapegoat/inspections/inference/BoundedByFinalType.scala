@@ -15,6 +15,7 @@ class BoundedByFinalType extends Inspection {
         tree match {
           case dd@DefDef(mods, _, _, _, _, _)
             if dd.symbol != null && dd.symbol.owner.tpe.baseClasses.contains(PartialFunctionClass) =>
+          case tdef: TypeDef if tdef.symbol.isAliasType =>
           case TypeDef(_, _, _, typeTree: TypeTree) =>
             typeTree.original match {
               case TypeBoundsTree(lo, hi)
