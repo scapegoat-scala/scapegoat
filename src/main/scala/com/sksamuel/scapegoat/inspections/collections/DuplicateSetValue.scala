@@ -11,7 +11,7 @@ class DuplicateSetValue extends Inspection {
       import context.global._
 
       private def hasDuplicates(trees: List[Tree]): Boolean = {
-        val values = trees.map {
+        val values: Set[Any] = trees.map {
           case Literal(Constant(x)) => x
           case x => x
         }.toSet
