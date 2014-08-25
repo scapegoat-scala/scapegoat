@@ -82,7 +82,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       } else {
         if (verbose) {
           println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
-          if (ignoredFiles.size > 0)
+          if (ignoredFiles.nonEmpty)
             println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
         }
         super.run()
