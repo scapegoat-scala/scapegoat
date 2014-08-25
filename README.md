@@ -73,7 +73,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Inspections
 
-There are currently 104 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 107 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 |Name|Brief Description|
 |----|-----------|
@@ -135,13 +135,14 @@ There are currently 104 inspections. An overview list is given, followed by a mo
 | LooksLikeInterpolatedString | Finds strings that look like they should be interpolated but are not |
 | LonelySealedTrait | Checks for sealed traits which have no implementation |
 | MaxParameters | Checks for methods that have over 10 parameters |
+| MethodNames | Warns on method names that don't adhere to the Scala style guidelines |
 | MethodReturningAny | Checks for defs that are defined or inferred to return `Any` |
 | ModOne| Checks for `x % 1` which will always return `0` |
 | NanComparison| Checks for `x == Double.NaN` which will always fail |
 | NegationIsEmpty | `!Traversable.isEmpty` can be replaced with `Traversable.nonEmpty` |
 | NegationNonEmpty | `!Traversable.nonEmpty` can be replaced with `Traversable.isEmpty` |
 | NullUse| Checks for use of `null` |
-| ObjectNames | Ensures object names adhere to style guidelines |
+| ObjectNames | Ensures object names adhere to the Scala style guidelines |
 | OptionGet| Checks for `Option.get` |
 | OptionSize| Checks for `Option.size` |
 | ParameterlessMethodReturnsUnit| Checks for `def foo : Unit` |
@@ -155,6 +156,7 @@ There are currently 104 inspections. An overview list is given, followed by a mo
 | RedundantFinalizer| Checks for empty finalizers. |
 | RepeatedCaseBody | Checks for case statements which have the same body |
 | SimplifyBooleanExpression | `b == false` can be simplified to `!b` |
+| StripMarginOnRegex | Checks for .stripMargin on regex strings that contain a pipe |
 | SubstringZero | Checks for `String.substring(0)` |
 | SuspiciousMatchOnClassObject | Finds code where matching is taking place on class literals |
 | SwallowedException | Finds catch blocks that don't handle caught exceptions | 
@@ -177,6 +179,7 @@ There are currently 104 inspections. An overview list is given, followed by a mo
 | UseSqrt| Checks for use of `math.pow` for calculating `math.sqrt` |
 | VarClosure | Finds closures that reference var |
 | VarCouldBeVal | Checks for `var`s that could be declared as `val`s |
+| VariableShadowing | Warns for variables that shadow variables or parameters in an outer scope with the same name |
 | VarUse| Checks for use of `var` |
 | WhileTrue| Checks for code that uses a `while(true)` or `do { } while(true)` block. |
 | WildcardImport | Checks for wildcard imports |
