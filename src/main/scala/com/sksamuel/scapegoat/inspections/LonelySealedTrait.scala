@@ -42,7 +42,6 @@ class LonelySealedTrait extends Inspection {
             sealedClasses.put(cdef.name.toString, cdef)
           case ClassDef(_, name, _, Template(parents, _, _)) => inspectParents(parents)
           case ModuleDef(_, name, Template(parents, _, _)) => inspectParents(parents)
-
           case _ =>
         }
         continue(tree)

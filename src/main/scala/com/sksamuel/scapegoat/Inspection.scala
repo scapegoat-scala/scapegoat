@@ -81,6 +81,8 @@ case class InspectionContext(global: Global, feedback: Feedback) {
         case iff@If(_, _, _) if isSuppressed(iff.symbol) =>
         case tri@Try(_, _, _) if isSuppressed(tri.symbol) =>
         case mod: ModuleDef if isSuppressed(mod.symbol) =>
+        case ClassDef(_, _, _, Template(parents, _, _))
+          if parents.map(_.tpe.typeSymbol.fullName.toString).contains("scala.reflect.api.TypeCreator") =>
         case classdef: ClassDef if isSuppressed(classdef.symbol) =>
         case _ => inspect(tree)
       }

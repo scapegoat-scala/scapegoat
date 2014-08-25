@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.ConstantIf
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class ConstantIfTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
@@ -33,6 +34,22 @@ class ConstantIfTest extends FreeSpec with Matchers with PluginRunner with OneIn
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for subclasses of TypeCreator" in {
+        val code =
+          """import scala.reflect.api.{Mirror, Universe, TypeCreator}
+            |class Test extends TypeCreator {
+            |  override def apply[U <: Universe with Singleton](m: Mirror[U]): U#Type = {
+            |    if (1 < 2)
+            |      throw new RuntimeException
+            |    else
+            |      null
+            |  }
+            |}
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
+
