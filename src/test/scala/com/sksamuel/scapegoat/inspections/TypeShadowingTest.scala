@@ -76,6 +76,18 @@ class TypeShadowingTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for case class synthetic methods" in {
+        val code =
+          """
+            |case class CombinedInfo[A](
+            |  combined: A,
+            |  extraIPs: Set[Long],
+            |  extraHosts: Set[String],
+            |  notes: Set[String] = Set.empty)
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }

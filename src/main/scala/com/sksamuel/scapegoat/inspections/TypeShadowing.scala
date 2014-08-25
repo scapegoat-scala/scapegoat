@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
-
 import scala.collection.mutable
+
+import com.sksamuel.scapegoat.{Levels, Inspection, InspectionContext, Inspector}
 
 /** @author Stephen Samuel */
 class TypeShadowing extends Inspection {
@@ -16,19 +16,23 @@ class TypeShadowing extends Inspection {
         val types = mutable.HashSet[String]()
         tparams.foreach(tparam => types.add(tparam.name.toString))
         trees.foreach {
-          case dd @ DefDef(_, name, mtparams, _, _, _) =>
-            mtparams.foreach(tparam => {
-              if (types.contains(tparam.name.toString)) {
-                context.warn("Type shadowing",
-                  dd.pos,
-                  Levels.Warning,
-                  s"Method $name declares shadowed type parameter ${tparam.name}",
-                  TypeShadowing.this)
-              }
+          case dd : DefDef if dd.symbol != null && dd.symbol.isSynthetic =>
+          case dd @ DefDef(_, name, deftparams, _, _, _) =>
+            deftparams.foreach(tparam => {
+              if (types.contains(tparam.name.toString))
+                warn(dd, name, tparam)
             })
           case ClassDef(_, _, tparams2, Template(_, _, body)) => checkShadowing(tparams2, body)
           case _ =>
         }
+      }
+
+      private def warn(dd: DefDef, name: TermName, tparam: TypeDef) {
+        context.warn("Type shadowing",
+          dd.pos,
+          Levels.Warning,
+          s"Method $name declares shadowed type parameter ${tparam.name}",
+          TypeShadowing.this)
       }
 
       override def inspect(tree: Tree): Unit = {
