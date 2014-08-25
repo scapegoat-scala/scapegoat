@@ -10,7 +10,7 @@ import com.sksamuel.scapegoat.inspections.imports.{WildcardImport, DuplicateImpo
 import com.sksamuel.scapegoat.inspections.inference.{PointlessTypeBounds, MethodReturningAny, BoundedByFinalType, ProductWithSerializableInferred}
 import com.sksamuel.scapegoat.inspections.matching.{SuspiciousMatchOnClassObject, PartialFunctionInsteadOfMatch, RepeatedCaseBody}
 import com.sksamuel.scapegoat.inspections.math._
-import com.sksamuel.scapegoat.inspections.naming.{ObjectNames, ClassNames}
+import com.sksamuel.scapegoat.inspections.naming.{MethodNames, ObjectNames, ClassNames}
 import com.sksamuel.scapegoat.inspections.nulls.{NullAssignment, NullParameter}
 import com.sksamuel.scapegoat.inspections.option.{EitherGet, ImpossibleOptionSizeCondition, OptionGet, OptionSize}
 import com.sksamuel.scapegoat.inspections.string._
@@ -81,6 +81,7 @@ object ScapegoatConfig extends App {
     new LonelySealedTrait,
     new MaxParameters,
     new ObjectNames,
+    new MethodNames,
     new MethodReturningAny,
     new ModOne,
     new NanComparison,
