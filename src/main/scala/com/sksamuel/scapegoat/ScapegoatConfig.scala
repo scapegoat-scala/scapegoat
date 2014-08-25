@@ -122,6 +122,7 @@ object ScapegoatConfig extends App {
     new UseSqrt,
     new VarClosure,
     new VarCouldBeVal,
+    new VariableShadowing,
     new VarUse,
     new WhileTrue,
     new WildcardImport,
