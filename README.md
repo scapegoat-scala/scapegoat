@@ -41,6 +41,8 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Changelog
 
+* **0.94.0** - Fixed some more false positives. Added MethodNames inspection, StripMarginOnRegex inspection, and VariableShadowing inspection (the latter being a work in progress, please report feedback).
+
 * **0.93.2** - Fixed false positives.
 
 * **0.93.1** - #67 fixed var args in duplicate map check, #66 ignoring methods returning nothing when checking for unused params, #69 fixed extended classes false pos, #73 Removed incorrect inspection, #64 updated supression to use tree.symbol.isSynthetic instead of mods.synth, Merge pull request #77 from paulp/psp, Give access to the inspection logic through the sbt console, #76 Improve the contains test.
