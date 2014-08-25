@@ -12,7 +12,7 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
 
-Latest Release: 0.94.0
+Latest Release: 0.94.1
 
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
