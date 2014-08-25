@@ -1,15 +1,16 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
-/** @author Stephen Samuel
-  *
-  *         Inspired by Intellij
-  * */
+/**
+ * @author Stephen Samuel
+ *
+ *         Inspired by Intellij
+ */
 class ExistsSimplifableToContains extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -26,8 +27,7 @@ class ExistsSimplifableToContains extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("exists")), List(Function(_, Apply(Select(_, Equals), List(x)))))
-            if isTraversable(lhs) && isContainsType(lhs, x) =>
+          case Apply(Select(lhs, TermName("exists")), List(Function(_, Apply(Select(_, Equals), List(x))))) if isTraversable(lhs) && isContainsType(lhs, x) =>
             context.warn("Exists simplifable to contains",
               tree.pos,
               Levels.Info,

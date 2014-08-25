@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat._
 class NanComparison extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
       import definitions._
@@ -14,17 +14,15 @@ class NanComparison extends Inspection {
       private def isNan(value: Any): Boolean = {
         value match {
           case d: Double => d.isNaN
-          case _ => false
+          case _         => false
         }
       }
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("$eq$eq")), List(Literal(Constant(x))))
-            if isFloatingPointType(lhs) && isNan(x) =>
+          case Apply(Select(lhs, TermName("$eq$eq")), List(Literal(Constant(x)))) if isFloatingPointType(lhs) && isNan(x) =>
             warn(tree)
-          case Apply(Select(Literal(Constant(x)), TermName("$eq$eq")), List(rhs))
-            if isFloatingPointType(rhs) && isNan(x) =>
+          case Apply(Select(Literal(Constant(x)), TermName("$eq$eq")), List(rhs)) if isFloatingPointType(rhs) && isNan(x) =>
             warn(tree)
           case _ => continue(tree)
         }

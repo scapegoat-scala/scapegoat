@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
-import scala.runtime.{RichLong, RichInt}
+import scala.runtime.{ RichLong, RichInt }
 
 /** @author Stephen Samuel */
 class AvoidToMinusOne extends Inspection {
@@ -24,8 +24,7 @@ class AvoidToMinusOne extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(Apply(Select(lhs, To),
-          List(Apply(Select(loopvar, Minus), List(Literal(Constant(1)))))), Foreach), _), _)
-            if isIntegral(lhs) && isIntegral(loopvar) =>
+            List(Apply(Select(loopvar, Minus), List(Literal(Constant(1)))))), Foreach), _), _) if isIntegral(lhs) && isIntegral(loopvar) =>
             context.warn("Avoid To Minus One", tree.pos, Levels.Info,
               "j to k - 1 can be better written as j until k: " + tree.toString().take(200),
               AvoidToMinusOne.this)

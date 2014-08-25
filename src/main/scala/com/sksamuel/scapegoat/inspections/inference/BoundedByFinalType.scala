@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.inference
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class BoundedByFinalType extends Inspection {
@@ -13,13 +13,11 @@ class BoundedByFinalType extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case dd@DefDef(mods, _, _, _, _, _)
-            if dd.symbol != null && dd.symbol.owner.tpe.baseClasses.contains(PartialFunctionClass) =>
+          case dd @ DefDef(mods, _, _, _, _, _) if dd.symbol != null && dd.symbol.owner.tpe.baseClasses.contains(PartialFunctionClass) =>
           case tdef: TypeDef if tdef.symbol.isAliasType =>
           case TypeDef(_, _, _, typeTree: TypeTree) =>
             typeTree.original match {
-              case TypeBoundsTree(lo, hi)
-                if lo.tpe.isFinalType && hi.tpe.isFinalType =>
+              case TypeBoundsTree(lo, hi) if lo.tpe.isFinalType && hi.tpe.isFinalType =>
                 context.warn("Bounded by final type", tree.pos, Levels.Warning,
                   "Pointless type bound. Type parameter can only be a single value: " + tree
                     .toString()

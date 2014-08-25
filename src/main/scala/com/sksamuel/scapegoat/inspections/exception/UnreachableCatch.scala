@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.exception
 
-import com.sksamuel.scapegoat.{Levels, Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
 
 import scala.collection.mutable
 
@@ -8,19 +8,19 @@ import scala.collection.mutable
 class UnreachableCatch extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
       def isUnreachable(cases: List[CaseDef]) = {
         val types = mutable.HashSet[Type]()
-        def check(tpe: Type): Boolean = {
-          if (types.exists(tpe <:< _)) true
-          else {
-            types.add(tpe)
-            false
+          def check(tpe: Type): Boolean = {
+            if (types.exists(tpe <:< _)) true
+            else {
+              types.add(tpe)
+              false
+            }
           }
-        }
         cases.exists {
           // matches t : Throwable
           case CaseDef(Bind(_, Typed(_, tpt)), _, _) => check(tpt.tpe)

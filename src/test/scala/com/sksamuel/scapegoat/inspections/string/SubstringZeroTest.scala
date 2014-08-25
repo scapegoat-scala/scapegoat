@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.string
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
+import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
 class SubstringZeroTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {

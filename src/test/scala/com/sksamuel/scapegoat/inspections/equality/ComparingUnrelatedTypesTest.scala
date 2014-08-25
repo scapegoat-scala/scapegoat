@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.equality
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{ FreeSpec, Matchers }
 
 /** @author Stephen Samuel */
 class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunner {

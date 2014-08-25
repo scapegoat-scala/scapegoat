@@ -2,14 +2,15 @@ package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel
-  *
-  *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#INT_BAD_REM_BY_1
-  **/
+/**
+ * @author Stephen Samuel
+ *
+ *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#INT_BAD_REM_BY_1
+ */
 class ModOne extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 

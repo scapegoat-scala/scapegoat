@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class PublicFinalizer extends Inspection {
@@ -9,7 +9,7 @@ class PublicFinalizer extends Inspection {
 
     import context.global._
 
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       override def inspect(tree: Tree): Unit = {
         tree match {

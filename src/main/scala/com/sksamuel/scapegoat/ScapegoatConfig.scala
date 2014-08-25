@@ -100,6 +100,7 @@ object ScapegoatConfig extends App {
     new RedundantFinalizer,
     new RepeatedCaseBody,
     new SimplifyBooleanExpression,
+    new StripMarginOnRegex,
     new SubstringZero,
     new SuspiciousMatchOnClassObject,
     new SwallowedException,

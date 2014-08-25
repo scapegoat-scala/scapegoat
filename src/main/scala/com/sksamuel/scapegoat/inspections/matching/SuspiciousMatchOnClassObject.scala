@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class SuspiciousMatchOnClassObject extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -22,9 +22,8 @@ class SuspiciousMatchOnClassObject extends Inspection {
 
       private def inspectCases(cases: List[CaseDef]): Unit = {
         cases.exists {
-          case c@CaseDef(pat, _, _)
-            // if we have a case object and a companion class, then we are matching on an object instead of a class
-            if pat.symbol != null && pat.symbol.isModuleOrModuleClass && pat.tpe.typeSymbol.companionClass.isClass =>
+          case c @ CaseDef(pat, _, _) // if we have a case object and a companion class, then we are matching on an object instead of a class
+          if pat.symbol != null && pat.symbol.isModuleOrModuleClass && pat.tpe.typeSymbol.companionClass.isClass =>
             warn(c)
             true
           case _ => false

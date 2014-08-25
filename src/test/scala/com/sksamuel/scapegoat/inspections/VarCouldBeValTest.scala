@@ -2,14 +2,14 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.VarCouldBeVal
-import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
+import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
 class VarCouldBeValTest
-  extends FreeSpec
-  with Matchers
-  with PluginRunner
-  with OneInstancePerTest {
+    extends FreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(new VarCouldBeVal)
 

@@ -49,7 +49,7 @@ case class InspectionContext(global: Global, feedback: Feedback) {
     private val Safe = typeOf[Safe]
 
     private def inspectionClass(klass: Class[_]): Class[_] = Option(klass.getEnclosingClass) match {
-      case None => klass
+      case None    => klass
       case Some(k) => inspectionClass(k)
     }
 
@@ -76,20 +76,16 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       tree match {
         // ignore synthetic methods added
         case DefDef(mods, _, _, _, _, _) if tree.symbol.isSynthetic =>
-        case dd@DefDef(_, _, _, _, _, _) if isSuppressed(dd.symbol) =>
-        case block@Block(_, _) if isSuppressed(block.symbol) =>
-        case iff@If(_, _, _) if isSuppressed(iff.symbol) =>
-        case tri@Try(_, _, _) if isSuppressed(tri.symbol) =>
+        case dd @ DefDef(_, _, _, _, _, _) if isSuppressed(dd.symbol) =>
+        case block @ Block(_, _) if isSuppressed(block.symbol) =>
+        case iff @ If(_, _, _) if isSuppressed(iff.symbol) =>
+        case tri @ Try(_, _, _) if isSuppressed(tri.symbol) =>
         case mod: ModuleDef if isSuppressed(mod.symbol) =>
-        case ClassDef(_, _, _, Template(parents, _, _))
-          if parents.map(_.tpe.typeSymbol.fullName).contains("scala.reflect.api.TypeCreator") =>
+        case ClassDef(_, _, _, Template(parents, _, _)) if parents.map(_.tpe.typeSymbol.fullName).contains("scala.reflect.api.TypeCreator") =>
         case classdef: ClassDef if isSuppressed(classdef.symbol) =>
         case _ => inspect(tree)
       }
     }
   }
 }
-
-
-
 

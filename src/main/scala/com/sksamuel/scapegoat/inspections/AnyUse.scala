@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 import scala.reflect.internal.Flags
 
@@ -25,8 +25,7 @@ class AnyUse extends Inspection {
           case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
-          case ValDef(_, _, tpt, _)
-            if tpt.tpe =:= typeOf[Any] => warn(tree)
+          case ValDef(_, _, tpt, _) if tpt.tpe =:= typeOf[Any] => warn(tree)
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] => warn(tree)
           case _ => continue(tree)
         }

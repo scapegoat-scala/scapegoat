@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat._
 class EmptyCatchBlock extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -21,7 +21,7 @@ class EmptyCatchBlock extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Try(body, catches, finalizer) => checkCatches(catches)
-          case _ => continue(tree)
+          case _                             => continue(tree)
         }
       }
     }

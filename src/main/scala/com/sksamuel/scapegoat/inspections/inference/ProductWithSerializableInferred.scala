@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.inference
 
-import com.sksamuel.scapegoat.{Levels, Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
 
 import scala.reflect.internal.Flags
 
@@ -8,7 +8,7 @@ import scala.reflect.internal.Flags
 class ProductWithSerializableInferred extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -29,7 +29,7 @@ class ProductWithSerializableInferred extends Inspection {
           case ValDef(mods, name, tpt, rhs) if isProductWithSerializable(tpt.tpe) =>
             context.warn("Product with Serializable inferred", tree.pos, Levels.Warning,
               "It is unlikely that this was your target type: " + tree.toString().take(300),
-            ProductWithSerializableInferred.this)
+              ProductWithSerializableInferred.this)
           case _ => continue(tree)
         }
       }

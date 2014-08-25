@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.inference
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 import scala.reflect.internal.Flags
 
@@ -8,13 +8,13 @@ import scala.reflect.internal.Flags
 class MethodReturningAny extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
+          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic                =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] || tpt.tpe =:= typeOf[AnyRef] =>

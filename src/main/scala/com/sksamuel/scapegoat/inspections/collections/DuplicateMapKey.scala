@@ -29,8 +29,7 @@ class DuplicateMapKey extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _), args)
-            if isDuplicateKeys(args) => warn(tree)
+          case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _), args) if isDuplicateKeys(args) => warn(tree)
           case _ => continue(tree)
         }
       }

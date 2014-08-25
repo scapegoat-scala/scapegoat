@@ -5,8 +5,8 @@ import java.io.File
 import com.sksamuel.scapegoat.io.IOUtils
 
 import scala.tools.nsc._
-import scala.tools.nsc.plugins.{Plugin, PluginComponent}
-import scala.tools.nsc.transform.{Transform, TypingTransformers}
+import scala.tools.nsc.plugins.{ Plugin, PluginComponent }
+import scala.tools.nsc.transform.{ Transform, TypingTransformers }
 
 class ScapegoatPlugin(val global: Global) extends Plugin {
 
@@ -18,17 +18,17 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override def init(options: List[String], error: String => Unit): Boolean = {
     options.find(_.startsWith("disabledInspections:")) match {
       case Some(option) => component.disabled = option.drop("disabledInspections:".length).split(':').toList
-      case _ =>
+      case _            =>
     }
     options.find(_.startsWith("consoleOutput:")) match {
       case Some(option) => component.consoleOutput = option.drop("consoleOutput:".length).toBoolean
-      case _ =>
+      case _            =>
     }
     options.find(_.startsWith("ignoredFiles:")) match {
       case Some(option) => component.ignoredFiles = option.drop("ignoredFiles:".length).split(':').toList
-      case _ =>
+      case _            =>
     }
-    for ( verbose <- options.find(_.startsWith("verbose:")) ) {
+    for (verbose <- options.find(_.startsWith("verbose:"))) {
       component.verbose = verbose.drop("verbose:".length).toBoolean
     }
     options.find(_.startsWith("dataDir:")) match {
@@ -43,12 +43,11 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val optionsHelp: Option[String] = Some(Seq(
     "-P:scapegoat:dataDir:<pathtodatadir>    where the report should be written\n" +
-      "-P:scapegoat:disabled:<listofinspections>    comma separated list of disabled inspections\n"
-  ).mkString("\n"))
+      "-P:scapegoat:disabled:<listofinspections>    comma separated list of disabled inspections\n").mkString("\n"))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
-  extends PluginComponent with TypingTransformers with Transform {
+    extends PluginComponent with TypingTransformers with Transform {
 
   require(inspections != null)
 
@@ -124,7 +123,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
         val context = new InspectionContext(global, feedback)
         activeInspections.foreach(inspection => {
           val inspector = inspection.inspector(context)
-          for ( traverser <- inspector.postTyperTraverser )
+          for (traverser <- inspector.postTyperTraverser)
             traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
           inspector.postInspection()
         })

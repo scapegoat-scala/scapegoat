@@ -2,13 +2,14 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel
-  *         This inspection was inspired by http://p5wscala.wordpress.com/scalaprocessing-gotchas/#t2
-  **/
+/**
+ * @author Stephen Samuel
+ *         This inspection was inspired by http://p5wscala.wordpress.com/scalaprocessing-gotchas/#t2
+ */
 class CollectionPromotionToAny extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -22,7 +23,7 @@ class CollectionPromotionToAny extends Inspection {
       private def isAny(symbol: Symbol): Boolean = symbol.typeSignature.resultType.typeArgs.head.toString == "Any"
 
       private def isAnySeq(tree: Tree): Boolean = tree match {
-        case select@Select(_, _) if select.symbol != null => isSeq(select.symbol) && isAny(select.symbol)
+        case select @ Select(_, _) if select.symbol != null => isSeq(select.symbol) && isAny(select.symbol)
         case _ => false
       }
 

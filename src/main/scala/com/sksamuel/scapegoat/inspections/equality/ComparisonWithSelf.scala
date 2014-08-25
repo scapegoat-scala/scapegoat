@@ -6,13 +6,13 @@ import com.sksamuel.scapegoat._
 class ComparisonWithSelf extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
       def containsAssignment(tree: Tree) = tree match {
         case Assign(_, _) => true
-        case _ => false
+        case _            => false
       }
 
       override def inspect(tree: Tree): Unit = {

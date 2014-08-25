@@ -2,14 +2,14 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unsafe.FinalizerWithoutSuper
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
 
 /** @author Stephen Samuel */
 class FinalizerWithoutSuperTest
-  extends FreeSpec
-  with Matchers
-  with PluginRunner
-  with OneInstancePerTest {
+    extends FreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(new FinalizerWithoutSuper)
 

@@ -2,20 +2,21 @@ package com.sksamuel.scapegoat.inspections.exception
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel
-  *
-  *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#NM_CLASS_NOT_EXCEPTION
-  **/
+/**
+ * @author Stephen Samuel
+ *
+ *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#NM_CLASS_NOT_EXCEPTION
+ */
 class IncorrectlyNamedExceptions extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case cdef@ClassDef(mods, name, _, impl) =>
+          case cdef @ ClassDef(mods, name, _, impl) =>
             val isNamedException = name.toString.endsWith("Exception")
             val isException = impl.tpe <:< typeOf[Exception]
             (isNamedException, isException) match {

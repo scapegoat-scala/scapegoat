@@ -22,10 +22,10 @@ class Feedback(consoleOutput: Boolean) {
   }
 
   private def warn(text: String,
-                   pos: Position,
-                   level: Level,
-                   snippet: Option[String],
-                   inspection: Inspection): Unit = {
+    pos: Position,
+    level: Level,
+    snippet: Option[String],
+    inspection: Inspection): Unit = {
     val sourceFile = normalizeSourceFile(pos.source.file.path)
     val warning = Warning(text, pos.line, level, sourceFile, snippet, inspection.getClass.getCanonicalName)
     warnings.append(warning)
@@ -36,13 +36,13 @@ class Feedback(consoleOutput: Boolean) {
   private def normalizeSourceFile(sourceFile: String): String = {
     val indexOf = sourceFile.indexOf("src/main/scala/")
     val packageAndFile = if (indexOf == -1) sourceFile else sourceFile.drop(indexOf).drop("src/main/scala/".length)
-    packageAndFile.replace('/', '.').replace('\\','.')
+    packageAndFile.replace('/', '.').replace('\\', '.')
   }
 }
 
 case class Warning(text: String,
-                   line: Int,
-                   level: Level,
-                   sourceFile: String,
-                   snippet: Option[String],
-                   inspection: String)
+  line: Int,
+  level: Level,
+  sourceFile: String,
+  snippet: Option[String],
+  inspection: String)

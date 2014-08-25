@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.io
 
-import com.sksamuel.scapegoat.{Levels, Feedback}
+import com.sksamuel.scapegoat.{ Levels, Feedback }
 
 import scala.xml.Unparsed
 
@@ -62,12 +62,17 @@ object HtmlReportWriter {
 
   def header =
     <head>
-      <title>Scapegoat Inspection Reporter</title>{Unparsed(
-      "<link href=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css\" rel=\"stylesheet\">")}{Unparsed(
-      """<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel='stylesheet' type='text/css'>""")}{Unparsed
-    { """<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>"""}}<style>
-      {css}
-    </style>
+      <title>Scapegoat Inspection Reporter</title>{
+        Unparsed(
+          "<link href=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css\" rel=\"stylesheet\">")
+      }{
+        Unparsed(
+          """<link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700,300italic,400italic,500italic,700italic' rel='stylesheet' type='text/css'>""")
+      }{
+        Unparsed { """<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>""" }
+      }<style>
+         { css }
+       </style>
     </head>
 
   def body(reporter: Feedback) =
@@ -75,12 +80,12 @@ object HtmlReportWriter {
       <h1>Scapegoat Inspections</h1>
       <h3>
         Errors
-        {reporter.warnings(Levels.Error).size.toString}
+        { reporter.warnings(Levels.Error).size.toString }
         Warnings
-        {reporter.warnings(Levels.Warning).size.toString}
+        { reporter.warnings(Levels.Warning).size.toString }
         Infos
-        {reporter.warnings(Levels.Info).size.toString}
-      </h3>{warnings(reporter)}
+        { reporter.warnings(Levels.Info).size.toString }
+      </h3>{ warnings(reporter) }
     </body>
 
   def warnings(reporter: Feedback) = {
@@ -89,26 +94,32 @@ object HtmlReportWriter {
         val source = warning.sourceFile + ":" + warning.line
         <div class="warning">
           <div class="source">
-            {source}
+            { source }
           </div>
           <div class="title">
-            {warning.level match {
-            case Levels.Info => <span class="label label-info">Info</span>
-            case Levels.Warning => <span class="label label-warning">Warning</span>
-            case Levels.Error => <span class="label label-danger">Error</span>
-          }}&nbsp;{warning.text}&nbsp;<span class="inspection">{warning.inspection}</span>
-          </div>{warning.snippet match {
-          case None =>
-          case Some(snippet) =>
-            <div class="snippet">
-              {snippet}
-            </div>
-        }}
+            {
+              warning.level match {
+                case Levels.Info=> <span class="label label-info">Info</span>
+                case Levels.Warning=> <span class="label label-warning">Warning</span>
+                case Levels.Error=> <span class="label label-danger">Error</span>
+              }
+            }
+            &nbsp;{ warning.text }
+            &nbsp;<span class="inspection">{ warning.inspection }</span>
+          </div>{
+            warning.snippet match {
+              case None=>
+              case Some(snippet) =>
+                <div class="snippet">
+                  { snippet }
+                </div>
+            }
+          }
         </div>
     }
   }
 
   def generate(reporter: Feedback) = <html>
-    {header}{body(reporter)}
-  </html>
+                                       { header }{ body(reporter) }
+                                     </html>
 }

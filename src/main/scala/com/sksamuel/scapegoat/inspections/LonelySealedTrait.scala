@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 import scala.collection.mutable
 
@@ -15,7 +15,7 @@ class LonelySealedTrait extends Inspection {
     private val implementedClasses = mutable.HashSet[String]()
 
     override def postInspection(): Unit = {
-      for ( (name, cdef) <- sealedClasses ) {
+      for ((name, cdef) <- sealedClasses) {
         if (!implementedClasses.contains(name)) {
           context.warn("Lonely sealed trait",
             cdef.pos,
@@ -29,16 +29,16 @@ class LonelySealedTrait extends Inspection {
     private def inspectParents(parents: List[Tree]): Unit = {
       parents.foreach {
         case parent =>
-          for ( c <- parent.tpe.baseClasses )
+          for (c <- parent.tpe.baseClasses)
             implementedClasses.add(c.name.toString)
       }
     }
 
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case cdef@ClassDef(mods, name, _, _) if mods.isSealed =>
+          case cdef @ ClassDef(mods, name, _, _) if mods.isSealed =>
             sealedClasses.put(cdef.name.toString, cdef)
           case ClassDef(_, name, _, Template(parents, _, _)) => inspectParents(parents)
           case ModuleDef(_, name, Template(parents, _, _)) => inspectParents(parents)

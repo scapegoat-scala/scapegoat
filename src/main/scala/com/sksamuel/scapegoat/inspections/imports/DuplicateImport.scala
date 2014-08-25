@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.imports
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 import scala.collection.mutable
 
@@ -11,7 +11,7 @@ class DuplicateImport extends Inspection {
 
     private val imports = mutable.HashSet[String]()
 
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -26,7 +26,7 @@ class DuplicateImport extends Inspection {
               imports.add(name)
             })
           case DefDef(_, _, _, _, _, _) => // check imports inside defs
-          case _ => continue(tree)
+          case _                        => continue(tree)
         }
       }
     }

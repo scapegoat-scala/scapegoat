@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.ExpressionAsStatement
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
 
 /** @author Stephen Samuel */
 class ExpressionAsStatementTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {

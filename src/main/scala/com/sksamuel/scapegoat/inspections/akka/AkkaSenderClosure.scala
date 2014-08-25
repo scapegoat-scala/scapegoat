@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.akka
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
 class AkkaSenderClosure extends Inspection {
@@ -9,12 +9,12 @@ class AkkaSenderClosure extends Inspection {
 
     import context.global._
 
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Function(List(ValDef(_, _, _, _)), body) =>
-          case _ => continue(tree)
+          case _                                        => continue(tree)
         }
       }
     }

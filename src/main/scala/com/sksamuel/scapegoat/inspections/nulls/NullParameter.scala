@@ -6,13 +6,13 @@ import com.sksamuel.scapegoat._
 class NullParameter extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
       def containsNull(trees: List[Tree]) = trees exists {
         case Literal(Constant(null)) => true
-        case _ => false
+        case _                       => false
       }
 
       override def inspect(tree: Tree): Unit = {

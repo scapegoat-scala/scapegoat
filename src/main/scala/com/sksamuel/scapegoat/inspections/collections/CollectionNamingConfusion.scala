@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat._
 class CollectionNamingConfusion extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -22,7 +22,7 @@ class CollectionNamingConfusion extends Inspection {
               "An instanceof Set is confusingly referred to by a variable called/containing list: " +
                 tree.toString().take(300),
               CollectionNamingConfusion.this)
-          case v@ValDef(_, TermName(name), tpt, _) if isList(tpt.tpe) && isNamedSet(name) =>
+          case v @ ValDef(_, TermName(name), tpt, _) if isList(tpt.tpe) && isNamedSet(name) =>
             context.warn("A List is named set", tree.pos, Levels.Info,
               "An instanceof List is confusingly referred to by a variable called/containing set: " +
                 tree.toString().take(300),

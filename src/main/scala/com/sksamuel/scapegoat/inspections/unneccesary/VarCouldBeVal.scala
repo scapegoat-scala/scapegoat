@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.unneccesary
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 import scala.collection.mutable
 
@@ -8,14 +8,14 @@ import scala.collection.mutable
 class VarCouldBeVal extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
       private def containsUnwrittenVar(tree: Tree, vars: mutable.HashSet[String]): Boolean = {
         tree match {
           case Block(stmt, expr) => containsUnwrittenVar(stmt :+ expr, vars)
-          case _ => containsUnwrittenVar(List(tree), vars)
+          case _                 => containsUnwrittenVar(List(tree), vars)
         }
       }
 
@@ -24,9 +24,9 @@ class VarCouldBeVal extends Inspection {
         // what's left are unwritten vars
         trees.foreach {
           case ValDef(mods, name, _, _) if mods.isMutable => vars.add(name.toString)
-          case Assign(lhs, _) => vars.remove(lhs.toString())
-          case DefDef(_, _, _, _, _, rhs) => containsUnwrittenVar(rhs, vars)
-          case block: Block => containsUnwrittenVar(block, vars)
+          case Assign(lhs, _)                             => vars.remove(lhs.toString())
+          case DefDef(_, _, _, _, _, rhs)                 => containsUnwrittenVar(rhs, vars)
+          case block: Block                               => containsUnwrittenVar(block, vars)
           case If(cond, thenp, elsep) =>
             containsUnwrittenVar(thenp, vars)
             containsUnwrittenVar(elsep, vars)
@@ -41,7 +41,7 @@ class VarCouldBeVal extends Inspection {
 
       override final def inspect(tree: Tree): Unit = {
         tree match {
-          case d@DefDef(mods, _, _, vparamss, _, Block(stmt, expr)) if containsUnwrittenVar(stmt :+ expr) =>
+          case d @ DefDef(mods, _, _, vparamss, _, Block(stmt, expr)) if containsUnwrittenVar(stmt :+ expr) =>
             context.warn("Var could be val",
               tree.pos,
               Levels.Warning,

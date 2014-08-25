@@ -1,14 +1,14 @@
 package com.sksamuel.scapegoat.inspections.option
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
+import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
 
 /** @author Stephen Samuel */
 class ImpossibleOptionSizeConditionTest
-  extends FreeSpec
-  with Matchers
-  with PluginRunner
-  with OneInstancePerTest {
+    extends FreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(new ImpossibleOptionSizeCondition)
 

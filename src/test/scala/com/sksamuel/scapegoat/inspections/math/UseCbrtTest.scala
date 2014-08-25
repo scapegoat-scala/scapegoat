@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.{ FreeSpec, Matchers }
 
 /** @author Matic Potočnik */
 class UseCbrtTest extends FreeSpec with Matchers with PluginRunner {

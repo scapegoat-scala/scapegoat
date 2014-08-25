@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 import scala.collection.mutable
 
@@ -8,7 +8,7 @@ import scala.collection.mutable
 class TypeShadowing extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -16,7 +16,7 @@ class TypeShadowing extends Inspection {
         val types = mutable.HashSet[String]()
         tparams.foreach(tparam => types.add(tparam.name.toString))
         trees.foreach {
-          case dd@DefDef(_, name, mtparams, _, _, _) =>
+          case dd @ DefDef(_, name, mtparams, _, _, _) =>
             mtparams.foreach(tparam => {
               if (types.contains(tparam.name.toString)) {
                 context.warn("Type shadowing",

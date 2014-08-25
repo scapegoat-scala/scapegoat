@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.exception
 
-import com.sksamuel.scapegoat.{Levels, Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
 class SwallowedException extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -14,7 +14,7 @@ class SwallowedException extends Inspection {
         tree match {
           case Try(_, cases, _) =>
             cases collect {
-              case cd@CaseDef(_, _, Literal(Constant(()))) => cd
+              case cd @ CaseDef(_, _, Literal(Constant(()))) => cd
             } foreach (casedef => {
               context.warn("Swallowed exception",
                 tree.pos,

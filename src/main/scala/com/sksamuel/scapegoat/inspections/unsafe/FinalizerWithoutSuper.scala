@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.unsafe
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class FinalizerWithoutSuper extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -19,7 +19,7 @@ class FinalizerWithoutSuper extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case dd@DefDef(mods, Finalize, _, _, tpt, rhs) if tpt.tpe <:< typeOf[Unit] =>
+          case dd @ DefDef(mods, Finalize, _, _, tpt, rhs) if tpt.tpe <:< typeOf[Unit] =>
             if (!containsSuper(rhs))
               context.warn("Finalizer without super",
                 tree.pos,

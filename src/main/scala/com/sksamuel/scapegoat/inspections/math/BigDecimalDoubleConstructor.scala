@@ -6,10 +6,10 @@ import com.sksamuel.scapegoat._
 class BigDecimalDoubleConstructor extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
-      import definitions.{DoubleClass, FloatClass}
+      import definitions.{ DoubleClass, FloatClass }
 
       private def isBigDecimal(pack: Tree) =
         pack.toString == "scala.`package`.BigDecimal" || pack.toString == "java.math.BigDecimal"
@@ -20,7 +20,7 @@ class BigDecimalDoubleConstructor extends Inspection {
           "The results of this constructor can be somewhat unpredictable. " +
             "Eg, writing new BigDecimal(0.1) in Java creates a BigDecimal which is actually equal to 0.1000000000000000055511151231257827021181583404541015625. " +
             "This is because 0.1 cannot be represented exactly as a double. " + tree.toString().take(100),
-        BigDecimalDoubleConstructor.this)
+          BigDecimalDoubleConstructor.this)
       }
 
       override def inspect(tree: Tree): Unit = {
@@ -28,11 +28,11 @@ class BigDecimalDoubleConstructor extends Inspection {
           case Apply(Select(pack, TermName("apply")), arg :: tail) if isBigDecimal(pack) && isFloatingPointType(arg) =>
             warn(tree)
           case Apply(Select(New(pack), nme.CONSTRUCTOR),
-          arg :: tail) if isBigDecimal(pack) && isFloatingPointType(arg) =>
+            arg :: tail) if isBigDecimal(pack) && isFloatingPointType(arg) =>
             warn(tree)
           case _ => continue(tree)
         }
       }
     }
-}
+  }
 }

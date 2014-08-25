@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class SwapSortFilter extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -15,11 +15,9 @@ class SwapSortFilter extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(Apply(TypeApply(Select(lhs, TermName("sorted")), _), _), TermName("filter")), _)
-            if isSeq(lhs) =>
+          case Apply(Select(Apply(TypeApply(Select(lhs, TermName("sorted")), _), _), TermName("filter")), _) if isSeq(lhs) =>
             warn(tree)
-          case Apply(Select(Apply(Apply(TypeApply(Select(lhs, TermName("sortBy")), _), _), _), TermName("filter")), _)
-            if isSeq(lhs) =>
+          case Apply(Select(Apply(Apply(TypeApply(Select(lhs, TermName("sortBy")), _), _), _), TermName("filter")), _) if isSeq(lhs) =>
             warn(tree)
           case Apply(Select(Apply(Select(lhs, TermName("sortWith")), _), TermName("filter")), _) if isSeq(lhs) =>
             warn(tree)

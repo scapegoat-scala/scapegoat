@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
 class DefaultArgUse extends Inspection {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 

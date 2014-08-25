@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
 class MaxParameters extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -15,7 +15,7 @@ class MaxParameters extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(_, name, _, _, _, _) if name == nme.CONSTRUCTOR =>
-          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
+          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic        =>
           case DefDef(_, name, _, vparamss, _, _) if count(vparamss) =>
             context.warn("Max parameters",
               tree.pos,

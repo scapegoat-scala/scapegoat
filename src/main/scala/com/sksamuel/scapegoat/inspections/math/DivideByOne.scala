@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat._
 class DivideByOne extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
@@ -19,7 +19,7 @@ class DivideByOne extends Inspection {
 
       private def isOne(value: Any): Boolean = value match {
         case i: Int => i == 1
-        case _ => false
+        case _      => false
       }
 
       override def inspect(tree: Tree): Unit = {

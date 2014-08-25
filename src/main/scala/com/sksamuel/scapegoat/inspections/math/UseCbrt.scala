@@ -6,14 +6,13 @@ import com.sksamuel.scapegoat._
 class UseCbrt extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply  new context.Traverser {
+    override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(pack, TermName("pow")), List(_, Literal(Constant(third: Double))))
-            if(pack.toString() == "scala.math.`package`"
+          case Apply(Select(pack, TermName("pow")), List(_, Literal(Constant(third: Double)))) if (pack.toString() == "scala.math.`package`"
             || pack.toString() == "java.this.lang.Math"
             || pack.toString() == "java.this.lang.StrictMath")
             && third >= 0.3333332

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat
 
-import java.io.{File, FileNotFoundException}
+import java.io.{ File, FileNotFoundException }
 import java.net.URL
 
 import scala.tools.nsc.reporters.ConsoleReporter
@@ -15,7 +15,7 @@ trait PluginRunner {
 
   val settings = {
     val s = new scala.tools.nsc.Settings
-    for ( dummy <- Option(System.getProperty("printphases")) ) {
+    for (dummy <- Option(System.getProperty("printphases"))) {
       s.Xprint.value = List("all")
       s.Yrangepos.value = true
       s.Yposdebug.value = true
@@ -82,9 +82,9 @@ trait PluginRunner {
 }
 
 class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
-                        inspections: Seq[Inspection],
-                        reporter: ConsoleReporter)
-  extends scala.tools.nsc.Global(settings, reporter) {
+  inspections: Seq[Inspection],
+  reporter: ConsoleReporter)
+    extends scala.tools.nsc.Global(settings, reporter) {
 
   val scapegoat = new ScapegoatComponent(this, inspections)
   scapegoat.disableHTML = true
@@ -120,8 +120,7 @@ class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
       inlineExceptionHandlers -> "optimization: inline exception handlers",
       closureElimination -> "optimization: eliminate uncalled closures",
       deadCode -> "optimization: eliminate dead code",
-      terminal -> "The last phase in the compiler chain"
-    )
+      terminal -> "The last phase in the compiler chain")
     phs foreach (addToPhasesSet _).tupled
   }
 }
