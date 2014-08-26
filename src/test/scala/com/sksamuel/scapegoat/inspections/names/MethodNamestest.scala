@@ -45,6 +45,33 @@ class MethodNamestest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for getter methods" in {
+        val code =
+          """object A {
+               val Name = "sammy"
+             }
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for parameters" in {
+        val code =
+          """object A {
+               def foo(Name:String) = {}
+             }
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for setter methods" in {
+        val code =
+          """object A {
+               var Name = "sammy"
+             }
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
