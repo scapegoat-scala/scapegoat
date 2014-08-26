@@ -29,8 +29,10 @@ class VariableShadowing extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case ClassDef(_, _, _, Template(_, _, body)) => enter(); continue(tree); exit()
-          case ModuleDef(_, _, Template(_, _, body)) => enter(); continue(tree); exit()
+          case ClassDef(_, _, _, Template(_, _, body)) =>
+            enter(); continue(tree); exit()
+          case ModuleDef(_, _, Template(_, _, body))   =>
+            enter(); continue(tree); exit()
           case DefDef(_, _, _, vparamss, _, rhs) =>
             enter()
             vparamss.foreach(_.foreach(inspect))
