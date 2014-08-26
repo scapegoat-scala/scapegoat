@@ -29,6 +29,22 @@ def check(code: String) = {
 }
 """
 
+resolvers += "linter" at "http://hairyfotr.github.io/linteRepo/releases"
+
+addCompilerPlugin("com.foursquare.lint" %% "linter" % "0.1-SNAPSHOT")
+
+scalacOptions ++= Seq(
+  "-Xlint",
+  "-Ywarn-adapted-args",
+  "-Ywarn-dead-code",
+  "-Ywarn-inaccessible",
+  "-Ywarn-infer-any",
+  "-Ywarn-nullary-override",
+  "-Ywarn-nullary-unit",
+  "-Ywarn-numeric-widen"
+  //"-Ywarn-value-discard"
+)
+  
 javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 
 libraryDependencies ++= Seq(
