@@ -19,6 +19,7 @@ class MethodNames extends Inspection {
           case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic    =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR) =>
           case DefDef(_, nme.CONSTRUCTOR, _, _, _, _)                      =>
+          case DefDef(mods, _, _, _, _, _) if tree.symbol != null && tree.symbol.isConstructor =>
           case DefDef(_, name, _, _, _, _) if !name.toString.matches(regex) =>
             context.warn("Method name not recommended",
               tree.pos,

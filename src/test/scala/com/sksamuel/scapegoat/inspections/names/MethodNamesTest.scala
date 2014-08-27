@@ -84,6 +84,36 @@ class MethodNamesTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for nested traits" in {
+        val code = """
+              object Test {
+                trait Inner {
+                  def valueStr: String = "test"
+                }
+              } """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for nested classes" in {
+        val code = """
+              object Test {
+                class Inner {
+                  def valueStr: String = "test"
+                }
+              } """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for nested objects" in {
+        val code = """
+              object Test {
+                object Inner {
+                  def valueStr: String = "test"
+                }
+              } """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
