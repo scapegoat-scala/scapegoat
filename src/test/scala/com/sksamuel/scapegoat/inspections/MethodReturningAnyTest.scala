@@ -2,20 +2,20 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.inference.MethodReturningAny
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class MethodReturningAnyTest
-    extends FreeSpec
-    with Matchers
-    with PluginRunner
-    with OneInstancePerTest {
+  extends FreeSpec
+  with Matchers
+  with PluginRunner
+  with OneInstancePerTest {
 
   override val inspections = Seq(new MethodReturningAny)
 
   "MethodReturningAny" - {
     "should report warning" - {
-      "for methods returning any ==" in {
+      "for methods returning any" in {
 
         val code = """class Test {
                         def foo : Any = 1
@@ -26,7 +26,7 @@ class MethodReturningAnyTest
       }
     }
     "should not report warning" - {
-      "for methods returning <:< Any ==" in {
+      "for methods returning <:< Any" in {
 
         val code =
           """class Test {
@@ -36,6 +36,19 @@ class MethodReturningAnyTest
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for overriden methods returning any" in {
+        val code =
+          """object T {
+               trait A {
+                 def foo : AnyRef = "foo"
+               }
+               class B extends A {
+                 override def foo : AnyRef = "overriden foo"
+               }
+            |} """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
     }
   }

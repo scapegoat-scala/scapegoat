@@ -18,7 +18,7 @@ class SwallowedException extends Inspection {
 
       private def checkCatches(defs: List[CaseDef]) = defs.foreach {
         case CaseDef(Bind(TermName("ignored") | TermName("ignore"), _), _, _) =>
-        case cdef@CaseDef(_, _, Literal(Constant(()))) => warn(cdef)
+        case cdef @ CaseDef(_, _, Literal(Constant(()))) => warn(cdef)
         case _ =>
       }
 

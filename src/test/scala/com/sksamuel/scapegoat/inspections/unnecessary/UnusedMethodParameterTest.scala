@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.unnecessary
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.UnusedMethodParameter
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class UnusedMethodParameterTest
@@ -26,20 +27,6 @@ class UnusedMethodParameterTest
         compiler.scapegoat.feedback.warnings.size shouldBe 1
         compiler.scapegoat.feedback.warns.size shouldBe 1
       }
-    }
-    "overriden method should report as info" in {
-      val code = """object Test {
-                      trait Foo {
-                        def foo(name:String):String
-                      }
-                      object Fool extends Foo {
-                        override def foo(name:String) : String = "sam"
-                      }
-                    } """.stripMargin
-
-      compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warns.size shouldBe 0
-      compiler.scapegoat.feedback.infos.size shouldBe 1
     }
     "should ignore @SuppressWarnings" in {
 
@@ -69,6 +56,19 @@ class UnusedMethodParameterTest
         val code = """class Test {
                      |  def foo(name:String) = throw new RuntimeException
                      |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "overriden method should report as info" in {
+        val code = """object Test {
+                      trait Foo {
+                        def foo(name:String):String
+                      }
+                      object Fool extends Foo {
+                        override def foo(name:String) : String = "sam"
+                      }
+                    } """.stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
