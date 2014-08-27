@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 class RedundantFinalModifierOnVar extends Inspection {
 
@@ -12,12 +12,11 @@ class RedundantFinalModifierOnVar extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case ValDef(mods, _, _, _)
-            if mods.isFinal && mods.isMutable &&
-              (tree.symbol.enclClass.isFinal ||
-                tree.symbol.enclClass.isCase ||
-                tree.symbol.enclClass.isModuleOrModuleClass ||
-                tree.symbol.enclClass.isPackageObjectOrClass) =>
+          case ValDef(mods, _, _, _) if mods.isFinal && mods.isMutable &&
+            (tree.symbol.enclClass.isFinal ||
+              tree.symbol.enclClass.isCase ||
+              tree.symbol.enclClass.isModuleOrModuleClass ||
+              tree.symbol.enclClass.isPackageObjectOrClass) =>
             context.warn("Redundant final modifier on method",
               tree.pos,
               Levels.Info,

@@ -14,9 +14,9 @@ class RedundantFinalModifierOnMethod extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic =>
+          case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic    =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR) =>
-          case DefDef(_, nme.CONSTRUCTOR, _, _, _, _) =>
+          case DefDef(_, nme.CONSTRUCTOR, _, _, _, _)                      =>
           case dd @ DefDef(mods, _, _, _, _, _) if mods.isFinal &&
             (tree.symbol.enclClass.isFinal ||
               tree.symbol.enclClass.isCase ||
