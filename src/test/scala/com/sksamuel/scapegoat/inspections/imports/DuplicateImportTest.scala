@@ -1,6 +1,7 @@
 package com.sksamuel.scapegoat.inspections.imports
 
 import com.sksamuel.scapegoat.PluginRunner
+
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
@@ -44,6 +45,21 @@ class DuplicateImportTest extends FreeSpec with Matchers with PluginRunner with 
       //        compileCodeSnippet(code)
       //        compiler.scapegoat.feedback.warnings.size shouldBe 1
       //      }
+    }
+    "should not report warning" - {
+      "for sibling class imports" in {
+        val code =
+          """
+             object A {
+              import scala.collection.immutable.Set
+             }
+             class B {
+               import scala.collection.immutable.Set
+             } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }

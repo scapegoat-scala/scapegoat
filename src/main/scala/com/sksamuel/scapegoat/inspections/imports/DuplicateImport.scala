@@ -17,6 +17,9 @@ class DuplicateImport extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
+          case PackageDef(_, _)     => imports.clear()
+          case ModuleDef(_, _, _)   => imports.clear()
+          case ClassDef(_, _, _, _) => imports.clear()
           case Import(expr, selectors) =>
             selectors.foreach(selector => {
               val name = expr.toString + "." + selector.name
