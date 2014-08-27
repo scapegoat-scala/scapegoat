@@ -22,6 +22,8 @@ class UnusedMethodParameter extends Inspection {
         tree match {
           // ignore traits, quite often you define a method in a trait with default impl that does nothing
           case ClassDef(_, _, _, _) if tree.symbol.isTrait                                  =>
+          // ignore overriden methods, the parameter might be used by other classes
+          case DefDef(mods, _, _, _, _, _) if mods.isOverride                               =>
           // ignore abstract methods obv.
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.ABSTRACT)                   =>
           case d @ DefDef(_, _, _, _, _, _) if d.symbol != null && d.symbol.isAbstract      =>
