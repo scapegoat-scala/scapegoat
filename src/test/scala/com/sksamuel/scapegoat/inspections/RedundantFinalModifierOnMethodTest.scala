@@ -62,6 +62,11 @@ class RedundantFinalModifierOnMethodTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "on fields" in {
+        val code = """object A { final val b = true }"""
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
