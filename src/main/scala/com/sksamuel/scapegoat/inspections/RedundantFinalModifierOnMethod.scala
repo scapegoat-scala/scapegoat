@@ -19,16 +19,15 @@ class RedundantFinalModifierOnMethod extends Inspection {
           case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR) =>
           case DefDef(_, nme.CONSTRUCTOR, _, _, _, _) =>
-          case dd @ DefDef(mods, _, _, _, _, _) if mods.isFinal &&
+          case dd @ DefDef(mods, name, _, _, _, _) if mods.isFinal &&
             (tree.symbol.enclClass.isFinal ||
               tree.symbol.enclClass.isCase ||
               tree.symbol.enclClass.isModuleOrModuleClass ||
               tree.symbol.enclClass.isPackageObjectOrClass) =>
-            val owner = dd.symbol.enclClass
             context.warn("Redundant final modifier on method",
               tree.pos,
               Levels.Info,
-              "This Method cannot be overriden, final modifer is redundant",
+              s"${dd.symbol.fullName} cannot be overriden, final modifer is redundant",
               RedundantFinalModifierOnMethod.this)
           case _ => continue(tree)
         }

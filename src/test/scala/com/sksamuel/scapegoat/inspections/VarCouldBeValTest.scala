@@ -151,6 +151,26 @@ class VarCouldBeValTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when var is written to for nested defs" in {
+        val code =
+          """
+          |package com.sam
+          |trait Iterator {
+          |  def next : Int
+          |}
+          |object Test {
+          |  def iterator = new Iterator {
+          |    var last = -1
+          |    def next: Int = {
+          |      last = last + 1
+          |      last
+          |    }
+          |  }
+          |}
+        """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }

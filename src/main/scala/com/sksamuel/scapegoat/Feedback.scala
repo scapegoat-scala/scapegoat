@@ -31,7 +31,8 @@ class Feedback(consoleOutput: Boolean) {
     warnings.append(warning)
     if (consoleOutput) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFile:${warning.line}: $text")
-      println(s"\t\t\t$snippet")
+      snippet.foreach(s => println(s"          $s"))
+      println()
     }
   }
 
