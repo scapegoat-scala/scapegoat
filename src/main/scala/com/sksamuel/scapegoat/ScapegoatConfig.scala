@@ -52,7 +52,6 @@ object ScapegoatConfig extends App {
     new DuplicateSetValue,
     new EitherGet,
     new EmptyCaseClass,
-    new EmptyCatchBlock,
     new EmptyFor,
     new EmptyIfBlock,
     new EmptyInterpolatedString,

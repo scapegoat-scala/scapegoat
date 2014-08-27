@@ -1,6 +1,7 @@
 package com.sksamuel.scapegoat.inspections.exception
 
 import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.inspections.exception.SwallowedException
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
@@ -55,8 +56,7 @@ class SwallowedExceptionTest
     }
     "should not report warning" - {
       "for exceptions all handled" in {
-
-        val code2 = """object Test {
+        val code = """object Test {
                         try {
                         } catch {
                           case e : RuntimeException => println("a")
@@ -64,8 +64,17 @@ class SwallowedExceptionTest
                           case x : Throwable => println("c")
                         }
                     } """.stripMargin
-
-        compileCodeSnippet(code2)
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for exception called ignored" in {
+        val code = """object A { try { println() } catch { case ignored : Exception => } }"""
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for exception called ignore" in {
+        val code = """object A { try { println() } catch { case ignore : Exception => } }"""
+        compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
     }
