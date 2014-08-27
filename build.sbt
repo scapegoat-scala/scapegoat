@@ -1,4 +1,4 @@
-import scalariform.formatter.preferences.{FormattingPreferences, AlignSingleLineCaseStatements, CompactControlReadability, DoubleIndentClassDeclaration, IndentLocalDefs, RewriteArrowSymbols}
+import scalariform.formatter.preferences.{AlignSingleLineCaseStatements, CompactControlReadability, DoubleIndentClassDeclaration, FormattingPreferences, IndentLocalDefs}
 
 import sbt.Keys._
 
