@@ -3,6 +3,8 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
+import akka.actor.PossiblyHarmful
+
 /** @author Stephen Samuel */
 class SuspiciousMatchOnClassObjectTest
     extends FreeSpec
@@ -85,17 +87,20 @@ class SuspiciousMatchOnClassObjectTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      "for case objects" in {
-        val code = """
+      "for top level case objects" in {
+        val code = """package com.sammy
+
                       trait Android
                       case object Lal extends Android
                       case object Data extends Android
+                      case class Robot(name:String) extends Android
 
                       object Test {
                         val b : Any = Data
                         b match {
                            case Data => println("Yes captain")
                            case Lal => println("Yes dad")
+                           case Robot(name) => println(name)
                            case _ =>
                         }
                     } """.stripMargin
@@ -103,9 +108,10 @@ class SuspiciousMatchOnClassObjectTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      "for top level case objects" in {
+      "for top level objects" in {
         val code = """
                      |package com.sammy
+                     |
                      |trait TestTrait
                      |object TestObject extends TestTrait
                      |
@@ -133,7 +139,33 @@ class SuspiciousMatchOnClassObjectTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for case objects with abstract companion class" in {
+        val code = """        abstract class Kill
+                     |        case object Kill extends Kill
+                     |        object A {
+                     |          val a: AnyRef = "sam"
+                     |          a match {
+                     |            case Kill =>
+                     |            case _ =>
+                     |          }
+                     |        }""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for instances of case class" in {
+        val code = """        case class Robot(name:String)
+                     |        object A {
+                     |          val Robbie = Robot("Robbie")
+                     |          val a: AnyRef = Robot("t800")
+                     |          a match {
+                     |            case Robbie =>
+                     |            case Robot(name) =>
+                     |            case _ =>
+                     |          }
+                     |        }""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
-

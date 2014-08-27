@@ -12,18 +12,20 @@ class SuspiciousMatchOnClassObject extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
           case Match(selector, cases) =>
-            inspectCases(cases)
+            checkCases(cases)
             continue(tree)
           case _ => continue(tree)
         }
       }
 
-      private def inspectCases(cases: List[CaseDef]): Unit = {
+      private def checkCases(cases: List[CaseDef]): Unit = {
         cases.exists {
           case c @ CaseDef(pat, _, _) // if we have a case object and a companion class, then we are matching on an object instead of a class
-          if pat.symbol != null && pat.symbol.isModuleOrModuleClass && pat.tpe.typeSymbol.companionClass.isClass =>
+            if pat.symbol != null &&
+              pat.symbol.isModuleOrModuleClass &&
+              pat.tpe.typeSymbol.companionClass.isClass &&
+              !pat.tpe.typeSymbol.companionClass.isAbstractClass =>
             warn(c)
             true
           case _ => false
