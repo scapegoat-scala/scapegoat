@@ -24,6 +24,7 @@ class RedundantFinalModifierOnMethod extends Inspection {
               tree.symbol.enclClass.isCase ||
               tree.symbol.enclClass.isModuleOrModuleClass ||
               tree.symbol.enclClass.isPackageObjectOrClass) =>
+            val owner = dd.symbol.enclClass
             context.warn("Redundant final modifier on method",
               tree.pos,
               Levels.Info,

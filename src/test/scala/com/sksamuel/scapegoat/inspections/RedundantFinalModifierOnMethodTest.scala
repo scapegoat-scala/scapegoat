@@ -1,8 +1,5 @@
 package com.sksamuel.scapegoat.inspections
 
-
-import scala.collection.parallel.immutable
-
 import com.sksamuel.scapegoat.PluginRunner
 
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
@@ -40,6 +37,12 @@ class RedundantFinalModifierOnMethodTest
       }
       "when implicit object has final method" in {
         val code = """object A { implicit object B {  final def foo = {} } } """
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
+      "for value classes" in {
+        val code =
+          """class A(val str:String) extends AnyVal { final def foo = str }"""
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
