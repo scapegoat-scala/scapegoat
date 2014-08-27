@@ -22,10 +22,10 @@ class SuspiciousMatchOnClassObject extends Inspection {
       private def checkCases(cases: List[CaseDef]): Unit = {
         cases.exists {
           case c @ CaseDef(pat, _, _) // if we have a case object and a companion class, then we are matching on an object instead of a class
-            if pat.symbol != null &&
-              pat.symbol.isModuleOrModuleClass &&
-              pat.tpe.typeSymbol.companionClass.isClass &&
-              !pat.tpe.typeSymbol.companionClass.isAbstractClass =>
+          if pat.symbol != null &&
+            pat.symbol.isModuleOrModuleClass &&
+            pat.tpe.typeSymbol.companionClass.isClass &&
+            !pat.tpe.typeSymbol.companionClass.isAbstractClass =>
             warn(c)
             true
           case _ => false

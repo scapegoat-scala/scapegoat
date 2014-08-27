@@ -12,6 +12,8 @@ class ComparingUnrelatedTypes extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
+          case Apply(Select(lhs, TermName("$eq$eq")), List(Literal(Constant(0)))) if lhs.tpe.typeSymbol.isNumericValueClass =>
+          case Apply(Select(Literal(Constant(0)), TermName("$eq$eq")), List(rhs)) if rhs.tpe.typeSymbol.isNumericValueClass =>
           case Apply(Select(lhs, TermName("$eq$eq")), List(rhs)) =>
             val q = lhs
             val l = lhs.tpe.erasure

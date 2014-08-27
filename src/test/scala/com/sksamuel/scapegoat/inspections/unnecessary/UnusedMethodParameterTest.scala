@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.unnecessary
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.UnusedMethodParameter
 
-import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
+import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
 class UnusedMethodParameterTest
