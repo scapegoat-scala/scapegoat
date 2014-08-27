@@ -99,6 +99,7 @@ object ScapegoatConfig extends App {
     new ProductWithSerializableInferred,
     new PublicFinalizer,
     new RedundantFinalizer,
+    new RedundantFinalModifierOnMethod,
     new RepeatedCaseBody,
     new SimplifyBooleanExpression,
     new StripMarginOnRegex,
