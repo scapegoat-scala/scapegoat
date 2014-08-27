@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat.inspections.naming.MethodNames
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
-class MethodNamestest
+class MethodNamesTest
   extends FreeSpec
   with Matchers
   with PluginRunner
@@ -67,6 +67,18 @@ class MethodNamestest
         val code =
           """object A {
                var Name = "sammy"
+             }
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for nested vals" in {
+        val code =
+          """object A {
+               def foo = {
+                 val AAAA = 1
+                 println(AAAA)
+               }
              }
           """.stripMargin
         compileCodeSnippet(code)
