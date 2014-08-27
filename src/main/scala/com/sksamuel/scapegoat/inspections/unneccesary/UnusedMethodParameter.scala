@@ -20,6 +20,8 @@ class UnusedMethodParameter extends Inspection {
 
       override final def inspect(tree: Tree): Unit = {
         tree match {
+          // ignore traits, quite often you define a method in a trait with default impl that does nothing
+          case ClassDef(_, _, _, _) if tree.symbol.isTrait =>
           // ignore abstract methods obv.
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.ABSTRACT)              =>
           case d @ DefDef(_, _, _, _, _, _) if d.symbol != null && d.symbol.isAbstract =>
