@@ -16,7 +16,10 @@ class EmptyCatchBlock extends Inspection {
             "Empty catch block " + cd.toString().take(100), EmptyCatchBlock.this)
       }
 
-      def checkCatches(defs: List[CaseDef]) = defs.foreach(cd => checkCatch(cd))
+      def checkCatches(defs: List[CaseDef]) = defs.foreach {
+        case CaseDef(Bind(TermName("ignored") | TermName("ignore"), _), _, _) =>
+        case cd => checkCatch(cd)
+      }
 
       override def inspect(tree: Tree): Unit = {
         tree match {

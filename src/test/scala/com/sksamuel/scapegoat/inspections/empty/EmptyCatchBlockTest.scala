@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.empty
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers }
+import org.scalatest.{OneInstancePerTest, FreeSpec, Matchers}
 
 /** @author Stephen Samuel */
-class EmptyCatchBlockTest extends FreeSpec with Matchers with PluginRunner {
+class EmptyCatchBlockTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new EmptyCatchBlock)
 
@@ -23,6 +23,18 @@ class EmptyCatchBlockTest extends FreeSpec with Matchers with PluginRunner {
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 2
+    }
+    "should not report warning" - {
+      "for exception called ignored" in {
+        val code = """object A { try { println() } catch { case ignored : Exception => } }"""
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for exception called ignore" in {
+        val code = """object A { try { println() } catch { case ignore : Exception => } }"""
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
