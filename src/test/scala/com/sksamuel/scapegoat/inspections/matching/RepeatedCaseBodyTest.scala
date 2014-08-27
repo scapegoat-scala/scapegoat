@@ -19,8 +19,8 @@ class RepeatedCaseBodyTest
         val code = """object Test {
                       val s : Any = null
                       s match {
-                       case "sam" => println("foo"); println("foo"); println("foo")
-                       case "bam" => println("foo"); println("foo"); println("foo")
+                       case "sam" => println("foo"); println("foo"); println("foo"); println("foo"); println("foo")
+                       case "bam" => println("foo"); println("foo"); println("foo"); println("foo"); println("foo")
                        case _ =>
                       }
                     } """.stripMargin
@@ -33,9 +33,9 @@ class RepeatedCaseBodyTest
         val code = """object Test {
                       val s : Any = null
                       s match {
-                       case str : String if str.length == 3 => println("foo"); println("foo"); println("foo")
-                       case str : String => println("foo"); println("foo"); println("foo")
-                       case i : Int=> println("foo"); println("foo"); println("foo")
+                       case str : String if str.length == 3 => println("foo"); println("foo"); println("foo"); println("foo"); println("foo")
+                       case str : String => println("foo"); println("foo"); println("foo"); println("foo"); println("foo")
+                       case i : Int=> println("foo"); println("foo"); println("foo"); println("foo"); println("foo")
                        case _ =>
                       }
                     } """.stripMargin
