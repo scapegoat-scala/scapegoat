@@ -17,9 +17,9 @@ class MethodReturningAny extends Inspection {
           case DefDef(mods, _, _, _, _, _) if mods.isSynthetic                =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
-          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR) =>
+          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR)    =>
           /// ignore overridden methods as the parent will receive the warning
-          case DefDef(mods, _, _, _, _, _) if mods.isOverride =>
+          case DefDef(mods, _, _, _, _, _) if mods.isOverride                 =>
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] || tpt.tpe =:= typeOf[AnyRef] =>
             context.warn("MethodReturningAny", tree.pos, Levels.Warning,
               "Method returns Any. Consider using a more specialized type: " + tree.toString().take(300),
