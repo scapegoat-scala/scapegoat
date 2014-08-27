@@ -75,11 +75,11 @@ class RepeatedCaseBodyTest
       }
       "for bodies with two or less statements" in {
 
-        val code = """object Test {
+        val code = """class T(a:String) {
                       val s = "sam"
                       s match {
-                       case s : String => println("foo");
-                       case _ => println("foo");
+                       case s : String => println("foo", a);
+                       case _ => println("foo", a);
                       }
                     } """.stripMargin
 
