@@ -35,6 +35,11 @@ class RedundantFinalModifierOnMethodTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+      "when implicit object has final method" in {
+        val code = """object A { implicit object B {  final def foo = {} } } """
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
     }
     "should not report warning" - {
       "when non final class has final method" in {
@@ -49,6 +54,11 @@ class RedundantFinalModifierOnMethodTest
       }
       "when abstract class has final method" in {
         val code = """abstract class Test {  final def foo = {} } """
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "when implicit class has final method" in {
+        val code = """object A { implicit class B(str:String) {  final def foo = {} } }"""
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
