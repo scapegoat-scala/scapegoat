@@ -1,5 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
+
+import scala.collection.parallel.immutable
+
 import com.sksamuel.scapegoat.PluginRunner
 
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
@@ -72,6 +75,22 @@ class RedundantFinalModifierOnMethodTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for partial functions" in {
+        val code =
+          """
+            |object Resolved {
+            |  import java.net.{InetAddress, Inet4Address, Inet6Address}
+            |  def apply(name: String, addresses: Iterable[InetAddress]): Seq[InetAddress] = {
+            |    val ipv4: Seq[Inet4Address] = addresses.collect({ case a: Inet4Address ⇒ a}).toSeq
+            |    val ipv6: Seq[Inet6Address] = addresses.collect({ case a: Inet6Address ⇒ a}).toSeq
+            |    ipv4 ++ ipv6
+            |  }
+            |}
+          """.stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
+

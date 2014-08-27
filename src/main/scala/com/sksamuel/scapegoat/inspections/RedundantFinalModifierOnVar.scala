@@ -17,10 +17,10 @@ class RedundantFinalModifierOnVar extends Inspection {
               tree.symbol.enclClass.isCase ||
               tree.symbol.enclClass.isModuleOrModuleClass ||
               tree.symbol.enclClass.isPackageObjectOrClass) =>
-            context.warn("Redundant final modifier on method",
+            context.warn("Redundant final modifier on var",
               tree.pos,
               Levels.Info,
-              "Method cannot be overriden, final modifer is redundant",
+              "This var cannot be overriden, final modifer is redundant",
               RedundantFinalModifierOnVar.this)
           case _ => continue(tree)
         }

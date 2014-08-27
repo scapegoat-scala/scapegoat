@@ -26,10 +26,10 @@ class NullParameter extends Inspection {
         }
       }
       private def warn(tree: Tree) {
-        context.warn("Null use",
+        context.warn("Null parameter",
           tree.pos,
           Levels.Warning,
-          "null as method argument: " + tree.toString().take(300),
+          "Null is used as a method parameter: " + tree.toString().take(300),
           NullParameter.this)
       }
     }
