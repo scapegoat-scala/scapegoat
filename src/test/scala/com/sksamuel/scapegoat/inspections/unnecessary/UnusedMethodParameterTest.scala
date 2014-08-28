@@ -3,12 +3,12 @@ package com.sksamuel.scapegoat.inspections.unnecessary
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.UnusedMethodParameter
 
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class UnusedMethodParameterTest
-    extends FreeSpec
-    with Matchers with PluginRunner with OneInstancePerTest {
+  extends FreeSpec
+  with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new UnusedMethodParameter)
 
@@ -60,15 +60,14 @@ class UnusedMethodParameterTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      "overriden method should report as info" in {
-        val code = """object Test {
+      "for overriden method without override keyword" in {
+        val code = """package com.sam
                       trait Foo {
                         def foo(name:String):String
                       }
                       object Fool extends Foo {
-                        override def foo(name:String) : String = "sam"
-                      }
-                    } """.stripMargin
+                        def foo(name:String) : String = "sam"
+                      } """.stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
