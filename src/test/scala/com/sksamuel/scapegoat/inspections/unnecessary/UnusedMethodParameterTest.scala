@@ -14,7 +14,7 @@ class UnusedMethodParameterTest
 
   "UnusedMethodParameter" - {
     "should report warning" - {
-      "for unused parmaeters in concrete methods" in {
+      "for unused parameters in concrete methods" in {
         val code = """class Test {
                         val initstuff = "sammy"
                         def foo(a:String, b:Int, c:Int) {
@@ -60,6 +60,18 @@ class UnusedMethodParameterTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for overriden method" in {
+        val code = """package com.sam
+                      trait Foo {
+                        def foo(name:String):String
+                      }
+                      object Fool extends Foo {
+                        override def foo(name:String) : String = "sam"
+                      } """
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
       "for overriden method without override keyword" in {
         val code = """package com.sam
                       trait Foo {
@@ -67,7 +79,19 @@ class UnusedMethodParameterTest
                       }
                       object Fool extends Foo {
                         def foo(name:String) : String = "sam"
-                      } """.stripMargin
+                      } """
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for implemented method" in {
+        val code = """package com.sam
+                      trait Foo {
+                        def foo(name:String): String
+                      }
+                      case class Fool() extends Foo {
+                        def foo(name:String): String = "sam"
+                      } """
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0

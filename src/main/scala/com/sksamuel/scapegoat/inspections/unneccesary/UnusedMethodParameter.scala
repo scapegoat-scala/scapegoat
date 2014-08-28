@@ -1,5 +1,7 @@
 package com.sksamuel.scapegoat.inspections.unneccesary
 
+import scala.reflect.internal.Flags
+
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
@@ -30,7 +32,10 @@ class UnusedMethodParameter extends Inspection {
           case DefDef(_, _, _, _, _, _) if tree.symbol != null && tree.symbol.isConstructor =>
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= NothingTpe =>
           // ignore overriden methods, the parameter might be used by other classes
-          case DefDef(mods, _, _, _, _, _) if mods.isOverride || (tree.symbol != null && tree.symbol.isOverride) =>
+          case DefDef(mods, _, _, _, _, _)
+            if mods.isOverride ||
+              mods.hasFlag(Flags.OVERRIDE) ||
+              (tree.symbol != null && (tree.symbol.isAnyOverride || tree.symbol.isOverridingSymbol)) =>
           case d @ DefDef(mods, _, _, vparamss, _, rhs) =>
             for (
               vparams <- vparamss;
