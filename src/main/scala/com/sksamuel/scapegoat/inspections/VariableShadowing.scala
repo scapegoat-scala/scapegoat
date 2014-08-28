@@ -31,7 +31,7 @@ class VariableShadowing extends Inspection {
         tree match {
           case ClassDef(_, _, _, Template(_, _, body)) =>
             enter(); continue(tree); exit()
-          case ModuleDef(_, _, Template(_, _, body))   =>
+          case ModuleDef(_, _, Template(_, _, body)) =>
             enter(); continue(tree); exit()
           case DefDef(_, _, _, vparamss, _, rhs) =>
             enter()

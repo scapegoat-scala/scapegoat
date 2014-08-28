@@ -14,7 +14,9 @@ class EmptyMethod extends Inspection {
         tree match {
           // its ok to do empty impl for overriden methods
           case DefDef(mods, _, _, _, _, _) if mods.isOverride =>
-          case DefDef(mods, _, _, _, _, Literal(Constant(()))) if !mods.hasFlag(Flag.SYNTHETIC) =>
+          case ClassDef(mods, _, _, _) if mods.isTrait => continue(tree)
+          case DefDef(_, _, _, _, _, _) if tree.symbol != null && tree.symbol.enclClass.isTrait =>
+          case DefDef(mods, _, _, _, _, Literal(Constant(()))) =>
             context.warn("Empty method", tree.pos, Levels.Warning, "Empty method statement " + tree.toString().take(500),
               EmptyMethod.this)
           case _ => continue(tree)

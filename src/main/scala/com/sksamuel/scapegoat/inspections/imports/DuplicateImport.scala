@@ -17,9 +17,9 @@ class DuplicateImport extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case PackageDef(_, _)     =>
+          case PackageDef(_, _) =>
             imports.clear(); continue(tree)
-          case ModuleDef(_, _, _)   =>
+          case ModuleDef(_, _, _) =>
             imports.clear(); continue(tree)
           case ClassDef(_, _, _, _) =>
             imports.clear(); continue(tree)
