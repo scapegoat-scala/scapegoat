@@ -31,6 +31,7 @@ object ScapegoatConfig extends App {
     new AvoidToMinusOne,
     new AsInstanceOf,
     new BigDecimalDoubleConstructor,
+    new BigDecimalScaleWithoutRoundingMode,
     new BoundedByFinalType,
     new BrokenOddness,
     new CatchNpe,
