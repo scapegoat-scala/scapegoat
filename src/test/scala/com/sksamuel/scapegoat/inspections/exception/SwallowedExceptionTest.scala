@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections.exception
 
 import com.sksamuel.scapegoat.PluginRunner
-import com.sksamuel.scapegoat.inspections.exception.SwallowedException
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class SwallowedExceptionTest
