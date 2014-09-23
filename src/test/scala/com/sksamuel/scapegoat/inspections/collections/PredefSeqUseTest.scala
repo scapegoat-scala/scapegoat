@@ -19,14 +19,16 @@ class PredefSeqUseTest extends FreeSpec with Matchers with PluginRunner with One
     }
     "should not report warning" - {
       "for scala.collection.mutable usage" in {
-        val code =
-          """import scala.collection.mutable.Set
-            |object Test { val a = Set("sammy") }""".stripMargin
+        val code = """import scala.collection.mutable.Set
+                     |object Test { val a = Set("sammy") }""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for scala.collection.immutable usage" in {
-        val code =
-          """import scala.collection.immutable.Set
-            |object Test { val a = Set("sammy") }""".stripMargin
+        val code = """import scala.collection.immutable.Set
+                     |object Test { val a = Set("sammy") }""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
     }
   }
