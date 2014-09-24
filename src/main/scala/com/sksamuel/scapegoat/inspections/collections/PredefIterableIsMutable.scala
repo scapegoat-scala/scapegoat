@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class PredefSeqUse extends Inspection {
+class PredefIterableIsMutable extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -23,7 +23,7 @@ class PredefSeqUse extends Inspection {
           tree.pos,
           Levels.Info,
           "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?",
-          PredefSeqUse.this)
+          PredefIterableIsMutable.this)
       }
     }
   }

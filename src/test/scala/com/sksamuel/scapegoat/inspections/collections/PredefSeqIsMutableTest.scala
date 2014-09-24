@@ -5,9 +5,9 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
-class PredefSeqUseTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class PredefSeqIsMutableTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
-  override val inspections = Seq(new PredefSeqUse)
+  override val inspections = Seq(new PredefSeqIsMutable)
 
   "PredefSeqUse" - {
     "should report warning" - {
