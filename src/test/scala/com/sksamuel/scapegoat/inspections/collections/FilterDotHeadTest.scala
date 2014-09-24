@@ -13,7 +13,7 @@ class FilterDotHeadTest
   override val inspections = Seq(new FilterDotHead)
 
   "self assignment" - {
-    "should report warning" - {
+    "should report warning" in {
       val code = """class Test {
                      List(1,2,3).filter(_ < 0).head
                     } """.stripMargin

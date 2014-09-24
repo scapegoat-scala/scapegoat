@@ -68,6 +68,7 @@ object ScapegoatConfig extends App {
     new FilterDotSize,
     new FinalizerWithoutSuper,
     new FindDotIsDefined,
+    new FindAndNotEqualsNoneReplaceWithExists,
     new IllegalFormatString,
     new IncorrectlyNamedExceptions,
     new IncorrectNumberOfArgsToFormat,
