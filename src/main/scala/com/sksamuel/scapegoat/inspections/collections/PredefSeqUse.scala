@@ -12,14 +12,18 @@ class PredefSeqUse extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(Select(_, TermName("Predef")), TermName("Set")) =>
-            context.warn("Predef.Set is mutable",
-              tree.pos,
-              Levels.Info,
-              "Predef.Set aliases scala.collection.mutable.Set. Did you intend to use an immutable collection.",
-              PredefSeqUse.this)
+          case DefDef(mods, _, _, _, _, _) if tree.symbol.isAccessor =>
+          case TypeTree() if tree.tpe.erasure.toString() == "Seq[Any]" => warn(tree)
           case _ => continue(tree)
         }
+      }
+
+      def warn(tree: Tree): Unit = {
+        context.warn("Predef.Seq is mutable",
+          tree.pos,
+          Levels.Info,
+          "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?",
+          PredefSeqUse.this)
       }
     }
   }
