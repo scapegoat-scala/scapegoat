@@ -1,4 +1,4 @@
-Scapegoat ![travis image](https://travis-ci.org/sksamuel/scalac-scapegoat-plugin.svg?branch=master)
+Scapegoat [![travis image](https://travis-ci.org/sksamuel/scalac-scapegoat-plugin.svg?branch=master)](https://travis-ci.org/sksamuel/scalac-scapegoat-plugin)
 ==========
 
 Scapegoat is a Scala static code analyzer, what is more colloquially known as a code lint tool or linter. Scapegoat works in a similar vein to Java's [FindBugs](http://findbugs.sourceforge.net/) or [checkstyle](http://checkstyle.sourceforge.net/), or Scala's [Scalastyle](https://github.com/scalastyle/scalastyle).
