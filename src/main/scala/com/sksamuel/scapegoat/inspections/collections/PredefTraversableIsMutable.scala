@@ -13,16 +13,16 @@ class PredefTraversableIsMutable extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(mods, _, _, _, _, _) if tree.symbol.isAccessor =>
-          case TypeTree() if tree.tpe.erasure.toString() == "Seq[Any]" => warn(tree)
+          case TypeTree() if tree.tpe.erasure.toString() == "Traversable[Any]" => warn(tree)
           case _ => continue(tree)
         }
       }
 
       def warn(tree: Tree): Unit = {
-        context.warn("Predef.Seq is mutable",
+        context.warn("Default Traversable is mutable",
           tree.pos,
           Levels.Info,
-          "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?",
+          "Traversable aliases scala.collection.mutable.Traversable. Did you intend to use an immutable Traversable?",
           PredefTraversableIsMutable.this)
       }
     }
