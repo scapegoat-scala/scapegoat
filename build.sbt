@@ -8,7 +8,7 @@ organization := "com.sksamuel.scapegoat"
 
 version := "0.94.6"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.4"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
