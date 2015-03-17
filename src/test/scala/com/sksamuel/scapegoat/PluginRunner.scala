@@ -8,10 +8,11 @@ import scala.tools.nsc.reporters.ConsoleReporter
 /** @author Stephen Samuel */
 trait PluginRunner {
 
-  val scalaVersion = "2.11.2"
+  val scalaVersion = "2.11.6"
   val shortScalaVersion = scalaVersion.dropRight(2)
 
   val classPath = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
+  println(classPath)
 
   val settings = {
     val s = new scala.tools.nsc.Settings
@@ -21,7 +22,7 @@ trait PluginRunner {
       s.Yposdebug.value = true
     }
     s.stopAfter.value = List("refchecks") // no need to go all the way to generating classfiles
-    s.classpath.value = classPath.mkString(":")
+    s.classpath.value = classPath.mkString(File.pathSeparator)
     s.feature.value = true
     s
   }
@@ -69,7 +70,7 @@ trait PluginRunner {
     val jarPath = sbtHome + "/cache/" + groupId + "/" + artifactId + "/jars/" + artifactId + "-" + version + ".jar"
     val file = new File(jarPath)
     if (file.exists) {
-      println(s"Located ivy jar [$file]")
+      // println(s"Located ivy jar [$file]")
       file
     } else throw new FileNotFoundException(s"Could not locate [$jarPath].")
   }
