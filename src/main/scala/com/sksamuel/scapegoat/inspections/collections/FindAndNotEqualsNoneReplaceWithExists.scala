@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 class FindAndNotEqualsNoneReplaceWithExists extends Inspection {
 
@@ -12,7 +12,7 @@ class FindAndNotEqualsNoneReplaceWithExists extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("find")), _), TermName("$bang$eq")),
-          List(Select(_, TermName("None")))) =>
+            List(Select(_, TermName("None")))) =>
             context.warn("filter(_.isDefined).map(_.get)",
               tree.pos,
               Levels.Info,

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Levels, Inspection, InspectionContext, Inspector}
+import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
 class PredefSeqIsMutable extends Inspection {

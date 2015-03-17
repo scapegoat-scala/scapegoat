@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
+import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
 class PredefTraversableIsMutableTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {

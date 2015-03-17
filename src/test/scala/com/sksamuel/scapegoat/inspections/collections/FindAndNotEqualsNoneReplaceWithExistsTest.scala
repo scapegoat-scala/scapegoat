@@ -1,14 +1,14 @@
 package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
+import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
 class FindAndNotEqualsNoneReplaceWithExistsTest
-  extends FreeSpec
-  with Matchers
-  with PluginRunner
-  with OneInstancePerTest {
+    extends FreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(new FindAndNotEqualsNoneReplaceWithExists)
 
