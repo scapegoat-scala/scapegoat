@@ -6,9 +6,9 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-version := "0.94.6"
+version := "0.94.7-SNAPSHOT"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.6"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
 
@@ -28,10 +28,6 @@ def check(code: String) = {
   feedback
 }
 """
-
-resolvers += "linter" at "http://hairyfotr.github.io/linteRepo/releases"
-
-addCompilerPlugin("com.foursquare.lint" %% "linter" % "0.1-SNAPSHOT")
 
 scalacOptions ++= Seq(
   "-Xlint",
