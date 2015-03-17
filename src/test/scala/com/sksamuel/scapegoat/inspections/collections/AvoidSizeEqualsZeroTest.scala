@@ -25,7 +25,7 @@ class AvoidSizeEqualsZeroTest extends FreeSpec with Matchers with PluginRunner w
     "should ignore durations" in {
       val code = """object Test {
                    |case class Duration(start: Long, stop: Long) {
-                   |  def length: Long = end - stop
+                   |  def length: Long = stop - start
                    |  def isEmpty: Boolean = length == 0
                    |  }
                     } """.stripMargin
