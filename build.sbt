@@ -10,7 +10,7 @@ version := "0.94.7-SNAPSHOT"
 
 scalaVersion := "2.11.6"
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8")
+scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8", "-Xmax-classfile-name", "254")
 
 publishMavenStyle := true
 

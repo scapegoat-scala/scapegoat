@@ -5,7 +5,9 @@ import java.net.URL
 
 import scala.tools.nsc.reporters.ConsoleReporter
 
-/** @author Stephen Samuel */
+/** @author Stephen Samuel
+  * @author Eugene Sypachev (Axblade)
+  */
 trait PluginRunner {
 
   val scalaVersion = "2.11.6"
@@ -90,6 +92,7 @@ class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
   val scapegoat = new ScapegoatComponent(this, inspections)
   scapegoat.disableHTML = true
   scapegoat.disableXML = true
+  scapegoat.disableScalastyleXML = true
   scapegoat.verbose = false
   scapegoat.summary = false
 
