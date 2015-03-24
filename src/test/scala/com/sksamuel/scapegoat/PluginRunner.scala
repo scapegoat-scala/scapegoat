@@ -90,6 +90,7 @@ class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
   val scapegoat = new ScapegoatComponent(this, inspections)
   scapegoat.disableHTML = true
   scapegoat.disableXML = true
+  scapegoat.disableScalastyleXML = true
   scapegoat.verbose = false
   scapegoat.summary = false
 

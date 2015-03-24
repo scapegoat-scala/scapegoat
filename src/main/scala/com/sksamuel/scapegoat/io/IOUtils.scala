@@ -4,10 +4,14 @@ import java.io.{ BufferedWriter, File, FileWriter }
 
 import com.sksamuel.scapegoat.Feedback
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel
+ * @author Eugene Sypachev (Axblade)
+ */
 object IOUtils {
 
   private val XmlFile = "scapegoat.xml"
+  private val ScalastyleXmlFile = "scapegoat-scalastyle.xml"
   private val HtmlFile = "scapegoat.html"
 
   def serialize(file: File, str: String) = {
@@ -28,6 +32,14 @@ object IOUtils {
     targetDir.mkdirs()
     val html = XmlReportWriter.toXML(reporter)
     val file = new File(targetDir.getAbsolutePath + "/" + XmlFile)
+    serialize(file, html.toString())
+    file
+  }
+
+  def writeScalastyleReport(targetDir: File, reporter: Feedback): File = {
+    targetDir.mkdirs()
+    val html = ScalastyleReportWriter.toXML(reporter)
+    val file = new File(targetDir.getAbsolutePath + "/" + ScalastyleXmlFile)
     serialize(file, html.toString())
     file
   }

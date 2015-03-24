@@ -62,6 +62,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var summary: Boolean = true
   var disableXML = false
   var disableHTML = false
+  var disableScalastyleXML = false
 
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")
@@ -103,6 +104,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           val xml = IOUtils.writeXMLReport(dataDir, feedback)
           if (verbose)
             println(s"[info] [scapegoat] Written XML report [$xml]")
+        }
+        if (!disableScalastyleXML) {
+          val xml = IOUtils.writeScalastyleReport(dataDir, feedback)
+          if (verbose)
+            println(s"[info] [scapegoat] Written Scalastyle XML report [$xml]")
         }
       }
     }
