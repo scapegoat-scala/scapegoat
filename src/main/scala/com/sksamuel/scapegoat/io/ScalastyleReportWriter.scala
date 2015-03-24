@@ -13,7 +13,7 @@ object ScalastyleReportWriter {
 
   def toXML(feedback: Feedback): Node = {
     <checkstyle version={ checkstyleVersion } generatedBy={ scapegoat }>
-      { feedback.warnings.groupBy(_.sourceFile).foreach(fileToXml) }
+      { feedback.warnings.groupBy(_.sourceFile).map(fileToXml) }
     </checkstyle>
   }
 
