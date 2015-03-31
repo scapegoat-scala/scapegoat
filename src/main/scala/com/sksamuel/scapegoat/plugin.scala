@@ -31,6 +31,14 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     for (verbose <- options.find(_.startsWith("verbose:"))) {
       component.verbose = verbose.drop("verbose:".length).toBoolean
     }
+    options.find(_.startsWith("customInspectors:")) match {
+      case Some(option) => component.customInpections =
+        option.drop("customInspectors:".length)
+          .split(':')
+          .toSeq
+          .map(inspection => Class.forName(inspection).newInstance.asInstanceOf[Inspection])
+      case _            =>
+    }
     options.find(_.startsWith("dataDir:")) match {
       case Some(option) =>
         component.dataDir = new File(option.drop("dataDir:".length))
@@ -43,7 +51,8 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val optionsHelp: Option[String] = Some(Seq(
     "-P:scapegoat:dataDir:<pathtodatadir>    where the report should be written\n" +
-      "-P:scapegoat:disabled:<listofinspections>    comma separated list of disabled inspections\n").mkString("\n"))
+      "-P:scapegoat:disabled:<listofinspections>    comma separated list of disabled inspections\n" +
+      "-P:scapegoat:customInspectors:<listofinspections>    comma separated list of custom inspections\n").mkString("\n"))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
@@ -63,6 +72,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disableXML = false
   var disableHTML = false
   var disableScalastyleXML = false
+  var customInpections: Seq[Inspection] = Nil
 
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")
@@ -70,7 +80,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def disableAll = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
-  def activeInspections = inspections.filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+  def activeInspections = (inspections ++ customInpections).filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
   lazy val feedback = new Feedback(consoleOutput)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
