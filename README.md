@@ -37,6 +37,10 @@ And if you prefer a prettier report, here is a screen shot of the type of HTML r
 
 ![screenshot](https://raw.githubusercontent.com/sksamuel/scapegoat/master/screenshot1.png)
 
+### Configuration
+
+For instructions on suppressing warnings by file, by inspection or by line see [the sbt-scapegoat README](https://github.com/sksamuel/sbt-scapegoat).
+
 ### False positives
 
 Please note that scapegoat is a new project. While it's been tested on some common open source projects, there is still a good chance you'll find false positives. Please open up issues if you run into these so we can fix them.
