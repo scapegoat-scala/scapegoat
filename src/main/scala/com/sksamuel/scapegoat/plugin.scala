@@ -37,7 +37,29 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
           .split(':')
           .toSeq
           .map(inspection => Class.forName(inspection).newInstance.asInstanceOf[Inspection])
-      case _            =>
+      case _ =>
+    }
+    options.find(_.startsWith("reports:")) match {
+      case Some(option) =>
+        option.drop("reports:".length)
+          .split(':')
+          .toSeq
+          .foreach { r =>
+            r match {
+              case "xml"        => component.disableXML = false
+              case "html"       => component.disableHTML = false
+              case "scalastyle" => component.disableScalastyleXML = false
+              case "all" =>
+                component.disableXML = false
+                component.disableHTML = false
+                component.disableScalastyleXML = false
+              case _ =>
+            }
+          }
+      case None =>
+        component.disableXML = false
+        component.disableHTML = false
+        component.disableScalastyleXML = false
     }
     options.find(_.startsWith("dataDir:")) match {
       case Some(option) =>
@@ -47,12 +69,20 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         error("-P:scapegoat:dataDir not specified")
         false
     }
+
   }
 
   override val optionsHelp: Option[String] = Some(Seq(
-    "-P:scapegoat:dataDir:<pathtodatadir>    where the report should be written\n" +
-      "-P:scapegoat:disabled:<listofinspections>    comma separated list of disabled inspections\n" +
-      "-P:scapegoat:customInspectors:<listofinspections>    comma separated list of custom inspections\n").mkString("\n"))
+    "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
+    "-P:scapegoat:disabled:<listofinspections>            colon separated list of disabled inspections",
+    "-P:scapegoat:customInspectors:<listofinspections>    colon separated list of custom inspections",
+    "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
+    "                                                     files to ignore.",
+    "-P:scapeogoat:verbose:<boolean>                      enable/disable verbose console messages",
+    "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
+    "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
+    "                                                     Valid options are `xml', `html', `scalastyle',",
+    "                                                     or `all'.").mkString("\n"))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
@@ -69,9 +99,9 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var verbose: Boolean = false
   var debug: Boolean = false
   var summary: Boolean = true
-  var disableXML = false
-  var disableHTML = false
-  var disableScalastyleXML = false
+  var disableXML = true
+  var disableHTML = true
+  var disableScalastyleXML = true
   var customInpections: Seq[Inspection] = Nil
 
   override val phaseName: String = "scapegoat"

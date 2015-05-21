@@ -5,9 +5,10 @@ import java.net.URL
 
 import scala.tools.nsc.reporters.ConsoleReporter
 
-/** @author Stephen Samuel
-  * @author Eugene Sypachev (Axblade)
-  */
+/**
+ * @author Stephen Samuel
+ * @author Eugene Sypachev (Axblade)
+ */
 trait PluginRunner {
 
   val scalaVersion = "2.11.6"

@@ -13,3 +13,4 @@ credentials.sbt
 # Scala-IDE specific
 .scala_dependencies
 .idea
+target
