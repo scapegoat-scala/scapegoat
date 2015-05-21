@@ -37,7 +37,25 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
           .split(':')
           .toSeq
           .map(inspection => Class.forName(inspection).newInstance.asInstanceOf[Inspection])
-      case _            =>
+      case _ =>
+    }
+    options.find(_.startsWith("reports:")) match {
+      case Some(option) =>
+        option.drop("reports:".length)
+          .split(':')
+          .toSeq
+          .foreach { r =>
+            r match {
+              case "xml"        => component.disableXML = false
+              case "html"       => component.disableHTML = false
+              case "scalastyle" => component.disableScalastyleXML = false
+              case _            =>
+            }
+          }
+      case None =>
+        component.disableXML = false
+        component.disableHTML = false
+        component.disableScalastyleXML = false
     }
     options.find(_.startsWith("dataDir:")) match {
       case Some(option) =>
@@ -47,6 +65,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         error("-P:scapegoat:dataDir not specified")
         false
     }
+
   }
 
   override val optionsHelp: Option[String] = Some(Seq(
@@ -69,9 +88,9 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var verbose: Boolean = false
   var debug: Boolean = false
   var summary: Boolean = true
-  var disableXML = false
-  var disableHTML = false
-  var disableScalastyleXML = false
+  var disableXML = true
+  var disableHTML = true
+  var disableScalastyleXML = true
   var customInpections: Seq[Inspection] = Nil
 
   override val phaseName: String = "scapegoat"
