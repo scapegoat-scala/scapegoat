@@ -6,7 +6,7 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-version := "0.94.7"
+version := "1.0.0"
 
 scalaVersion := "2.11.6"
 
@@ -49,14 +49,14 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules"          %     "scala-xml_2.11"        % "1.0.2",
   "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "test",
   "commons-io"                      %     "commons-io"            % "2.4"         % "test",
-  "org.scalatest"                   %%    "scalatest"             % "2.1.6"       % "test",
+  "org.scalatest"                   %%    "scalatest"             % "2.2.4"       % "test",
   "com.typesafe.scala-logging"      %%    "scala-logging-slf4j"   % "2.1.2"       % "test",
   "org.mockito"                     %     "mockito-all"           % "1.9.5"       % "test",
   "joda-time"                       %     "joda-time"             % "2.3"         % "test",
   "org.joda"                        %     "joda-convert"          % "1.3.1"       % "test",
   "org.slf4j"                       %     "slf4j-api"             % "1.7.7"       % "test",
   "org.scala-lang.modules"          %%    "scala-async"           % "0.9.2"       % "test",
-  "com.typesafe.akka"               %%    "akka-actor"            % "2.3.4"       % "test",
+  "com.typesafe.akka"               %%    "akka-actor"            % "2.3.11"       % "test",
   "org.scaldi"                      %%    "scaldi"                % "0.4"
 )
 
