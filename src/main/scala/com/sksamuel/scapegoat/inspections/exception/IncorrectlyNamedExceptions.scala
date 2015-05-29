@@ -16,14 +16,17 @@ class IncorrectlyNamedExceptions extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case cdef @ ClassDef(mods, name, _, impl) =>
+          case cdef@ClassDef(mods, name, _, impl) =>
             val isNamedException = name.toString.endsWith("Exception")
+            val isAnon = scala.util.Try {
+              cdef.symbol.isAnonymousClass
+            } getOrElse false
             val isException = impl.tpe <:< typeOf[Exception]
-            (isNamedException, isException) match {
-              case (true, false) =>
+            (isNamedException, isAnon, isException) match {
+              case (true, _, false) =>
                 context.warn("Class named exception does not derive from Exception",
                   tree.pos, Levels.Error, tree.toString().take(500), IncorrectlyNamedExceptions.this)
-              case (false, true) =>
+              case (false, false, true) =>
                 context.warn("Class derived from Exception is not named *Exception",
                   tree.pos, Levels.Error, tree.toString().take(500), IncorrectlyNamedExceptions.this)
               case _ =>
