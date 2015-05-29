@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.string
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest}
 
 /** @author Stephen Samuel */
 class LooksLikeInterpolatedStringTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
@@ -31,6 +31,16 @@ class LooksLikeInterpolatedStringTest extends FreeSpec with Matchers with Plugin
       val code = """object Test {
                       val str = "this is my not interpolated string lookalike"
                    } """.stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+    "for strings containing $anonfun" in {
+      val code =
+        """
+          |  object Test {
+          |     val str = "this contains $anonfun"
+          |  }
+        """.stripMargin
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }

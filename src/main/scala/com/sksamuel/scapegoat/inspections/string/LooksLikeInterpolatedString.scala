@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class LooksLikeInterpolatedString extends Inspection {
@@ -15,12 +15,16 @@ class LooksLikeInterpolatedString extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Literal(Constant(str: String)) if regex1.findFirstIn(str).isDefined || regex2.findFirstIn(str).isDefined =>
-            context.warn("Looks Like Interpolated String",
-              tree.pos,
-              Levels.Warning,
-              str,
-              LooksLikeInterpolatedString.this)
+          case Literal(Constant(str: String)) =>
+            val possibles1 = regex1.findAllIn(str).toList.filterNot(_.contains("$anonfun"))
+            val possibles2 = regex2.findAllIn(str).toList.filterNot(_.contains("$anonfun"))
+            if ((possibles1 ++ possibles2).nonEmpty) {
+              context.warn("Looks Like Interpolated String",
+                tree.pos,
+                Levels.Warning,
+                str,
+                LooksLikeInterpolatedString.this)
+            }
           case _ => continue(tree)
         }
       }
