@@ -111,7 +111,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   def disableAll = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
   def activeInspections = (inspections ++ customInpections).filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
-  lazy val feedback = new Feedback(consoleOutput)
+  lazy val feedback = new Feedback(consoleOutput, global.reporter)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {

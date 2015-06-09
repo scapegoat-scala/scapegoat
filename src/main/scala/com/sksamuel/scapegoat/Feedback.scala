@@ -1,10 +1,11 @@
 package com.sksamuel.scapegoat
 
 import scala.collection.mutable.ListBuffer
-import scala.reflect.api.Position
+import scala.reflect.internal.util.Position
+import scala.tools.nsc.reporters.Reporter
 
 /** @author Stephen Samuel */
-class Feedback(consoleOutput: Boolean) {
+class Feedback(consoleOutput: Boolean, reporter: Reporter) {
 
   val warnings = new ListBuffer[Warning]
 
@@ -33,6 +34,11 @@ class Feedback(consoleOutput: Boolean) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFile:${warning.line}: $text")
       snippet.foreach(s => println(s"          $s"))
       println()
+    }
+    level match {
+      case Levels.Error   => reporter.error(pos, text)
+      case Levels.Warning => reporter.warning(pos, text)
+      case Levels.Info    => reporter.info(pos, text, force = false)
     }
   }
 

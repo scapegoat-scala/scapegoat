@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat
 
-import scala.reflect.api.Position
+import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
