@@ -32,9 +32,9 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     for (verbose <- options.find(_.startsWith("verbose:"))) {
       component.verbose = verbose.drop("verbose:".length).toBoolean
     }
-    options.find(_.startsWith("customInspectors:")) match {
+    options.find(_.startsWith("customInspections:")) match {
       case Some(option) => component.customInpections =
-        option.drop("customInspectors:".length)
+        option.drop("customInspections:".length)
           .split(':')
           .toSeq
           .map(inspection => Class.forName(inspection).newInstance.asInstanceOf[Inspection])
@@ -90,7 +90,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override val optionsHelp: Option[String] = Some(Seq(
     "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
     "-P:scapegoat:disabled:<listofinspections>            colon separated list of disabled inspections",
-    "-P:scapegoat:customInspectors:<listofinspections>    colon separated list of custom inspections",
+    "-P:scapegoat:customInspections:<listofinspections>   colon separated list of custom inspections",
     "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
     "                                                     files to ignore.",
     "-P:scapeogoat:verbose:<boolean>                      enable/disable verbose console messages",
