@@ -9,6 +9,8 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
 
   val warnings = new ListBuffer[Warning]
 
+  var levelOverridesByInspectionSimpleName: Map[String, Level] = Map.empty
+
   def infos = warnings(Levels.Info)
   def errors = warnings(Levels.Error)
   def warns = warnings(Levels.Warning)
@@ -27,15 +29,22 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
     level: Level,
     snippet: Option[String],
     inspection: Inspection): Unit = {
+
+    val adjustedLevel = levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName) match {
+      case Some(overrideLevel) => overrideLevel
+      case None                => level
+    }
+
     val sourceFile = normalizeSourceFile(pos.source.file.path)
-    val warning = Warning(text, pos.line, level, sourceFile, snippet, inspection.getClass.getCanonicalName)
+    val warning = Warning(text, pos.line, adjustedLevel, sourceFile, snippet, inspection.getClass.getCanonicalName)
     warnings.append(warning)
     if (consoleOutput) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFile:${warning.line}: $text")
       snippet.foreach(s => println(s"          $s"))
       println()
     }
-    level match {
+
+    adjustedLevel match {
       case Levels.Error   => reporter.error(pos, text)
       case Levels.Warning => reporter.warning(pos, text)
       case Levels.Info    => reporter.info(pos, text, force = false)

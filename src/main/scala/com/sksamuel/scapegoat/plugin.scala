@@ -61,6 +61,22 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         component.disableHTML = false
         component.disableScalastyleXML = false
     }
+    options.find(_.startsWith("overrideLevels:")) foreach {
+      case option =>
+        component.feedback.levelOverridesByInspectionSimpleName =
+          option.drop("overrideLevels:".length).split(":").map {
+            case nameLevel =>
+              nameLevel.split("=") match {
+                case Array(insp, level) => insp -> Levels.fromName(level)
+                case _ =>
+                  throw new IllegalArgumentException(
+                    s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
+                      "Expecting 'name=level' where 'name' is the simple name of " +
+                      "an inspection and 'level' is the simple name of a " +
+                      "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.")
+              }
+          }.toMap
+    }
     options.find(_.startsWith("dataDir:")) match {
       case Some(option) =>
         component.dataDir = new File(option.drop("dataDir:".length))
@@ -82,7 +98,14 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
     "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
     "                                                     Valid options are `xml', `html', `scalastyle',",
-    "                                                     or `all'.").mkString("\n"))
+    "                                                     or `all'.",
+    "-P:scapegoat:overrideLevels:<levels>                 override the built in warning levels, e.g. to",
+    "                                                     downgrade a Error to a Warning.",
+    "                                                     <levels> should be a colon separated list of name=level",
+    "                                                     settings, where 'name' is the simple name of an inspection",
+    "                                                     and 'level' is the simple name of a",
+    "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.")
+    .mkString("\n"))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
