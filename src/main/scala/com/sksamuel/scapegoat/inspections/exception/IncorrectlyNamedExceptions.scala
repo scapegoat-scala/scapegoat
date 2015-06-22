@@ -21,7 +21,19 @@ class IncorrectlyNamedExceptions extends Inspection {
             val isAnon = scala.util.Try {
               cdef.symbol.isAnonymousClass
             } getOrElse false
-            val isException = impl.tpe <:< typeOf[Exception]
+
+            val extendsException = impl.tpe <:< typeOf[Exception]
+            val selfTypeIsException = impl match {
+              case Template(_, self, _) =>
+                self.tpt.tpe <:< typeOf[Exception]
+              case _ => false
+            }
+
+            // A class or trait is an Exception for our purposes if it either
+            // inherits from exception or it is a trait which declares its
+            // self-type to be Exception
+            val isException = extendsException || selfTypeIsException
+
             (isNamedException, isAnon, isException) match {
               case (true, _, false) =>
                 context.warn("Class named exception does not derive from Exception",

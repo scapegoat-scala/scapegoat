@@ -30,7 +30,19 @@ class IncorrectlyNamedExceptionsTest extends FreeSpec with Matchers with PluginR
             |}""".stripMargin
 
         compileCodeSnippet(code)
-        // one for import 2 for ussage
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for traits with Exception self-types" in {
+
+        val code =
+          """trait ErrorCodeException {
+            |  this: Exception =>
+            |
+            |  def errorCode: Int
+            |}
+          """.stripMargin
+
+        compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
     }
