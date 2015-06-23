@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.{ Warning, PluginRunner }
 import com.sksamuel.scapegoat.inspections.unneccesary.UnusedMethodParameter
 
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
@@ -97,6 +97,81 @@ class UnusedMethodParameterTest
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
     }
+
+    "should handle constructor params" - {
+      "ignore unused case class primary param" in {
+        assertNoWarnings("""case class Foo(x: Int)""")
+      }
+
+      "warn on unused case class secondary params" in {
+        val code = """case class Foo(x: Int)(y: Int)"""
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings match {
+          case Seq(warning: Warning) =>
+            warning.snippet.get should include("y")
+        }
+      }
+
+      "not warn on case class secondary params used as fields" in {
+        assertNoWarnings(
+          """case class Foo(x: Int)(y: Int) {
+            |  def example: String = {
+            |    s"x = $x, y = $y"
+            |  }
+            |}
+          """.stripMargin)
+      }
+
+      "not warn on case class secondary params used as params" in {
+        assertNoWarnings(
+          """case class Foo(x: Int)(y: Int) {
+            |  println(s"x = $x, y = $y")
+            |
+            |  def example: String = "irrelevant"
+            |}
+          """.stripMargin)
+      }
+
+      "warn on unused non-case class primary params" in {
+        val code = """class Foo(x: Int)"""
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings match {
+          case Seq(warning: Warning) =>
+            warning.snippet.get should include("x")
+        }
+      }
+
+      "not warn on non-case class primary params used as fields" in {
+        assertNoWarnings(
+          """class Foo(x: Int) {
+            |  def example: String = {
+            |    s"x = $x"
+            |  }
+            |}
+          """.stripMargin)
+      }
+
+      "not warn on non-case class primary params used as params" in {
+        assertNoWarnings(
+          """class Foo(x: Int) {
+            |  println(s"x = $x")
+            |
+            |  def example: String = "irrelevant"
+            |}
+          """.stripMargin)
+      }
+
+      "not warn on non-case class primary params marked val" in {
+        assertNoWarnings("""class Foo(val x: Int)""")
+      }
+    }
+  }
+
+  private def assertNoWarnings(code: String) = {
+    compileCodeSnippet(code)
+    compiler.scapegoat.feedback.warnings.size shouldBe 0
   }
 }
 
