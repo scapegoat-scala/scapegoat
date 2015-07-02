@@ -34,10 +34,10 @@ abstract class Inspector(val context: InspectionContext) {
 
 case class InspectionContext(global: Global, feedback: Feedback) {
 
-  def warn(text: String, pos: Position, level: Level, inspection: Inspection) = {
+  def warn(text: String, pos: Position, level: Level, inspection: Inspection): Unit = {
     feedback.warn(text, pos, level, inspection)
   }
-  def warn(text: String, pos: Position, level: Level, snippet: String, inspection: Inspection) = {
+  def warn(text: String, pos: Position, level: Level, snippet: String, inspection: Inspection): Unit = {
     feedback.warn(text, pos, level, snippet, inspection)
   }
 
