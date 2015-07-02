@@ -44,18 +44,16 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         option.drop("reports:".length)
           .split(':')
           .toSeq
-          .foreach { r =>
-            r match {
-              case "xml"        => component.disableXML = false
-              case "html"       => component.disableHTML = false
-              case "scalastyle" => component.disableScalastyleXML = false
-              case "all" =>
-                component.disableXML = false
-                component.disableHTML = false
-                component.disableScalastyleXML = false
-              case _ =>
-            }
-          }
+          .foreach {
+          case "xml" => component.disableXML = false
+          case "html" => component.disableHTML = false
+          case "scalastyle" => component.disableScalastyleXML = false
+          case "all" =>
+            component.disableXML = false
+            component.disableHTML = false
+            component.disableScalastyleXML = false
+          case _ =>
+        }
       case None =>
         component.disableXML = false
         component.disableHTML = false
@@ -131,9 +129,9 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
-  def disableAll = disabled.exists(_.compareToIgnoreCase("all") == 0)
+  def disableAll: Boolean = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
-  def activeInspections = (inspections ++ customInpections).filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+  def activeInspections: Seq[Inspection] = (inspections ++ customInpections).filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
   lazy val feedback = new Feedback(consoleOutput, global.reporter)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
@@ -180,7 +178,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   protected def newTransformer(unit: CompilationUnit): Transformer = new Transformer(unit)
 
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
-    override def transform(tree: global.Tree) = {
+    override def transform(tree: global.Tree): global.Tree = {
       if (ignoredFiles.exists(unit.source.path.matches)) {
         if (debug) {
           println(s"[debug] Skipping scapegoat [$unit]")
