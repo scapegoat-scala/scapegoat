@@ -57,7 +57,7 @@ libraryDependencies ++= Seq(
   "org.slf4j"                       %     "slf4j-api"             % "1.7.7"       % "test",
   "org.scala-lang.modules"          %%    "scala-async"           % "0.9.2"       % "test",
   "com.typesafe.akka"               %%    "akka-actor"            % "2.3.4"       % "test",
-  "org.scaldi"                      %%    "scaldi"                % "0.4"
+  "org.scaldi"                      %%    "scaldi"                % "0.4"         % "test"
 )
 
 publishTo <<= version {
