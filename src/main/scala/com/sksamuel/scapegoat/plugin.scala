@@ -1,6 +1,7 @@
 package com.sksamuel.scapegoat
 
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 
 import com.sksamuel.scapegoat.io.IOUtils
 
@@ -45,15 +46,15 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
           .split(':')
           .toSeq
           .foreach {
-          case "xml" => component.disableXML = false
-          case "html" => component.disableHTML = false
-          case "scalastyle" => component.disableScalastyleXML = false
-          case "all" =>
-            component.disableXML = false
-            component.disableHTML = false
-            component.disableScalastyleXML = false
-          case _ =>
-        }
+            case "xml"        => component.disableXML = false
+            case "html"       => component.disableHTML = false
+            case "scalastyle" => component.disableScalastyleXML = false
+            case "all" =>
+              component.disableXML = false
+              component.disableHTML = false
+              component.disableScalastyleXML = false
+            case _ =>
+          }
       case None =>
         component.disableXML = false
         component.disableHTML = false
@@ -125,24 +126,25 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disableScalastyleXML = true
   var customInpections: Seq[Inspection] = Nil
 
+  private val count = new AtomicInteger(0)
+
   override val phaseName: String = "scapegoat"
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
   def disableAll: Boolean = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
-  def activeInspections: Seq[Inspection] = (inspections ++ customInpections).filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+  def activeInspections: Seq[Inspection] = (inspections ++ customInpections)
+    .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
   lazy val feedback = new Feedback(consoleOutput, global.reporter)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {
       if (disableAll) {
-        if (verbose) {
-          reporter.echo("[info] [scapegoat] All inspections disabled")
-        }
+        reporter.echo("[info] [scapegoat] All inspections disabled")
       } else {
+        reporter.echo(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
         if (verbose) {
-          reporter.echo(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
           if (ignoredFiles.nonEmpty)
             reporter.echo(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
         }
@@ -153,7 +155,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           val warns = feedback.warns.size
           val infos = feedback.infos.size
           val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
-          reporter.echo(s"[$level] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
+          reporter.echo(s"[$level] [scapegoat] Analysis complete: ${count.get} files - $errors errors $warns warns $infos infos")
         }
 
         if (!disableHTML) {
@@ -175,7 +177,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     }
   }
 
-  protected def newTransformer(unit: CompilationUnit): Transformer = new Transformer(unit)
+  protected def newTransformer(unit: CompilationUnit): Transformer = {
+    count.incrementAndGet()
+    new Transformer(unit)
+  }
 
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: global.Tree): global.Tree = {
