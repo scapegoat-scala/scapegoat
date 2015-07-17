@@ -138,13 +138,13 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     override def run(): Unit = {
       if (disableAll) {
         if (verbose) {
-          println("[info] [scapegoat] All inspections disabled")
+          reporter.echo("[info] [scapegoat] All inspections disabled")
         }
       } else {
         if (verbose) {
-          println(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
+          reporter.echo(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
           if (ignoredFiles.nonEmpty)
-            println(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
+            reporter.echo(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
         }
         super.run()
 
@@ -153,23 +153,23 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           val warns = feedback.warns.size
           val infos = feedback.infos.size
           val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
-          println(s"[$level] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
+          reporter.echo(s"[$level] [scapegoat] Analysis complete - $errors errors $warns warns $infos infos")
         }
 
         if (!disableHTML) {
           val html = IOUtils.writeHTMLReport(dataDir, feedback)
           if (verbose)
-            println(s"[info] [scapegoat] Written HTML report [$html]")
+            reporter.echo(s"[info] [scapegoat] Written HTML report [$html]")
         }
         if (!disableXML) {
           val xml = IOUtils.writeXMLReport(dataDir, feedback)
           if (verbose)
-            println(s"[info] [scapegoat] Written XML report [$xml]")
+            reporter.echo(s"[info] [scapegoat] Written XML report [$xml]")
         }
         if (!disableScalastyleXML) {
           val xml = IOUtils.writeScalastyleReport(dataDir, feedback)
           if (verbose)
-            println(s"[info] [scapegoat] Written Scalastyle XML report [$xml]")
+            reporter.echo(s"[info] [scapegoat] Written Scalastyle XML report [$xml]")
         }
       }
     }
@@ -181,11 +181,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
     override def transform(tree: global.Tree): global.Tree = {
       if (ignoredFiles.exists(unit.source.path.matches)) {
         if (debug) {
-          println(s"[debug] Skipping scapegoat [$unit]")
+          reporter.echo(s"[debug] Skipping scapegoat [$unit]")
         }
       } else {
         if (debug) {
-          println(s"[debug] Scapegoat analysis [$unit] .....")
+          reporter.echo(s"[debug] Scapegoat analysis [$unit] .....")
         }
         val context = new InspectionContext(global, feedback)
         activeInspections.foreach(inspection => {
