@@ -47,6 +47,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
           .split(';')
           .toSeq
           .map(path => new URL(path))
+          .map(fixDirectoryClasspathUrl)
       case _ =>
     }
     options.find(_.startsWith("reports:")) match {
@@ -93,6 +94,28 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         error("-P:scapegoat:dataDir not specified")
         false
     }
+  }
+
+  /**
+   * The [[URLClassLoader]] is very strict that directory classpath entries must
+   * end with a trailing slash, otherwise they are treated as JAR entries.
+   *
+   * The SBT wrapper (sbt-scapegoat) is not well placed to enforce that all Files
+   * it is given have trailing slashes or not because a) lots of java.io.File
+   * operations strip trailing slashes (e.g. toAbsoluteFile) and b) not all
+   * directories referenced will exist at the time that the SBT settings are
+   * generated (e.g. some /classes/ dirs will have been deleted in a multi-module
+   * build).
+   *
+   * Therefore it is surprisingly difficult for our command-line clients to
+   * correctly pass in trailing slashes, but very important that they are used,
+   * so we add them in here to avoid hard-to-diagnose errors.
+   */
+  private def fixDirectoryClasspathUrl(url: URL): URL = {
+    if (url.getProtocol == "file" && new File(url.toURI).isDirectory && !url.getPath.endsWith("/")) {
+      new URL(url, url.getPath + "/")
+    } else
+      url
   }
 
   override val optionsHelp: Option[String] = Some(Seq(
@@ -157,7 +180,15 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       new URLClassLoader(customInpectionsClasspath.toArray, getClass().getClassLoader())
 
     customInpections.map { inspection =>
-      Class.forName(inspection, true, inspectionCl).newInstance.asInstanceOf[Inspection]
+      try {
+        Class.forName(inspection, true, inspectionCl).newInstance.asInstanceOf[Inspection]
+      } catch {
+        case e: ClassNotFoundException =>
+          throw new ClassNotFoundException(
+            s"Unable to load a custom inspection '$inspection'. " +
+              s"The customInpectionsClasspath is '$customInpectionsClasspath'",
+            e)
+      }
     }
   }
 

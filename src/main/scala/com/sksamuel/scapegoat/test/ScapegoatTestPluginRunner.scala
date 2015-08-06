@@ -23,18 +23,22 @@ trait ScapegoatTestPluginRunner {
   val scalaVersion = "2.11.6"
 
   /**
-   * The classpath for the compiler is set to include the classpath of the calling
-   * Java process. This ensures that the Scapegoat plugin classes will be on the
-   * classpath regardless of whether this class is running in a scapegoat test
+   * We need to add the `scalac-scapegoat-plugin` classes to the classpath of the
+   * captive compiler. (It will not inherit the currently running classpath.)
+   *
+   * This needs to happen regardless of whether the current process is a scapegoat test
    * (in which case the cp will be something like target/scala-2.11/classes)
    * or from a unit test in a user-project testing a custom Inspection
    * (in which case the cp will be something like ~/.ivy2/cache/...scapegoat...).
    *
-   * We add the scala compiler JARs to the front of the classpath as they are
-   * unlikely to be on the current cp, but are needed for the compiler to run.
+   * We also need to add the scala compiler JARs which are needed for the compiler to run.
+   *
+   * In the normal case where `scapegoat` is running as a compiler plugin
+   * (e.g via sbt-scapegoat) then the scapegoat classes will get added to the compiler
+   * classpath via the "-Xplugin" argument.
    */
   val classPath = getScalaJars.map(_.getAbsolutePath).mkString(File.pathSeparator) +
-    File.pathSeparator + System.getProperty("java.class.path")
+    File.pathSeparator + getScapegoatClasspath()
 
   val settings = {
     val s = new scala.tools.nsc.Settings
@@ -44,6 +48,7 @@ trait ScapegoatTestPluginRunner {
       s.Yposdebug.value = true
     }
     s.stopAfter.value = List("refchecks") // no need to go all the way to generating classfiles
+    println(s"qq classPath = $classPath")
     s.classpath.value = classPath
     s.feature.value = true
     s
@@ -91,6 +96,13 @@ trait ScapegoatTestPluginRunner {
       // println(s"Located ivy jar [$file]")
       file
     } else throw new FileNotFoundException(s"Could not locate [$jarPath].")
+  }
+
+  def getScapegoatClasspath(): String = {
+    val url = classOf[Inspection].getProtectionDomain.getCodeSource.getLocation
+    require(url.getProtocol == "file")
+    val file = new File(url.toURI)
+    file.getAbsolutePath
   }
 }
 
