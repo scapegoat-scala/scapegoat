@@ -48,7 +48,6 @@ trait ScapegoatTestPluginRunner {
       s.Yposdebug.value = true
     }
     s.stopAfter.value = List("refchecks") // no need to go all the way to generating classfiles
-    println(s"qq classPath = $classPath")
     s.classpath.value = classPath
     s.feature.value = true
     s

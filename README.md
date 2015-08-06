@@ -48,21 +48,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Writing custom inspections
 
-Scapegoat supports custom inspections, for example to guard against project- or library-specific
-bugs.
-
-Your inspections need to be compiled before the code in the rest of your project is
-compiled (like macros).
-
-You can either create a separate JAR of inspections, or you can put your inspections in the
-SBT project/ directory.
-
-qq how?
-
-qq move these instructions to scapegoat-sbt?
-
-See [the sbt-scapegoat README](https://github.com/sksamuel/sbt-scapegoat) for instructions on
-adding your custom inspection to your build.
+See CustomInspections.md in this directory.
 
 ### Changelog
 
