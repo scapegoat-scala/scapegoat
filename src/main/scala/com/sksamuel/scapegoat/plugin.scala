@@ -1,6 +1,8 @@
 package com.sksamuel.scapegoat
 
 import java.io.File
+import java.net.URL
+import java.net.URLClassLoader
 import java.util.concurrent.atomic.AtomicInteger
 
 import com.sksamuel.scapegoat.io.IOUtils
@@ -37,7 +39,14 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         option.drop("customInspections:".length)
           .split(':')
           .toSeq
-          .map(inspection => Class.forName(inspection).newInstance.asInstanceOf[Inspection])
+      case _ =>
+    }
+    options.find(_.startsWith("customInspectionsClasspath:")) match {
+      case Some(option) => component.customInpectionsClasspath =
+        option.drop("customInspectionsClasspath:".length)
+          .split(';')
+          .toSeq
+          .map(path => new URL(path))
       case _ =>
     }
     options.find(_.startsWith("reports:")) match {
@@ -90,7 +99,10 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override val optionsHelp: Option[String] = Some(Seq(
     "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
     "-P:scapegoat:disabled:<listofinspections>            colon separated list of disabled inspections",
-    "-P:scapegoat:customInspections:<listofinspections>   colon separated list of custom inspections",
+    "-P:scapegoat:customInspections:<listofinspections>   colon separated list of custom inspections by",
+    "                                                     full class name",
+    "-P:scapegoat:customInspectionsClasspath:<paths>      semi-colon separated list of classpath URLs from which",
+    "                                                     to load custom inspections",
     "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
     "                                                     files to ignore.",
     "-P:scapeogoat:verbose:<boolean>                      enable/disable verbose console messages",
@@ -124,7 +136,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disableXML = true
   var disableHTML = true
   var disableScalastyleXML = true
-  var customInpections: Seq[Inspection] = Nil
+  var customInpections: Seq[String] = Nil
+  var customInpectionsClasspath: Seq[URL] = Nil
 
   private val count = new AtomicInteger(0)
 
@@ -134,8 +147,21 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def disableAll: Boolean = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
-  def activeInspections: Seq[Inspection] = (inspections ++ customInpections)
+  def activeInspections: Seq[Inspection] = (inspections ++ loadCustomInspections())
     .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+
+  // TODO: this is called quite a few times during a compile run. Is that a problem?
+  def loadCustomInspections(): Seq[Inspection] = {
+    val inspectionCl = if (customInpectionsClasspath.isEmpty)
+      getClass().getClassLoader()
+    else
+      new URLClassLoader(customInpectionsClasspath.toArray, getClass().getClassLoader())
+
+    customInpections.map { inspection =>
+      Class.forName(inspection, true, inspectionCl).newInstance.asInstanceOf[Inspection]
+    }
+  }
+
   lazy val feedback = new Feedback(consoleOutput, global.reporter)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
