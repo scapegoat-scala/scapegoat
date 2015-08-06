@@ -93,19 +93,18 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         error("-P:scapegoat:dataDir not specified")
         false
     }
-
   }
 
   override val optionsHelp: Option[String] = Some(Seq(
     "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
-    "-P:scapegoat:disabled:<listofinspections>            colon separated list of disabled inspections",
+    "-P:scapegoat:disabled:<listofinspections>            colon separated list of disabled inspections, by simple name",
     "-P:scapegoat:customInspections:<listofinspections>   colon separated list of custom inspections by",
     "                                                     full class name",
     "-P:scapegoat:customInspectionsClasspath:<paths>      semi-colon separated list of classpath URLs from which",
     "                                                     to load custom inspections",
     "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
     "                                                     files to ignore.",
-    "-P:scapeogoat:verbose:<boolean>                      enable/disable verbose console messages",
+    "-P:scapegoat:verbose:<boolean>                       enable/disable verbose console messages",
     "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
     "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
     "                                                     Valid options are `xml', `html', `scalastyle',",
