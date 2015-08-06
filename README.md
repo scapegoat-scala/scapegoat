@@ -39,11 +39,30 @@ And if you prefer a prettier report, here is a screen shot of the type of HTML r
 
 ### Configuration
 
-For instructions on suppressing warnings by file, by inspection or by line see [the sbt-scapegoat README](https://github.com/sksamuel/sbt-scapegoat).
+For instructions on suppressing warnings by file, by inspection or by line see
+[the sbt-scapegoat README](https://github.com/sksamuel/sbt-scapegoat).
 
 ### False positives
 
 Please note that scapegoat is a new project. While it's been tested on some common open source projects, there is still a good chance you'll find false positives. Please open up issues if you run into these so we can fix them.
+
+### Writing custom inspections
+
+Scapegoat supports custom inspections, for example to guard against project- or library-specific
+bugs.
+
+Your inspections need to be compiled before the code in the rest of your project is
+compiled (like macros).
+
+You can either create a separate JAR of inspections, or you can put your inspections in the
+SBT project/ directory.
+
+qq how?
+
+qq move these instructions to scapegoat-sbt?
+
+See [the sbt-scapegoat README](https://github.com/sksamuel/sbt-scapegoat) for instructions on
+adding your custom inspection to your build.
 
 ### Changelog
 
