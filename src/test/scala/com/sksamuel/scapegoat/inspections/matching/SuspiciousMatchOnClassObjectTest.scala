@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 import akka.actor.PossiblyHarmful
@@ -9,7 +9,7 @@ import akka.actor.PossiblyHarmful
 class SuspiciousMatchOnClassObjectTest
     extends FreeSpec
     with Matchers
-    with PluginRunner
+    with ScapegoatTestPluginRunner
     with OneInstancePerTest {
 
   override val inspections = Seq(new SuspiciousMatchOnClassObject)

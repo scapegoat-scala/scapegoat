@@ -1,13 +1,13 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
 class ListAppendTest
     extends FreeSpec
     with Matchers
-    with PluginRunner
+    with ScapegoatTestPluginRunner
     with OneInstancePerTest {
 
   override val inspections = Seq(new ListAppend)

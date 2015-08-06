@@ -1,15 +1,15 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.NoOpOverride
 import com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryToInt
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
 class NoOpOverrideTest
     extends FreeSpec
     with Matchers
-    with PluginRunner
+    with ScapegoatTestPluginRunner
     with OneInstancePerTest {
 
   override val inspections = Seq(new NoOpOverride)

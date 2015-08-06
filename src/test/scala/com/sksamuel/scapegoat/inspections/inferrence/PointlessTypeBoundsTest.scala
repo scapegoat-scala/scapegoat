@@ -1,14 +1,14 @@
 package com.sksamuel.scapegoat.inspections.inferrence
 
-import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.inference.PointlessTypeBounds
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
 class PointlessTypeBoundsTest
     extends FreeSpec
     with Matchers
-    with PluginRunner
+    with ScapegoatTestPluginRunner
     with OneInstancePerTest {
 
   override val inspections = Seq(new PointlessTypeBounds)

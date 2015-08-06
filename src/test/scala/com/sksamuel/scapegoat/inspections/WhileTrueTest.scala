@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
-class WhileTrueTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class WhileTrueTest extends FreeSpec with Matchers with ScapegoatTestPluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new WhileTrue)
 

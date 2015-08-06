@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
 
 import scala.concurrent.Future
@@ -9,7 +9,7 @@ import scala.concurrent.Future
 class PartialFunctionInsteadOfMatchTest
     extends FreeSpec
     with Matchers
-    with PluginRunner
+    with ScapegoatTestPluginRunner
     with OneInstancePerTest {
 
   override val inspections = Seq(new PartialFunctionInsteadOfMatch)

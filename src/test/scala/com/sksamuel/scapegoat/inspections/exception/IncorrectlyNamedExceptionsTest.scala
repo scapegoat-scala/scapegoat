@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.exception
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
 
 /** @author Stephen Samuel */
-class IncorrectlyNamedExceptionsTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class IncorrectlyNamedExceptionsTest extends FreeSpec with Matchers with ScapegoatTestPluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new IncorrectlyNamedExceptions)
 

@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.names
 
-import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.naming.MethodNames
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
@@ -9,7 +9,7 @@ import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 class MethodNamesTest
     extends FreeSpec
     with Matchers
-    with PluginRunner
+    with ScapegoatTestPluginRunner
     with OneInstancePerTest {
 
   override val inspections = Seq(new MethodNames)

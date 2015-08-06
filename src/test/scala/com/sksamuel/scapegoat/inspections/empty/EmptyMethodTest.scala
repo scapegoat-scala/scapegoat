@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.empty
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
 
 /** @author Stephen Samuel */
-class EmptyMethodTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class EmptyMethodTest extends FreeSpec with Matchers with ScapegoatTestPluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new EmptyMethod)
 

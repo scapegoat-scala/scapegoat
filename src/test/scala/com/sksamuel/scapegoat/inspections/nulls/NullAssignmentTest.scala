@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.nulls
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
-class NullAssignmentTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class NullAssignmentTest extends FreeSpec with Matchers with ScapegoatTestPluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new NullAssignment)
 

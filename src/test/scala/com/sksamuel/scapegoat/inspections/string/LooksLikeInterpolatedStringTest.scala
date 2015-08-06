@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
-class LooksLikeInterpolatedStringTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class LooksLikeInterpolatedStringTest extends FreeSpec with Matchers with ScapegoatTestPluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new LooksLikeInterpolatedString)
 

@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.style
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.test.ScapegoatTestPluginRunner
 import org.scalatest.{ FreeSpec, Matchers }
 
 /** @author Stephen Samuel */
-class SimplifyBooleanExpressionTest extends FreeSpec with Matchers with PluginRunner {
+class SimplifyBooleanExpressionTest extends FreeSpec with Matchers with ScapegoatTestPluginRunner {
 
   override val inspections = Seq(new SimplifyBooleanExpression)
 
