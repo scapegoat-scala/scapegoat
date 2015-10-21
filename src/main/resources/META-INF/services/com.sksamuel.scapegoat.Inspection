@@ -1,0 +1,126 @@
+# This file lists the Inspections exported by scapegoat.
+# See https://docs.oracle.com/javase/tutorial/ext/basics/spi.html
+#
+# Some inspections which are in the codebase but not yet ready for
+# use are commented out here.
+#
+# com.sksamuel.scapegoat.inspections.AnyUse
+com.sksamuel.scapegoat.inspections.AvoidToMinusOne
+# com.sksamuel.scapegoat.inspections.DefaultArgUse
+com.sksamuel.scapegoat.inspections.DoubleNegation
+com.sksamuel.scapegoat.inspections.EmptyCaseClass
+com.sksamuel.scapegoat.inspections.LonelySealedTrait
+com.sksamuel.scapegoat.inspections.MaxParameters
+com.sksamuel.scapegoat.inspections.NoOpOverride
+com.sksamuel.scapegoat.inspections.PublicFinalizer
+com.sksamuel.scapegoat.inspections.RedundantFinalModifierOnCaseClass
+com.sksamuel.scapegoat.inspections.RedundantFinalModifierOnMethod
+com.sksamuel.scapegoat.inspections.RedundantFinalModifierOnVar
+com.sksamuel.scapegoat.inspections.TypeShadowing
+com.sksamuel.scapegoat.inspections.VarClosure
+# com.sksamuel.scapegoat.inspections.VarUse
+# com.sksamuel.scapegoat.inspections.VariableShadowing
+# com.sksamuel.scapegoat.inspections.akka.AkkaSenderClosure
+com.sksamuel.scapegoat.inspections.collections.ArrayEquals
+com.sksamuel.scapegoat.inspections.collections.AvoidSizeEqualsZero
+com.sksamuel.scapegoat.inspections.collections.AvoidSizeNotEqualsZero
+com.sksamuel.scapegoat.inspections.collections.CollectionNamingConfusion
+com.sksamuel.scapegoat.inspections.collections.CollectionNegativeIndex
+com.sksamuel.scapegoat.inspections.collections.CollectionPromotionToAny
+com.sksamuel.scapegoat.inspections.collections.ComparisonToEmptyList
+com.sksamuel.scapegoat.inspections.collections.ComparisonToEmptySet
+com.sksamuel.scapegoat.inspections.collections.DuplicateMapKey
+com.sksamuel.scapegoat.inspections.collections.DuplicateSetValue
+com.sksamuel.scapegoat.inspections.collections.ExistsSimplifableToContains
+com.sksamuel.scapegoat.inspections.collections.FilterDotHead
+com.sksamuel.scapegoat.inspections.collections.FilterDotHeadOption
+com.sksamuel.scapegoat.inspections.collections.FilterDotIsEmpty
+com.sksamuel.scapegoat.inspections.collections.FilterDotSize
+# com.sksamuel.scapegoat.inspections.collections.FilterDotSizeComparison
+com.sksamuel.scapegoat.inspections.collections.FilterOptionAndGet
+com.sksamuel.scapegoat.inspections.collections.FindAndNotEqualsNoneReplaceWithExists
+com.sksamuel.scapegoat.inspections.collections.FindDotIsDefined
+com.sksamuel.scapegoat.inspections.collections.JavaConversionsUse
+com.sksamuel.scapegoat.inspections.collections.ListAppend
+com.sksamuel.scapegoat.inspections.collections.ListSize
+# com.sksamuel.scapegoat.inspections.collections.ListTail
+com.sksamuel.scapegoat.inspections.collections.NegationIsEmpty
+com.sksamuel.scapegoat.inspections.collections.NegationNonEmpty
+# com.sksamuel.scapegoat.inspections.collections.NegativeSeqPad
+# com.sksamuel.scapegoat.inspections.collections.PredefIterableIsMutable
+# com.sksamuel.scapegoat.inspections.collections.PredefSeqIsMutable
+# com.sksamuel.scapegoat.inspections.collections.PredefTraversableIsMutable
+com.sksamuel.scapegoat.inspections.collections.PreferSeqEmpty
+com.sksamuel.scapegoat.inspections.collections.PreferSetEmpty
+com.sksamuel.scapegoat.inspections.collections.SwapSortFilter
+com.sksamuel.scapegoat.inspections.collections.TraversableHead
+com.sksamuel.scapegoat.inspections.collections.UnsafeContains
+com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
+com.sksamuel.scapegoat.inspections.empty.EmptyFor
+com.sksamuel.scapegoat.inspections.empty.EmptyIfBlock
+com.sksamuel.scapegoat.inspections.empty.EmptyMethod
+com.sksamuel.scapegoat.inspections.empty.EmptySynchronizedBlock
+com.sksamuel.scapegoat.inspections.empty.EmptyTryBlock
+com.sksamuel.scapegoat.inspections.empty.EmptyWhileBlock
+com.sksamuel.scapegoat.inspections.equality.ComparingFloatingPointTypes
+com.sksamuel.scapegoat.inspections.equality.ComparingUnrelatedTypes
+com.sksamuel.scapegoat.inspections.equality.ComparisonWithSelf
+com.sksamuel.scapegoat.inspections.exception.CatchNpe
+com.sksamuel.scapegoat.inspections.exception.CatchThrowable
+com.sksamuel.scapegoat.inspections.exception.IncorrectlyNamedExceptions
+com.sksamuel.scapegoat.inspections.exception.SwallowedException
+com.sksamuel.scapegoat.inspections.exception.UnreachableCatch
+com.sksamuel.scapegoat.inspections.imports.DuplicateImport
+# com.sksamuel.scapegoat.inspections.imports.WildcardImport
+com.sksamuel.scapegoat.inspections.inference.BoundedByFinalType
+com.sksamuel.scapegoat.inspections.inference.MethodReturningAny
+com.sksamuel.scapegoat.inspections.inference.PointlessTypeBounds
+com.sksamuel.scapegoat.inspections.inference.ProductWithSerializableInferred
+com.sksamuel.scapegoat.inspections.matching.PartialFunctionInsteadOfMatch
+com.sksamuel.scapegoat.inspections.matching.RepeatedCaseBody
+com.sksamuel.scapegoat.inspections.matching.SuspiciousMatchOnClassObject
+com.sksamuel.scapegoat.inspections.math.BigDecimalDoubleConstructor
+com.sksamuel.scapegoat.inspections.math.BigDecimalScaleWithoutRoundingMode
+com.sksamuel.scapegoat.inspections.math.BrokenOddness
+com.sksamuel.scapegoat.inspections.math.DivideByOne
+com.sksamuel.scapegoat.inspections.math.ModOne
+com.sksamuel.scapegoat.inspections.math.NanComparison
+com.sksamuel.scapegoat.inspections.math.UseCbrt
+com.sksamuel.scapegoat.inspections.math.UseExpM1
+com.sksamuel.scapegoat.inspections.math.UseLog10
+com.sksamuel.scapegoat.inspections.math.UseLog1P
+com.sksamuel.scapegoat.inspections.math.UseSqrt
+com.sksamuel.scapegoat.inspections.math.ZeroNumerator
+com.sksamuel.scapegoat.inspections.naming.ClassNames
+com.sksamuel.scapegoat.inspections.naming.MethodNames
+com.sksamuel.scapegoat.inspections.naming.ObjectNames
+com.sksamuel.scapegoat.inspections.nulls.NullAssignment
+com.sksamuel.scapegoat.inspections.nulls.NullParameter
+com.sksamuel.scapegoat.inspections.option.EitherGet
+com.sksamuel.scapegoat.inspections.option.ImpossibleOptionSizeCondition
+com.sksamuel.scapegoat.inspections.option.OptionGet
+com.sksamuel.scapegoat.inspections.option.OptionSize
+com.sksamuel.scapegoat.inspections.string.ArraysInFormat
+com.sksamuel.scapegoat.inspections.string.ArraysToString
+com.sksamuel.scapegoat.inspections.string.EmptyInterpolatedString
+com.sksamuel.scapegoat.inspections.string.IllegalFormatString
+com.sksamuel.scapegoat.inspections.string.IncorrectNumberOfArgsToFormat
+com.sksamuel.scapegoat.inspections.string.InvalidRegex
+com.sksamuel.scapegoat.inspections.string.LooksLikeInterpolatedString
+com.sksamuel.scapegoat.inspections.string.StripMarginOnRegex
+com.sksamuel.scapegoat.inspections.string.SubstringZero
+com.sksamuel.scapegoat.inspections.style.AvoidOperatorOverload
+com.sksamuel.scapegoat.inspections.style.ParameterlessMethodReturnsUnit
+com.sksamuel.scapegoat.inspections.style.SimplifyBooleanExpression
+com.sksamuel.scapegoat.inspections.unneccesary.ConstantIf
+com.sksamuel.scapegoat.inspections.unneccesary.RedundantFinalizer
+com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryIf
+com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryReturnUse
+com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryToInt
+com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryToString
+com.sksamuel.scapegoat.inspections.unneccesary.UnusedMethodParameter
+com.sksamuel.scapegoat.inspections.unneccesary.VarCouldBeVal
+com.sksamuel.scapegoat.inspections.unsafe.AsInstanceOf
+com.sksamuel.scapegoat.inspections.unsafe.FinalizerWithoutSuper
+com.sksamuel.scapegoat.inspections.unsafe.IsInstanceOf
+com.sksamuel.scapegoat.inspections.unsafe.TryGet

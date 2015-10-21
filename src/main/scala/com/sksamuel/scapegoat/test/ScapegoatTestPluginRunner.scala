@@ -1,5 +1,6 @@
 package com.sksamuel.scapegoat.test
 
+import com.sksamuel.scapegoat.ScapegoatComponent.InspectionLoader
 import java.io.{ File, FileNotFoundException }
 import java.net.URL
 
@@ -110,7 +111,12 @@ class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
   reporter: ConsoleReporter)
     extends scala.tools.nsc.Global(settings, reporter) {
 
-  val scapegoat = new ScapegoatComponent(this, inspections)
+  val scapegoat = new ScapegoatComponent(
+    this,
+    new InspectionLoader {
+      override def loadAllInspections(): Seq[Inspection] = inspections
+    })
+
   scapegoat.disableHTML = true
   scapegoat.disableXML = true
   scapegoat.disableScalastyleXML = true

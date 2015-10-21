@@ -8,6 +8,10 @@ bugs.
 Your inspections need to be compiled before the code in the rest of your project is
 compiled (like macros).
 
+Inspections are detected by `scapegoat` using the ServiceLoader API. You must add
+the fully-qualified class name of your Inspection to a resource file named
+`META-INF/services/com.sksamuel.scapegoat.Inspection`.
+
 See the instructions in the
 [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) Readme for setting up
 an SBT build with custom inspections.

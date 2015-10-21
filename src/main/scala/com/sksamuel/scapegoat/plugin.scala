@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat
 
-import java.io.File
-import java.net.URL
-import java.net.URLClassLoader
-import java.util.concurrent.atomic.AtomicInteger
-
+import com.sksamuel.scapegoat.ScapegoatComponent.InspectionLoader
 import com.sksamuel.scapegoat.io.IOUtils
-
+import java.io.File
+import java.net.{ URL, URLClassLoader }
+import java.util.ServiceLoader
+import java.util.concurrent.atomic.AtomicInteger
+import scala.concurrent.Promise
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{ Plugin, PluginComponent }
 import scala.tools.nsc.transform.{ Transform, TypingTransformers }
@@ -15,10 +15,22 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val name: String = "scapegoat"
   override val description: String = "scapegoat compiler plugin"
-  val component = new ScapegoatComponent(global, ScapegoatConfig.inspections)
+  val component = new ScapegoatComponent(global, new InspectionServiceLoader(this))
   override val components: List[PluginComponent] = List(component)
 
   override def init(options: List[String], error: String => Unit): Boolean = {
+    try {
+      val result = initInner(options, error)
+      component.pluginInitCompleted.success(())
+      result
+    } catch {
+      case e: Throwable =>
+        component.pluginInitCompleted.failure(e)
+        throw e
+    }
+  }
+
+  private def initInner(options: List[String], error: String => Unit): Boolean = {
     options.find(_.startsWith("disabledInspections:")) match {
       case Some(option) => component.disabled = option.drop("disabledInspections:".length).split(':').toList
       case _            =>
@@ -34,15 +46,8 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     for (verbose <- options.find(_.startsWith("verbose:"))) {
       component.verbose = verbose.drop("verbose:".length).toBoolean
     }
-    options.find(_.startsWith("customInspections:")) match {
-      case Some(option) => component.customInpections =
-        option.drop("customInspections:".length)
-          .split(':')
-          .toSeq
-      case _ =>
-    }
     options.find(_.startsWith("customInspectionsClasspath:")) match {
-      case Some(option) => component.customInpectionsClasspath =
+      case Some(option) => component.customInspectionsClasspath =
         option.drop("customInspectionsClasspath:".length)
           .split(';')
           .toSeq
@@ -121,10 +126,10 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override val optionsHelp: Option[String] = Some(Seq(
     "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
     "-P:scapegoat:disabled:<listofinspections>            colon separated list of disabled inspections, by simple name",
-    "-P:scapegoat:customInspections:<listofinspections>   colon separated list of custom inspections by",
-    "                                                     full class name",
     "-P:scapegoat:customInspectionsClasspath:<paths>      semi-colon separated list of classpath URLs from which",
-    "                                                     to load custom inspections",
+    "                                                     to load custom inspections.",
+    "                                                     Inspections should be listed by name in a resource file named",
+    "                                                     'META-INF/services/com.sksamuel.scapegoat.Inspection'.",
     "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
     "                                                     files to ignore.",
     "-P:scapegoat:verbose:<boolean>                       enable/disable verbose console messages",
@@ -141,13 +146,16 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     .mkString("\n"))
 }
 
-class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
-    extends PluginComponent with TypingTransformers with Transform {
-
-  require(inspections != null)
+class ScapegoatComponent(
+  val global: Global,
+  inspectionLoader: InspectionLoader)
+    extends PluginComponent
+    with TypingTransformers
+    with Transform {
 
   import global._
 
+  val pluginInitCompleted = Promise[Unit]()
   var dataDir: File = new File(".")
   var disabled: List[String] = Nil
   var ignoredFiles: List[String] = Nil
@@ -158,8 +166,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disableXML = true
   var disableHTML = true
   var disableScalastyleXML = true
-  var customInpections: Seq[String] = Nil
-  var customInpectionsClasspath: Seq[URL] = Nil
+  var customInspectionsClasspath: Seq[URL] = Nil
 
   private val count = new AtomicInteger(0)
 
@@ -169,28 +176,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def disableAll: Boolean = disabled.exists(_.compareToIgnoreCase("all") == 0)
 
-  def activeInspections: Seq[Inspection] = (inspections ++ loadCustomInspections())
+  lazy val activeInspections: Seq[Inspection] = inspectionLoader.loadAllInspections()
     .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
-
-  // TODO: this is called quite a few times during a compile run. Is that a problem?
-  def loadCustomInspections(): Seq[Inspection] = {
-    val inspectionCl = if (customInpectionsClasspath.isEmpty)
-      getClass().getClassLoader()
-    else
-      new URLClassLoader(customInpectionsClasspath.toArray, getClass().getClassLoader())
-
-    customInpections.map { inspection =>
-      try {
-        Class.forName(inspection, true, inspectionCl).newInstance.asInstanceOf[Inspection]
-      } catch {
-        case e: ClassNotFoundException =>
-          throw new ClassNotFoundException(
-            s"Unable to load a custom inspection '$inspection'. " +
-              s"The customInpectionsClasspath is '$customInpectionsClasspath'",
-            e)
-      }
-    }
-  }
 
   lazy val feedback = new Feedback(consoleOutput, global.reporter)
 
@@ -258,5 +245,42 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
       }
       tree
     }
+  }
+}
+
+/**
+ * The Inspections are loaded using Java's [[java.util.ServiceLoader]] API.
+ * See https://docs.oracle.com/javase/tutorial/ext/basics/spi.html
+ *
+ * This must be done after [[ScapegoatPlugin.init()]], because it depends
+ * on the classpaths provided in the plugin arguments.
+ */
+class InspectionServiceLoader(plugin: ScapegoatPlugin)
+    extends InspectionLoader {
+
+  override def loadAllInspections(): Seq[Inspection] = {
+
+    require(plugin.component.pluginInitCompleted.isCompleted)
+    import plugin.component._
+
+    val inspectionCl = if (customInspectionsClasspath.isEmpty)
+      this.getClass().getClassLoader()
+    else
+      new URLClassLoader(customInspectionsClasspath.toArray, this.getClass().getClassLoader())
+
+    val loader = ServiceLoader.load(classOf[Inspection], inspectionCl)
+
+    import scala.collection.JavaConversions._
+    loader.iterator().toList
+  }
+}
+
+object ScapegoatComponent {
+  /**
+   * A pluggable interface which allows unit tests to bypass the normal
+   * Inspection detection mechanism.
+   */
+  trait InspectionLoader {
+    def loadAllInspections(): Seq[Inspection]
   }
 }
