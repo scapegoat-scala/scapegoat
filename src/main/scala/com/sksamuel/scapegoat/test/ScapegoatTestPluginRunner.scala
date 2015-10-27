@@ -21,8 +21,6 @@ import scala.tools.nsc.reporters.ConsoleReporter
  */
 trait ScapegoatTestPluginRunner {
 
-  val scalaVersion = "2.11.6"
-
   /**
    * We need to add the `scalac-scapegoat-plugin` classes to the classpath of the
    * captive compiler. (It will not inherit the currently running classpath.)
@@ -85,7 +83,8 @@ trait ScapegoatTestPluginRunner {
     scalaJars.map(findScalaJar)
   }
 
-  def findScalaJar(artifactId: String): File = findIvyJar("org.scala-lang", artifactId, scalaVersion)
+  def findScalaJar(artifactId: String): File =
+    findIvyJar("org.scala-lang", artifactId, scala.util.Properties.versionNumberString)
 
   def findIvyJar(groupId: String, artifactId: String, version: String): File = {
     val userHome = System.getProperty("user.home")
