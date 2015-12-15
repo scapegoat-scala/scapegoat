@@ -20,7 +20,10 @@ class CollectionPromotionToAny extends Inspection {
       }
 
       private def isAny(tree: Tree): Boolean = tree.toString() == "Any"
-      private def isAny(symbol: Symbol): Boolean = symbol.typeSignature.resultType.typeArgs.head.toString == "Any"
+      private def isAny(symbol: Symbol): Boolean = symbol.typeSignature.resultType.typeArgs.headOption match {
+        case Some(t) => t.toString == "Any"
+        case None => false
+      }
 
       private def isAnySeq(tree: Tree): Boolean = tree match {
         case select @ Select(_, _) if select.symbol != null => isSeq(select.symbol) && isAny(select.symbol)
