@@ -253,17 +253,17 @@ Checks for code that uses a `while(true)` or `do { } while(true)` block.
 
 * ScalaStyle (Scala) - https://github.com/scalastyle/scalastyle/wiki
 * Linter (Scala) - https://github.com/HairyFotr/linter
-* WartRemover (Scala) - https://github.com/typelevel/wartremover
+* WartRemover (Scala) - https://github.com/puffnfresh/wartremover
 * Findbugs (JVM) - http://findbugs.sourceforge.net/bugDescriptions.html
 * Fb-contrib (JVM) - http://fb-contrib.sourceforge.net/
 * CheckStyle (Java) - http://checkstyle.sourceforge.net/availablechecks.html
 * PMD (Java) - http://pmd.sourceforge.net/pmd-5.0.3/rules/index.html
-* Error-prone (Java) - https://code.google.com/p/error-prone/wiki/BugPatterns
+* Error-prone (Java) - https://github.com/google/error-prone
 * CodeNarc (Groovy) - http://codenarc.sourceforge.net/codenarc-rule-index.html
 * PVS-Studio (C++) - http://www.viva64.com/en/d/
 * Coverity (C++) - http://www.slideshare.net/Coverity/static-analysis-primer-22874326 (6,7)
 * CppCheck (C++) - http://cppcheck.sourceforge.net/
 * OCLint (C++/ObjC) - http://docs.oclint.org/en/dev/rules/index.html
-* JSHint (Javascript) - http://www.jshint.com/
+* JSHint (Javascript) - http://jshint.com/
 * JavascriptLint (Javascript) - http://www.javascriptlint.com/
 * ClosureLinter (Javascript) - https://developers.google.com/closure/utilities/
