@@ -11,19 +11,25 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
 
   "ComparingUnrelatedTypes" - {
     "should report warning" in {
-      val code = """class Test {
-                      val a = new RuntimeException
-                      val b = new Exception
+      val code = """
+        case class SomeValueClass(i: Int) extends AnyVal
+        class Test {
+          val a = new RuntimeException
+          val b = new Exception
 
-                      "sammy" == BigDecimal(10) // warning 1
-                      "sammy" == "bobby" // same type
-                      a == b // superclass
-                      a == "sammy" // warning 2
-                      Some("sam") == Option("laura") // ok
-                      Nil == Set.empty // warning 3
-                    } """.stripMargin
+          "sammy" == BigDecimal(10) // warning 1
+          "sammy" == "bobby" // same type
+          a == b // superclass
+          a == "sammy" // warning 2
+          Some("sam") == Option("laura") // ok
+          Nil == Set.empty // warning 3
+          Some(1) match {
+            case Some(x) if x == SomeValueClass(1) => () // warning 4
+            case _ => ()
+          }
+        } """.stripMargin
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 3
+      compiler.scapegoat.feedback.warnings.size shouldBe 4
     }
     "should not report warning" - {
       "for long compared to zero" in {
