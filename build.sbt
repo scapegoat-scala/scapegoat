@@ -6,8 +6,6 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-version := "1.0.1"
-
 scalaVersion := "2.11.7"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8", "-Xmax-classfile-name", "254")
@@ -59,6 +57,10 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka"               %%    "akka-actor"            % "2.3.4"       % "test",
   "org.scaldi"                      %%    "scaldi"                % "0.4"         % "test"
 )
+
+sbtrelease.ReleasePlugin.autoImport.releasePublishArtifactsAction := PgpKeys.publishSigned.value
+
+sbtrelease.ReleasePlugin.autoImport.releaseCrossBuild := false
 
 publishTo <<= version {
   (v: String) =>
