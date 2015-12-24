@@ -99,7 +99,7 @@ pomExtra := {
       </license>
     </licenses>
     <scm>
-      <url>git@github.com:sksamuel/scam.git</url>
+      <url>git@github.com:sksamuel/scapegoat.git</url>
       <connection>scm:git@github.com:sksamuel/scapegoat.git</connection>
     </scm>
     <developers>
