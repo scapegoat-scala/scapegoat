@@ -23,13 +23,45 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
           a == "sammy" // warning 2
           Some("sam") == Option("laura") // ok
           Nil == Set.empty // warning 3
+
           Some(1) match {
             case Some(x) if x == SomeValueClass(1) => () // warning 4
             case _ => ()
           }
+
+          def foo[K <: Option[String]](in: K): Boolean = {
+            in == Some(1) // warning 5
+            in == SomeValueClass(3) // warning 6
+            in == Some("somestring") // warning 7 (ideally we could avoid this)
+            in == Option("somestring") // ok
+          }
+
+          def foo2[K](in: K): Boolean = {
+            in == Some(1) // warning 8
+            in == SomeValueClass(3) // warning 9
+            in == in // ok
+          }
+
+          def foo3[K <: J, J](in: K, in2: J): Boolean = {
+            in == Some(1) // warning 10
+            in2 == Some(1) // warning 11
+            in == in // ok
+            in == in2 // ok
+            in2 == in2 // ok
+          }
+
+          def foo4[K <: Option[Option[String]]](in: K): Boolean = {
+            in == Some(Some(1)) // warning 12
+            in == SomeValueClass(3) // warning 13
+            in == Some(Some("somestring")) // warning 14 (ideally we could avoid this)
+            in == Option(Option("somestring")) // ok
+          }
+
+          Some(1) == Some("somestring") // warning 15
+          Option(Option("1")) == Some(Some("2")) // ok
         } """.stripMargin
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 4
+      compiler.scapegoat.feedback.warnings.size shouldBe 15
     }
     "should not report warning" - {
       "for long compared to zero" in {
