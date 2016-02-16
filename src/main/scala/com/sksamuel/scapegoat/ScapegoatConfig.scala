@@ -35,6 +35,8 @@ object ScapegoatConfig extends App {
     new BoundedByFinalType,
     new BrokenOddness,
     new CatchNpe,
+    new CatchException,
+    new CatchFatal,
     new CatchThrowable,
     new ClassNames,
     new CollectionNamingConfusion,

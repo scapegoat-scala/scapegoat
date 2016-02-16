@@ -88,7 +88,7 @@ There are currently 107 inspections. An overview list is given, followed by a mo
 | ArrayEquals | Checks for comparison of arrays using `==` which will always return false |
 | ArraysInFormat| Checks for arrays passed to String.format |
 | ArraysToString| Checks for explicit toString calls on arrays |
-| AvoidOperatorOverload | Checks for mental symbolic method names | 
+| AvoidOperatorOverload | Checks for mental symbolic method names |
 | AvoidSizeEqualsZero | Traversable.size can be slow for some data structure, prefer .isEmpty |
 | AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty |
 | AvoidToMinusOne | Checks for loops that use `x to n-1` instead of `x until n` |
@@ -97,6 +97,8 @@ There are currently 107 inspections. An overview list is given, followed by a mo
 | BoundedByFinalType | Looks for types with upper bounds of a final type |
 | BrokenOddness| checks for a % 2 == 1 for oddness because this fails on negative numbers |
 | CatchNpe| Checks for try blocks that catch null pointer exceptions |
+| CatchException | Checks for try blocks that catch Exception |
+| CatchFatal | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable |
 | CatchThrowable | Checks for try blocks that catch Throwable |
 | ClassNames | Ensures class names adhere to the style guidelines |
 | CollectionNamingConfusion| Checks for variables that are confusingly named |
@@ -167,7 +169,7 @@ There are currently 107 inspections. An overview list is given, followed by a mo
 | StripMarginOnRegex | Checks for .stripMargin on regex strings that contain a pipe |
 | SubstringZero | Checks for `String.substring(0)` |
 | SuspiciousMatchOnClassObject | Finds code where matching is taking place on class literals |
-| SwallowedException | Finds catch blocks that don't handle caught exceptions | 
+| SwallowedException | Finds catch blocks that don't handle caught exceptions |
 | SwapSortFilter| `sort.filter` can be replaced with `filter.sort` for performance |
 | TraversableHead| Looks for unsafe usage of `Traversable.head` |
 | TryGet| Checks for use of `Try.get` |
