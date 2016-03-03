@@ -15,10 +15,11 @@ class ReverseTailReverseTest
     "should report warning" in {
       val code = """class Test {
                      List(1,2,3).reverse.tail.reverse
+                     Array(1,2,3).reverse.tail.reverse
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 2
     }
   }
 }
