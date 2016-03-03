@@ -107,7 +107,7 @@ object ScapegoatConfig extends App {
     new RedundantFinalModifierOnVar,
     new RepeatedCaseBody,
     new ReverseTailReverse,
-    new ReverseHead,
+    new ReverseFunc,
     new SimplifyBooleanExpression,
     new StripMarginOnRegex,
     new SubstringZero,
