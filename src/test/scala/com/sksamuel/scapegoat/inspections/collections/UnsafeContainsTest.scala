@@ -44,6 +44,16 @@ class UnsafeContainsTest extends FreeSpec with Matchers with PluginRunner with O
         compiler.scapegoat.feedback.warnings.size shouldBe 0
 
       }
+      "for Seq filtering with Seq contains" in {
+        val code = """
+                   |val words = Seq("Hello", "world")
+                   |val moreWords = Seq("Goodbye", "cruel", "world")
+                   |val common = moreWords.filter(words.contains)
+                   | """.stripMargin.trim
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
