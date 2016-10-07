@@ -89,6 +89,7 @@ object ScapegoatConfig extends App {
     new NanComparison,
     new NegationIsEmpty,
     new NegationNonEmpty,
+    new NoOpOverride,
     new NullAssignment,
     new NullParameter,
     new ObjectNames,
@@ -119,7 +120,6 @@ object ScapegoatConfig extends App {
     new TryGet,
     new TypeShadowing,
     new UnnecessaryIf,
-    new NoOpOverride,
     new UnnecessaryReturnUse,
     new UnnecessaryToInt,
     new UnnecessaryToString,
@@ -133,9 +133,6 @@ object ScapegoatConfig extends App {
     new UseSqrt,
     new VarClosure,
     new VarCouldBeVal,
-    //new VariableShadowing,
-    // new VarUse,
     new WhileTrue,
-    //new WildcardImport,
     new ZeroNumerator)
 }
