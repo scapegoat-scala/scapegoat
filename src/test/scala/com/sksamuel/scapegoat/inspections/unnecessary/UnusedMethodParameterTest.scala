@@ -61,14 +61,12 @@ class UnusedMethodParameterTest
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for methods not returning when their return type is specified" in {
-        pendingUntilFixed {
-          val code = """class Test {
-                     |  def foo(name:String): String = throw new RuntimeException
-                     |}""".stripMargin
+        val code = """class Test {
+                   |  def foo(name:String): String = throw new RuntimeException
+                   |}""".stripMargin
 
-          compileCodeSnippet(code)
-          compiler.scapegoat.feedback.warnings.size shouldBe 0
-        }
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for overriden method" in {
         val code = """package com.sam
@@ -108,24 +106,23 @@ class UnusedMethodParameterTest
       }
 
       "for js.native defined method" in {
-        pendingUntilFixed {
-          val code = """package scala.scalajs {
-                          object js {
-                            def native: Nothing = ???
-                          }
+        val code = """package scala.scalajs {
+                        object js {
+                          def native: Nothing = ???
                         }
+                      }
 
-                        package com.sam {
-                        
-                        import scalajs.js
-                        
-                        class Foo {
-                          def foo(name: String): String = js.native
-                        }
-                        } """
-          compileCodeSnippet(code)
-          compiler.scapegoat.feedback.warnings.size shouldBe 0
-        }
+                      package com.sam {
+                      
+                      import scalajs.js
+                      
+                      class Foo {
+                        def foo(name: String): String = js.native
+                      }
+                      } """
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+
       }
     }
 

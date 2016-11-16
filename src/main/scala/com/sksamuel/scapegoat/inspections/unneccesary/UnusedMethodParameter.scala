@@ -89,6 +89,9 @@ class UnusedMethodParameter extends Inspection {
           // ignore methods that just throw, e.g. "???"
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= NothingTpe                                   =>
 
+          // ignore methods that just throw, e.g. "???" or "js.native"
+          case DefDef(_, _, _, _, _, rhs) if rhs.tpe =:= NothingTpe                                   =>
+
           // ignore overriden methods, the parameter might be used by other classes
           case DefDef(mods, _, _, _, _, _) if mods.isOverride ||
             mods.hasFlag(Flags.OVERRIDE) ||
