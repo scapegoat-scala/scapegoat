@@ -12,7 +12,7 @@ class MethodNames extends Inspection {
 
       import context.global._
 
-      private val regex = "^[a-z][A-Za-z0-9]*$"
+      private val regex = "^[a-z][A-Za-z0-9]*(_=)?$"
 
       override def inspect(tree: Tree): Unit = {
         tree match {
