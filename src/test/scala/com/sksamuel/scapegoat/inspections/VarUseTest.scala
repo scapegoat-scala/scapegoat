@@ -3,7 +3,6 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
-/** @author Stephen Samuel */
 class VarUseTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new VarUse)
@@ -18,21 +17,21 @@ class VarUseTest extends FreeSpec with Matchers with PluginRunner with OneInstan
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
-    "should not report warning" - {
-      "for akka actors" in {
-        addToClassPath("com.typesafe.akka", "akka-actor_2.11", "2.3.4")
-        val code = """import akka.actor.Actor
-                     |import akka.actor.Actor.Receive
-                     |  class TestActor extends Actor {
-                     |    var awesome = false
-                     |    override def receive: Receive = {
-                     |      case _ => awesome = !awesome
-                     |    }
-                     |  }""".stripMargin
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 0
-      }
-    }
+//    "should not report warning" - {
+//      "for akka actors" in {
+//        addToClassPath("com.typesafe.akka", "akka-actor_2.11", "2.3.4")
+//        val code = """import akka.actor.Actor
+//                     |import akka.actor.Actor.Receive
+//                     |  class TestActor extends Actor {
+//                     |    var awesome = false
+//                     |    override def receive: Receive = {
+//                     |      case _ => awesome = !awesome
+//                     |    }
+//                     |  }""".stripMargin
+//        compileCodeSnippet(code)
+//        compiler.scapegoat.feedback.warnings.size shouldBe 0
+//      }
+//    }
   }
   //  "async macros" - {
   //    "should be ignored" in {
