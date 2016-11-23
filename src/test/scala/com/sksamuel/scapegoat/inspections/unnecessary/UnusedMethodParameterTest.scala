@@ -60,6 +60,14 @@ class UnusedMethodParameterTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for methods not returning when their return type is specified" in {
+        val code = """class Test {
+                   |  def foo(name:String): String = throw new RuntimeException
+                   |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
       "for overriden method" in {
         val code = """package com.sam
                       trait Foo {
@@ -95,6 +103,26 @@ class UnusedMethodParameterTest
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+
+      "for js.native defined method" in {
+        val code = """package scala.scalajs {
+                        object js {
+                          def native: Nothing = ???
+                        }
+                      }
+
+                      package com.sam {
+                      
+                      import scalajs.js
+                      
+                      class Foo {
+                        def foo(name: String): String = js.native
+                      }
+                      } """
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+
       }
     }
 
