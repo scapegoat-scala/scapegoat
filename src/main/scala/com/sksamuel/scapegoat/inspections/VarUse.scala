@@ -2,7 +2,6 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
 class VarUse extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
