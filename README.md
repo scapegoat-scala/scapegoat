@@ -3,6 +3,7 @@ Scapegoat
 
 [![travis image](https://travis-ci.org/sksamuel/scapegoat.svg?branch=master)](https://travis-ci.org/sksamuel/scapegoat)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.11*.svg?label=latest%20release%20for%202.11"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.11%22)
+[<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.12*.svg?label=latest%20release%20for%202.12"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.12%22)
 
 Scapegoat is a Scala static code analyzer, what is more colloquially known as a code lint tool or linter. Scapegoat works in a similar vein to Java's [FindBugs](http://findbugs.sourceforge.net/) or [checkstyle](http://checkstyle.sourceforge.net/), or Scala's [Scalastyle](https://github.com/scalastyle/scalastyle).
 
@@ -14,9 +15,6 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
-
-Latest Release: 1.2.0
-
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
 
 ### Reports
