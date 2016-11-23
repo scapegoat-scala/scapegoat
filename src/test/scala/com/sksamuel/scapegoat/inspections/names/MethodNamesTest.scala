@@ -114,6 +114,16 @@ class MethodNamesTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for setter methods (2)" in {
+        val code = """
+          object Test {
+             def hallo: String = ""
+             def hallo_=(x: String): Unit = {}
+          }
+          """
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings should have size 0
+      }
     }
   }
 }

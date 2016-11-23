@@ -12,7 +12,7 @@ class MethodNames extends Inspection {
 
       import context.global._
 
-      private val regex = "^[a-z][A-Za-z0-9]*$"
+      private val regex = "^[a-z][A-Za-z0-9]*(_\\$eq)?$"
 
       override def inspect(tree: Tree): Unit = {
         tree match {
@@ -25,7 +25,7 @@ class MethodNames extends Inspection {
             context.warn("Method name not recommended",
               tree.pos,
               Levels.Info,
-              "Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods",
+              s"Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods",
               MethodNames.this)
           case _ => continue(tree)
         }
