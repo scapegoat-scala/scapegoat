@@ -2,7 +2,6 @@ package com.sksamuel.scapegoat.inspections.unsafe
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
 class AsInstanceOf extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
@@ -12,7 +11,8 @@ class AsInstanceOf extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case TypeApply(Select(_, TermName("asInstanceOf")), _) =>
+          // this will skip any uses of manifest etc
+          case TypeApply(Select(qual, TermName("asInstanceOf")), _) if qual.toString != "classOf[java.lang.Class]" =>
             context.warn("Use of asInstanceOf", tree.pos, Levels.Warning,
               "asInstanceOf used near " + tree.toString().take(500) + ". Consider using pattern matching.",
               AsInstanceOf.this)

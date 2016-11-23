@@ -4,7 +4,6 @@ import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unsafe.AsInstanceOf
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
-/** @author Stephen Samuel */
 class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new AsInstanceOf)
@@ -62,19 +61,18 @@ class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with One
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
+
+      val mf = manifest[Class[_]]
+
     }
-    //    "should ignore scaldi defs" in {
-    //      addToClassPath("org.scaldi", "scaldi_2.11", "0.4")
-    //      val code = """  import scaldi._
-    //                      trait FooService
-    //                      class ServicesModule extends Module {
-    //                        bind[FooService] to new FooServiceImpl() // class implementation
-    //                      }
-    //                      class FooServiceImpl(implicit injector: Injector) extends FooService with Injectable
-    //                 """.stripMargin
-    //
-    //      compileCodeSnippet(code)
-    //      compiler.scapegoat.feedback.warnings.size shouldBe 0
-    //    }
+    "should not warn on manifest of class" in {
+      val code = """object Test {
+                      @SuppressWarnings(Array("asinstanceof"))
+                      val mf = manifest[Class[_]]
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
   }
 }
