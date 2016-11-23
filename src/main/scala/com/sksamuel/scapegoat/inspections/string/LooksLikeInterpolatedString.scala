@@ -1,8 +1,7 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-/** @author Stephen Samuel */
 class LooksLikeInterpolatedString extends Inspection {
 
   final val regex1 = "\\$\\{[a-z][.a-zA-Z0-9_]*\\}".r
@@ -15,6 +14,7 @@ class LooksLikeInterpolatedString extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
+          case Select(qual@Ident(TermName("scala")), name@TermName("StringContext")) => continue(tree)
           case Literal(Constant(str: String)) =>
             val possibles1 = regex1.findAllIn(str).toList.filterNot(_.contains("$anonfun"))
             val possibles2 = regex2.findAllIn(str).toList.filterNot(_.contains("$anonfun"))

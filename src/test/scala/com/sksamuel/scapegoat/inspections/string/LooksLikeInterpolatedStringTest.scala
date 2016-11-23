@@ -33,6 +33,26 @@ class LooksLikeInterpolatedStringTest extends FreeSpec with Matchers with Plugin
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
+    "for interpolated strings" in {
+      val code = """object Test {
+                      val a = "hello"
+                      val str = s"${a}"
+                   } """.stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+    "for quasi quotes" in {
+      val code =
+        """object Test {
+                      val a = "hello"
+                      implicit class QQuotes(val sc: StringContext) extends AnyVal {
+                         def q(args: Any*): String = "anything"
+                       }
+                      val str = q"${a}"
+                   } """.stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
     "for strings containing $anonfun" in {
       val code =
         """
