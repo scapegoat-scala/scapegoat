@@ -4,7 +4,6 @@ import com.sksamuel.scapegoat.PluginRunner
 
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
-/** @author Stephen Samuel */
 class BigDecimalScaleWithoutRoundingModeTest
     extends FreeSpec
     with Matchers

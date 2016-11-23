@@ -4,7 +4,6 @@ import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.VarCouldBeVal
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
-/** @author Stephen Samuel */
 class VarCouldBeValTest
     extends FreeSpec
     with Matchers
@@ -159,7 +158,7 @@ class VarCouldBeValTest
           |  def next : Int
           |}
           |object Test {
-          |  def iterator = new Iterator {
+          |  val iterator = new Iterator {
           |    var last = -1
           |    def next: Int = {
           |      last = last + 1

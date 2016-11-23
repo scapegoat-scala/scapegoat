@@ -3,7 +3,6 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers }
 
-/** @author Stephen Samuel */
 class UseSqrtTest extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new UseSqrt)
@@ -13,14 +12,16 @@ class UseSqrtTest extends FreeSpec with Matchers with PluginRunner {
 
       val code = """object Test {
                         val a = 2
-                        math.pow(2, 0.5)
-                        math.pow(2, 1/2d)
-                        Math.pow(2, 1/2d)
-                        StrictMath.pow(2, 1/2d)
+                        scala.math.pow(2, 0.5) // scala
+                        scala.math.pow(2, 1/2d) // scala
+                        math.pow(2, 0.5) // scala
+                        math.pow(2, 1/2d) // scala
+                        Math.pow(2, 1/2d) // java
+                        StrictMath.pow(2, 1/2d) // java
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 4
+      compiler.scapegoat.feedback.warnings.size shouldBe 6
     }
   }
 }

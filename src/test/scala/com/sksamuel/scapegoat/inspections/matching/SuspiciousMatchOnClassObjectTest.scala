@@ -3,9 +3,6 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
-import akka.actor.PossiblyHarmful
-
-/** @author Stephen Samuel */
 class SuspiciousMatchOnClassObjectTest
     extends FreeSpec
     with Matchers

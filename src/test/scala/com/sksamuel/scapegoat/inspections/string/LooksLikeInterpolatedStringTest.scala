@@ -3,7 +3,6 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
-/** @author Stephen Samuel */
 class LooksLikeInterpolatedStringTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new LooksLikeInterpolatedString)

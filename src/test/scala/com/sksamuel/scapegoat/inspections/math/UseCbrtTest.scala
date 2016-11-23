@@ -13,14 +13,16 @@ class UseCbrtTest extends FreeSpec with Matchers with PluginRunner {
 
       val code = """object Test {
                         val a = 2
+                        scala.math.pow(2, 1/3d)
                         math.pow(2, 1/3d)
+                        scala.math.pow(2, 1/3f)
                         math.pow(2, 1/3f)
                         Math.pow(2, 1/3d)
                         StrictMath.pow(2, 1/3d)
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 4
+      compiler.scapegoat.feedback.warnings.size shouldBe 6
     }
   }
 }

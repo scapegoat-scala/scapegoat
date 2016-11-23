@@ -3,7 +3,6 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers }
 
-/** @author Matic Potočnik */
 class UseLog1PTest extends FreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new UseLog1P)
@@ -13,14 +12,16 @@ class UseLog1PTest extends FreeSpec with Matchers with PluginRunner {
 
       val code = """object Test {
                         val a = 2d
+                        scala.math.log(a + 1)
                         math.log(a + 1)
+                        scala.math.log(1 + a)
                         math.log(1 + a)
                         Math.log(a + 1)
                         StrictMath.log(a + 1)
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 4
+      compiler.scapegoat.feedback.warnings.size shouldBe 6
     }
   }
 }

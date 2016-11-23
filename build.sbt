@@ -1,12 +1,12 @@
-import scalariform.formatter.preferences.{AlignSingleLineCaseStatements, CompactControlReadability, DoubleIndentClassDeclaration, FormattingPreferences, IndentLocalDefs}
-
 import sbt.Keys._
 
 name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.12.0"
+
+crossScalaVersions := Seq("2.11.8", "2.12.0")
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8", "-Xmax-classfile-name", "254")
 
@@ -44,23 +44,19 @@ javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 libraryDependencies ++= Seq(
   "org.scala-lang"                  %     "scala-reflect"         % scalaVersion.value,
   "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "provided",
-  "org.scala-lang.modules"          %     "scala-xml_2.11"        % "1.0.2",
+  "org.scala-lang.modules"          %%    "scala-xml"             % "1.0.5",
   "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "test",
-  "commons-io"                      %     "commons-io"            % "2.4"         % "test",
-  "org.scalatest"                   %%    "scalatest"             % "2.2.4"       % "test",
-  "com.typesafe.scala-logging"      %%    "scala-logging-slf4j"   % "2.1.2"       % "test",
-  "org.mockito"                     %     "mockito-all"           % "1.9.5"       % "test",
-  "joda-time"                       %     "joda-time"             % "2.3"         % "test",
-  "org.joda"                        %     "joda-convert"          % "1.3.1"       % "test",
-  "org.slf4j"                       %     "slf4j-api"             % "1.7.7"       % "test",
-  "org.scala-lang.modules"          %%    "scala-async"           % "0.9.2"       % "test",
-  "com.typesafe.akka"               %%    "akka-actor"            % "2.3.4"       % "test",
-  "org.scaldi"                      %%    "scaldi"                % "0.4"         % "test"
+  "commons-io"                      %     "commons-io"            % "2.4"                   % "test",
+  "org.scalatest"                   %%    "scalatest"             % "3.0.0"                 % "test",
+  "org.mockito"                     %     "mockito-all"           % "1.9.5"                 % "test",
+  "joda-time"                       %     "joda-time"             % "2.3"                   % "test",
+  "org.joda"                        %     "joda-convert"          % "1.3.1"                 % "test",
+  "org.slf4j"                       %     "slf4j-api"             % "1.7.7"                 % "test"
 )
 
 sbtrelease.ReleasePlugin.autoImport.releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
-sbtrelease.ReleasePlugin.autoImport.releaseCrossBuild := false
+sbtrelease.ReleasePlugin.autoImport.releaseCrossBuild := true
 
 publishTo <<= version {
   (v: String) =>
@@ -70,14 +66,6 @@ publishTo <<= version {
     else
       Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
-
-scalariformSettings
-
-ScalariformKeys.preferences := FormattingPreferences()
-  .setPreference(AlignSingleLineCaseStatements, true)
-  .setPreference(CompactControlReadability, false)
-  .setPreference(DoubleIndentClassDeclaration, true)
-  .setPreference(IndentLocalDefs, true)
 
 publishMavenStyle := true
 

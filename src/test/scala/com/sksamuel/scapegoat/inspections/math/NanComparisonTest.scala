@@ -3,7 +3,6 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
-/** @author Stephen Samuel */
 class NanComparisonTest
     extends FreeSpec
     with Matchers
