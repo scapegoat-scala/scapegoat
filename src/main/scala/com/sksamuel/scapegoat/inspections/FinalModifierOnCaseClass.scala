@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
-class RedundantFinalModifierOnCaseClass extends Inspection {
+class FinalModifierOnCaseClass extends Inspection {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -12,12 +12,12 @@ class RedundantFinalModifierOnCaseClass extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case ClassDef(mods, _, _, _) if mods.isCase && mods.isFinal =>
-            context.warn("Redundant final modifier on case class",
+          case ClassDef(mods, _, _, _) if mods.isCase && !mods.isFinal =>
+            context.warn("Missing final modifier on case class",
               tree.pos,
               Levels.Info,
-              "Case classes cannot be extended, final modifer is redundant",
-              RedundantFinalModifierOnCaseClass.this)
+              "Case classes should have final modifer",
+              FinalModifierOnCaseClass.this)
           case _ => continue(tree)
         }
       }
