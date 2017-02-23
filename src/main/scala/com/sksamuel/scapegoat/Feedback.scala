@@ -35,11 +35,12 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
       case None                => level
     }
 
-    val sourceFile = normalizeSourceFile(pos.source.file.path)
-    val warning = Warning(text, pos.line, adjustedLevel, sourceFile, snippet, inspection.getClass.getCanonicalName)
+    val sourceFileFull = pos.source.file.path
+    val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
+    val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, snippet, inspection.getClass.getCanonicalName)
     warnings.append(warning)
     if (consoleOutput) {
-      println(s"[${warning.level.toString.toLowerCase}] $sourceFile:${warning.line}: $text")
+      println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
       snippet.foreach(s => println(s"          $s"))
       println()
     }
@@ -61,6 +62,7 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
 case class Warning(text: String,
   line: Int,
   level: Level,
-  sourceFile: String,
+  sourceFileFull: String,
+  sourceFileNormalized: String,
   snippet: Option[String],
   inspection: String)
