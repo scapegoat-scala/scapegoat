@@ -131,6 +131,7 @@ There are currently 107 inspections. An overview list is given, followed by a mo
 | FilterOptionAndGet | `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
 | FilterDotSize | `.filter(x => ).size` can be replaced more concisely with with `count(x => )` |
 | FinalizerWithoutSuper | Checks for overriden finalizers that do not call super |
+| FinalModifierOnCaseClass | Using Case classes without `final` modifer can lead to surprising breakage |
 | FindDotIsDefined | `find(x => ).isDefined` can be replaced with `exist(x => )` |
 | FindAndNotEqualsNoneReplaceWithExists | `.find(x => ) != None` can be replaced with `exist(x => )` |
 | IllegalFormatString | Looks for invalid format strings |
@@ -165,7 +166,6 @@ There are currently 107 inspections. An overview list is given, followed by a mo
 | ProductWithSerializableInferred | Checks for vals that have `Product with Serializable` as their inferred type |
 | PublicFinalizer | Checks for overriden finalizes that are public |
 | RedundantFinalizer | Checks for empty finalizers. |
-| RedundantFinalModifierOnCaseClass | Case classes cannot be extended, `final` modifer is redundant |
 | RedundantFinalModifierOnMethod | Redundant `final` modifier on method that cannot be overriden |
 | RedundantFinalModifierOnVar | Redundant `final` modifier on var that cannot be overriden |
 | RepeatedCaseBody | Checks for case statements which have the same body |
