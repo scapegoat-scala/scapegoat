@@ -39,6 +39,7 @@ object ScapegoatConfig extends App {
     new CatchFatal,
     new CatchThrowable,
     new ClassNames,
+    new CollectionIndexOnNonIndexedSeq,
     new CollectionNamingConfusion,
     new CollectionNegativeIndex,
     new CollectionPromotionToAny,
