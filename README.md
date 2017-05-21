@@ -80,7 +80,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Inspections
 
-There are currently 107 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 108 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name | Brief Description |
 |----|-----------|
@@ -101,6 +101,7 @@ There are currently 107 inspections. An overview list is given, followed by a mo
 | CatchFatal | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable |
 | CatchThrowable | Checks for try blocks that catch Throwable |
 | ClassNames | Ensures class names adhere to the style guidelines |
+| CollectionIndexOnNonIndexedSeq | Checks for indexing on a Seq which is not an IndexedSeq |
 | CollectionNamingConfusion | Checks for variables that are confusingly named |
 | CollectionNegativeIndex | Checks for negative access on a sequence eg `list.get(-1)` |
 | CollectionPromotionToAny | Checks for collection operations that promote the collection to `Any` |
@@ -201,6 +202,12 @@ There are currently 107 inspections. An overview list is given, followed by a mo
 ##### Arrays to string
 
 Checks for explicit toString calls on arrays. Since toString on an array does not perform a deep toString, like say scala's List, this is usually a mistake.
+
+##### CollectionIndexOnNonIndexedSeq
+
+Checks for calls of `.apply(idx)` on a `Seq` where the index is not a literal and the `Seq` is not an `IndexedSeq`.
+
+*Rationale* If code which expects O(1) positional access to a Seq is given a non-IndexedSeq (such as a List, where indexing is O(n)) then this may cause poor performance.
 
 ##### ComparingUnrelatedTypes
 
