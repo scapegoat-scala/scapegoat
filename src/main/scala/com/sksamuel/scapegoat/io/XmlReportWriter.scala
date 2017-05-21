@@ -14,6 +14,6 @@ object XmlReportWriter {
   }
 
   private def warning2xml(warning: Warning) = {
-    <warning line={ warning.line.toString } text={ warning.text } snippet={ warning.snippet.orNull } level={ warning.level.toString } file={ warning.sourceFile } inspection={ warning.inspection }/>
+    <warning line={ warning.line.toString } text={ warning.text } snippet={ warning.snippet.orNull } level={ warning.level.toString } file={ warning.sourceFileNormalized } inspection={ warning.inspection }/>
   }
 }

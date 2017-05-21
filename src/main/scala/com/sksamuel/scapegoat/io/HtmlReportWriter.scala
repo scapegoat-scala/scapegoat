@@ -91,7 +91,7 @@ object HtmlReportWriter {
   def warnings(reporter: Feedback) = {
     reporter.warnings.map {
       case warning =>
-        val source = warning.sourceFile + ":" + warning.line
+        val source = warning.sourceFileNormalized + ":" + warning.line
         <div class="warning">
           <div class="source">
             { source }
