@@ -9,6 +9,11 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
 
   override val inspections = Seq(new ComparingUnrelatedTypes)
 
+  private def verifyNoWarnings(code: String): Unit = {
+    compileCodeSnippet(code)
+    compiler.scapegoat.feedback.warnings.size shouldBe 0
+  }
+
   "ComparingUnrelatedTypes" - {
     "should report warning" in {
       val code = """
@@ -59,40 +64,44 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
 
           Some(1) == Some("somestring") // warning 15
           Option(Option("1")) == Some(Some("2")) // ok
+
+          val f: Float = 1.0f
+          val d: Double = 1.0d
+          f == 1 // warning 16
+          d == 1 // warning 17
+
+          val c: Char = 'a'
+          c == -1 // warning 18
+          c == 65536 // warning 19
+
+          val i: Int = 1
+          i == -2147483649L // warning 20
         } """.stripMargin
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 15
+      compiler.scapegoat.feedback.warnings.size shouldBe 20
     }
     "should not report warning" - {
-      "for long compared to zero" in {
-        val code = """object A { val l = 100l; val b = l == 0 } """
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      "for zero" - {
+        "compared to long" in { verifyNoWarnings("""object A { val l = 100l; val b = 0 == l }""") }
+        "compared to double" in { verifyNoWarnings("""object A { val d = 100d; val b = 0 == d }""") }
+        "compared to float" in { verifyNoWarnings("""object A { val f = 100f; val b = 0 == f }""") }
       }
-      "for double compared to zero" in {
-        val code = """object A { val d = 100d; val b = d == 0 } """
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      "for long" - {
+        "compared to zero" in { verifyNoWarnings("""object A { val l = 100l; val b = l == 0 }""") }
+        "compared to int literal" in { verifyNoWarnings("""object A { val l = 100l; val b = l == 100 }""") }
       }
-      "for float compared to zero" in {
-        val code = """object A { val f = 100f; val b = f == 0 } """
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      "for char" - {
+        "compared to char-sized long literal" in { verifyNoWarnings("""object A { val c = 'a'; val c = l == 97L }""") }
+        "compared to char-sized int literal" in { verifyNoWarnings("""object A { val c = 'a'; val c = l == 97 }""") }
       }
-      "for zero compared to long" in {
-        val code = """object A { val l = 100l; val b = 0 == l } """
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      "for short" - {
+        "compared to Short.MaxValue as int literal" in { verifyNoWarnings("""object A { val s = 1.toShort; val b = s == 32767 }""") }
       }
-      "for zero compared to double" in {
-        val code = """object A { val d = 100d; val b = 0 == d } """
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      "for double" - {
+        "compared to zero" in { verifyNoWarnings("""object A { val d = 100d; val b = d == 0 }""") }
       }
-      "for zero compared to float" in {
-        val code = """object A { val f = 100f; val b = 0 == f } """
-        compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      "for float" - {
+        "compared to zero" in { verifyNoWarnings("""object A { val f = 100f; val b = f == 0 }""") }
       }
     }
   }
