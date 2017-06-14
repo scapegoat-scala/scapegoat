@@ -10,8 +10,8 @@ class CollectionIndexOnNonIndexedSeq extends Inspection {
 
       import context.global._
 
-      private def isSeq(t: Tree) = t.tpe <:< typeOf[Seq[_]]
-      private def isIndexedSeq(t: Tree) = t.tpe <:< typeOf[IndexedSeq[_]]
+      private def isSeq(t: Tree) = t.tpe <:< typeOf[Seq[Any]]
+      private def isIndexedSeq(t: Tree) = t.tpe <:< typeOf[IndexedSeq[Any]]
       private def isLiteral(t: Tree) = t match {
         case Literal(_) => true
         case _ => false
