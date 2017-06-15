@@ -27,7 +27,7 @@ class ExistsSimplifableToContains extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("exists")), List(Function(_, Apply(Select(_, Equals), List(x))))) if isTraversable(lhs) && isContainsType(lhs, x) =>
-            context.warn("Exists simplifable to contains",
+            context.warn("Exists simplifiable to contains",
               tree.pos,
               Levels.Info,
               "exists(x => x == y) can be replaced with contains(y): " + tree.toString().take(500),
