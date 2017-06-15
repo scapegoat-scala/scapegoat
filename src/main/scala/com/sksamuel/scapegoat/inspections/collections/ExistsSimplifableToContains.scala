@@ -15,20 +15,19 @@ class ExistsSimplifableToContains extends Inspection {
       import context.global._
 
       private val Equals = TermName("$eq$eq")
-      private def isTraversable(tree: Tree) = tree.tpe <:< typeOf[Traversable[_]]
+
+      private def isTraversable(tree: Tree) = tree.tpe <:< typeOf[Traversable[Any]]
+
       private def isContainsType(container: Tree, value: Tree): Boolean = {
-        val l = value.tpe.underlying.typeSymbol.tpe
-        container.tpe.underlying.typeArgs.headOption match {
-          case Some(t) =>
-            l <:< t || l =:= t
-          case None => false
-        }
+        val valueType = value.tpe.underlying.typeSymbol.tpe
+        val traversableType = container.tpe.underlying.baseType(typeOf[Traversable[Any]].typeSymbol)
+        traversableType.typeArgs.exists(t => valueType <:< t || valueType =:= t)
       }
 
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("exists")), List(Function(_, Apply(Select(_, Equals), List(x))))) if isTraversable(lhs) && isContainsType(lhs, x) =>
-            context.warn("Exists simplifable to contains",
+            context.warn("Exists simplifiable to contains",
               tree.pos,
               Levels.Info,
               "exists(x => x == y) can be replaced with contains(y): " + tree.toString().take(500),

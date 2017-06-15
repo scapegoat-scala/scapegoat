@@ -15,10 +15,11 @@ class ExistsSimplifableToContainsTest extends FreeSpec with Matchers with Plugin
           |val exists1 = List(1,2,3).exists(x => x == 2)
           |val list = List("sam", "spade")
           |val exists2 = list.exists(_ == "spoof")
+          |val exists3 = (1 to 3).exists(_ == 2)
           |} """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 2
+      compiler.scapegoat.feedback.warnings.size shouldBe 3
     }
   }
 
