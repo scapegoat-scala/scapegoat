@@ -15,13 +15,15 @@ class ExistsSimplifableToContains extends Inspection {
       import context.global._
 
       private val Equals = TermName("$eq$eq")
-      private def isTraversable(tree: Tree) = tree.tpe <:< typeOf[Traversable[_]]
+
+      private def isTraversable(tree: Tree) = tree.tpe <:< typeOf[Traversable[Any]]
+
       private def isContainsType(container: Tree, value: Tree): Boolean = {
-        val l = value.tpe.underlying.typeSymbol.tpe
-        container.tpe.underlying.typeArgs.headOption match {
-          case Some(t) =>
-            l <:< t || l =:= t
-          case None => false
+        val valueType = value.tpe.underlying.typeSymbol.tpe
+        val traversableType = container.tpe.underlying.baseType(typeOf[Traversable[Any]].typeSymbol)
+        traversableType.typeArgs match {
+          case t :: _ => valueType <:< t || valueType =:= t
+          case _ => false
         }
       }
 
