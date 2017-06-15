@@ -4,11 +4,17 @@ import com.sksamuel.scapegoat._
 
 class ReverseFunc extends Inspection {
 
-  val funcReplace = Map(
-    "head" -> "last",
-    "headOption" -> "lastOption",
-    "iterator" -> "reverseIterator",
-    "map" -> "reverseMap")
+  object FuncReplace {
+
+    private val funcReplace = Map(
+      "head" -> "last",
+      "headOption" -> "lastOption",
+      "iterator" -> "reverseIterator",
+      "map" -> "reverseMap")
+
+    def unapply(func: String): Option[(String, String)] =
+      funcReplace.find(_._1 == func)
+  }
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -17,20 +23,20 @@ class ReverseFunc extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(Select(c, TermName("reverse")), TermName(func)) if funcReplace.contains(func) &&
-            c.tpe.<:<(typeOf[Traversable[_]]) =>
-            warn(func, tree)
-          case Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))), TermName(func)) if (arrayOps1.toString.contains("ArrayOps")) &&
-            (arrayOps2.toString.contains("ArrayOps")) &&
-            funcReplace.contains(func) =>
-            warn(func, tree)
+          case Select(Select(c, TermName("reverse")), TermName(FuncReplace(func, replace)))
+            if c.tpe <:< typeOf[Traversable[Any]] =>
+            warn(func, replace, tree)
+          case Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))), TermName(FuncReplace(func, replace)))
+            if arrayOps1.toString.contains("ArrayOps") && arrayOps2.toString.contains("ArrayOps") =>
+            warn(func, replace, tree)
           case _ => continue(tree)
         }
       }
 
-      private def warn(func: String, tree: Tree) =
-        context.warn(s"reverse.$func instead of ${funcReplace(func)}", tree.pos, Levels.Info,
-          s".reverse.$func can be replaced with ${funcReplace(func)}: " + tree.toString().take(500), ReverseFunc.this)
+      private def warn(func: String, replace: String, tree: Tree) =
+        context.warn(s"reverse.$func instead of $replace", tree.pos, Levels.Info,
+          s".reverse.$func can be replaced with $replace: " + tree.toString().take(500), ReverseFunc.this)
+
     }
   }
 }
