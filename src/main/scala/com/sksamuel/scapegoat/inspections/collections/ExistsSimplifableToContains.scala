@@ -21,10 +21,7 @@ class ExistsSimplifableToContains extends Inspection {
       private def isContainsType(container: Tree, value: Tree): Boolean = {
         val valueType = value.tpe.underlying.typeSymbol.tpe
         val traversableType = container.tpe.underlying.baseType(typeOf[Traversable[Any]].typeSymbol)
-        traversableType.typeArgs match {
-          case t :: _ => valueType <:< t || valueType =:= t
-          case _ => false
-        }
+        traversableType.typeArgs.exists(t => valueType <:< t || valueType =:= t)
       }
 
       override def inspect(tree: Tree): Unit = {
