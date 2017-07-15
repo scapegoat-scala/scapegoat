@@ -84,6 +84,7 @@ object ScapegoatConfig extends App {
     new ListSize,
     new LooksLikeInterpolatedString,
     new LonelySealedTrait,
+    new MapGetAndGetOrElse,
     new MaxParameters,
     new MethodNames,
     new MethodReturningAny,
