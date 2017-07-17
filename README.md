@@ -146,6 +146,7 @@ There are currently 108 inspections. An overview list is given, followed by a mo
 | ListSize | Checks for `List.size` which is O(n). |
 | LooksLikeInterpolatedString | Finds strings that look like they should be interpolated but are not |
 | LonelySealedTrait | Checks for sealed traits which have no implementation |
+| MapGetAndGetOrElse | `Map.get(key).getOrElse(value)` can be replaced with `Map.getOrElse(key, value)` |
 | MaxParameters | Checks for methods that have over 10 parameters |
 | MethodNames | Warns on method names that don't adhere to the Scala style guidelines |
 | MethodReturningAny | Checks for defs that are defined or inferred to return `Any` |
