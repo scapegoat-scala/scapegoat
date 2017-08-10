@@ -66,6 +66,8 @@ class UnusedMethodParameter extends Inspection {
           // ignore traits, quite often you define a method in a trait with default impl that does nothing
           case ClassDef(_, _, _, _) if tree.symbol.isTrait =>
 
+          case ClassDef(mods, _, _, _) if mods.hasAbstractFlag =>
+
           case ClassDef(mods, _, _, classBody @ Template(_, _, classTopLevelStmts)) =>
 
             classTopLevelStmts.foreach {

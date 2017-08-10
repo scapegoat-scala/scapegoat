@@ -51,6 +51,13 @@ class UnusedMethodParameterTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for abstract constructor" in {
+
+        val code = """abstract class EventBusMessage(messageVersion: Int)"""
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
       "for methods not returning" in {
 
         val code = """class Test {
@@ -113,9 +120,9 @@ class UnusedMethodParameterTest
                       }
 
                       package com.sam {
-                      
+
                       import scalajs.js
-                      
+
                       class Foo {
                         def foo(name: String): String = js.native
                       }
