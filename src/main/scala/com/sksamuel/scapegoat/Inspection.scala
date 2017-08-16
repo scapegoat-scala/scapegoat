@@ -83,6 +83,7 @@ case class InspectionContext(global: Global, feedback: Feedback) {
         case mod: ModuleDef if isSuppressed(mod.symbol) =>
         case ClassDef(_, _, _, Template(parents, _, _)) if parents.map(_.tpe.typeSymbol.fullName).contains("scala.reflect.api.TypeCreator") =>
         case classdef: ClassDef if isSuppressed(classdef.symbol) =>
+        case _ if analyzer.hasMacroExpansionAttachment(tree) => //skip macros as per http://bit.ly/2uS8BrU
         case _ => inspect(tree)
       }
     }
