@@ -53,6 +53,10 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
               component.disableXML = false
               component.disableHTML = false
               component.disableScalastyleXML = false
+            case "none" =>
+              component.disableXML = true
+              component.disableHTML = true
+              component.disableScalastyleXML = true
             case _ =>
           }
       case None =>
