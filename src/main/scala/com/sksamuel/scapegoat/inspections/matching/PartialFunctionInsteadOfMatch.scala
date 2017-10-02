@@ -19,7 +19,7 @@ class PartialFunctionInsteadOfMatch extends Inspection {
       }
 
       private def isPFBind(name: TermName) = {
-        val b = name.toString.matches("x0\\$\\d")
+        val b = name.toString.matches("x0\\$\\d+")
         b
       }
 

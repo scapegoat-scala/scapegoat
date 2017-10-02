@@ -49,6 +49,42 @@ class PartialFunctionInsteadOfMatchTest
                        case i: Int =>
                        case s: String =>
                      }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
+                     list.map {
+                       case i: Int =>
+                       case s: String =>
+                     }
 
                      val future = Future { }
                      future onComplete {
