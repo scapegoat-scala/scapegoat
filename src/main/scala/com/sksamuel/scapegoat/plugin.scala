@@ -97,7 +97,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     "-P:scapegoat:customInspectors:<listofinspections>    colon separated list of custom inspections",
     "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
     "                                                     files to ignore.",
-    "-P:scapeogoat:verbose:<boolean>                      enable/disable verbose console messages",
+    "-P:scapegoat:verbose:<boolean>                      enable/disable verbose console messages",
     "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
     "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
     "                                                     Valid options are `xml', `html', `scalastyle',",
