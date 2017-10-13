@@ -119,6 +119,7 @@ object ScapegoatConfig extends App {
     new SwallowedException,
     new SwapSortFilter,
     new TraversableHead,
+    new TraversableLast,
     new TryGet,
     new TypeShadowing,
     new UnnecessaryIf,
