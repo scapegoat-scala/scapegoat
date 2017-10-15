@@ -15,7 +15,51 @@ Scalastyle is a similar linting tool which focuses mostly on enforcing style/cod
 
 ### Usage
 Scapegoat is developed as a scala compiler plugin, which can then be used inside your build tool.
+
+#### SBT
 See: [sbt-scapegoat](https://github.com/sksamuel/sbt-scapegoat) for SBT integration.
+
+#### Maven
+
+Firstly you need to add scapegoat plugin as a dependency:
+
+```xml
+<dependency>
+    <groupId>com.sksamuel.scapegoat</groupId>
+    <artifactId>scalac-scapegoat-plugin_${scala.binary.version}</artifactId>
+    <version>1.3.3</version>
+</dependency>
+```
+
+Then configure `scala-maven-plugin` by adding `compilerPlugin`
+
+```xml
+<plugin>
+    <groupId>net.alchim31.maven</groupId>
+    <artifactId>scala-maven-plugin</artifactId>
+    <configuration>
+        <args>
+            <arg>-P:scapegoat:dataDir:./target/scapegoat</arg>
+        </args>
+        <compilerPlugins>
+            <compilerPlugin>
+                <groupId>com.sksamuel.scapegoat</groupId>
+                <artifactId>scalac-scapegoat-plugin_${scala.binary.version}</artifactId>
+                <version>1.3.3</version>
+            </compilerPlugin>
+        </compilerPlugins>
+    </configuration>
+</plugin>
+```
+The only required parameter is `dataDir` (where report will be generated):
+
+`<arg>-P:scapegoat:dataDir:./target/scapegoat</arg>`
+
+You can pass other configuration flags same way, e.g.
+
+`<arg>-P:scapegoat:disabledInspections:FinalModifierOnCaseClass</arg>`
+
+Note: You may use a separate maven profile, so that the dependency doesn't go to you runtime classpath.
 
 ### Reports
 
