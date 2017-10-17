@@ -12,7 +12,7 @@ class EmptyMethod extends Inspection {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          // its ok to do empty impl for overriden methods
+          // its ok to do empty impl for overridden methods
           case DefDef(mods, _, _, _, _, _) if mods.isOverride =>
           case ClassDef(mods, _, _, _) if mods.isTrait => continue(tree)
           case DefDef(_, _, _, _, _, _) if tree.symbol != null && tree.symbol.enclClass.isTrait =>

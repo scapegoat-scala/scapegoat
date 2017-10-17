@@ -75,7 +75,7 @@ class UnusedMethodParameterTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      "for overriden method" in {
+      "for overridden method" in {
         val code = """package com.sam
                       trait Foo {
                         def foo(name:String):String
@@ -87,7 +87,7 @@ class UnusedMethodParameterTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      "for overriden method without override keyword" in {
+      "for overridden method without override keyword" in {
         val code = """package com.sam
                       trait Foo {
                         def foo(name:String):String

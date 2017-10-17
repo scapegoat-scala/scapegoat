@@ -16,7 +16,7 @@ class NoOpOverride extends Inspection {
             context.warn("No op Override",
               tree.pos,
               Levels.Info,
-              "This method is overriden yet only calls super: " + tree.toString().take(200),
+              "This method is overridden yet only calls super: " + tree.toString().take(200),
               NoOpOverride.this)
           case _ => continue(tree)
         }

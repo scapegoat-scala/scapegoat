@@ -20,7 +20,7 @@ class RedundantFinalModifierOnVar extends Inspection {
             context.warn("Redundant final modifier on var",
               tree.pos,
               Levels.Info,
-              "This var cannot be overriden, final modifer is redundant",
+              "This var cannot be overridden, final modifier is redundant",
               RedundantFinalModifierOnVar.this)
           case _ => continue(tree)
         }

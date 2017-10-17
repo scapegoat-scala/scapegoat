@@ -4,9 +4,9 @@ import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
-class ExistsSimplifableToContainsTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class ExistsSimplifiableToContainsTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
-  override val inspections = Seq(new ExistsSimplifableToContains)
+  override val inspections = Seq(new ExistsSimplifiableToContains)
 
   "exists with compatible type" - {
     "should report warning" in {

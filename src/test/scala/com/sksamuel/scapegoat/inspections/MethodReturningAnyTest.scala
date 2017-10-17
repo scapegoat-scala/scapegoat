@@ -37,14 +37,14 @@ class MethodReturningAnyTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      "for overriden methods returning any" in {
+      "for overridden methods returning any" in {
         val code =
           """object T {
                trait A {
                  def foo : AnyRef = "foo"
                }
                class B extends A {
-                 override def foo : AnyRef = "overriden foo"
+                 override def foo : AnyRef = "overridden foo"
                }
             |} """.stripMargin
         compileCodeSnippet(code)

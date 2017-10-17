@@ -94,9 +94,9 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 * **0.93.2** - Fixed false positives.
 
-* **0.93.1** - #67 fixed var args in duplicate map check, #66 ignoring methods returning nothing when checking for unused params, #69 fixed extended classes false pos, #73 Removed incorrect inspection, #64 updated supression to use tree.symbol.isSynthetic instead of mods.synth, Merge pull request #77 from paulp/psp, Give access to the inspection logic through the sbt console, #76 Improve the contains test.
+* **0.93.1** - #67 fixed var args in duplicate map check, #66 ignoring methods returning nothing when checking for unused params, #69 fixed extended classes false pos, #73 Removed incorrect inspection, #64 updated suppression to use tree.symbol.isSynthetic instead of mods.synth, Merge pull request #77 from paulp/psp, Give access to the inspection logic through the sbt console, #76 Improve the contains test.
 
-* **0.93.0** - Added ability to define multiple traversers that run in seperate phases of the compiler, #58 Updated supression to work on objects and classes, #60 handling case objects in suspcious match on class object, Allow all inspections to be disabled, other fixes
+* **0.93.0** - Added ability to define multiple traversers that run in separate phases of the compiler, #58 Updated suppression to work on objects and classes, #60 handling case objects in suspicious match on class object, Allow all inspections to be disabled, other fixes
 
 * **0.92.2** - Added debug option, Made summary optional and disabled in tests, Improved var could be val #54, Split null inspections into assignment and invocation #53, Bumped count on operators to > 2, loads of fixes, loads of verboseness removed.
 
@@ -104,7 +104,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 * **0.92.0** - Added swallowed exception inspection, Added public finalizer inspection, Added use expm1(x) instead of exp(x) - 1 inspection, Added use log1p(x) instead of log(x + 1) inspection, Added use log10(x) instead of log(x)/log(10) inspection, Added use cbrt inspection
 
-* **0.91.0** - Updated logging format to include less [scapegoat] everywhere, Addded scala.math and java.StrictMath to useSqrt, Added ignored files patterns option, Added wildcard import inspection, Added comparison to empty set inspection
+* **0.91.0** - Updated logging format to include less [scapegoat] everywhere, Added scala.math and java.StrictMath to useSqrt, Added ignored files patterns option, Added wildcard import inspection, Added comparison to empty set inspection
 
 * **0.90.17** - Added looks like interpolated string inspection, Added SuspiciousMatchOnClassObject inspection, Updated varuse to not warn on vars in actors #46, Added comparison to empty list inspection, #37 Changed emptyinterpolated string to error, #37 Fixed warning on max parameters
 
@@ -114,35 +114,35 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 * **0.90.12** - New inspections: unnecessary override, duplicate import, pointless type bounds, max parameters, var closure, method returning any. Updated repeated case body to ignore bodies with two or less statements #28. Removed false positives on getter/setter #27.
 
-* **0.90.11** - Added empty for inspection, AnyUse inspection, Added ArrayEquals inspection, Added double negation inspection, Disabled expession as statement inspection by default, Added avoid operator overload inspection, #25 improving repeated case bodies, Added lonely sealed trait. Added postInspection call to inspections
+* **0.90.11** - Added empty for inspection, AnyUse inspection, Added ArrayEquals inspection, Added double negation inspection, Disabled expression as statement inspection by default, Added avoid operator overload inspection, #25 improving repeated case bodies, Added lonely sealed trait. Added postInspection call to inspections
 
 * **0.90.10** - Added type shadowing inspection, var could be val inspection, unreachable catch inspection and unnecessary toString inspection
 
 * **0.90.09** - Added new inspections: bounded by final type, empty while block, prefer vector empty, finalizer without super, impossible option size condition, filter dot head, repeated case body. Added `infos` to HTML output header
 
-* **0.90.8** - Fixed erroneous partial functions inspection. Added inspection for empty case classe. Changed levels in output to lowercase. Added console output option. Fixed seq empty on non empty seq. Changed return usage to info. Fixed odd issue with empty tree. Changed unused parameter in override to be info. Ignoring all synthetic method added to case classes. Fixed while(true) being detected by ConstantIf
+* **0.90.8** - Fixed erroneous partial functions inspection. Added inspection for empty case class. Changed levels in output to lowercase. Added console output option. Fixed seq empty on non empty seq. Changed return usage to info. Fixed odd issue with empty tree. Changed unused parameter in override to be info. Ignoring all synthetic method added to case classes. Fixed while(true) being detected by ConstantIf
 
 ### Inspections
 
-There are currently 108 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 116 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name | Brief Description |
 |----|-----------|
 | ArrayEquals | Checks for comparison of arrays using `==` which will always return false |
 | ArraysInFormat | Checks for arrays passed to String.format |
 | ArraysToString | Checks for explicit toString calls on arrays |
+| AsInstanceOf | Checks for use of `asInstanceOf` |
 | AvoidOperatorOverload | Checks for mental symbolic method names |
 | AvoidSizeEqualsZero | Traversable.size can be slow for some data structure, prefer .isEmpty |
 | AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty |
 | AvoidToMinusOne | Checks for loops that use `x to n-1` instead of `x until n` |
-| AsInstanceOf | Checks for use of `asInstanceOf` |
 | BigDecimalDoubleConstructor | Checks for use of `BigDecimal(double)` which can be unsafe |
 | BigDecimalScaleWithoutRoundingMode | `setScale()` on a `BigDecimal` without setting the rounding mode can throw an exception |
 | BoundedByFinalType | Looks for types with upper bounds of a final type |
 | BrokenOddness | checks for a % 2 == 1 for oddness because this fails on negative numbers |
-| CatchNpe | Checks for try blocks that catch null pointer exceptions |
 | CatchException | Checks for try blocks that catch Exception |
 | CatchFatal | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable |
+| CatchNpe | Checks for try blocks that catch null pointer exceptions |
 | CatchThrowable | Checks for try blocks that catch Throwable |
 | ClassNames | Ensures class names adhere to the style guidelines |
 | CollectionIndexOnNonIndexedSeq | Checks for indexing on a Seq which is not an IndexedSeq |
@@ -169,27 +169,27 @@ There are currently 108 inspections. An overview list is given, followed by a mo
 | EmptySynchronizedBlock | Looks for empty synchronized blocks |
 | EmptyTryBlock | Looks for empty try blocks |
 | EmptyWhileBlock | Looks for empty while loops |
-| ExistsSimplifableToContains | `exists(x => x == b)` replaceable with `contains(b)` |
+| ExistsSimplifiableToContains | `exists(x => x == b)` replaceable with `contains(b)` |
 | FilterDotHead | `.filter(x => ).head` can be replaced with `find(x => ) match { .. } ` |
 | FilterDotHeadOption | `.filter(x =>).headOption` can be replaced with `find(x => )` |
 | FilterDotIsEmpty | `.filter(x => ).isEmpty` can be replaced with `!exists(x => )` |
-| FilterOptionAndGet | `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
 | FilterDotSize | `.filter(x => ).size` can be replaced more concisely with with `count(x => )` |
-| FinalizerWithoutSuper | Checks for overriden finalizers that do not call super |
-| FinalModifierOnCaseClass | Using Case classes without `final` modifer can lead to surprising breakage |
-| FindDotIsDefined | `find(x => ).isDefined` can be replaced with `exist(x => )` |
+| FilterOptionAndGet | `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
+| FinalModifierOnCaseClass | Using Case classes without `final` modifier can lead to surprising breakage |
+| FinalizerWithoutSuper | Checks for overridden finalizers that do not call super |
 | FindAndNotEqualsNoneReplaceWithExists | `.find(x => ) != None` can be replaced with `exist(x => )` |
+| FindDotIsDefined | `find(x => ).isDefined` can be replaced with `exist(x => )` |
 | IllegalFormatString | Looks for invalid format strings |
-| IncorrectlyNamedExceptions | Checks for exceptions that are not called *Exception and vice versa |
-| IncorrectNumberOfArgsToFormat | Checks for wrong number of arguments to `String.format` |
-| InvalidRegex | Checks for invalid regex literals |
 | ImpossibleOptionSizeCondition | Checks for code like `option.size > 2` which can never be true |
+| IncorrectNumberOfArgsToFormat | Checks for wrong number of arguments to `String.format` |
+| IncorrectlyNamedExceptions | Checks for exceptions that are not called *Exception and vice versa |
+| InvalidRegex | Checks for invalid regex literals |
 | IsInstanceOf | Checks for use of `isInstanceOf` |
 | JavaConversionsUse | Checks for use of implicit Java conversions |
 | ListAppend | Checks for List :+ which is O(n) |
 | ListSize | Checks for `List.size` which is O(n). |
-| LooksLikeInterpolatedString | Finds strings that look like they should be interpolated but are not |
 | LonelySealedTrait | Checks for sealed traits which have no implementation |
+| LooksLikeInterpolatedString | Finds strings that look like they should be interpolated but are not |
 | MapGetAndGetOrElse | `Map.get(key).getOrElse(value)` can be replaced with `Map.getOrElse(key, value)` |
 | MaxParameters | Checks for methods that have over 10 parameters |
 | MethodNames | Warns on method names that don't adhere to the Scala style guidelines |
@@ -210,14 +210,14 @@ There are currently 108 inspections. An overview list is given, followed by a mo
 | PreferSeqEmpty | Checks for Seq() when could use Seq.empty |
 | PreferSetEmpty | Checks for Set() when could use Set.empty |
 | ProductWithSerializableInferred | Checks for vals that have `Product with Serializable` as their inferred type |
-| PublicFinalizer | Checks for overriden finalizes that are public |
+| PublicFinalizer | Checks for overridden finalizes that are public |
+| RedundantFinalModifierOnMethod | Redundant `final` modifier on method that cannot be overridden |
+| RedundantFinalModifierOnVar | Redundant `final` modifier on var that cannot be overridden |
 | RedundantFinalizer | Checks for empty finalizers. |
-| RedundantFinalModifierOnMethod | Redundant `final` modifier on method that cannot be overriden |
-| RedundantFinalModifierOnVar | Redundant `final` modifier on var that cannot be overriden |
 | RepeatedCaseBody | Checks for case statements which have the same body |
+| ReverseFunc | `reverse` followed by `head`, `headOption`, `iterator`, or`map` can be replaced, respectively, with `last`, `lastOption`, `reverseIterator`, or `reverseMap` |
 | ReverseTailReverse | `.reverse.tail.reverse` can be replaced with `init` |
 | ReverseTakeReverse | `.reverse.take(...).reverse` can be replaced with `takeRight` |
-| ReverseFunc | `reverse` followed by `head`, `headOption`, `iterator`, or`map` can be replaced, respectively, with `last`, `lastOption`, `reverseIterator`, or `reverseMap` |
 | SimplifyBooleanExpression | `b == false` can be simplified to `!b` |
 | StripMarginOnRegex | Checks for .stripMargin on regex strings that contain a pipe |
 | SubstringZero | Checks for `String.substring(0)` |
@@ -225,6 +225,7 @@ There are currently 108 inspections. An overview list is given, followed by a mo
 | SwallowedException | Finds catch blocks that don't handle caught exceptions |
 | SwapSortFilter | `sort.filter` can be replaced with `filter.sort` for performance |
 | TraversableHead | Looks for unsafe usage of `Traversable.head` |
+| TraversableLast | Looks for unsafe usage of `Traversable.last` |
 | TryGet | Checks for use of `Try.get` |
 | TypeShadowing | Checks for shadowed type parameters in methods |
 | UnnecessaryIf | Checks for code like `if (expr) true else false` |
@@ -286,7 +287,7 @@ Checks for empty finalizers. This is redundant code and should be removed. Eg, `
 
 ##### PreferSetEmpty
 
-Indicates where code using Set() could be replaced with Set.empty. Set() instantiates a new instance each time it is invoked, whereas Set.emtpy returns a pre-instantiated instance.
+Indicates where code using Set() could be replaced with Set.empty. Set() instantiates a new instance each time it is invoked, whereas Set.empty returns a pre-instantiated instance.
 
 ##### UnnecessaryReturnUse
 
