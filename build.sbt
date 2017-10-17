@@ -4,13 +4,11 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-scalaVersion := "2.12.0"
+scalaVersion := "2.12.3"
 
-crossScalaVersions := Seq("2.11.8", "2.12.0")
+crossScalaVersions := Seq("2.11.11", scalaVersion.value)
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8", "-Xmax-classfile-name", "254")
-
-publishMavenStyle := true
 
 fullClasspath in console in Compile ++= (fullClasspath in Test).value // because that's where "PluginRunner" is
 
@@ -44,28 +42,26 @@ javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
 libraryDependencies ++= Seq(
   "org.scala-lang"                  %     "scala-reflect"         % scalaVersion.value,
   "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "provided",
-  "org.scala-lang.modules"          %%    "scala-xml"             % "1.0.5",
+  "org.scala-lang.modules"          %%    "scala-xml"             % "1.0.6",
   "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "test",
-  "commons-io"                      %     "commons-io"            % "2.4"                   % "test",
-  "org.scalatest"                   %%    "scalatest"             % "3.0.0"                 % "test",
-  "org.mockito"                     %     "mockito-all"           % "1.9.5"                 % "test",
-  "joda-time"                       %     "joda-time"             % "2.3"                   % "test",
-  "org.joda"                        %     "joda-convert"          % "1.3.1"                 % "test",
-  "org.slf4j"                       %     "slf4j-api"             % "1.7.7"                 % "test"
+  "commons-io"                      %     "commons-io"            % "2.5"                   % "test",
+  "org.scalatest"                   %%    "scalatest"             % "3.0.4"                 % "test",
+  "org.mockito"                     %     "mockito-all"           % "1.10.19"               % "test",
+  "joda-time"                       %     "joda-time"             % "2.9.9"                 % "test",
+  "org.joda"                        %     "joda-convert"          % "1.9.2"                 % "test",
+  "org.slf4j"                       %     "slf4j-api"             % "1.7.25"                % "test"
 )
 
 sbtrelease.ReleasePlugin.autoImport.releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
 sbtrelease.ReleasePlugin.autoImport.releaseCrossBuild := true
 
-publishTo <<= version {
-  (v: String) =>
-    val nexus = "https://oss.sonatype.org/"
-    if (v.trim.endsWith("SNAPSHOT"))
-      Some("snapshots" at nexus + "content/repositories/snapshots")
-    else
-      Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
+publishTo := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
 
 publishMavenStyle := true
 
