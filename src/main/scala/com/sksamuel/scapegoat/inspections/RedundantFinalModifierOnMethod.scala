@@ -27,7 +27,7 @@ class RedundantFinalModifierOnMethod extends Inspection {
             context.warn("Redundant final modifier on method",
               tree.pos,
               Levels.Info,
-              s"${dd.symbol.fullName} cannot be overriden, final modifer is redundant",
+              s"${dd.symbol.fullName} cannot be overridden, final modifier is redundant",
               RedundantFinalModifierOnMethod.this)
           case _ => continue(tree)
         }

@@ -7,7 +7,7 @@ import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels
  *
  *         Inspired by Intellij
  */
-class ExistsSimplifableToContains extends Inspection {
+class ExistsSimplifiableToContains extends Inspection {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -31,7 +31,7 @@ class ExistsSimplifableToContains extends Inspection {
               tree.pos,
               Levels.Info,
               "exists(x => x == y) can be replaced with contains(y): " + tree.toString().take(500),
-              ExistsSimplifableToContains.this)
+              ExistsSimplifiableToContains.this)
           case _ => continue(tree)
         }
       }

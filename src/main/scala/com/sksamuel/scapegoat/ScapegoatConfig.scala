@@ -63,7 +63,7 @@ object ScapegoatConfig extends App {
     new EmptySynchronizedBlock,
     new EmptyTryBlock,
     new EmptyWhileBlock,
-    new ExistsSimplifableToContains,
+    new ExistsSimplifiableToContains,
     new FilterDotHead,
     new FilterDotHeadOption,
     new FilterDotIsEmpty,
