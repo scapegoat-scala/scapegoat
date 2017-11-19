@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-class TraversableLast extends Inspection {
+class TraversableLast extends Inspection("Use of Traversable.last", Levels.Error) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -13,7 +13,7 @@ class TraversableLast extends Inspection {
         tree match {
           case Select(left, TermName("last")) =>
             if (left.tpe <:< typeOf[Traversable[_]])
-              context.warn("Use of Traversable.last", tree.pos, Levels.Error, tree.toString().take(500), TraversableLast.this)
+              context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }
       }

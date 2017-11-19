@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.naming
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class ClassNames extends Inspection {
+class ClassNames extends Inspection("Class name not recommended", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -16,11 +16,8 @@ class ClassNames extends Inspection {
         tree match {
           case ClassDef(_, name, _, _) if name.toString.contains("$anon") =>
           case ClassDef(mods, name, _, _) if !mods.isSynthetic && !name.toString.matches(regex) =>
-            context.warn("Class name not recommended",
-              tree.pos,
-              Levels.Info,
-              s"Class names should begin with uppercase letter (bad = $name)",
-              ClassNames.this)
+            context.warn(tree.pos, self ,
+              s"Class names should begin with uppercase letter (bad = $name)")
           case _ => continue(tree)
         }
       }

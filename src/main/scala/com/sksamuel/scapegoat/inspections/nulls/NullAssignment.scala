@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.nulls
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class NullAssignment extends Inspection {
+class NullAssignment extends Inspection("Null assignment", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -28,11 +28,7 @@ class NullAssignment extends Inspection {
       }
 
       private def warn(tree: Tree) {
-        context.warn("Null assignment",
-          tree.pos,
-          Levels.Warning,
-          "Null assignment on line " + tree.pos.line,
-          NullAssignment.this)
+        context.warn(tree.pos, self, "Null assignment on line " + tree.pos.line)
       }
     }
   }

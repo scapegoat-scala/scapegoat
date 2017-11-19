@@ -16,32 +16,19 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
   def warns = warnings(Levels.Warning)
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
-  def warn(text: String, pos: Position, level: Level, inspection: Inspection): Unit = {
-    warn(text, pos, level, None, inspection)
-  }
-
-  def warn(text: String, pos: Position, level: Level, snippet: String, inspection: Inspection): Unit = {
-    warn(text, pos, level, Option(snippet), inspection)
-  }
-
-  private def warn(text: String,
-    pos: Position,
-    level: Level,
-    snippet: Option[String],
-    inspection: Inspection): Unit = {
-
-    val adjustedLevel = levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName) match {
-      case Some(overrideLevel) => overrideLevel
-      case None                => level
-    }
+  def warn(pos: Position, inspection: Inspection, snippet: Option[String] = None): Unit = {
+    val level = inspection.defaultLevel
+    val text = inspection.text
+    val snippetText = inspection.explanation.orElse(snippet)
+    val adjustedLevel = levelOverridesByInspectionSimpleName.getOrElse(inspection.getClass.getSimpleName, level)
 
     val sourceFileFull = pos.source.file.path
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
-    val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, snippet, inspection.getClass.getCanonicalName)
+    val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, snippetText, inspection.getClass.getCanonicalName)
     warnings.append(warning)
     if (consoleOutput) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
-      snippet.foreach(s => println(s"          $s"))
+      snippetText.foreach(s => println(s"          $s"))
       println()
     }
 

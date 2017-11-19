@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class LonelySealedTrait extends Inspection {
+class LonelySealedTrait extends Inspection("Lonely sealed trait", Levels.Error) {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -17,11 +17,7 @@ class LonelySealedTrait extends Inspection {
     override def postInspection(): Unit = {
       for ((name, cdef) <- sealedClasses) {
         if (!implementedClasses.contains(name)) {
-          context.warn("Lonely sealed trait",
-            cdef.pos,
-            Levels.Error,
-            s"Sealed trait ${cdef.name} has no implementing classes",
-            LonelySealedTrait.this)
+          context.warn(cdef.pos, self, s"Sealed trait ${cdef.name} has no implementing classes")
         }
       }
     }

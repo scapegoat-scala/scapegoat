@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class VarCouldBeVal extends Inspection {
+class VarCouldBeVal extends Inspection("Var could be val", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -49,11 +49,8 @@ class VarCouldBeVal extends Inspection {
         tree match {
           case d @ DefDef(_, _, _, _, _, Block(stmt, expr)) =>
             for (unwritten <- containsUnwrittenVar(stmt :+ expr)) {
-              context.warn("Var could be val",
-                tree.pos,
-                Levels.Warning,
-                s"$unwritten is never written to, so could be a val: " + tree.toString().take(200),
-                VarCouldBeVal.this)
+              context.warn(tree.pos, self,
+                s"$unwritten is never written to, so could be a val: " + tree.toString().take(200))
             }
           case _ => continue(tree)
         }

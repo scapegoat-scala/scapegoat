@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class RepeatedCaseBody extends Inspection {
+class RepeatedCaseBody extends Inspection("Repeated case body", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -24,11 +24,8 @@ class RepeatedCaseBody extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Match(_, cases) if isRepeated(cases) =>
-            context.warn("Repeated case body",
-              tree.pos,
-              Levels.Warning,
-              "Case body is repeated. Consider merging pattern clauses together: " + tree.toString().take(500),
-              RepeatedCaseBody.this)
+            context.warn(tree.pos, self,
+              "Case body is repeated. Consider merging pattern clauses together: " + tree.toString().take(500))
           case _ => continue(tree)
         }
       }

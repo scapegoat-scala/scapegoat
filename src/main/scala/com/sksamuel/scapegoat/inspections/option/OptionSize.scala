@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.option
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class OptionSize extends Inspection {
+class OptionSize extends Inspection("Prefer Option.isDefined instead of Option.size", Levels.Error) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -14,8 +14,7 @@ class OptionSize extends Inspection {
         tree match {
           case Select(Apply(option2Iterable, List(opt)), TermName("size")) ⇒
             if (option2Iterable.symbol.fullName == "scala.Option.option2Iterable")
-              context.warn("Prefer Option.isDefined instead of Option.size",
-                tree.pos, Levels.Error, tree.toString().take(500), OptionSize.this)
+              context.warn(tree.pos, self, tree.toString().take(500))
           case _ ⇒ continue(tree)
         }
       }

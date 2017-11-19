@@ -10,7 +10,7 @@ import scala.reflect.internal.Flags
  *
  *         http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names
  */
-class AvoidOperatorOverload extends Inspection {
+class AvoidOperatorOverload extends Inspection("Avoid operator overload", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -23,12 +23,9 @@ class AvoidOperatorOverload extends Inspection {
           case DefDef(_, nme.CONSTRUCTOR, _, _, _, _) =>
           case DefDef(_, TermName("$init$"), _, _, _, _) =>
           case DefDef(_, name, _, _, _, _) if name.toChars.count(_ == '$') > 2 =>
-            context.warn("Avoid operator overload",
-              tree.pos,
-              Levels.Info,
+            context.warn(tree.pos, self,
               s"Scala style guide advocates against routinely using operators as method names (${name.decode}})." +
-                "See http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names",
-              AvoidOperatorOverload.this)
+                "See http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names")
           case _ => continue(tree)
         }
       }

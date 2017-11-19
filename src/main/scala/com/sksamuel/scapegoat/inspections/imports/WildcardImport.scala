@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.imports
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class WildcardImport extends Inspection {
+class WildcardImport extends Inspection("Wildcard import", Levels.Warning) {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -16,11 +16,7 @@ class WildcardImport extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Import(expr, selector) if isWildcard(selector) =>
-            context.warn("Wildcard import",
-              tree.pos,
-              Levels.Warning,
-              "Wildcard import used: " + tree.toString(),
-              WildcardImport.this)
+            context.warn(tree.pos, self, "Wildcard import used: " + tree.toString())
           case _ => continue(tree)
         }
       }

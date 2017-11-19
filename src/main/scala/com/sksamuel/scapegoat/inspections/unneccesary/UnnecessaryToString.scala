@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class UnnecessaryToString extends Inspection {
+class UnnecessaryToString extends Inspection("Unnecessary toString", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -14,8 +14,8 @@ class UnnecessaryToString extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(lhs, TermName("toString")) if lhs.tpe <:< StringClass.tpe =>
-            context.warn("Unnecessary toString", tree.pos, Levels.Warning,
-              "Unnecessary toString on instanceo of String: " + tree.toString().take(200), UnnecessaryToString.this)
+            context.warn(tree.pos, self,
+              "Unnecessary toString on instance of String: " + tree.toString().take(200))
           case _ =>
         }
         continue(tree)

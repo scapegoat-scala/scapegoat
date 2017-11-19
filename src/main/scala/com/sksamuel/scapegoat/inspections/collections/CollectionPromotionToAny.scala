@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat._
  * @author Stephen Samuel
  *         This inspection was inspired by http://p5wscala.wordpress.com/scalaprocessing-gotchas/#t2
  */
-class CollectionPromotionToAny extends Inspection {
+class CollectionPromotionToAny extends Inspection("Collection promotion to any", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -34,8 +34,7 @@ class CollectionPromotionToAny extends Inspection {
         tree match {
           case TypeApply(Select(l, TermName("$colon$plus")), List(a, r)) =>
             if (!isAnySeq(l) && isAny(a))
-              context.warn("Collection promotion to any", tree.pos, Levels.Warning, tree.toString().take(100),
-                CollectionPromotionToAny.this)
+              context.warn(tree.pos, self, tree.toString().take(100))
           case _ => continue(tree)
         }
       }

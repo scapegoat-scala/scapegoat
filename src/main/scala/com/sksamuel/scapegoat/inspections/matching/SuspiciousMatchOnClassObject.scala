@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class SuspiciousMatchOnClassObject extends Inspection {
+class SuspiciousMatchOnClassObject extends Inspection("Suspicious match on class object", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -33,11 +33,7 @@ class SuspiciousMatchOnClassObject extends Inspection {
       }
 
       private def warn(tree: Tree) {
-        context.warn("Suspicious match on class object",
-          tree.pos,
-          Levels.Warning,
-          tree.toString().take(500),
-          SuspiciousMatchOnClassObject.this)
+        context.warn(tree.pos, self, tree.toString().take(500))
       }
     }
   }

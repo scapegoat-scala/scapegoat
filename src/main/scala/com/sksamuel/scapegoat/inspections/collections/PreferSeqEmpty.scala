@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class PreferSeqEmpty extends Inspection {
+class PreferSeqEmpty extends Inspection("Prefer Seq.empty", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -21,9 +21,9 @@ class PreferSeqEmpty extends Inspection {
       }
 
       private def warn(tree: Tree) {
-        context.warn("Prefer Seq.empty", tree.pos, Levels.Info,
+        context.warn(tree.pos, self,
           "Seq[T]() creates a new instance. Consider Seq.empty which does not allocate a new object. " +
-            tree.toString().take(500), PreferSeqEmpty.this)
+            tree.toString().take(500))
       }
     }
   }

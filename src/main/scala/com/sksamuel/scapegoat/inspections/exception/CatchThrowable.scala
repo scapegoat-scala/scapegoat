@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class CatchThrowable extends Inspection {
+class CatchThrowable extends Inspection("Catch throwable", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -23,11 +23,9 @@ class CatchThrowable extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Try(_, cases, _) if catchesThrowable(cases) =>
-            context.warn("Catch throwable",
-              tree.pos,
-              Levels.Warning,
-              "Did you intend to catch all throwables, consider catching a more specific exception class: " +
-                tree.toString().take(300), CatchThrowable.this)
+            context.warn(tree.pos, self,
+              "Did you intend to catch all throwables? Consider catching a more specific exception class: " +
+                tree.toString().take(300))
           case _ => continue(tree)
         }
       }

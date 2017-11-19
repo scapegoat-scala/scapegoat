@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class NegationIsEmpty extends Inspection {
+class NegationIsEmpty extends Inspection("!isEmpty can be replaced with nonEmpty", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -17,8 +17,7 @@ class NegationIsEmpty extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Select(lhs, IsEmpty), Bang) if isTraversable(lhs) =>
-            context.warn("!isEmpty can be replaced with nonEmpty", tree.pos, Levels.Info,
-              tree.toString().take(100), NegationIsEmpty.this)
+            context.warn(tree.pos, self, tree.toString().take(100))
           case _ => continue(tree)
         }
       }

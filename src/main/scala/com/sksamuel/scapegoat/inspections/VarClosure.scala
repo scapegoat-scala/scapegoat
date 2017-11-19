@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
-class VarClosure extends Inspection {
+class VarClosure extends Inspection("Var in closure", Levels.Warning) {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -16,11 +16,8 @@ class VarClosure extends Inspection {
         case Apply(Select(_, _), args) =>
           args.filter(_.symbol != null)
             .foreach(arg => if (arg.symbol.isMethod && arg.symbol.isGetter && !arg.symbol.isStable) {
-              context.warn("VarClosure",
-                tree.pos,
-                Levels.Warning,
-                "Closing over a var can lead to subtle bugs: " + tree.toString().take(500),
-                VarClosure.this)
+              context.warn(tree.pos, self,
+                "Closing over a var can lead to subtle bugs: " + tree.toString().take(500))
             })
         case _ =>
       }

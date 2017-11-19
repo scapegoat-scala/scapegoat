@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class FilterDotIsEmpty extends Inspection {
+class FilterDotIsEmpty extends Inspection("filter().isEmpty instead of !exists()", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -13,8 +13,8 @@ class FilterDotIsEmpty extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(Select(_, TermName("filter")), _), TermName("isEmpty")) =>
-            context.warn("filter().isEmpty instead of !exists()", tree.pos, Levels.Info,
-              ".filter(x => Bool).isEmpty can be replaced with !exists(x => Bool): " + tree.toString().take(500), FilterDotIsEmpty.this)
+            context.warn(tree.pos, self,
+              ".filter(x => Bool).isEmpty can be replaced with !exists(x => Bool): " + tree.toString().take(500))
           case _ => continue(tree)
         }
       }

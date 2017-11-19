@@ -8,22 +8,23 @@ class ReadmeTest extends FreeSpec with Matchers {
     scala.io.Source.fromFile("README.md")
       .getLines().toSeq
 
-  val inspectionNamesFromReadme =
+  val inspectionNamesAndLevelsFromReadme =
     readme
       .dropWhile(l => l.trim.distinct != "|-")
       .drop(1)
       .takeWhile(l => l.trim.nonEmpty)
       .map(_.split("\\|"))
       .collect {
-        case Array(_, className, _) => className.trim
+        case Array(_, className, _, level) => className.trim -> level.trim
       }
 
-  val inspectionNames = ScapegoatConfig.inspections.map(_.getClass.getSimpleName).toSet
+  val inspectionNamesAndLevels =
+    ScapegoatConfig.inspections.map(i => i.getClass.getSimpleName -> i.defaultLevel.toString).toSet
 
   "README" - {
     "should be up to date" in {
-      val inCodeOnly = inspectionNames.diff(inspectionNamesFromReadme.toSet).toSeq.sorted
-      val inReadmeOnly = inspectionNamesFromReadme.toSet.diff(inspectionNames).toSeq.sorted
+      val inCodeOnly = inspectionNamesAndLevels.diff(inspectionNamesAndLevelsFromReadme.toSet).toSeq.sorted
+      val inReadmeOnly = inspectionNamesAndLevelsFromReadme.toSet.diff(inspectionNamesAndLevels).toSeq.sorted
 
       if (inCodeOnly.nonEmpty || inReadmeOnly.nonEmpty)
         fail(
@@ -35,13 +36,13 @@ class ReadmeTest extends FreeSpec with Matchers {
     }
 
     "should have inspections listed in order" in {
-      inspectionNamesFromReadme.sorted shouldBe inspectionNamesFromReadme
+      inspectionNamesAndLevelsFromReadme.sorted shouldBe inspectionNamesAndLevelsFromReadme
     }
 
     "should have correct number of inspections" in {
       val Pattern = raw"There are currently (\d+?) inspections.*".r
       readme.collect {
-        case Pattern(n) => n.toInt shouldBe inspectionNames.size
+        case Pattern(n) => n.toInt shouldBe inspectionNamesAndLevels.size
       }
     }
   }

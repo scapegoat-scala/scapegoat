@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
-class FinalModifierOnCaseClass extends Inspection {
+class FinalModifierOnCaseClass extends Inspection(
+  "Missing final modifier on case class", Levels.Info, "Case classes should have final modifier") {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -13,11 +14,7 @@ class FinalModifierOnCaseClass extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case ClassDef(mods, _, _, _) if !mods.hasAbstractFlag && mods.isCase && !mods.isFinal =>
-            context.warn("Missing final modifier on case class",
-              tree.pos,
-              Levels.Info,
-              "Case classes should have final modifier",
-              FinalModifierOnCaseClass.this)
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }

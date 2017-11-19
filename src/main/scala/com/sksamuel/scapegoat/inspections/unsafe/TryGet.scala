@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.unsafe
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class TryGet extends Inspection {
+class TryGet extends Inspection("Use of Try.get", Levels.Error) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -14,7 +14,7 @@ class TryGet extends Inspection {
         tree match {
           case Select(left, TermName("get")) =>
             if (left.tpe.typeSymbol.fullName == "scala.util.Try")
-              context.warn("Use of Try.get", tree.pos, Levels.Error, tree.toString().take(500), TryGet.this)
+              context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }
       }

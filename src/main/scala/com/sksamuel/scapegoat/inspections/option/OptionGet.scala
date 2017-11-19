@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.option
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class OptionGet extends Inspection {
+class OptionGet extends Inspection("Use of Option.get", Levels.Error) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -14,7 +14,7 @@ class OptionGet extends Inspection {
         tree match {
           case Select(left, TermName("get")) =>
             if (left.tpe.typeSymbol.fullName == "scala.Option")
-              context.warn("Use of Option.get", tree.pos, Levels.Error, tree.toString().take(500), OptionGet.this)
+              context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }
       }

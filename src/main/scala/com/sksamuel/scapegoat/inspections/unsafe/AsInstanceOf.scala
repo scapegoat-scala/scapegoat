@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections.unsafe
 
 import com.sksamuel.scapegoat._
 
-class AsInstanceOf extends Inspection {
+class AsInstanceOf extends Inspection("Use of asInstanceOf", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -13,9 +13,8 @@ class AsInstanceOf extends Inspection {
         tree match {
           // this will skip any uses of manifest etc
           case TypeApply(Select(qual, TermName("asInstanceOf")), _) if qual.toString != "classOf[java.lang.Class]" =>
-            context.warn("Use of asInstanceOf", tree.pos, Levels.Warning,
-              "asInstanceOf used near " + tree.toString().take(500) + ". Consider using pattern matching.",
-              AsInstanceOf.this)
+            context.warn(tree.pos, self,
+              "asInstanceOf used near " + tree.toString().take(500) + ". Consider using pattern matching.")
           case DefDef(modifiers, _, _, _, _, _) if modifiers.hasFlag(Flag.SYNTHETIC) => // no further
           case m @ Match(selector, cases) => // ignore selector and process cases
             cases.foreach(traverse)

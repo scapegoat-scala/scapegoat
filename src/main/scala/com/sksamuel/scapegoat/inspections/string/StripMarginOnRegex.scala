@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class StripMarginOnRegex extends Inspection {
+class StripMarginOnRegex extends Inspection("Strip margin on regex", Levels.Error,
+  "Strip margin will strip | from regex - possible corrupted regex") {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -17,12 +18,7 @@ class StripMarginOnRegex extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(_, List(Select(Apply(Select(_, Augment), List(Literal(Constant(str: String)))), StripMargin))), R) if str.contains('|') =>
-            context
-              .warn("Strip margin on regex",
-                tree.pos,
-                Levels.Error,
-                "Strip margin will strip | from regex - possible corrupted regex",
-                StripMarginOnRegex.this)
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }

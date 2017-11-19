@@ -8,7 +8,7 @@ import com.sksamuel.scapegoat._
  * Inspired by Intellij inspection that does:
  *   myMap.get(key).getOrElse(defaultValue) –> myMap.getOrElse(key, defaultValue)
  */
-class MapGetAndGetOrElse extends Inspection {
+class MapGetAndGetOrElse extends Inspection("Use of .get.getOrElse instead of .getOrElse", Levels.Error) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -21,12 +21,8 @@ class MapGetAndGetOrElse extends Inspection {
         tree match {
           case Apply(TypeApply(Select(Apply(Select(left, TermName("get")), List(key)),
             TermName("getOrElse")), _), List(defaultValue)) if isMap(left) =>
-            context.warn(
-              s"Use of .get.getOrElse instead of .getOrElse",
-              tree.pos,
-              Levels.Error,
-              s"Use of .get($key).getOrElse($defaultValue) instead of getOrElse($key, $defaultValue): " + tree.toString().take(500),
-              MapGetAndGetOrElse.this)
+            context.warn(tree.pos, self,
+              s"Use of .get($key).getOrElse($defaultValue) instead of getOrElse($key, $defaultValue): " + tree.toString().take(500))
           case _ => continue(tree)
         }
       }

@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat._
 
-class VarUse extends Inspection {
+class VarUse extends Inspection("Use of var", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -20,7 +20,7 @@ class VarUse extends Inspection {
           case ValDef(mods, _, _, _) if mods.isSynthetic || mods.isMacro                =>
           case ValDef(_, _, tpt, _) if isXmlLiteral(tpt.tpe)                            =>
           case v @ ValDef(modifiers, name, tpt, rhs) if modifiers.hasFlag(Flag.MUTABLE) =>
-            context.warn("Use of var", tree.pos, Levels.Warning, "var used: " + tree.toString().take(300), VarUse.this)
+            context.warn(tree.pos, self, "var used: " + tree.toString().take(300))
           case _ => continue(tree)
         }
       }

@@ -5,7 +5,7 @@ import scala.collection.mutable
 import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
-class TypeShadowing extends Inspection {
+class TypeShadowing extends Inspection("Type shadowing", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -28,11 +28,7 @@ class TypeShadowing extends Inspection {
       }
 
       private def warn(dd: DefDef, name: TermName, tparam: TypeDef) {
-        context.warn("Type shadowing",
-          dd.pos,
-          Levels.Warning,
-          s"Method $name declares shadowed type parameter ${tparam.name}",
-          TypeShadowing.this)
+        context.warn(dd.pos, self, s"Method $name declares shadowed type parameter ${tparam.name}")
       }
 
       override def inspect(tree: Tree): Unit = {

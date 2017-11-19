@@ -4,17 +4,17 @@ import com.sksamuel.scapegoat.inspections._
 import com.sksamuel.scapegoat.inspections.collections._
 import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
 import com.sksamuel.scapegoat.inspections.empty._
-import com.sksamuel.scapegoat.inspections.equality.{ ComparingFloatingPointTypes, ComparingUnrelatedTypes, ComparisonWithSelf }
+import com.sksamuel.scapegoat.inspections.equality._
 import com.sksamuel.scapegoat.inspections.exception._
-import com.sksamuel.scapegoat.inspections.imports.{ WildcardImport, DuplicateImport }
-import com.sksamuel.scapegoat.inspections.inference.{ PointlessTypeBounds, MethodReturningAny, BoundedByFinalType, ProductWithSerializableInferred }
-import com.sksamuel.scapegoat.inspections.matching.{ SuspiciousMatchOnClassObject, PartialFunctionInsteadOfMatch, RepeatedCaseBody }
+import com.sksamuel.scapegoat.inspections.imports.DuplicateImport
+import com.sksamuel.scapegoat.inspections.inference._
+import com.sksamuel.scapegoat.inspections.matching._
 import com.sksamuel.scapegoat.inspections.math._
-import com.sksamuel.scapegoat.inspections.naming.{ MethodNames, ObjectNames, ClassNames }
-import com.sksamuel.scapegoat.inspections.nulls.{ NullAssignment, NullParameter }
-import com.sksamuel.scapegoat.inspections.option.{ EitherGet, ImpossibleOptionSizeCondition, OptionGet, OptionSize }
+import com.sksamuel.scapegoat.inspections.naming._
+import com.sksamuel.scapegoat.inspections.nulls._
+import com.sksamuel.scapegoat.inspections.option._
 import com.sksamuel.scapegoat.inspections.string._
-import com.sksamuel.scapegoat.inspections.style.{ AvoidOperatorOverload, ParameterlessMethodReturnsUnit, SimplifyBooleanExpression }
+import com.sksamuel.scapegoat.inspections.style._
 import com.sksamuel.scapegoat.inspections.unneccesary._
 import com.sksamuel.scapegoat.inspections.unsafe._
 
@@ -25,18 +25,18 @@ object ScapegoatConfig extends App {
     new ArrayEquals,
     new ArraysInFormat,
     new ArraysToString,
+    new AsInstanceOf,
     new AvoidOperatorOverload,
     new AvoidSizeEqualsZero,
     new AvoidSizeNotEqualsZero,
     new AvoidToMinusOne,
-    new AsInstanceOf,
     new BigDecimalDoubleConstructor,
     new BigDecimalScaleWithoutRoundingMode,
     new BoundedByFinalType,
     new BrokenOddness,
-    new CatchNpe,
     new CatchException,
     new CatchFatal,
+    new CatchNpe,
     new CatchThrowable,
     new ClassNames,
     new CollectionIndexOnNonIndexedSeq,
@@ -67,23 +67,23 @@ object ScapegoatConfig extends App {
     new FilterDotHead,
     new FilterDotHeadOption,
     new FilterDotIsEmpty,
-    new FilterOptionAndGet,
     new FilterDotSize,
-    new FinalizerWithoutSuper,
+    new FilterOptionAndGet,
     new FinalModifierOnCaseClass,
-    new FindDotIsDefined,
+    new FinalizerWithoutSuper,
     new FindAndNotEqualsNoneReplaceWithExists,
+    new FindDotIsDefined,
     new IllegalFormatString,
-    new IncorrectlyNamedExceptions,
-    new IncorrectNumberOfArgsToFormat,
-    new InvalidRegex,
     new ImpossibleOptionSizeCondition,
+    new IncorrectNumberOfArgsToFormat,
+    new IncorrectlyNamedExceptions,
+    new InvalidRegex,
     new IsInstanceOf,
     new JavaConversionsUse,
     new ListAppend,
     new ListSize,
-    new LooksLikeInterpolatedString,
     new LonelySealedTrait,
+    new LooksLikeInterpolatedString,
     new MapGetAndGetOrElse,
     new MaxParameters,
     new MethodNames,
@@ -105,13 +105,13 @@ object ScapegoatConfig extends App {
     new PreferSetEmpty,
     new ProductWithSerializableInferred,
     new PublicFinalizer,
-    new RedundantFinalizer,
     new RedundantFinalModifierOnMethod,
     new RedundantFinalModifierOnVar,
+    new RedundantFinalizer,
     new RepeatedCaseBody,
+    new ReverseFunc,
     new ReverseTailReverse,
     new ReverseTakeReverse,
-    new ReverseFunc,
     new SimplifyBooleanExpression,
     new StripMarginOnRegex,
     new SubstringZero,

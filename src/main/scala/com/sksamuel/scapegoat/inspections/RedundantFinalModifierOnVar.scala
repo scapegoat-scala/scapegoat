@@ -2,7 +2,9 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
-class RedundantFinalModifierOnVar extends Inspection {
+class RedundantFinalModifierOnVar extends Inspection(
+  "Redundant final modifier on var", Levels.Info,
+  "This var cannot be overridden, final modifier is redundant") {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -17,11 +19,7 @@ class RedundantFinalModifierOnVar extends Inspection {
               tree.symbol.enclClass.isCase ||
               tree.symbol.enclClass.isModuleOrModuleClass ||
               tree.symbol.enclClass.isPackageObjectOrClass) =>
-            context.warn("Redundant final modifier on var",
-              tree.pos,
-              Levels.Info,
-              "This var cannot be overridden, final modifier is redundant",
-              RedundantFinalModifierOnVar.this)
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }

@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class DuplicateImport extends Inspection {
+class DuplicateImport extends Inspection("Duplicated Import", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -27,7 +27,7 @@ class DuplicateImport extends Inspection {
             selectors.foreach(selector => {
               val name = expr.toString + "." + selector.name
               if (imports.contains(name)) {
-                context.warn("Duplicated Import", tree.pos, Levels.Info, name, DuplicateImport.this)
+                context.warn(tree.pos, self, name)
               }
               imports.add(name)
             })
