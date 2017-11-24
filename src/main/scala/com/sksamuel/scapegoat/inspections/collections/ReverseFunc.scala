@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-class ReverseFunc extends Inspection {
+class ReverseFunc extends Inspection("Unnecessary reverse", Levels.Info) {
 
   object FuncReplace {
 
@@ -34,8 +34,8 @@ class ReverseFunc extends Inspection {
       }
 
       private def warn(func: String, replace: String, tree: Tree) =
-        context.warn(s"reverse.$func instead of $replace", tree.pos, Levels.Info,
-          s".reverse.$func can be replaced with $replace: " + tree.toString().take(500), ReverseFunc.this)
+        context.warn(tree.pos, self,
+          s".reverse.$func can be replaced with $replace: " + tree.toString().take(500))
 
     }
   }

@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class PredefIterableIsMutable extends Inspection {
+class PredefIterableIsMutable extends Inspection("Default Iterable is mutable", Levels.Info,
+  "Iterable aliases scala.collection.mutable.Iterable. Did you intend to use an immutable Iterable?") {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -19,11 +20,7 @@ class PredefIterableIsMutable extends Inspection {
       }
 
       def warn(tree: Tree): Unit = {
-        context.warn("Default Iterable is mutable",
-          tree.pos,
-          Levels.Info,
-          "Iterable aliases scala.collection.mutable.Iterable. Did you intend to use an immutable Iterable?",
-          PredefIterableIsMutable.this)
+        context.warn(tree.pos, self)
       }
     }
   }

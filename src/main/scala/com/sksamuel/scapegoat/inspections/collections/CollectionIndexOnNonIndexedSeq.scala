@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Josh Rosen */
-class CollectionIndexOnNonIndexedSeq extends Inspection {
+class CollectionIndexOnNonIndexedSeq extends Inspection(
+  "Seq.apply() on a non-IndexedSeq may cause performance problems", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -20,11 +21,7 @@ class CollectionIndexOnNonIndexedSeq extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("apply")), List(idx)) if isSeq(lhs) && !isIndexedSeq(lhs) && !isLiteral(idx)=>
-            context.warn("Seq.apply() on a non-IndexedSeq may cause performance problems",
-              tree.pos,
-              Levels.Warning,
-              tree.toString().take(100),
-              CollectionIndexOnNonIndexedSeq.this)
+            context.warn(tree.pos, self, tree.toString().take(100))
           case _ => continue(tree)
         }
       }

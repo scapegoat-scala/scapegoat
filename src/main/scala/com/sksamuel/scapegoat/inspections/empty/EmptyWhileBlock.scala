@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.empty
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class EmptyWhileBlock extends Inspection {
+class EmptyWhileBlock extends Inspection("Empty while block", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -13,7 +13,7 @@ class EmptyWhileBlock extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case LabelDef(_, _, If(_, Block(List(Literal(Constant(()))), _), _)) =>
-            context.warn("Empty while block", tree.pos, Levels.Warning, tree.toString().take(500), EmptyWhileBlock.this)
+            context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }
       }

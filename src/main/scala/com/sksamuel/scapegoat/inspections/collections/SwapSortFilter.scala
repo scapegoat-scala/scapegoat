@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class SwapSortFilter extends Inspection {
+class SwapSortFilter extends Inspection("Swap sort filter", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -26,11 +26,8 @@ class SwapSortFilter extends Inspection {
       }
 
       private def warn(tree: Tree): Unit = {
-        context.warn("Swap sort filter",
-          tree.pos,
-          Levels.Info,
-          "Swap sort.filter for filter.sort for better performance: " + tree.toString().take(500),
-          SwapSortFilter.this)
+        context.warn(tree.pos, self,
+          "Swap sort.filter for filter.sort for better performance: " + tree.toString().take(500))
       }
     }
   }

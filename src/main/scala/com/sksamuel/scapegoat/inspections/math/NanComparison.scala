@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class NanComparison extends Inspection {
+class NanComparison extends Inspection("Nan comparision", Levels.Error,
+  "NaN comparision will always fail. Use value.isNan instead.") {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -33,9 +34,7 @@ class NanComparison extends Inspection {
       }
 
       private def warn(tree: Tree) {
-        context.warn("Nan comparision", tree.pos, Levels.Error,
-          "NaN comparision will always fail. Use value.isNan instead.",
-          NanComparison.this)
+        context.warn(tree.pos, self)
       }
     }
   }

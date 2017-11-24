@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.equality
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class ComparingUnrelatedTypes extends Inspection {
+class ComparingUnrelatedTypes extends Inspection("Comparing unrelated types", Levels.Error) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -45,14 +45,8 @@ class ComparingUnrelatedTypes extends Inspection {
           case Apply(Select(lhs, TermName("$eq$eq")), List(rhs)) =>
             def related(lt: Type, rt: Type) =
               lt <:< rt || rt <:< lt || lt =:= rt
-            def isDerivedValueClass(ts: Symbol) =
-              (ts.isClass && ts.asClass.isDerivedValueClass)
-            def warn(): Unit = context.warn(
-              "Comparing unrelated types",
-              tree.pos,
-              Levels.Error,
-              tree.toString().take(500),
-              ComparingUnrelatedTypes.this)
+            def isDerivedValueClass(ts: Symbol) = ts.isClass && ts.asClass.isDerivedValueClass
+            def warn(): Unit = context.warn(tree.pos, self, tree.toString().take(500))
             def eraseIfNecessaryAndCompare(lt: Type, rt: Type): Unit = {
               val lTypeSymbol = lt.typeSymbol
               val rTypeSymbol = rt.typeSymbol

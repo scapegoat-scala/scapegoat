@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class EmptyCaseClass extends Inspection {
+class EmptyCaseClass extends Inspection("Empty case class", Levels.Info,
+  "Empty case class can be rewritten as a case object") {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -20,9 +21,7 @@ class EmptyCaseClass extends Inspection {
         tree match {
           // body should have constructor only, and with synthetic methods it has 10 in total
           case ClassDef(mods, _, List(), Template(_, _, body)) if mods.isCase && accessors(body).isEmpty =>
-            context.warn("Empty case class", tree.pos, Levels.Info,
-              "Empty case class can be rewritten as a case object",
-              EmptyCaseClass.this)
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }

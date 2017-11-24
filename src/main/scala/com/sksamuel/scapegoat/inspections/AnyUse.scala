@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class AnyUse extends Inspection {
+class AnyUse extends Inspection("AnyUse", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -13,11 +13,8 @@ class AnyUse extends Inspection {
       import context.global._
 
       def warn(tree: Tree) = {
-        context.warn("AnyUse",
-          tree.pos,
-          Levels.Info,
-          "Use of Any should be avoided: " + tree.toString().take(200),
-          AnyUse.this)
+        context.warn(tree.pos, AnyUse.this,
+          "Use of Any should be avoided: " + tree.toString().take(200))
       }
 
       override def inspect(tree: Tree): Unit = {

@@ -5,7 +5,7 @@ import scala.reflect.internal.Flags
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class UnusedMethodParameter extends Inspection {
+class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -55,8 +55,7 @@ class UnusedMethodParameter extends Inspection {
           if (!usesParameter(paramName, constructorBody) &&
             !usesField(paramName, classBody)) {
 
-            context.warn("Unused constructor parameter", vparam.pos, Levels.Warning,
-              s"Unused constructor parameter (${vparam.name})", UnusedMethodParameter.this)
+            context.warn(vparam.pos, self, s"Unused constructor parameter (${vparam.name})")
           }
         }
       }
@@ -105,9 +104,7 @@ class UnusedMethodParameter extends Inspection {
               vparam <- vparams
             ) {
               if (!usesParameter(vparam.name.toString, rhs)) {
-                val level = if (mods.isOverride) Levels.Info else Levels.Warning
-                context.warn("Unused method parameter", tree.pos, level,
-                  s"Unused method parameter ($vparam)", UnusedMethodParameter.this)
+                context.warn(tree.pos, self, s"Unused method parameter ($vparam)")
               }
             }
           case _ => continue(tree)

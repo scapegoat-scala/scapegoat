@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class IncorrectNumberOfArgsToFormat extends Inspection {
+class IncorrectNumberOfArgsToFormat extends Inspection("Incorrect number of args for format", Levels.Error) {
 
   // format is: %[argument_index$][flags][width][.precision][t]conversion
   final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d?(\\.\\d+)?[tT]?[a-zA-Z]".r
@@ -19,7 +19,7 @@ class IncorrectNumberOfArgsToFormat extends Inspection {
             TermName("format")), args) =>
             val argCount = argRegex.findAllIn(format.toString).matchData.size
             if (argCount > args.size)
-              context.warn("Incorrect number of args for format", tree.pos, Levels.Error, tree.toString().take(500), IncorrectNumberOfArgsToFormat.this)
+              context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }
       }

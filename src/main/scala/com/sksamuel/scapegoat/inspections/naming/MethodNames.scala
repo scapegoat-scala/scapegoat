@@ -5,7 +5,8 @@ import scala.reflect.internal.Flags
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class MethodNames extends Inspection {
+class MethodNames extends Inspection("Method name not recommended", Levels.Info,
+  "Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods") {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -22,11 +23,7 @@ class MethodNames extends Inspection {
           case DefDef(mods, _, _, _, _, _) if tree.symbol != null && tree.symbol.isConstructor =>
           case DefDef(_, name, _, _, _, _) if !name.decode.exists(_.isLetter) =>
           case DefDef(_, name, _, _, _, _) if !name.toString.matches(regex) =>
-            context.warn("Method name not recommended",
-              tree.pos,
-              Levels.Info,
-              s"Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods",
-              MethodNames.this)
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }

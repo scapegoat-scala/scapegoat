@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-class ReverseTakeReverse extends Inspection {
+class ReverseTakeReverse extends Inspection("reverse.take(...).reverse instead of takeRight", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -22,8 +22,8 @@ class ReverseTakeReverse extends Inspection {
       }
 
       private def warn(tree: Tree) = {
-        context.warn("reverse.take(...).reverse instead of takeRight", tree.pos, Levels.Info,
-          ".reverse.take(...).reverse can be replaced with takeRight: " + tree.toString().take(500), ReverseTakeReverse.this)
+        context.warn(tree.pos, self,
+          ".reverse.take(...).reverse can be replaced with takeRight: " + tree.toString().take(500))
       }
     }
   }

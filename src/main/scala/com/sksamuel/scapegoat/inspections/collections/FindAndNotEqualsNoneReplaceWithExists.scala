@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
-class FindAndNotEqualsNoneReplaceWithExists extends Inspection {
+class FindAndNotEqualsNoneReplaceWithExists extends Inspection(
+  "find(x => ) != None instead of exists(x =>)", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -13,11 +14,8 @@ class FindAndNotEqualsNoneReplaceWithExists extends Inspection {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("find")), _), TermName("$bang$eq")),
             List(Select(_, TermName("None")))) =>
-            context.warn("filter(_.isDefined).map(_.get)",
-              tree.pos,
-              Levels.Info,
-              ".filter(_.isDefined).map(_.get) can be replaced with flatten: " + tree.toString().take(500),
-              FindAndNotEqualsNoneReplaceWithExists.this)
+            context.warn(tree.pos, self,
+              ".find(x => ) != None can be replaced with exists(x =>): " + tree.toString().take(500))
           case _ => continue(tree)
         }
       }

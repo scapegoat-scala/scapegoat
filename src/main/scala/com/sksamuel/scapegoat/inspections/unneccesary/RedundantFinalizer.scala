@@ -7,7 +7,7 @@ import com.sksamuel.scapegoat._
  *
  *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#FI_USELESS
  */
-class RedundantFinalizer extends Inspection {
+class RedundantFinalizer extends Inspection("Redundant finalizer", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -17,7 +17,7 @@ class RedundantFinalizer extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case dd @ DefDef(mods, name, _, _, tpt, _) if mods.hasFlag(Flag.OVERRIDE) && name.toString == "finalize" && tpt.toString() == "Unit" =>
-            context.warn("Redundant finalizer", tree.pos, Levels.Warning, tree.toString().take(500), RedundantFinalizer.this)
+            context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }
       }

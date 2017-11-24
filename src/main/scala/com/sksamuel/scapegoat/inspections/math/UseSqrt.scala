@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat._
 
-class UseSqrt extends Inspection {
+class UseSqrt extends Inspection("Use sqrt", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -18,9 +18,8 @@ class UseSqrt extends Inspection {
               || pack.symbol.fullNameString == "java.lang.Math"
           =>
             val math = pack.toString().stripPrefix("java.lang.").stripPrefix("scala.").stripSuffix(".`package`")
-            context.warn(s"Use $math.sqrt", tree.pos, Levels.Info,
-              s"$math.sqrt is clearer and more performant than $math.pow(x, 0.5)",
-              UseSqrt.this)
+            context.warn(tree.pos, self,
+              s"$math.sqrt is clearer and more performant than $math.pow(x, 0.5)")
           case other =>
             val q = other
             continue(tree)

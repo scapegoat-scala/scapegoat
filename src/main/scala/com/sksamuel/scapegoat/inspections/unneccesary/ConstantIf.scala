@@ -5,10 +5,10 @@ import com.sksamuel.scapegoat._
 /**
  * @author Stephen Samuel
  *
- *         Checks for if statements where the condition evalutes to a constant true or a constant false.
+ *         Checks for if statements where the condition evaluates to a constant true or a constant false.
  *
  */
-class ConstantIf extends Inspection {
+class ConstantIf extends Inspection("Constant if expression", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -21,8 +21,8 @@ class ConstantIf extends Inspection {
           case LabelDef(_, _, _) =>
           case If(cond, thenp, elsep) =>
             if (cond.toString() == "false" || cond.toString() == "true")
-              context.warn("Constant if expression", tree.pos, Levels.Warning,
-                "Constant if expression " + tree.toString().take(500), ConstantIf.this)
+              context.warn(tree.pos, self,
+                "Constant if expression " + tree.toString().take(500))
           case _ => continue(tree)
         }
       }

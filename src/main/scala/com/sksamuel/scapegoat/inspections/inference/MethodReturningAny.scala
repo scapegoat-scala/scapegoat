@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class MethodReturningAny extends Inspection {
+class MethodReturningAny extends Inspection("Method Returning Any", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -21,9 +21,8 @@ class MethodReturningAny extends Inspection {
           /// ignore overridden methods as the parent will receive the warning
           case DefDef(mods, _, _, _, _, _) if mods.isOverride                 =>
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] || tpt.tpe =:= typeOf[AnyRef] =>
-            context.warn("MethodReturningAny", tree.pos, Levels.Warning,
-              "Method returns Any. Consider using a more specialized type: " + tree.toString().take(300),
-              MethodReturningAny.this)
+            context.warn(tree.pos, self,
+              "Method returns Any. Consider using a more specialized type: " + tree.toString().take(300))
           case _ => continue(tree)
         }
       }

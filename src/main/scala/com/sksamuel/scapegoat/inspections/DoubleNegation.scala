@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class DoubleNegation extends Inspection {
+class DoubleNegation extends Inspection("Double negation", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -15,11 +15,8 @@ class DoubleNegation extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Select(_, Bang), Bang) =>
-            context.warn("Double negation",
-              tree.pos,
-              Levels.Info,
-              "Double negation can be removed: " + tree.toString().take(200),
-              DoubleNegation.this)
+            context.warn(tree.pos, self,
+              "Double negation can be removed: " + tree.toString().take(200))
           case _ => continue(tree)
         }
       }

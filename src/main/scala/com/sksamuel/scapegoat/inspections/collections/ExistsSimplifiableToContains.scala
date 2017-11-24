@@ -7,7 +7,7 @@ import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels
  *
  *         Inspired by Intellij
  */
-class ExistsSimplifiableToContains extends Inspection {
+class ExistsSimplifiableToContains extends Inspection("Exists simplifiable to contains", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -27,11 +27,7 @@ class ExistsSimplifiableToContains extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("exists")), List(Function(_, Apply(Select(_, Equals), List(x))))) if isTraversable(lhs) && isContainsType(lhs, x) =>
-            context.warn("Exists simplifiable to contains",
-              tree.pos,
-              Levels.Info,
-              "exists(x => x == y) can be replaced with contains(y): " + tree.toString().take(500),
-              ExistsSimplifiableToContains.this)
+            context.warn(tree.pos, self, "exists(x => x == y) can be replaced with contains(y): " + tree.toString().take(500))
           case _ => continue(tree)
         }
       }

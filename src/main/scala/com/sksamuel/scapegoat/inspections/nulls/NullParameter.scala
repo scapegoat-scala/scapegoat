@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.nulls
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class NullParameter extends Inspection {
+class NullParameter extends Inspection("Null parameter", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -26,11 +26,7 @@ class NullParameter extends Inspection {
         }
       }
       private def warn(tree: Tree) {
-        context.warn("Null parameter",
-          tree.pos,
-          Levels.Warning,
-          "Null is used as a method parameter: " + tree.toString().take(300),
-          NullParameter.this)
+        context.warn(tree.pos, self, "Null is used as a method parameter: " + tree.toString().take(300))
       }
     }
   }

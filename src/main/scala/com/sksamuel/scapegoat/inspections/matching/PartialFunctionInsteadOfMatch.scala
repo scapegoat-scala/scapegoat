@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class PartialFunctionInsteadOfMatch extends Inspection {
+class PartialFunctionInsteadOfMatch extends Inspection("Match instead of partial function", Levels.Info) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -11,11 +11,8 @@ class PartialFunctionInsteadOfMatch extends Inspection {
       import context.global._
 
       private def warn(tree: Tree) {
-        context.warn("Match instead of partial function",
-          tree.pos,
-          Levels.Info,
-          "A map match can be replaced with a partial function for greater readability: " + tree.toString().take(500),
-          PartialFunctionInsteadOfMatch.this)
+        context.warn(tree.pos, self,
+          "A map match can be replaced with a partial function for greater readability: " + tree.toString().take(500))
       }
 
       private def isPFBind(name: TermName) = {

@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.style
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class SimplifyBooleanExpression extends Inspection {
+class SimplifyBooleanExpression extends Inspection("Simplify boolean expressions", Levels.Info) {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
 
@@ -14,11 +14,8 @@ class SimplifyBooleanExpression extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, Equals), List(Literal(Constant(false)))) =>
-            context.warn("Simplify boolean expressions",
-              tree.pos,
-              Levels.Info,
-              "Boolean expressions such as x == false can be re-written as !x: " + tree.toString().take(200),
-              SimplifyBooleanExpression.this)
+            context.warn(tree.pos, self,
+              "Boolean expressions such as x == false can be re-written as !x: " + tree.toString().take(200))
           case _ => continue(tree)
         }
       }

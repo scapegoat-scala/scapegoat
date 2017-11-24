@@ -5,7 +5,7 @@ import scala.collection.mutable.ListBuffer
 
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
-class VariableShadowing extends Inspection {
+class VariableShadowing extends Inspection("Variable shadowing", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -17,11 +17,7 @@ class VariableShadowing extends Inspection {
       private def isDefined(name: String): Boolean = contexts exists (_.contains(name.trim))
 
       private def warn(tree: Tree): Unit = {
-        context.warn("Variable shadowing",
-          tree.pos,
-          Levels.Warning,
-          "Variable is shadowed: " + tree.toString().take(200),
-          VariableShadowing.this)
+        context.warn(tree.pos, self, "Variable is shadowed: " + tree.toString().take(200))
       }
 
       private def enter(): Unit = contexts.push(new ListBuffer[String])

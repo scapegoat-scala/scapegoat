@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class SwallowedException extends Inspection {
+class SwallowedException extends Inspection("Empty catch block", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -12,8 +12,7 @@ class SwallowedException extends Inspection {
 
       private def warn(cd: CaseDef): Unit = {
         if (cd.body.toString == "()")
-          context.warn("Empty catch block", cd.pos, Levels.Warning,
-            "Empty catch block " + cd.toString().take(100), SwallowedException.this)
+          context.warn(cd.pos, self, "Empty catch block " + cd.toString().take(100))
       }
 
       private def checkCatches(defs: List[CaseDef]) = defs.foreach {

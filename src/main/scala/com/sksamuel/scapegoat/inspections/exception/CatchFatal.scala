@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels
 import scala.util.control.ControlThrowable
 
 /** @author Marconi Lanna */
-class CatchFatal extends Inspection {
+class CatchFatal extends Inspection("Catch fatal exception", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -33,11 +33,9 @@ class CatchFatal extends Inspection {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Try(_, cases, _) if catchesFatal(cases) =>
-            context.warn("Catch fatal exception",
-              tree.pos,
-              Levels.Warning,
-              "Did you intend to catch a fatal exception, consider using scala.util.control.NonFatal: " +
-                tree.toString().take(300), CatchFatal.this)
+            context.warn(tree.pos, self,
+              "Did you intend to catch a fatal exception? Consider using scala.util.control.NonFatal: " +
+                tree.toString().take(300))
           case _ => continue(tree)
         }
       }

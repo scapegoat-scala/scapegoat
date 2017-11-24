@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
 
 /** @author Stephen Samuel */
-class PredefSeqIsMutable extends Inspection {
+class PredefSeqIsMutable extends Inspection("Predef.Seq is mutable", Levels.Info,
+  "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?") {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -19,11 +20,7 @@ class PredefSeqIsMutable extends Inspection {
       }
 
       def warn(tree: Tree): Unit = {
-        context.warn("Predef.Seq is mutable",
-          tree.pos,
-          Levels.Info,
-          "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?",
-          PredefSeqIsMutable.this)
+        context.warn(tree.pos, self)
       }
     }
   }

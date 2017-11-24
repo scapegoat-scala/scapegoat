@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.inference
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class BoundedByFinalType extends Inspection {
+class BoundedByFinalType extends Inspection("Bounded by final type", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -18,11 +18,10 @@ class BoundedByFinalType extends Inspection {
           case TypeDef(_, _, _, typeTree: TypeTree) =>
             typeTree.original match {
               case TypeBoundsTree(lo, hi) if lo.tpe.isFinalType && hi.tpe.isFinalType =>
-                context.warn("Bounded by final type", tree.pos, Levels.Warning,
+                context.warn(tree.pos, self,
                   "Pointless type bound. Type parameter can only be a single value: " + tree
                     .toString()
-                    .take(300),
-                  BoundedByFinalType.this)
+                    .take(300))
               case _ =>
             }
           case _ => continue(tree)

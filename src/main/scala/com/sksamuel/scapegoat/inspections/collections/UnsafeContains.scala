@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class UnsafeContains extends Inspection {
+class UnsafeContains extends Inspection("Unsafe contains", Levels.Error) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -19,7 +19,7 @@ class UnsafeContains extends Inspection {
       }
       override def inspect(tree: Tree): Unit = tree match {
         case Applied(Select(lhs, Contains), _, (arg :: Nil) :: Nil) if isSeq(lhs) && !isCompatibleType(lhs, arg) =>
-          context.warn("Unsafe contains", tree.pos, Levels.Error, tree.toString().take(300), UnsafeContains.this)
+          context.warn(tree.pos, self, tree.toString().take(300))
         case _ =>
           continue(tree)
       }

@@ -126,124 +126,124 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 There are currently 116 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
-| Name | Brief Description |
-|----|-----------|
-| ArrayEquals | Checks for comparison of arrays using `==` which will always return false |
-| ArraysInFormat | Checks for arrays passed to String.format |
-| ArraysToString | Checks for explicit toString calls on arrays |
-| AsInstanceOf | Checks for use of `asInstanceOf` |
-| AvoidOperatorOverload | Checks for mental symbolic method names |
-| AvoidSizeEqualsZero | Traversable.size can be slow for some data structure, prefer .isEmpty |
-| AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty |
-| AvoidToMinusOne | Checks for loops that use `x to n-1` instead of `x until n` |
-| BigDecimalDoubleConstructor | Checks for use of `BigDecimal(double)` which can be unsafe |
-| BigDecimalScaleWithoutRoundingMode | `setScale()` on a `BigDecimal` without setting the rounding mode can throw an exception |
-| BoundedByFinalType | Looks for types with upper bounds of a final type |
-| BrokenOddness | checks for a % 2 == 1 for oddness because this fails on negative numbers |
-| CatchException | Checks for try blocks that catch Exception |
-| CatchFatal | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable |
-| CatchNpe | Checks for try blocks that catch null pointer exceptions |
-| CatchThrowable | Checks for try blocks that catch Throwable |
-| ClassNames | Ensures class names adhere to the style guidelines |
-| CollectionIndexOnNonIndexedSeq | Checks for indexing on a Seq which is not an IndexedSeq |
-| CollectionNamingConfusion | Checks for variables that are confusingly named |
-| CollectionNegativeIndex | Checks for negative access on a sequence eg `list.get(-1)` |
-| CollectionPromotionToAny | Checks for collection operations that promote the collection to `Any` |
-| ComparingFloatingPointTypes | Checks for equality checks on floating point types |
-| ComparingUnrelatedTypes | Checks for equality comparisons that cannot succeed |
-| ComparisonToEmptyList | Checks for code like `a == List()` or `a == Nil` |
-| ComparisonToEmptySet | Checks for code like `a == Set()` or `a == Set.empty` |
-| ComparisonWithSelf | Checks for equality checks with itself |
-| ConstantIf | Checks for code where the if condition compiles to a constant |
-| DivideByOne | Checks for divide by one, which always returns the original value |
-| DoubleNegation | Checks for code like `!(!b)` |
-| DuplicateImport | Checks for import statements that import the same selector |
-| DuplicateMapKey | Checks for duplicate key names in Map literals |
-| DuplicateSetValue | Checks for duplicate values in set literals |
-| EitherGet | Checks for use of .get on Left or Right |
-| EmptyCaseClass | Checks for case classes like `case class Faceman()` |
-| EmptyFor | Checks for empty `for` loops |
-| EmptyIfBlock | Checks for empty `if` blocks |
-| EmptyInterpolatedString | Looks for interpolated strings that have no arguments |
-| EmptyMethod | Looks for empty methods |
-| EmptySynchronizedBlock | Looks for empty synchronized blocks |
-| EmptyTryBlock | Looks for empty try blocks |
-| EmptyWhileBlock | Looks for empty while loops |
-| ExistsSimplifiableToContains | `exists(x => x == b)` replaceable with `contains(b)` |
-| FilterDotHead | `.filter(x => ).head` can be replaced with `find(x => ) match { .. } ` |
-| FilterDotHeadOption | `.filter(x =>).headOption` can be replaced with `find(x => )` |
-| FilterDotIsEmpty | `.filter(x => ).isEmpty` can be replaced with `!exists(x => )` |
-| FilterDotSize | `.filter(x => ).size` can be replaced more concisely with with `count(x => )` |
-| FilterOptionAndGet | `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` |
-| FinalModifierOnCaseClass | Using Case classes without `final` modifier can lead to surprising breakage |
-| FinalizerWithoutSuper | Checks for overridden finalizers that do not call super |
-| FindAndNotEqualsNoneReplaceWithExists | `.find(x => ) != None` can be replaced with `exist(x => )` |
-| FindDotIsDefined | `find(x => ).isDefined` can be replaced with `exist(x => )` |
-| IllegalFormatString | Looks for invalid format strings |
-| ImpossibleOptionSizeCondition | Checks for code like `option.size > 2` which can never be true |
-| IncorrectNumberOfArgsToFormat | Checks for wrong number of arguments to `String.format` |
-| IncorrectlyNamedExceptions | Checks for exceptions that are not called *Exception and vice versa |
-| InvalidRegex | Checks for invalid regex literals |
-| IsInstanceOf | Checks for use of `isInstanceOf` |
-| JavaConversionsUse | Checks for use of implicit Java conversions |
-| ListAppend | Checks for List :+ which is O(n) |
-| ListSize | Checks for `List.size` which is O(n). |
-| LonelySealedTrait | Checks for sealed traits which have no implementation |
-| LooksLikeInterpolatedString | Finds strings that look like they should be interpolated but are not |
-| MapGetAndGetOrElse | `Map.get(key).getOrElse(value)` can be replaced with `Map.getOrElse(key, value)` |
-| MaxParameters | Checks for methods that have over 10 parameters |
-| MethodNames | Warns on method names that don't adhere to the Scala style guidelines |
-| MethodReturningAny | Checks for defs that are defined or inferred to return `Any` |
-| ModOne | Checks for `x % 1` which will always return `0` |
-| NanComparison | Checks for `x == Double.NaN` which will always fail |
-| NegationIsEmpty | `!Traversable.isEmpty` can be replaced with `Traversable.nonEmpty` |
-| NegationNonEmpty | `!Traversable.nonEmpty` can be replaced with `Traversable.isEmpty` |
-| NoOpOverride | Checks for code that overrides parent method but simply calls super |
-| NullAssignment | Checks for use of `null` in assignments |
-| NullParameter | Checks for use of `null` in method invocation |
-| ObjectNames | Ensures object names adhere to the Scala style guidelines |
-| OptionGet | Checks for `Option.get` |
-| OptionSize | Checks for `Option.size` |
-| ParameterlessMethodReturnsUnit | Checks for `def foo : Unit` |
-| PartialFunctionInsteadOfMatch | Warns when you could use a partial function directly instead of a match block |
-| PointlessTypeBounds | Finds type bounds of the form `[A <: Any]` or `[A >: Nothing]`
-| PreferSeqEmpty | Checks for Seq() when could use Seq.empty |
-| PreferSetEmpty | Checks for Set() when could use Set.empty |
-| ProductWithSerializableInferred | Checks for vals that have `Product with Serializable` as their inferred type |
-| PublicFinalizer | Checks for overridden finalizes that are public |
-| RedundantFinalModifierOnMethod | Redundant `final` modifier on method that cannot be overridden |
-| RedundantFinalModifierOnVar | Redundant `final` modifier on var that cannot be overridden |
-| RedundantFinalizer | Checks for empty finalizers. |
-| RepeatedCaseBody | Checks for case statements which have the same body |
-| ReverseFunc | `reverse` followed by `head`, `headOption`, `iterator`, or`map` can be replaced, respectively, with `last`, `lastOption`, `reverseIterator`, or `reverseMap` |
-| ReverseTailReverse | `.reverse.tail.reverse` can be replaced with `init` |
-| ReverseTakeReverse | `.reverse.take(...).reverse` can be replaced with `takeRight` |
-| SimplifyBooleanExpression | `b == false` can be simplified to `!b` |
-| StripMarginOnRegex | Checks for .stripMargin on regex strings that contain a pipe |
-| SubstringZero | Checks for `String.substring(0)` |
-| SuspiciousMatchOnClassObject | Finds code where matching is taking place on class literals |
-| SwallowedException | Finds catch blocks that don't handle caught exceptions |
-| SwapSortFilter | `sort.filter` can be replaced with `filter.sort` for performance |
-| TraversableHead | Looks for unsafe usage of `Traversable.head` |
-| TraversableLast | Looks for unsafe usage of `Traversable.last` |
-| TryGet | Checks for use of `Try.get` |
-| TypeShadowing | Checks for shadowed type parameters in methods |
-| UnnecessaryIf | Checks for code like `if (expr) true else false` |
-| UnnecessaryReturnUse | Checks for use of `return` keyword in blocks |
-| UnnecessaryToInt | Checks for unnecessary `toInt` on instances of Int |
-| UnnecessaryToString | Checks for unnecessary `toString` on instances of String |
-| UnreachableCatch | Checks for catch clauses that cannot be reached |
-| UnsafeContains | Checks for `List.contains(value)` for invalid types |
-| UnusedMethodParameter | Checks for unused method parameters |
-| UseCbrt | Checks for use of `math.pow` for calculating `math.cbrt` |
-| UseExpM1 | Checks for use of `math.exp(x) - 1` instead of `math.expm1(x)` |
-| UseLog10 | Checks for use of `math.log(x)/math.log(10)` instead of `math.log10(x)` |
-| UseLog1P | Checks for use of `math.log(x + 1)` instead of `math.log1p(x)` |
-| UseSqrt | Checks for use of `math.pow` for calculating `math.sqrt` |
-| VarClosure | Finds closures that reference var |
-| VarCouldBeVal | Checks for `var`s that could be declared as `val`s |
-| WhileTrue | Checks for code that uses a `while(true)` or `do { } while(true)` block. |
-| ZeroNumerator | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0` |
+| Name | Brief Description | Default Level |
+|------|-------------------|---------------|
+| ArrayEquals | Checks for comparison of arrays using `==` which will always return false | Info |
+| ArraysInFormat | Checks for arrays passed to String.format | Error |
+| ArraysToString | Checks for explicit toString calls on arrays | Warning |
+| AsInstanceOf | Checks for use of `asInstanceOf` | Warning |
+| AvoidOperatorOverload | Checks for mental symbolic method names | Info |
+| AvoidSizeEqualsZero | Traversable.size can be slow for some data structure, prefer .isEmpty | Warning |
+| AvoidSizeNotEqualsZero | Traversable.size can be slow for some data structure, prefer .nonEmpty | Warning |
+| AvoidToMinusOne | Checks for loops that use `x to n-1` instead of `x until n` | Info |
+| BigDecimalDoubleConstructor | Checks for use of `BigDecimal(double)` which can be unsafe | Warning |
+| BigDecimalScaleWithoutRoundingMode | `setScale()` on a `BigDecimal` without setting the rounding mode can throw an exception | Warning |
+| BoundedByFinalType | Looks for types with upper bounds of a final type | Warning |
+| BrokenOddness | checks for a % 2 == 1 for oddness because this fails on negative numbers | Warning |
+| CatchException | Checks for try blocks that catch Exception | Warning |
+| CatchFatal | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable | Warning |
+| CatchNpe | Checks for try blocks that catch null pointer exceptions | Error |
+| CatchThrowable | Checks for try blocks that catch Throwable | Warning |
+| ClassNames | Ensures class names adhere to the style guidelines | Info |
+| CollectionIndexOnNonIndexedSeq | Checks for indexing on a Seq which is not an IndexedSeq | Warning |
+| CollectionNamingConfusion | Checks for variables that are confusingly named | Info |
+| CollectionNegativeIndex | Checks for negative access on a sequence eg `list.get(-1)` | Warning |
+| CollectionPromotionToAny | Checks for collection operations that promote the collection to `Any` | Warning |
+| ComparingFloatingPointTypes | Checks for equality checks on floating point types | Error |
+| ComparingUnrelatedTypes | Checks for equality comparisons that cannot succeed | Error |
+| ComparisonToEmptyList | Checks for code like `a == List()` or `a == Nil` | Info |
+| ComparisonToEmptySet | Checks for code like `a == Set()` or `a == Set.empty` | Info |
+| ComparisonWithSelf | Checks for equality checks with itself | Warning |
+| ConstantIf | Checks for code where the if condition compiles to a constant | Warning |
+| DivideByOne | Checks for divide by one, which always returns the original value | Warning |
+| DoubleNegation | Checks for code like `!(!b)` | Info |
+| DuplicateImport | Checks for import statements that import the same selector | Info |
+| DuplicateMapKey | Checks for duplicate key names in Map literals | Warning |
+| DuplicateSetValue | Checks for duplicate values in set literals | Warning |
+| EitherGet | Checks for use of .get on Left or Right | Error |
+| EmptyCaseClass | Checks for case classes like `case class Faceman()` | Info |
+| EmptyFor | Checks for empty `for` loops | Warning |
+| EmptyIfBlock | Checks for empty `if` blocks | Warning |
+| EmptyInterpolatedString | Looks for interpolated strings that have no arguments | Error |
+| EmptyMethod | Looks for empty methods | Warning |
+| EmptySynchronizedBlock | Looks for empty synchronized blocks | Warning |
+| EmptyTryBlock | Looks for empty try blocks | Warning |
+| EmptyWhileBlock | Looks for empty while loops | Warning |
+| ExistsSimplifiableToContains | `exists(x => x == b)` replaceable with `contains(b)` | Info |
+| FilterDotHead | `.filter(x => ).head` can be replaced with `find(x => ) match { .. } ` | Info |
+| FilterDotHeadOption | `.filter(x =>).headOption` can be replaced with `find(x => )` | Info |
+| FilterDotIsEmpty | `.filter(x => ).isEmpty` can be replaced with `!exists(x => )` | Info |
+| FilterDotSize | `.filter(x => ).size` can be replaced more concisely with with `count(x => )` | Info |
+| FilterOptionAndGet | `.filter(_.isDefined).map(_.get)` can be replaced with `flatten` | Info |
+| FinalModifierOnCaseClass | Using Case classes without `final` modifier can lead to surprising breakage | Info |
+| FinalizerWithoutSuper | Checks for overridden finalizers that do not call super | Warning |
+| FindAndNotEqualsNoneReplaceWithExists | `.find(x => ) != None` can be replaced with `exist(x => )` | Info |
+| FindDotIsDefined | `find(x => ).isDefined` can be replaced with `exist(x => )` | Info |
+| IllegalFormatString | Looks for invalid format strings | Error |
+| ImpossibleOptionSizeCondition | Checks for code like `option.size > 2` which can never be true | Error |
+| IncorrectNumberOfArgsToFormat | Checks for wrong number of arguments to `String.format` | Error |
+| IncorrectlyNamedExceptions | Checks for exceptions that are not called *Exception and vice versa | Error |
+| InvalidRegex | Checks for invalid regex literals | Info |
+| IsInstanceOf | Checks for use of `isInstanceOf` | Warning |
+| JavaConversionsUse | Checks for use of implicit Java conversions | Warning |
+| ListAppend | Checks for List :+ which is O(n) | Info |
+| ListSize | Checks for `List.size` which is O(n). | Info |
+| LonelySealedTrait | Checks for sealed traits which have no implementation | Error |
+| LooksLikeInterpolatedString | Finds strings that look like they should be interpolated but are not | Warning |
+| MapGetAndGetOrElse | `Map.get(key).getOrElse(value)` can be replaced with `Map.getOrElse(key, value)` | Error |
+| MaxParameters | Checks for methods that have over 10 parameters | Info |
+| MethodNames | Warns on method names that don't adhere to the Scala style guidelines | Info |
+| MethodReturningAny | Checks for defs that are defined or inferred to return `Any` | Warning |
+| ModOne | Checks for `x % 1` which will always return `0` | Warning |
+| NanComparison | Checks for `x == Double.NaN` which will always fail | Error |
+| NegationIsEmpty | `!Traversable.isEmpty` can be replaced with `Traversable.nonEmpty` | Info |
+| NegationNonEmpty | `!Traversable.nonEmpty` can be replaced with `Traversable.isEmpty` | Info |
+| NoOpOverride | Checks for code that overrides parent method but simply calls super | Info |
+| NullAssignment | Checks for use of `null` in assignments | Warning |
+| NullParameter | Checks for use of `null` in method invocation | Warning |
+| ObjectNames | Ensures object names adhere to the Scala style guidelines | Info |
+| OptionGet | Checks for `Option.get` | Error |
+| OptionSize | Checks for `Option.size` | Error |
+| ParameterlessMethodReturnsUnit | Checks for `def foo : Unit` | Warning |
+| PartialFunctionInsteadOfMatch | Warns when you could use a partial function directly instead of a match block | Info |
+| PointlessTypeBounds | Finds type bounds of the form `[A <: Any]` or `[A >: Nothing]`| Warning |
+| PreferSeqEmpty | Checks for Seq() when could use Seq.empty | Info |
+| PreferSetEmpty | Checks for Set() when could use Set.empty | Info |
+| ProductWithSerializableInferred | Checks for vals that have `Product with Serializable` as their inferred type | Warning |
+| PublicFinalizer | Checks for overridden finalizes that are public | Info |
+| RedundantFinalModifierOnMethod | Redundant `final` modifier on method that cannot be overridden | Info |
+| RedundantFinalModifierOnVar | Redundant `final` modifier on var that cannot be overridden | Info |
+| RedundantFinalizer | Checks for empty finalizers. | Warning |
+| RepeatedCaseBody | Checks for case statements which have the same body | Warning |
+| ReverseFunc | `reverse` followed by `head`, `headOption`, `iterator`, or`map` can be replaced, respectively, with `last`, `lastOption`, `reverseIterator`, or `reverseMap` | Info |
+| ReverseTailReverse | `.reverse.tail.reverse` can be replaced with `init` | Info |
+| ReverseTakeReverse | `.reverse.take(...).reverse` can be replaced with `takeRight` | Info |
+| SimplifyBooleanExpression | `b == false` can be simplified to `!b` | Info |
+| StripMarginOnRegex | Checks for .stripMargin on regex strings that contain a pipe | Error |
+| SubstringZero | Checks for `String.substring(0)` | Info |
+| SuspiciousMatchOnClassObject | Finds code where matching is taking place on class literals | Warning |
+| SwallowedException | Finds catch blocks that don't handle caught exceptions | Warning |
+| SwapSortFilter | `sort.filter` can be replaced with `filter.sort` for performance | Info |
+| TraversableHead | Looks for unsafe usage of `Traversable.head` | Error |
+| TraversableLast | Looks for unsafe usage of `Traversable.last` | Error |
+| TryGet | Checks for use of `Try.get` | Error |
+| TypeShadowing | Checks for shadowed type parameters in methods | Warning |
+| UnnecessaryIf | Checks for code like `if (expr) true else false` | Info |
+| UnnecessaryReturnUse | Checks for use of `return` keyword in blocks | Info |
+| UnnecessaryToInt | Checks for unnecessary `toInt` on instances of Int | Warning |
+| UnnecessaryToString | Checks for unnecessary `toString` on instances of String | Warning |
+| UnreachableCatch | Checks for catch clauses that cannot be reached | Warning |
+| UnsafeContains | Checks for `List.contains(value)` for invalid types | Error |
+| UnusedMethodParameter | Checks for unused method parameters | Warning |
+| UseCbrt | Checks for use of `math.pow` for calculating `math.cbrt` | Info |
+| UseExpM1 | Checks for use of `math.exp(x) - 1` instead of `math.expm1(x)` | Info |
+| UseLog10 | Checks for use of `math.log(x)/math.log(10)` instead of `math.log10(x)` | Info |
+| UseLog1P | Checks for use of `math.log(x + 1)` instead of `math.log1p(x)` | Info |
+| UseSqrt | Checks for use of `math.pow` for calculating `math.sqrt` | Info |
+| VarClosure | Finds closures that reference var | Warning |
+| VarCouldBeVal | Checks for `var`s that could be declared as `val`s | Warning |
+| WhileTrue | Checks for code that uses a `while(true)` or `do { } while(true)` block. | Warning |
+| ZeroNumerator | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0` | Warning |
 
 ##### Arrays to string
 
