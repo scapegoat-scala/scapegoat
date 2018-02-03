@@ -14,11 +14,12 @@ class ComparisonWithSelfInspectionTest extends FreeSpec with Matchers with Plugi
       val code = """object Test {
                       val b = true
                       if (b == b) {
+                      } else if(b != b) {
                       }
                     } """.stripMargin
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.size shouldBe 2
     }
   }
 }

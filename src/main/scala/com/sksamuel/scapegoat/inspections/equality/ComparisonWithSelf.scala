@@ -18,7 +18,7 @@ class ComparisonWithSelf extends Inspection("Comparision with self", Levels.Warn
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(left, TermName("$eq$eq")), List(right)) =>
+          case Apply(Select(left, TermName("$eq$eq" | "$bang$eq")), List(right)) =>
             if (left.toString() == right.toString())
               context.warn(tree.pos,self)
           case _ => continue(tree)
