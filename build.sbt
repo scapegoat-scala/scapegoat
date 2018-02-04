@@ -1,3 +1,4 @@
+import com.typesafe.sbt.pgp.PgpKeys
 import sbt.Keys._
 
 name := "scalac-scapegoat-plugin"
@@ -7,6 +8,10 @@ organization := "com.sksamuel.scapegoat"
 scalaVersion := "2.12.3"
 
 crossScalaVersions := Seq("2.11.11", scalaVersion.value)
+
+SbtPgp.autoImport.useGpg := true
+
+SbtPgp.autoImport.useGpgAgent := true
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8", "-Xmax-classfile-name", "254")
 
