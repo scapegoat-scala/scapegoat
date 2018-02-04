@@ -12,7 +12,7 @@ import scala.tools.nsc.reporters.ConsoleReporter
 trait PluginRunner {
 
   val scalaVersion = util.Properties.versionNumberString
-  val shortScalaVersion = scalaVersion.dropRight(2)
+  val shortScalaVersion = scalaVersion.split('.').dropRight(1).mkString(".")
 
   val classPath = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
 
