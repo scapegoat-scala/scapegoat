@@ -20,11 +20,12 @@ class ComparingFloatingPointTypesTest
                         val a = 14.5
                         val b = 15.6
                         a == b
+                        a != b
                       }
                     } """.stripMargin
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warnings.size shouldBe 2
       }
       "for float comparison" in {
         val code = """class Test {
@@ -32,11 +33,12 @@ class ComparingFloatingPointTypesTest
                         val a = 14.5f
                         val b = 15.6f
                         a == b
+                        a != b
                       }
                     } """.stripMargin
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warnings.size shouldBe 2
       }
     }
   }
