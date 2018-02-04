@@ -3,7 +3,7 @@ scala:
    - 2.11.11
    - 2.12.3
 script:
-   - sbt clean test
+   - sbt clean +test
 jdk:
    - oraclejdk8
 before_script:
