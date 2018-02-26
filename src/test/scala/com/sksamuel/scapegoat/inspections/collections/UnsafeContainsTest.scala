@@ -46,47 +46,51 @@ class UnsafeContainsTest extends FreeSpec with Matchers with PluginRunner with O
       }
       "for Seq filtering with Seq contains" in {
         val code = """
+                   |package com.sam
+                   |object Test {
                    |val words = Seq("Hello", "world")
                    |val moreWords = Seq("Goodbye", "cruel", "world")
                    |val common = moreWords.filter(words.contains)
+                   |}
                    | """.stripMargin.trim
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.infos.size shouldBe 0
-        compiler.scapegoat.feedback.warns.size shouldBe 0
-        compiler.scapegoat.feedback.errors.size shouldBe 0
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for Seq filtering by lambda with Seq contains" in {
         val code = """
+                     |package com.sam
+                     |object Test {
                      |val words = Seq("Hello", "world")
                      |val moreWords = Seq("Goodbye", "cruel", "world")
                      |val common = moreWords.filter(v => words.contains(v))
+                     |}
                      | """.stripMargin.trim
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.infos.size shouldBe 0
-        compiler.scapegoat.feedback.warns.size shouldBe 0
-        compiler.scapegoat.feedback.errors.size shouldBe 0
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for exists check with named function argument" in {
         val code = """
+                     |package com.sam
+                     |object Test {
                      |def distinctIndices(a: Seq[Int], b: Seq[Int]): Boolean = !a.exists(b.contains)
+                     |}
                      |""".stripMargin.trim
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.infos.size shouldBe 0
-        compiler.scapegoat.feedback.warns.size shouldBe 0
-        compiler.scapegoat.feedback.errors.size shouldBe 0
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for exists check with lambda argument" in {
         val code = """
+                     |package com.sam
+                     |object Test {
                      |def distinctIndices(a: Seq[Int], b: Seq[Int]): Boolean = !a.exists(v => b.contains(v))
+                     |}
                      |""".stripMargin.trim
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.infos.size shouldBe 0
-        compiler.scapegoat.feedback.warns.size shouldBe 0
-        compiler.scapegoat.feedback.errors.size shouldBe 0
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
     }
   }
