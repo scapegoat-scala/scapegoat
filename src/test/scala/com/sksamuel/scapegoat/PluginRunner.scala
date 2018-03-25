@@ -1,7 +1,8 @@
 package com.sksamuel.scapegoat
 
-import java.io.{ File, FileNotFoundException }
+import java.io.{File, FileNotFoundException}
 import java.net.URL
+import java.nio.charset.StandardCharsets
 
 import scala.tools.nsc.reporters.ConsoleReporter
 
@@ -35,7 +36,7 @@ trait PluginRunner {
 
   def writeCodeSnippetToTempFile(code: String): File = {
     val file = File.createTempFile("scapegoat_snippet", ".scala")
-    org.apache.commons.io.FileUtils.write(file, code)
+    org.apache.commons.io.FileUtils.write(file, code, StandardCharsets.UTF_8)
     file.deleteOnExit()
     file
   }
