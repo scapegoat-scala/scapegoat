@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class AvoidSizeEqualsZero extends Inspection("Avoid Traversable.size == 0", Levels.Warning) {
+class AvoidSizeEqualsZero extends Inspection("Avoid Traversable.size == 0, use Traversable.isEmpty instead", Levels.Warning) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
