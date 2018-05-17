@@ -14,7 +14,8 @@ class UnsafeContains extends Inspection("Unsafe contains", Levels.Error) {
       private val Seq = typeOf[Seq[_]].typeSymbol
       private def isSeq(tree: Tree): Boolean = tree.tpe.widen.baseClasses contains Seq
       private def isCompatibleType(container: Tree, value: Tree) = container.tpe baseType Seq match {
-        case TypeRef(_, Seq, elem :: Nil) => value.tpe <:< elem
+        case TypeRef(a, Seq, elem :: Nil) if elem.isInstanceOf[Any] && elem <:< value.tpe => true
+        case TypeRef(a, Seq, elem :: Nil) => value.tpe <:< elem
         case _                            => false
       }
       override def inspect(tree: Tree): Unit = tree match {
