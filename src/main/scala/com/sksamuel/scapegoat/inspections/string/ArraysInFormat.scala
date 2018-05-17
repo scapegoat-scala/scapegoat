@@ -3,7 +3,7 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 /** @author Stephen Samuel */
-class ArraysInFormat extends Inspection("Incorrect number of args for format", Levels.Error) {
+class ArraysInFormat extends Inspection("Array passed to String.format", Levels.Error) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
