@@ -101,7 +101,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
     "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
     "                                                     Valid options are `xml', `html', `scalastyle',",
-    "                                                     or `all'.",
+    "                                                     or `all'. Use `none' to disable reports.",
     "-P:scapegoat:overrideLevels:<levels>                 override the built in warning levels, e.g. to",
     "                                                     downgrade a Error to a Warning.",
     "                                                     <levels> should be a colon separated list of name=level",
