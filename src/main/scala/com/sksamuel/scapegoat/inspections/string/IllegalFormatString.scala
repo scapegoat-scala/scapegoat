@@ -8,7 +8,7 @@ import com.sksamuel.scapegoat._
 class IllegalFormatString extends Inspection("Illegal format string", Levels.Error) {
 
   // format is: %[argument_index$][flags][width][.precision][t]conversion
-  final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d?(\\.\\d+)?[tT]?[a-zA-Z]".r
+  final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d*(\\.\\d+)?[tT]?[a-zA-Z]".r
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

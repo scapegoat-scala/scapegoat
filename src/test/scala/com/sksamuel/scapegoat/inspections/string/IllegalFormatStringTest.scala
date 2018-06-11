@@ -85,4 +85,15 @@ class IllegalFormatStringTest extends FreeSpec with Matchers with PluginRunner w
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
+  "format string with large width" - {
+    "should not report warning" in {
+
+      val code = """object Test {
+                      "%010d".format(0)
+                   } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+  }
 }
