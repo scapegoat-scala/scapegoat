@@ -24,7 +24,7 @@ class AvoidOperatorOverload extends Inspection("Avoid operator overload", Levels
           case DefDef(_, TermName("$init$"), _, _, _, _) =>
           case DefDef(_, name, _, _, _, _) if name.toChars.count(_ == '$') > 2 =>
             context.warn(tree.pos, self,
-              s"Scala style guide advocates against routinely using operators as method names (${name.decode}})." +
+              s"Scala style guide advocates against routinely using operators as method names (${name.decode})." +
                 "See http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names")
           case _ => continue(tree)
         }
