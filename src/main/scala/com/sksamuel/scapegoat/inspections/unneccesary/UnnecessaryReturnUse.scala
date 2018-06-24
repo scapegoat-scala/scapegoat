@@ -13,7 +13,7 @@ class UnnecessaryReturnUse extends Inspection("Unnecessary return", Levels.Info,
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Block(_, Return(expr)) =>
+          case DefDef(_, _, _, _, _, Block(_, Return(_))) =>
             context.warn(tree.pos, self)
           case _ => continue(tree)
         }

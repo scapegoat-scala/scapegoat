@@ -17,6 +17,14 @@ class UnnecessaryReturnUseTest extends FreeSpec with Matchers with PluginRunner 
                         val s = "sammy"
                         return s
                       }
+
+                      def earlyOutReturn: Unit = {
+                        if(Math.random() > 0.5) {
+                          println("early out return")
+                          return () // Acceptable
+                        }
+                        println("not reachable")
+                      }
                     } """.stripMargin
 
       compileCodeSnippet(code)
