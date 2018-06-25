@@ -98,6 +98,14 @@ class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warnin
             mods.hasFlag(Flags.OVERRIDE) ||
             (tree.symbol != null && (tree.symbol.isAnyOverride || tree.symbol.isOverridingSymbol)) =>
 
+          // ignore main method
+          case DefDef(_, name, _, List(List(param)), tpt, _) if
+            name.toString == "main" &&
+            param.name.toString == "args" &&
+            tpt.tpe =:= UnitTpe &&
+            param.tpt.tpe =:= typeOf[Array[String]] =>
+
+
           case d @ DefDef(mods, _, _, vparamss, _, rhs) =>
             for (
               vparams <- vparamss;
