@@ -27,7 +27,7 @@ class NullAssignment extends Inspection("Null assignment", Levels.Warning) {
         }
       }
 
-      private def warn(tree: Tree) {
+      private def warn(tree: Tree): Unit = {
         context.warn(tree.pos, self, "Null assignment on line " + tree.pos.line)
       }
     }

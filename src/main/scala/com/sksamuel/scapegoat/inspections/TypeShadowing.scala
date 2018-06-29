@@ -27,7 +27,7 @@ class TypeShadowing extends Inspection("Type shadowing", Levels.Warning) {
         }
       }
 
-      private def warn(dd: DefDef, name: TermName, tparam: TypeDef) {
+      private def warn(dd: DefDef, name: TermName, tparam: TypeDef): Unit = {
         context.warn(dd.pos, self, s"Method $name declares shadowed type parameter ${tparam.name}")
       }
 

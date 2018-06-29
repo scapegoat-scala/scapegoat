@@ -25,7 +25,7 @@ class NullParameter extends Inspection("Null parameter", Levels.Warning) {
           case _ => continue(tree)
         }
       }
-      private def warn(tree: Tree) {
+      private def warn(tree: Tree): Unit = {
         context.warn(tree.pos, self, "Null is used as a method parameter: " + tree.toString().take(300))
       }
     }

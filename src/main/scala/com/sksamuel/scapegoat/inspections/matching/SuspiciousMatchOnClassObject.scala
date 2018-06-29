@@ -32,7 +32,7 @@ class SuspiciousMatchOnClassObject extends Inspection("Suspicious match on class
         }
       }
 
-      private def warn(tree: Tree) {
+      private def warn(tree: Tree): Unit = {
         context.warn(tree.pos, self, tree.toString().take(500))
       }
     }

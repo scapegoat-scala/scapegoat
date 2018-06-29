@@ -33,7 +33,7 @@ class NanComparison extends Inspection("Nan comparision", Levels.Error,
         lhs.tpe <:< DoubleClass.tpe || lhs.tpe <:< FloatClass.tpe
       }
 
-      private def warn(tree: Tree) {
+      private def warn(tree: Tree): Unit = {
         context.warn(tree.pos, self)
       }
     }
