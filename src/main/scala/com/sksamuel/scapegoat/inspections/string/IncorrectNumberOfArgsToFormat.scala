@@ -6,7 +6,8 @@ import com.sksamuel.scapegoat._
 class IncorrectNumberOfArgsToFormat extends Inspection("Incorrect number of args for format", Levels.Error) {
 
   // format is: %[argument_index$][flags][width][.precision][t]conversion
-  final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d?(\\.\\d+)?[tT]?[a-zA-Z]".r
+  //        OR: %%
+  final val argRegex = "%((\\d+\\$)?[-#+ 0,(\\<]*?\\d?(\\.\\d+)?[tT]?[a-zA-Z]|%)".r
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -17,7 +18,8 @@ class IncorrectNumberOfArgsToFormat extends Inspection("Incorrect number of args
         tree match {
           case Apply(Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(format)))),
             TermName("format")), args) =>
-            val argCount = argRegex.findAllIn(format.toString).matchData.size
+            // %% doesn't consume any arguments, but all other formats do
+            val argCount = argRegex.findAllIn(format.toString).matchData.filterNot(_.matched == "%%").size
             if (argCount > args.size)
               context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
