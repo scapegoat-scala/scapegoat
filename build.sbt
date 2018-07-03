@@ -9,7 +9,6 @@ scalaVersion := "2.12.6"
 crossScalaVersions := Seq("2.11.12", scalaVersion.value)
 
 sbtVersion in Global := "1.1.6"
-crossSbtVersions := Vector("0.13.16", sbtVersion.value)
 
 SbtPgp.autoImport.useGpg := true
 
