@@ -5,10 +5,10 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-scalaVersion := "2.12.4"
+scalaVersion := "2.12.6"
 crossScalaVersions := Seq("2.11.12", scalaVersion.value)
 
-sbtVersion in Global := "1.1.0"
+sbtVersion in Global := "1.1.6"
 crossSbtVersions := Vector("0.13.16", sbtVersion.value)
 
 SbtPgp.autoImport.useGpg := true
@@ -44,7 +44,7 @@ scalacOptions ++= Seq(
   //"-Ywarn-value-discard"
 )
   
-javacOptions ++= Seq("-source", "1.6", "-target", "1.6")
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 libraryDependencies ++= Seq(
   "org.scala-lang"                  %     "scala-reflect"         % scalaVersion.value,
