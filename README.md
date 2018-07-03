@@ -124,7 +124,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Inspections
 
-There are currently 116 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 117 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name | Brief Description | Default Level |
 |------|-------------------|---------------|
@@ -234,6 +234,7 @@ There are currently 116 inspections. An overview list is given, followed by a mo
 | UnnecessaryToString | Checks for unnecessary `toString` on instances of String | Warning |
 | UnreachableCatch | Checks for catch clauses that cannot be reached | Warning |
 | UnsafeContains | Checks for `List.contains(value)` for invalid types | Error |
+| UnsafeStringContains | Checks for `String.contains(value)` for invalid types | Error |
 | UnusedMethodParameter | Checks for unused method parameters | Warning |
 | UseCbrt | Checks for use of `math.pow` for calculating `math.cbrt` | Info |
 | UseExpM1 | Checks for use of `math.exp(x) - 1` instead of `math.expm1(x)` | Info |
