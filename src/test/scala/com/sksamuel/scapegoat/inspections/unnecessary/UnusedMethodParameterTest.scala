@@ -42,6 +42,14 @@ class UnusedMethodParameterTest
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
     "should not report warning" - {
+      "for main method" in {
+        val code = """class Test {
+                      def main(args: Array[String]) : Unit = {}
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
       "for abstract methods" in {
 
         val code = """abstract class Test {
