@@ -27,6 +27,19 @@ class UnreachableCatchTest
         compileCodeSnippet(code1)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+
+      "when unconditional catch is followed by conditional catch on the same type" in {
+        val code = """object Test {
+                        try {
+                        } catch {
+                          case e: RuntimeException =>
+                          case e: RuntimeException if e.getMessage.contains("foo") =>
+                        }
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
     }
     "should not report warning" - {
       "for super type after sub type" in {
@@ -41,6 +54,32 @@ class UnreachableCatchTest
                     } """.stripMargin
 
         compileCodeSnippet(code2)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+
+      "when conditional catch is followed by unconditional catch on the same type" in {
+        val code = """object Test {
+                        try {
+                        } catch {
+                          case e: RuntimeException if e.getMessage.contains("foo") =>
+                          case e: RuntimeException =>
+                        }
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+
+      "when conditional catch is followed by conditional catch on the same type" in {
+        val code = """object Test {
+                        try {
+                        } catch {
+                          case e: RuntimeException if e.getMessage.contains("foo") =>
+                          case e: RuntimeException if e.getMessage.contains("bar") =>
+                        }
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
     }
