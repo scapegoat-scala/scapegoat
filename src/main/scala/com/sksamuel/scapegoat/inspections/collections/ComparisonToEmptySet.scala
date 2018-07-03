@@ -25,7 +25,7 @@ class ComparisonToEmptySet extends Inspection("Comparison to empty set", Levels.
         }
       }
 
-      private def warn(tree: Tree) {
+      private def warn(tree: Tree): Unit = {
         context.warn(tree.pos, self,
           "Prefer use of isEmpty instead of comparison to an empty Set: " + tree.toString().take(200))
       }

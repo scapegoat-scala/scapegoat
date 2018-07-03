@@ -10,7 +10,7 @@ class PartialFunctionInsteadOfMatch extends Inspection("Match instead of partial
 
       import context.global._
 
-      private def warn(tree: Tree) {
+      private def warn(tree: Tree): Unit = {
         context.warn(tree.pos, self,
           "A map match can be replaced with a partial function for greater readability: " + tree.toString().take(500))
       }

@@ -93,7 +93,7 @@ class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
   scapegoat.verbose = false
   scapegoat.summary = false
 
-  override def computeInternalPhases() {
+  override def computeInternalPhases(): Unit = {
     super.computeInternalPhases()
     phasesSet.add(scapegoat)
     phasesDescMap.put(scapegoat, "scapegoat")
