@@ -49,6 +49,26 @@ class VarCouldBeValTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+
+      "with correct line numbers" in {
+        val code =
+          """object Test {
+            |  def foo {
+            |    var bar = 1
+            |    val myValue = 2
+            |    var baz = 3
+            |  }
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 2
+        val warningsInOrder = compiler.scapegoat.feedback.warnings.sortBy(_.line)
+        val Seq(barWarning, bazWarning) = warningsInOrder
+        barWarning.line shouldBe 3
+        barWarning.snippet should contain("bar is never written to, so could be a val: var bar: Int = 1")
+        bazWarning.line shouldBe 5
+        bazWarning.snippet should contain("baz is never written to, so could be a val: var baz: Int = 3")
+      }
     }
     "should not report warning" - {
       "when var is written to in the method" in {
