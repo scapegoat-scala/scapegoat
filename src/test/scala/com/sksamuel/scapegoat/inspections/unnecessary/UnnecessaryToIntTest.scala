@@ -38,6 +38,18 @@ class UnnecessaryToIntTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
+      "when invoking toInt on an Integer" in {
+        val code =
+          """object Test {
+                      def test(i: java.lang.Integer) = {
+                        val t = i.toInt
+                      }
+                    }""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
