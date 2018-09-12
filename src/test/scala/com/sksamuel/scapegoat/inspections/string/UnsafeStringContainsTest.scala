@@ -20,6 +20,7 @@ class UnsafeStringContainsTest extends FreeSpec with Matchers with PluginRunner 
           |  "abcd".contains('b') // good
           |  str.contains("abc") // good
           |  str.contains('b') // good
+          |  Seq("one", "two", "three").forall("abcdefgh".contains) // good
           |}""".stripMargin.trim
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 3
