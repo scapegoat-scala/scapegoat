@@ -16,7 +16,7 @@ class UnsafeStringContains extends Inspection("Unsafe string contains", Levels.E
       private def isChar(tree: Tree) = tree.tpe.widen.baseClasses.contains(typeOf[Char].typeSymbol)
 
       private def isString(tree: Tree): Boolean = {
-        tree.tpe.widen.baseClasses.contains(typeOf[String].typeSymbol) || (tree match {
+        tree.tpe.widen.baseClasses.contains(typeOf[CharSequence].typeSymbol) || (tree match {
           case Apply(left, _) => left.symbol.fullName == "scala.Predef.augmentString"
           case _ => false
         })
