@@ -63,5 +63,16 @@ class LooksLikeInterpolatedStringTest extends FreeSpec with Matchers with Plugin
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
+    "for strings with escaped $" in {
+      val code =
+        """
+          |  object Test {
+          |     val answer = 42
+          |     val message = s"$$answer = $answer"
+          |  }
+        """.stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
   }
 }
