@@ -14,11 +14,10 @@ class LooksLikeInterpolatedString extends Inspection("Looks Like Interpolated St
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(Ident(TermName("scala")), TermName("StringContext")) => continue(tree)
           case Literal(Constant(str: String)) =>
             val possibles = Seq(regex1, regex2)
               .flatMap(_.findAllIn(str).toList.filterNot(_.contains("$anonfun")))
-            if (possibles.nonEmpty) {
+            if (possibles.nonEmpty && !str.startsWith("$")) {
               context.warn(tree.pos, self, str)
             }
           case _ => continue(tree)
