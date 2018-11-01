@@ -5,7 +5,7 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.reporters.Reporter
 
 /** @author Stephen Samuel */
-class Feedback(consoleOutput: Boolean, reporter: Reporter) {
+class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String) {
 
   val warnings = new ListBuffer[Warning]
 
@@ -40,8 +40,9 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter) {
   }
 
   private def normalizeSourceFile(sourceFile: String): String = {
-    val indexOf = sourceFile.indexOf("src/main/scala/")
-    val packageAndFile = if (indexOf == -1) sourceFile else sourceFile.drop(indexOf).drop("src/main/scala/".length)
+    val indexOf = sourceFile.indexOf(sourcePrefix)
+    val fullPrefix = if (sourcePrefix.endsWith("/")) sourcePrefix else s"$sourcePrefix/"
+    val packageAndFile = if (indexOf == -1) sourceFile else sourceFile.drop(indexOf).drop(fullPrefix.length)
     packageAndFile.replace('/', '.').replace('\\', '.')
   }
 }

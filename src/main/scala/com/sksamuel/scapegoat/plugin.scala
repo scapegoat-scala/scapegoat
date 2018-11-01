@@ -37,7 +37,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         option.drop("customInspectors:".length)
           .split(':')
           .toSeq
-          .map(inspection => Class.forName(inspection).newInstance.asInstanceOf[Inspection])
+          .map(inspection => Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection])
       case _ =>
     }
     options.find(_.startsWith("reports:")) match {
@@ -80,6 +80,12 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
               }
           }.toMap
     }
+    options.find(_.startsWith("sourcePrefix:")) match {
+      case Some(option) => {
+        component.sourcePrefix = option.drop("sourcePrefix:".length)
+      }
+      case None => component.sourcePrefix = "src/main/scala/"
+    }
     options.find(_.startsWith("dataDir:")) match {
       case Some(option) =>
         component.dataDir = new File(option.drop("dataDir:".length))
@@ -88,7 +94,6 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         error("-P:scapegoat:dataDir not specified")
         false
     }
-
   }
 
   override val optionsHelp: Option[String] = Some(Seq(
@@ -107,7 +112,9 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     "                                                     <levels> should be a colon separated list of name=level",
     "                                                     settings, where 'name' is the simple name of an inspection",
     "                                                     and 'level' is the simple name of a",
-    "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.")
+    "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.",
+    "-P:scapegoat:sourcePrefix:<prefix>                   overrides source prefix if it differs from src/main/scala",
+    "                                                     for ex., in Play applications where sources are in app/ folder")
     .mkString("\n"))
 }
 
@@ -129,6 +136,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disableHTML = true
   var disableScalastyleXML = true
   var customInpections: Seq[Inspection] = Nil
+  var sourcePrefix = "src/main/scala/"
 
   private val count = new AtomicInteger(0)
 
@@ -140,7 +148,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def activeInspections: Seq[Inspection] = (inspections ++ customInpections)
     .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
-  lazy val feedback = new Feedback(consoleOutput, global.reporter)
+  lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {
