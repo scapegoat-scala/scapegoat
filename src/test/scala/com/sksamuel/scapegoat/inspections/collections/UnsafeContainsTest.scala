@@ -20,6 +20,7 @@ class UnsafeContainsTest extends FreeSpec with Matchers with PluginRunner with O
       |  def f5[CC[X] <: Seq[X], A <: AnyRef, B <: AnyVal](xs: CC[A], y: B) = xs contains y  // bad
       |
       |  List(1).contains("sam")
+      |  Some(1).contains("sam")
       |  val int = 1
       |  List("sam").contains(int)
       |  List(2).contains(int) // is good
@@ -29,7 +30,7 @@ class UnsafeContainsTest extends FreeSpec with Matchers with PluginRunner with O
       |}""".stripMargin.trim
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 6
+      compiler.scapegoat.feedback.warnings.size shouldBe 7
     }
     "should not report warning" - {
       "for type parameter A in method, collection, and value" in {
