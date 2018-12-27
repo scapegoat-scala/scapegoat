@@ -12,14 +12,24 @@ class UnsafeContains extends Inspection("Unsafe contains", Levels.Error) {
 
       private val Contains = TermName("contains")
       private val Seq = typeOf[Seq[_]].typeSymbol
-      private def isSeq(tree: Tree): Boolean = tree.tpe.widen.baseClasses contains Seq
-      private def isCompatibleType(container: Tree, value: Tree) = container.tpe baseType Seq match {
-        case TypeRef(a, Seq, elem :: Nil) if elem.isInstanceOf[Any] && elem <:< value.tpe => true
-        case TypeRef(a, Seq, elem :: Nil) => value.tpe <:< elem
+      private val Option = typeOf[Option[_]].typeSymbol
+      private def isSeqOrOption(tree: Tree): Boolean = {
+        val baseClasses = tree.tpe.widen.baseClasses
+        baseClasses.contains(Seq) || baseClasses.contains(Option)
+      }
+
+      private def isCompatibleType(container: Tree, value: Tree, typ: Symbol): Boolean = container.tpe baseType typ match {
+        case TypeRef(a, typ, elem :: Nil) if elem.isInstanceOf[Any] && elem <:< value.tpe => true
+        case TypeRef(a, typ, elem :: Nil) => value.tpe <:< elem
         case _                            => false
       }
+
+      private def isCompatibleType(container: Tree, value: Tree): Boolean = {
+        isCompatibleType(container, value, Seq) || isCompatibleType(container, value, Option)
+      }
+
       override def inspect(tree: Tree): Unit = tree match {
-        case Applied(Select(lhs, Contains), _, (arg :: Nil) :: Nil) if isSeq(lhs) && !isCompatibleType(lhs, arg) =>
+        case Applied(Select(lhs, Contains), _, (arg :: Nil) :: Nil) if isSeqOrOption(lhs) && !isCompatibleType(lhs, arg) =>
           context.warn(tree.pos, self, tree.toString().take(300))
         case _ =>
           continue(tree)
