@@ -61,6 +61,43 @@ You can pass other configuration flags same way, e.g.
 
 Note: You may use a separate maven profile, so that the dependency doesn't go to you runtime classpath.
 
+#### Gradle
+
+Firstly you need to add scapegoat plugin as a dependency:
+
+```groovy
+dependencies {
+  compile 'com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12:1.3.3'
+  scalaCompilerPlugin "com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12:1.3.3"
+}
+
+```
+
+Then configure `scala-compiler-plugin` 
+
+```groovy
+configurations {
+  scalaCompilerPlugin
+}
+
+tasks.withType(ScalaCompile) {
+  scalaCompileOptions.additionalParameters = [
+    "-Xplugin:" + configurations.scalaCompilerPlugin.asPath,
+    "-P:scapegoat:dataDir:" + buildDir + "/scapegoat"
+  ]
+}
+
+```
+
+The only required parameter is `dataDir` (where report will be generated):
+
+`"-P:scapegoat:dataDir:" + buildDir + "/scapegoat",`
+
+You can pass other configuration flags adding it to the `additionalParameters` list, e.g.
+
+`"-P:scapegoat:disabledInspections:FinalModifierOnCaseClass""`
+
+
 ### Reports
 
 Here is sample output from the console during the build for a project with warnings/errors:
