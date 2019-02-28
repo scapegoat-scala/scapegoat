@@ -17,8 +17,8 @@ class ComparisonToEmptySet extends Inspection("Comparison to empty set", Levels.
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(_, Equals), List(Apply(TypeApply(Select(Select(_, TermSet), TermApply), _), _))) => warn(tree)
-          case Apply(Select(Apply(TypeApply(Select(Select(_, TermSet), TermApply), _), _), Equals), _) => warn(tree)
+          case Apply(Select(_, Equals), List(Apply(TypeApply(Select(Select(_, TermSet), TermApply), _), List()))) => warn(tree)
+          case Apply(Select(Apply(TypeApply(Select(Select(_, TermSet), TermApply), _), List()), Equals), _) => warn(tree)
           case Apply(Select(_, Equals), List(TypeApply(Select(Select(_, TermSet), Empty), _))) => warn(tree)
           case Apply(Select(TypeApply(Select(Select(_, TermSet), Empty), _), Equals), _) => warn(tree)
           case _ => continue(tree)

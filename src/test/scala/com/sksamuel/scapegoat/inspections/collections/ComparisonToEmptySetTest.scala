@@ -51,5 +51,25 @@ class ComparisonToEmptySetTest extends FreeSpec with Matchers with PluginRunner 
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
     }
+    "should not report warning" - {
+      "for comparing lhs to Set(x)" in {
+        val code = """object Test {
+                        val a = Set(1,2,3)
+                        a == Set(2)
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "for comparing rhs to Set(x)" in {
+        val code = """object Test {
+                        val a = Set(1,2,3)
+                        Set(2) == a
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+    }
   }
 }
