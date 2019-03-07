@@ -5,7 +5,7 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.8"
 crossScalaVersions := Seq("2.11.12", scalaVersion.value)
 
 sbtVersion in Global := "1.1.6"
@@ -48,7 +48,7 @@ javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 libraryDependencies ++= Seq(
   "org.scala-lang"                  %     "scala-reflect"         % scalaVersion.value,
   "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "provided",
-  "org.scala-lang.modules"          %%    "scala-xml"             % "1.0.6",
+  "org.scala-lang.modules"          %%    "scala-xml"             % "1.1.1",
   "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "test",
   "commons-io"                      %     "commons-io"            % "2.5"                   % "test",
   "org.scalatest"                   %%    "scalatest"             % "3.0.4"                 % "test",
