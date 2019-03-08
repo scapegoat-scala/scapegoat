@@ -13,9 +13,14 @@ class UnnecessaryToInt extends Inspection("Unnecessary toInt", Levels.Warning) {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(lhs, TermName("toInt")) if lhs.tpe <:< IntClass.tpe && lhs.symbol.baseClasses.nonEmpty =>
-            context.warn(tree.pos, self,
-              "Unnecessary invocation of toInt on instance of Int " + tree.toString().take(200))
+          case Select(lhs, TermName("toInt"))
+            if lhs.tpe <:< IntClass.tpe &&
+               Option(lhs.symbol).fold(ifEmpty = true)(_.baseClasses.nonEmpty) =>
+              context.warn(
+                tree.pos,
+                self,
+                s"Unnecessary invocation of toInt on instance of Int ${tree.toString.take(200)}"
+              )
           case _ =>
         }
         continue(tree)
