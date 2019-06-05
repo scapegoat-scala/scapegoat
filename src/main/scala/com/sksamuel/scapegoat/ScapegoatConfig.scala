@@ -101,6 +101,7 @@ object ScapegoatConfig extends App {
     new ParameterlessMethodReturnsUnit,
     new PartialFunctionInsteadOfMatch,
     new PointlessTypeBounds,
+    new PreferMapEmpty,
     new PreferSeqEmpty,
     new PreferSetEmpty,
     new ProductWithSerializableInferred,

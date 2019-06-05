@@ -244,6 +244,7 @@ There are currently 117 inspections. An overview list is given, followed by a mo
 | ParameterlessMethodReturnsUnit | Checks for `def foo : Unit` | Warning |
 | PartialFunctionInsteadOfMatch | Warns when you could use a partial function directly instead of a match block | Info |
 | PointlessTypeBounds | Finds type bounds of the form `[A <: Any]` or `[A >: Nothing]`| Warning |
+| PreferMapEmpty | Checks for Map() when could use Map.empty | Info |
 | PreferSeqEmpty | Checks for Seq() when could use Seq.empty | Info |
 | PreferSetEmpty | Checks for Set() when could use Set.empty | Info |
 | ProductWithSerializableInferred | Checks for vals that have `Product with Serializable` as their inferred type | Warning |
