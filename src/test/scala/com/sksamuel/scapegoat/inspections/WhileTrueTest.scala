@@ -13,7 +13,7 @@ class WhileTrueTest extends FreeSpec with Matchers with PluginRunner with OneIns
     "when constant" - {
       "should report warning" in {
 
-        val code = """import scala.collection.JavaConversions._
+        val code = """
                     object Test {
                       while (true) {
                         println("sam")
@@ -27,7 +27,7 @@ class WhileTrueTest extends FreeSpec with Matchers with PluginRunner with OneIns
     "when not constant" - {
       "should not report warning" in {
 
-        val code = """import scala.collection.JavaConversions._
+        val code = """
                     object Test {
                       while (System.currentTimeMillis > 0) {
                         println("sam")
@@ -44,7 +44,7 @@ class WhileTrueTest extends FreeSpec with Matchers with PluginRunner with OneIns
     "when constant" - {
       "should report warning" in {
 
-        val code = """import scala.collection.JavaConversions._
+        val code = """
                     object Test {
                       do {
                         println("sam")
@@ -58,7 +58,7 @@ class WhileTrueTest extends FreeSpec with Matchers with PluginRunner with OneIns
     "when not constant" - {
       "should not report warning" in {
 
-        val code = """import scala.collection.JavaConversions._
+        val code = """
                     object Test {
                       do {
                         println("sam")
