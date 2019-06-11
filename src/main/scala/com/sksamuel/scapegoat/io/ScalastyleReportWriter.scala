@@ -2,7 +2,6 @@ package com.sksamuel.scapegoat.io
 
 import com.sksamuel.scapegoat.{ Warning, Feedback }
 
-import scala.collection.mutable.ListBuffer
 import scala.xml.Node
 
 /** @author Eugene Sypachev (Axblade) */
@@ -17,7 +16,7 @@ object ScalastyleReportWriter {
     </checkstyle>
   }
 
-  private def fileToXml(fileWarningMapEntry: (String, ListBuffer[Warning])) = {
+  private def fileToXml(fileWarningMapEntry: (String, Seq[Warning])) = {
     val (file, warnings) = fileWarningMapEntry
     <file name={ file }>
       { warnings.map(warningToXml) }

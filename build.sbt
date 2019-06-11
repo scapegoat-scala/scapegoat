@@ -14,7 +14,50 @@ SbtPgp.autoImport.useGpg := true
 
 SbtPgp.autoImport.useGpgAgent := true
 
-scalacOptions := Seq("-unchecked", "-deprecation", "-feature", "-encoding", "utf8", "-Xmax-classfile-name", "254")
+val scalac13Options = Seq(
+  "-Xlint:adapted-args",
+  "-Xlint:inaccessible",
+  "-Xlint:infer-any",
+  "-Xlint:nullary-override",
+  "-Xlint:nullary-unit",
+)
+
+val scalac12Options = Seq(
+  "-Xlint:adapted-args",
+  "-Ywarn-inaccessible",
+  "-Ywarn-infer-any",
+  "-Xlint:nullary-override",
+  "-Xlint:nullary-unit",
+  "-Xmax-classfile-name", "254"
+)
+
+val scalac11Options = Seq(
+  "-Ywarn-adapted-args",
+  "-Ywarn-inaccessible",
+  "-Ywarn-infer-any",
+  "-Ywarn-nullary-override",
+  "-Ywarn-dead-code",
+  "-Ywarn-nullary-unit",
+  "-Ywarn-numeric-widen",
+  "-Xmax-classfile-name", "254",
+  //"-Ywarn-value-discard"
+)
+
+scalacOptions := {
+  val common = Seq(
+    "-unchecked",
+    "-deprecation",
+    "-feature",
+    "-encoding", "utf8",
+    "-Xlint"
+  )
+
+  common ++ (scalaBinaryVersion.value match {
+    case "2.11" => scalac11Options
+    case "2.12" => scalac12Options
+    case "2.13" => scalac13Options
+  })
+}
 
 fullClasspath in console in Compile ++= (fullClasspath in Test).value // because that's where "PluginRunner" is
 
@@ -31,31 +74,20 @@ def check(code: String) = {
 }
 """
 
-scalacOptions ++= Seq(
-  "-Xlint",
-  "-Ywarn-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-inaccessible",
-  "-Ywarn-infer-any",
-  "-Ywarn-nullary-override",
-  "-Ywarn-nullary-unit",
-  "-Ywarn-numeric-widen"
-  //"-Ywarn-value-discard"
-)
-  
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 libraryDependencies ++= Seq(
-  "org.scala-lang"                  %     "scala-reflect"         % scalaVersion.value,
-  "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "provided",
-  "org.scala-lang.modules"          %%    "scala-xml"             % "1.1.1",
-  "org.scala-lang"                  %     "scala-compiler"        % scalaVersion.value      % "test",
-  "commons-io"                      %     "commons-io"            % "2.5"                   % "test",
-  "org.scalatest"                   %%    "scalatest"             % "3.0.4"                 % "test",
-  "org.mockito"                     %     "mockito-all"           % "1.10.19"               % "test",
-  "joda-time"                       %     "joda-time"             % "2.9.9"                 % "test",
-  "org.joda"                        %     "joda-convert"          % "1.9.2"                 % "test",
-  "org.slf4j"                       %     "slf4j-api"             % "1.7.25"                % "test"
+  "org.scala-lang"                  %     "scala-reflect"           % scalaVersion.value,
+  "org.scala-lang"                  %     "scala-compiler"          % scalaVersion.value      % "provided",
+  "org.scala-lang.modules"          %%    "scala-xml"               % "1.2.0",
+  "org.scala-lang.modules"          %%    "scala-collection-compat" % "2.0.0",
+  "org.scala-lang"                  %     "scala-compiler"          % scalaVersion.value      % "test",
+  "commons-io"                      %     "commons-io"              % "2.5"                   % "test",
+  "org.scalatest"                   %%    "scalatest"               % "3.0.8"                 % "test",
+  "org.mockito"                     %     "mockito-all"             % "1.10.19"               % "test",
+  "joda-time"                       %     "joda-time"               % "2.9.9"                 % "test",
+  "org.joda"                        %     "joda-convert"            % "1.9.2"                 % "test",
+  "org.slf4j"                       %     "slf4j-api"               % "1.7.25"                % "test"
 )
 
 sbtrelease.ReleasePlugin.autoImport.releasePublishArtifactsAction := PgpKeys.publishSigned.value

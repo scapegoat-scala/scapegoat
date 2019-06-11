@@ -7,7 +7,9 @@ import scala.tools.nsc.reporters.Reporter
 /** @author Stephen Samuel */
 class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String) {
 
-  val warnings = new ListBuffer[Warning]
+  private val warningsBuffer = new ListBuffer[Warning]
+
+  def warnings: Seq[Warning] = warningsBuffer.toSeq
 
   var levelOverridesByInspectionSimpleName: Map[String, Level] = Map.empty
 
@@ -25,7 +27,7 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String)
     val sourceFileFull = pos.source.file.path
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
     val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, snippetText, inspection.getClass.getCanonicalName)
-    warnings.append(warning)
+    warningsBuffer.append(warning)
     if (consoleOutput) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
       snippetText.foreach(s => println(s"          $s"))
