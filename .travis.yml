@@ -3,7 +3,7 @@ scala:
    - 2.11.12
    - 2.12.6
 script:
-   - sbt clean +test
+   - sbt ++$TRAVIS_SCALA_VERSION clean test
 jdk:
    - oraclejdk8
 before_script:
