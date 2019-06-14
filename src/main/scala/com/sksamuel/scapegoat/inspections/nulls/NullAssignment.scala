@@ -10,11 +10,6 @@ class NullAssignment extends Inspection("Null assignment", Levels.Warning) {
 
       import context.global._
 
-      def containsNull(trees: List[Tree]) = trees exists {
-        case Literal(Constant(null)) => true
-        case _                       => false
-      }
-
       override def inspect(tree: Tree): Unit = {
         tree match {
           case ValDef(_, _, _, Literal(Constant(null))) => warn(tree)

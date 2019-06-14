@@ -21,7 +21,7 @@ class UseSqrt extends Inspection("Use sqrt", Levels.Info) {
             context.warn(tree.pos, self,
               s"$math.sqrt is clearer and more performant than $math.pow(x, 0.5)")
           case other =>
-            val q = other
+            other
             continue(tree)
         }
       }

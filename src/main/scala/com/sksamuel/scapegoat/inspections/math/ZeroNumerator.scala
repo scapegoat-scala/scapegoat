@@ -9,7 +9,6 @@ class ZeroNumerator extends Inspection("Zero numerator", Levels.Warning,
     override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
-      import definitions._
 
       override def inspect(tree: Tree): Unit = {
         tree match {

@@ -3,7 +3,6 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.PluginRunner
 import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
 
-import scala.concurrent.Future
 
 /** @author Stephen Samuel */
 class PartialFunctionInsteadOfMatchTest
