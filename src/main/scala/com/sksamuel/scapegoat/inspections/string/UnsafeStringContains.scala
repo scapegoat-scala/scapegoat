@@ -17,18 +17,22 @@ class UnsafeStringContains extends Inspection("Unsafe string contains", Levels.E
 
       private def isString(tree: Tree): Boolean = {
         tree.tpe.widen.baseClasses.contains(typeOf[CharSequence].typeSymbol) || (tree match {
-          case Apply(left, _) => left.symbol.fullName == "scala.Predef.augmentString"
+          case Apply(left, _) => Set("scala.LowPriorityImplicits.wrapString", "scala.Predef.augmentString")(left.symbol.fullName)
           case _ => false
         })
       }
 
       private def isCompatibleType(value: Tree) = isString(value) || isChar(value)
 
-      override def inspect(tree: Tree): Unit = tree match {
-        case Applied(Select(lhs, Contains), _, (arg :: Nil) :: Nil) if isString(lhs) && !isCompatibleType(arg) =>
-          context.warn(tree.pos, self, tree.toString().take(300))
-        case _ =>
-          continue(tree)
+      override def inspect(tree: Tree): Unit = {
+        tree match {
+          case Applied(Select(lhs, Contains), targ :: Nil, (_ :: Nil) :: Nil) if isString(lhs) && !isCompatibleType(targ) =>
+            context.warn(tree.pos, self, tree.toString().take(300))
+          case Applied(Select(lhs, Contains), _, (arg :: Nil) :: Nil) if isString(lhs) && !isCompatibleType(arg) =>
+            context.warn(tree.pos, self, tree.toString().take(300))
+          case _ =>
+            continue(tree)
+        }
       }
     }
   }

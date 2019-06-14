@@ -18,7 +18,9 @@ class ProductWithSerializableInferred extends Inspection("Product with Serializa
 
       private def isProductWithSerializable(tpe: Type): Boolean = {
         tpe.typeArgs match {
-          case List(RefinedType(List(Product, Serializable, Obj), decls)) => true
+          case List(RefinedType(parents, decls)) if parents.size == 3 =>
+            Seq(Product, Serializable, Obj).forall(t => parents.exists(_ =:= t))
+
           case _ => false
         }
       }

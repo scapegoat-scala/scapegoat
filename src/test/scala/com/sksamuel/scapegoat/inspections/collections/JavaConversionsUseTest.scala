@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.{ PluginRunner, isScala213 }
 import org.scalatest.{ FreeSpec, Matchers }
 
 /** @author Stephen Samuel */
@@ -9,7 +9,7 @@ class JavaConversionsUseTest extends FreeSpec with Matchers with PluginRunner {
   override val inspections = Seq(new JavaConversionsUse)
 
   "JavaConversionsUse" - {
-    "should report warning" in {
+    "should report warning (for Scala < 2.13)" in {
 
       val code = """import scala.collection.JavaConversions._
                     object Test {
@@ -18,9 +18,10 @@ class JavaConversionsUseTest extends FreeSpec with Matchers with PluginRunner {
                       val a = jul.exists(_ == "sammy")
                    |  val b = jum.toSeq
                     } """.stripMargin
+      val expectedWarnings = if (isScala213) 0 else 1
 
       compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings should have size expectedWarnings
     }
   }
 }

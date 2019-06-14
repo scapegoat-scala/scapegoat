@@ -10,11 +10,6 @@ class UseExpM1 extends Inspection("Use expm1", Levels.Info) {
 
       import context.global._
 
-      def isMathPackage(pack: String) =
-        (pack == "scala.math.`package`"
-          || pack == "java.this.lang.Math"
-          || pack == "java.this.lang.StrictMath")
-
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(pack, TermName("exp")), List(number)), nme.SUB), List(Literal(Constant(1)))) =>

@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat
 
 import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest, PrivateMethodTester}
 
-import scala.reflect.internal.util.{NoPosition, OffsetPosition}
+import scala.reflect.internal.util.NoPosition
 import scala.tools.nsc.reporters.StoreReporter
 
 /** @author Stephen Samuel */
