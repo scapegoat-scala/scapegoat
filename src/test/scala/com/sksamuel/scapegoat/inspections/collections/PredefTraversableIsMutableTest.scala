@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.{ PluginRunner, isScala213 }
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
@@ -9,16 +9,18 @@ class PredefTraversableIsMutableTest extends FreeSpec with Matchers with PluginR
   override val inspections = Seq(new PredefTraversableIsMutable)
 
   "PredefTraversableIsMutable" - {
-    "should report warning" - {
+    "should report warning (for Scala < 2.13)" - {
       "for predef Traversable apply" in {
         val code = """object Test { val a = Traversable("sammy") }""".stripMargin
+        val expectedWarnings = if (isScala213) 0 else 1
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warnings should have size expectedWarnings
       }
       "for declaring Traversable as return type" in {
         val code = """object Test { def foo : Traversable[String] = ??? }""".stripMargin
+        val expectedWarnings = if (isScala213) 0 else 1
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warnings should have size expectedWarnings
       }
     }
     "should not report warning" - {
