@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.{ PluginRunner, isScala213 }
 
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
@@ -10,16 +10,18 @@ class PredefSeqIsMutableTest extends FreeSpec with Matchers with PluginRunner wi
   override val inspections = Seq(new PredefSeqIsMutable)
 
   "PredefSeqUse" - {
-    "should report warning" - {
-      "for predef seq apply" in {
+    "should report warning (for Scala < 2.13)" - {
+      "for predef seq apply" in  {
         val code = """object Test { val a = Seq("sammy") }""".stripMargin
+        val expectedWarnings = if (isScala213) 0 else 1
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warnings should have size expectedWarnings
       }
       "for declaring Seq as return type" in {
         val code = """object Test { def foo : Seq[String] = ??? }""".stripMargin
+        val expectedWarnings = if (isScala213) 0 else 1
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warnings should have size expectedWarnings
       }
     }
     "should not report warning" - {
