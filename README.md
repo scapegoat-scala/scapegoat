@@ -162,7 +162,7 @@ Please note that scapegoat is a new project. While it's been tested on some comm
 
 ### Inspections
 
-There are currently 117 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 118 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name | Brief Description | Default Level |
 |------|-------------------|---------------|
@@ -245,6 +245,7 @@ There are currently 117 inspections. An overview list is given, followed by a mo
 | ParameterlessMethodReturnsUnit | Checks for `def foo : Unit` | Warning |
 | PartialFunctionInsteadOfMatch | Warns when you could use a partial function directly instead of a match block | Info |
 | PointlessTypeBounds | Finds type bounds of the form `[A <: Any]` or `[A >: Nothing]`| Warning |
+| PreferMapEmpty | Checks for Map() when could use Map.empty | Info |
 | PreferSeqEmpty | Checks for Seq() when could use Seq.empty | Info |
 | PreferSetEmpty | Checks for Set() when could use Set.empty | Info |
 | ProductWithSerializableInferred | Checks for vals that have `Product with Serializable` as their inferred type | Warning |
