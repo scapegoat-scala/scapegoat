@@ -53,7 +53,6 @@ case class InspectionContext(global: Global, feedback: Feedback) {
     import global._
 
     private val SuppressWarnings = typeOf[SuppressWarnings]
-    private val Safe = typeOf[Safe]
 
     private def inspectionClass(klass: Class[_]): Class[_] = Option(klass.getEnclosingClass) match {
       case None    => klass
@@ -68,7 +67,11 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       an.javaArgs.head._2.toString.toLowerCase.contains(inspectionClass(getClass).getSimpleName.toLowerCase)
     }
 
-    private def isSkipAnnotation(an: AnnotationInfo) = an.tree.tpe =:= SuppressWarnings || an.tree.tpe =:= Safe
+    private def isSkipAnnotation(an: AnnotationInfo) = {
+      // Workaround for #222: we can't use typeOf[Safe] here it requires Scapegoat to be on the
+      // compile classpath.
+      an.tree.tpe =:= SuppressWarnings || an.tree.tpe.erasure.toString == "com.sksamuel.scapegoat.Safe"
+    }
 
     private def isSuppressed(symbol: Symbol) = {
       symbol != null &&
