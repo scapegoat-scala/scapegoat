@@ -97,6 +97,18 @@ case class InspectionContext(global: Global, feedback: Feedback) {
         case _ => inspect(tree)
       }
     }
+
+    protected def isArray(tree: Tree): Boolean = tree.tpe.typeSymbol.fullName == "scala.Array"
+    protected def isTraversable(tree: Tree): Boolean = tree.tpe <:< typeOf[Traversable[Any]]
+    protected def isSeq(t: Tree): Boolean = t.tpe <:< typeOf[Seq[Any]]
+    protected def isIndexedSeq(t: Tree): Boolean = t.tpe <:< typeOf[IndexedSeq[Any]]
+    protected def isSet(t: Tree): Boolean = {
+      t.tpe.widen.baseClasses.exists { c =>
+        c.fullName == "scala.collection.mutable.Set" || c.fullName == "scala.collection.immutable.Set"
+      }
+    }
+    protected def isList(t: Tree): Boolean = t.tpe <:< typeOf[scala.collection.immutable.List[Any]]
+    protected def isMap(tree: Tree): Boolean = tree.tpe.baseClasses.exists { _.fullName == "scala.collection.Map" }
   }
 }
 

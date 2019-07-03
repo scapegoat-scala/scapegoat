@@ -15,7 +15,7 @@ class AvoidSizeEqualsZero extends Inspection("Avoid Traversable.size == 0, use T
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(Select(q, Size | Length), TermName("$eq$eq")), List(Literal(Constant(0)))) if q.tpe.<:<(typeOf[Traversable[_]]) =>
+          case Apply(Select(Select(q, Size | Length), TermName("$eq$eq")), List(Literal(Constant(0)))) if isTraversable(q) =>
             context.warn(tree.pos, self,
               "Traversable.size is slow for some implementations. Prefer .isEmpty which is O(1): " + tree.toString().take(100))
           case _ => continue(tree)

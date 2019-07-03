@@ -12,7 +12,7 @@ class ArrayEquals extends Inspection(
 
       import context.global._
 
-      private def isArray(tree: Tree) = tree match {
+      protected override def isArray(tree: Tree): Boolean = tree match {
         // "null" is deprecated, but comparing an array to null can be useful
         // in some cases (e.g. when interfacing with null-using Java code) and
         // shouldn't trigger this warning, which relates to whether the
@@ -22,7 +22,7 @@ class ArrayEquals extends Inspection(
         // be coerced to Array when it is compared to an array, so it would
         // otherwise match the next case.
         case Literal(Constant(null)) => false
-        case x                       => x.tpe <:< typeOf[Array[_]]
+        case x                       => super.isArray(x)
       }
 
       override def inspect(tree: Tree): Unit = {

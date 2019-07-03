@@ -15,8 +15,6 @@ class MapGetAndGetOrElse extends Inspection("Use of .get.getOrElse instead of .g
 
       import context.global._
 
-      private def isMap(tree: Tree): Boolean = tree.tpe <:< typeOf[scala.collection.Map[_, _]]
-
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(Apply(Select(left, TermName("get")), List(key)),

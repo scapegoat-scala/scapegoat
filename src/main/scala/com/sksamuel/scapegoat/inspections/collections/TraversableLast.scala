@@ -12,7 +12,7 @@ class TraversableLast extends Inspection("Use of Traversable.last", Levels.Error
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(left, TermName("last")) =>
-            if (left.tpe <:< typeOf[Traversable[_]])
+            if (isTraversable(left))
               context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }

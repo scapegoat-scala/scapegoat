@@ -13,7 +13,7 @@ class TraversableHead extends Inspection("Use of Traversable.head", Levels.Error
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(left, TermName("head")) =>
-            if (left.tpe <:< typeOf[Traversable[_]])
+            if (isTraversable(left))
               context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }

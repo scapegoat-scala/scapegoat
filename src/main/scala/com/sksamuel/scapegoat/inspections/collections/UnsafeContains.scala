@@ -11,8 +11,8 @@ class UnsafeContains extends Inspection("Unsafe contains", Levels.Error) {
       import treeInfo.Applied
 
       private val Contains = TermName("contains")
-      private val Seq = typeOf[Seq[_]].typeSymbol
-      private val Option = typeOf[Option[_]].typeSymbol
+      private val Seq = typeOf[Seq[Any]].typeSymbol
+      private val Option = typeOf[Option[Any]].typeSymbol
       private def isSeqOrOption(tree: Tree): Boolean = {
         val baseClasses = tree.tpe.widen.baseClasses
         baseClasses.contains(Seq) || baseClasses.contains(Option)

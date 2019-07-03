@@ -11,7 +11,6 @@ class ListAppend extends Inspection("List append is slow", Levels.Info,
 
       import context.global._
 
-      private def isList(tree: Tree) = tree.tpe <:< typeOf[List[_]]
       private val Append = TermName("$colon$plus")
 
       override def inspect(tree: Tree): Unit = {
