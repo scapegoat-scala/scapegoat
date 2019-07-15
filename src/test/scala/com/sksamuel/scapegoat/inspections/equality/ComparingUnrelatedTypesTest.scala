@@ -139,6 +139,9 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for sizeIs" in {
+        verifyNoWarnings("""object A { val b = Seq("a", "b").sizeIs == 2 }""")
+      }
     }
   }
 }

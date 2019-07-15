@@ -25,6 +25,8 @@ class ComparingUnrelatedTypes extends Inspection("Comparing unrelated types", Le
           }
         }
 
+        def isSizeCompareOps(t: Type) = t <:< typeOf[scala.collection.IterableOps.SizeCompareOps]
+
         tree match {
           // -- Special cases ---------------------------------------------------------------------
 
@@ -39,6 +41,9 @@ class ComparingUnrelatedTypes extends Inspection("Comparing unrelated types", Le
           // comparision but `(c: Char) == 128000` is not.
           case Apply(Select(value, TermName("$eq$eq" | "$bang$eq")), List(lit @ Literal(_))) if integralLiteralFitsInType(lit, value.tpe) =>
           case Apply(Select(lit @ Literal(_), TermName("$eq$eq" | "$bang$eq")), List(value)) if integralLiteralFitsInType(lit, value.tpe)  =>
+
+          // Comparing SizeCompareOps to an integral value should be ignored.
+          case Apply(Select(lhs, TermName("$eq$eq" | "$bang$eq")), List(_)) if isSizeCompareOps(lhs.tpe) =>
 
           // -- End special cases ------------------------------------------------------------------
 
