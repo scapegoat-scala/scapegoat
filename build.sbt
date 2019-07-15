@@ -5,7 +5,7 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.0"
 crossScalaVersions := Seq("2.11.12", "2.13.0", scalaVersion.value)
 
 sbtVersion in Global := "1.1.6"
