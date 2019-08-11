@@ -122,44 +122,6 @@ And if you prefer a prettier report, here is a screen shot of the type of HTML r
 
 For instructions on suppressing warnings by file, by inspection or by line see [the sbt-scapegoat README](https://github.com/sksamuel/sbt-scapegoat).
 
-### False positives
-
-Please note that scapegoat is a new project. While it's been tested on some common open source projects, there is still a good chance you'll find false positives. Please open up issues if you run into these so we can fix them.
-
-### Changelog
-
-* **0.94.0** - Fixed some more false positives. Added MethodNames inspection, StripMarginOnRegex inspection, and VariableShadowing inspection (the latter being a work in progress, please report feedback).
-
-* **0.93.2** - Fixed false positives.
-
-* **0.93.1** - #67 fixed var args in duplicate map check, #66 ignoring methods returning nothing when checking for unused params, #69 fixed extended classes false pos, #73 Removed incorrect inspection, #64 updated suppression to use tree.symbol.isSynthetic instead of mods.synth, Merge pull request #77 from paulp/psp, Give access to the inspection logic through the sbt console, #76 Improve the contains test.
-
-* **0.93.0** - Added ability to define multiple traversers that run in separate phases of the compiler, #58 Updated suppression to work on objects and classes, #60 handling case objects in suspicious match on class object, Allow all inspections to be disabled, other fixes
-
-* **0.92.2** - Added debug option, Made summary optional and disabled in tests, Improved var could be val #54, Split null inspections into assignment and invocation #53, Bumped count on operators to > 2, loads of fixes, loads of verboseness removed.
-
-* **0.92.1** - Fixed a load of false positives.
-
-* **0.92.0** - Added swallowed exception inspection, Added public finalizer inspection, Added use expm1(x) instead of exp(x) - 1 inspection, Added use log1p(x) instead of log(x + 1) inspection, Added use log10(x) instead of log(x)/log(10) inspection, Added use cbrt inspection
-
-* **0.91.0** - Updated logging format to include less [scapegoat] everywhere, Added scala.math and java.StrictMath to useSqrt, Added ignored files patterns option, Added wildcard import inspection, Added comparison to empty set inspection
-
-* **0.90.17** - Added looks like interpolated string inspection, Added SuspiciousMatchOnClassObject inspection, Updated varuse to not warn on vars in actors #46, Added comparison to empty list inspection, #37 Changed emptyinterpolated string to error, #37 Fixed warning on max parameters
-
-* **0.90.14** - Bunch of bug fixes for false positives. No new inspections.
-
-* **0.90.13** - Fixed NPE in VarClosure inspection, Added Object Names inspection, Added classnames inspection, Added avoid to minus one inspection.
-
-* **0.90.12** - New inspections: unnecessary override, duplicate import, pointless type bounds, max parameters, var closure, method returning any. Updated repeated case body to ignore bodies with two or less statements #28. Removed false positives on getter/setter #27.
-
-* **0.90.11** - Added empty for inspection, AnyUse inspection, Added ArrayEquals inspection, Added double negation inspection, Disabled expression as statement inspection by default, Added avoid operator overload inspection, #25 improving repeated case bodies, Added lonely sealed trait. Added postInspection call to inspections
-
-* **0.90.10** - Added type shadowing inspection, var could be val inspection, unreachable catch inspection and unnecessary toString inspection
-
-* **0.90.09** - Added new inspections: bounded by final type, empty while block, prefer vector empty, finalizer without super, impossible option size condition, filter dot head, repeated case body. Added `infos` to HTML output header
-
-* **0.90.8** - Fixed erroneous partial functions inspection. Added inspection for empty case class. Changed levels in output to lowercase. Added console output option. Fixed seq empty on non empty seq. Changed return usage to info. Fixed odd issue with empty tree. Changed unused parameter in override to be info. Ignoring all synthetic method added to case classes. Fixed while(true) being detected by ConstantIf
-
 ### Inspections
 
 There are currently 118 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
