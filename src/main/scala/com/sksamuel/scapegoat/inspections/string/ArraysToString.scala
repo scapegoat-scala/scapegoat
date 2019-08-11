@@ -11,7 +11,6 @@ class ArraysToString extends Inspection("Use of Array.toString", Levels.Warning)
       import context.global._
 
       private val ToString = TermName("toString")
-      private def isArray(tree: Tree) = tree.tpe <:< typeOf[Array[_]]
 
       override def inspect(tree: Tree): Unit = {
         tree match {

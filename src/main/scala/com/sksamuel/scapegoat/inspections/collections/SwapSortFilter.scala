@@ -10,9 +10,6 @@ class SwapSortFilter extends Inspection("Swap sort filter", Levels.Info) {
 
       import context.global._
 
-      private val Seq = typeOf[Seq[_]]
-      private def isSeq(tree: Tree) = tree.tpe <:< Seq
-
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(TypeApply(Select(lhs, TermName("sorted")), _), _), TermName("filter")), _) if isSeq(lhs) =>

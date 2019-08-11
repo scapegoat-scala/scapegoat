@@ -16,8 +16,6 @@ class ExistsSimplifiableToContains extends Inspection("Exists simplifiable to co
 
       private val Equals = TermName("$eq$eq")
 
-      private def isTraversable(tree: Tree) = tree.tpe <:< typeOf[Traversable[Any]]
-
       private def isContainsType(container: Tree, value: Tree): Boolean = {
         val valueType = value.tpe.underlying.typeSymbol.tpe
         val traversableType = container.tpe.underlying.baseType(typeOf[Traversable[Any]].typeSymbol)

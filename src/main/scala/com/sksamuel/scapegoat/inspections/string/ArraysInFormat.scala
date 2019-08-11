@@ -10,7 +10,7 @@ class ArraysInFormat extends Inspection("Array passed to String.format", Levels.
 
       import context.global._
 
-      private def containsArrayType(trees: List[Tree]) = trees.exists(_.tpe <:< typeOf[Array[_]])
+      private def containsArrayType(trees: List[Tree]) = trees.exists(isArray)
 
       override def inspect(tree: Tree): Unit = {
         tree match {

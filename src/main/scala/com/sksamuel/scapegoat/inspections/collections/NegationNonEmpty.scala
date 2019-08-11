@@ -12,7 +12,6 @@ class NegationNonEmpty extends Inspection("!nonEmpty can be replaced with isEmpt
 
       private val IsEmpty = TermName("nonEmpty")
       private val Bang = TermName("unary_$bang")
-      private def isTraversable(tree: Tree) = tree.tpe <:< typeOf[Traversable[_]]
 
       override def inspect(tree: Tree): Unit = {
         tree match {

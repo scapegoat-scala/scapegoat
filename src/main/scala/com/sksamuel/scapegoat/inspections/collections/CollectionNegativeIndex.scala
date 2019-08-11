@@ -12,7 +12,7 @@ class CollectionNegativeIndex extends Inspection("Collection index out of bounds
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("apply")), List(Literal(Constant(x: Int)))) if lhs.tpe <:< typeOf[List[_]] && x < 0 =>
+          case Apply(Select(lhs, TermName("apply")), List(Literal(Constant(x: Int)))) if isList(lhs) && x < 0 =>
             context.warn(tree.pos, self, tree.toString().take(100))
           case _ => continue(tree)
         }

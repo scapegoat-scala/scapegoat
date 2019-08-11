@@ -53,7 +53,6 @@ case class InspectionContext(global: Global, feedback: Feedback) {
     import global._
 
     private val SuppressWarnings = typeOf[SuppressWarnings]
-    private val Safe = typeOf[Safe]
 
     private def inspectionClass(klass: Class[_]): Class[_] = Option(klass.getEnclosingClass) match {
       case None    => klass
@@ -68,7 +67,11 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       an.javaArgs.head._2.toString.toLowerCase.contains(inspectionClass(getClass).getSimpleName.toLowerCase)
     }
 
-    private def isSkipAnnotation(an: AnnotationInfo) = an.tree.tpe =:= SuppressWarnings || an.tree.tpe =:= Safe
+    private def isSkipAnnotation(an: AnnotationInfo) = {
+      // Workaround for #222: we can't use typeOf[Safe] here it requires Scapegoat to be on the
+      // compile classpath.
+      an.tree.tpe =:= SuppressWarnings || an.tree.tpe.erasure.toString == "com.sksamuel.scapegoat.Safe"
+    }
 
     private def isSuppressed(symbol: Symbol) = {
       symbol != null &&
@@ -94,6 +97,18 @@ case class InspectionContext(global: Global, feedback: Feedback) {
         case _ => inspect(tree)
       }
     }
+
+    protected def isArray(tree: Tree): Boolean = tree.tpe.typeSymbol.fullName == "scala.Array"
+    protected def isTraversable(tree: Tree): Boolean = tree.tpe <:< typeOf[Traversable[Any]]
+    protected def isSeq(t: Tree): Boolean = t.tpe <:< typeOf[Seq[Any]]
+    protected def isIndexedSeq(t: Tree): Boolean = t.tpe <:< typeOf[IndexedSeq[Any]]
+    protected def isSet(t: Tree): Boolean = {
+      t.tpe.widen.baseClasses.exists { c =>
+        c.fullName == "scala.collection.mutable.Set" || c.fullName == "scala.collection.immutable.Set"
+      }
+    }
+    protected def isList(t: Tree): Boolean = t.tpe <:< typeOf[scala.collection.immutable.List[Any]]
+    protected def isMap(tree: Tree): Boolean = tree.tpe.baseClasses.exists { _.fullName == "scala.collection.Map" }
   }
 }
 

@@ -11,7 +11,7 @@ class ReverseTailReverse extends Inspection("reverse.tail.reverse instead of ini
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Select(Select(Select(c, TermName("reverse")), TermName("tail")), TermName("reverse")) if c.tpe.<:<(typeOf[Traversable[_]]) =>
+          case Select(Select(Select(c, TermName("reverse")), TermName("tail")), TermName("reverse")) if isTraversable(c) =>
             warn(tree)
           case Select(Apply(arrayOps0, List(Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(col)), TermName("reverse")))), TermName("tail")))), TermName("reverse")) if (arrayOps0.toString.contains("ArrayOps"))
             && arrayOps1.toString.contains("ArrayOps")
