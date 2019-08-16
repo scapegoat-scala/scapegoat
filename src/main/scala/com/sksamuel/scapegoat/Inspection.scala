@@ -59,12 +59,19 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       case Some(k) => inspectionClass(k)
     }
 
-    private def isAllDisabled(an: AnnotationInfo) = {
-      an.javaArgs.head._2.toString.toLowerCase.contains("\"all\"")
-    }
-
-    private def isThisDisabled(an: AnnotationInfo) = {
-      an.javaArgs.head._2.toString.toLowerCase.contains(inspectionClass(getClass).getSimpleName.toLowerCase)
+    private def isThisDisabled(an: AnnotationInfo): Boolean = {
+      val cls = inspectionClass(getClass)
+      val names = Set("all", cls.getSimpleName, cls.getCanonicalName).map(_.toLowerCase)
+      val suppressedNames: Seq[String] = an.javaArgs.values.headOption.toSeq.flatMap {
+        case ArrayAnnotArg(args) =>
+          args.collect {
+            case LiteralAnnotArg(Constant(suppressedName: String)) =>
+              suppressedName.toLowerCase
+          }
+        case _ =>
+          Seq.empty[String]
+      }
+      names.intersect(suppressedNames.toSet).nonEmpty
     }
 
     private def isSkipAnnotation(an: AnnotationInfo) = {
@@ -75,7 +82,7 @@ case class InspectionContext(global: Global, feedback: Feedback) {
 
     private def isSuppressed(symbol: Symbol) = {
       symbol != null &&
-        symbol.annotations.exists(an => isSkipAnnotation(an) && (isAllDisabled(an) || isThisDisabled(an)))
+        symbol.annotations.exists(an => isSkipAnnotation(an) && isThisDisabled(an))
     }
 
     protected def continue(tree: Tree) = super.traverse(tree)
@@ -86,13 +93,11 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       tree match {
         // ignore synthetic methods added
         case DefDef(mods, _, _, _, _, _) if tree.symbol.isSynthetic =>
-        case dd @ DefDef(_, _, _, _, _, _) if isSuppressed(dd.symbol) =>
+        case member: MemberDef if isSuppressed(member.symbol) =>
         case block @ Block(_, _) if isSuppressed(block.symbol) =>
         case iff @ If(_, _, _) if isSuppressed(iff.symbol) =>
         case tri @ Try(_, _, _) if isSuppressed(tri.symbol) =>
-        case mod: ModuleDef if isSuppressed(mod.symbol) =>
         case ClassDef(_, _, _, Template(parents, _, _)) if parents.map(_.tpe.typeSymbol.fullName).contains("scala.reflect.api.TypeCreator") =>
-        case classdef: ClassDef if isSuppressed(classdef.symbol) =>
         case _ if analyzer.hasMacroExpansionAttachment(tree) => //skip macros as per http://bit.ly/2uS8BrU
         case _ => inspect(tree)
       }
