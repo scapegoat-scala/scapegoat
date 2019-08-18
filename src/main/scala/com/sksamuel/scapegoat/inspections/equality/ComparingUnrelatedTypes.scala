@@ -45,33 +45,11 @@ class ComparingUnrelatedTypes extends Inspection("Comparing unrelated types", Le
           case Apply(Select(lhs, TermName("$eq$eq" | "$bang$eq")), List(rhs)) =>
             def related(lt: Type, rt: Type) =
               lt <:< rt || rt <:< lt || lt =:= rt
-            def isDerivedValueClass(ts: Symbol) = ts.isClass && ts.asClass.isDerivedValueClass
-            def isEnumValue(ts: Symbol) = ts.fullNameString == "scala.Enumeration.Value"
             def warn(): Unit = context.warn(tree.pos, self, tree.toString().take(500))
-            def eraseIfNecessaryAndCompare(lt: Type, rt: Type): Unit = {
-              val lTypeSymbol = lt.typeSymbol
-              val rTypeSymbol = rt.typeSymbol
-              val (l, r) = if (isDerivedValueClass(lTypeSymbol) || isDerivedValueClass(rTypeSymbol)) {
-                (lt, rt)
-              } else if (lTypeSymbol.isParameter || rTypeSymbol.isParameter) {
-                (lt, rt)
-              } else if (isEnumValue(lTypeSymbol) || isEnumValue(rTypeSymbol)) {
-                (lt, rt)
-              } else {
-                (lt.erasure, rt.erasure)
-              }
 
-              if (!related(l, r)) {
-                warn()
-              } else {
-                lt.typeArgs.zip(rt.typeArgs).foreach {
-                  case (ltInner, rtInner) =>
-                    eraseIfNecessaryAndCompare(ltInner, rtInner)
-                }
-              }
+            if (!related(lhs.tpe.deconst, rhs.tpe.deconst)) {
+              warn()
             }
-
-            eraseIfNecessaryAndCompare(lhs.tpe, rhs.tpe)
 
           case _ => continue(tree)
         }
