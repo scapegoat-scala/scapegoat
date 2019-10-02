@@ -86,6 +86,12 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       }
       case None => component.sourcePrefix = "src/main/scala/"
     }
+    options.find(_.startsWith("minimalLevel:")) match {
+      case Some(level) => {
+        component.minimalLevel = Levels.fromName(level)
+      }
+      case None => component.minimalLevel = Levels.Info
+    }
     options.find(_.startsWith("dataDir:")) match {
       case Some(option) =>
         component.dataDir = new File(option.drop("dataDir:".length))
@@ -114,7 +120,11 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     "                                                     and 'level' is the simple name of a",
     "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.",
     "-P:scapegoat:sourcePrefix:<prefix>                   overrides source prefix if it differs from src/main/scala",
-    "                                                     for ex., in Play applications where sources are in app/ folder")
+    "                                                     for ex., in Play applications where sources are in app/ folder",
+    "-P:scapegoat:minimalWarnLevel:<level>                provides minimal level of triggered inspections,",
+    "                                                     that will be shown in a report.",
+    "                                                     'level' is the simple name of a",
+    "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.")
     .mkString("\n"))
 }
 
@@ -137,6 +147,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disableScalastyleXML = true
   var customInpections: Seq[Inspection] = Nil
   var sourcePrefix = "src/main/scala/"
+  var minimalLevel: Level = Levels.Info
 
   private val count = new AtomicInteger(0)
 
@@ -148,7 +159,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def activeInspections: Seq[Inspection] = (inspections ++ customInpections)
     .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
-  lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix)
+  lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix, minimalLevel)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {

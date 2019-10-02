@@ -5,11 +5,13 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.reporters.Reporter
 
 /** @author Stephen Samuel */
-class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String) {
+class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String, minimalLevel: Level = Levels.Info) {
 
   private val warningsBuffer = new ListBuffer[Warning]
 
   def warnings: Seq[Warning] = warningsBuffer.toSeq
+  def warningsWithMinimalLevel: Seq[Warning] = warnings.filter(_.hasMinimalLevelOf(minimalLevel))
+  def shouldPrint(warning: Warning): Boolean = consoleOutput && warning.hasMinimalLevelOf(minimalLevel)
 
   var levelOverridesByInspectionSimpleName: Map[String, Level] = Map.empty
 
@@ -28,7 +30,7 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String)
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
     val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, snippetText, inspection.getClass.getCanonicalName)
     warningsBuffer.append(warning)
-    if (consoleOutput) {
+    if (shouldPrint(warning)) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
       snippetText.foreach(s => println(s"          $s"))
       println()
@@ -55,4 +57,13 @@ case class Warning(text: String,
   sourceFileFull: String,
   sourceFileNormalized: String,
   snippet: Option[String],
-  inspection: String)
+  inspection: String) {
+
+  def hasMinimalLevelOf(minimalLevel: Level): Boolean = {
+    minimalLevel match {
+      case Levels.Info => true
+      case Levels.Warning => this.level == Levels.Warning || this.level == Levels.Error
+      case Levels.Error => this.level == Levels.Error
+    }
+  }
+}
