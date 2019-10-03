@@ -12,6 +12,8 @@ class ReadmeTest extends FreeSpec with Matchers {
     readme
       .dropWhile(l => l.trim.distinct != "|-")
       .drop(1)
+      .dropWhile(l => l.trim.distinct != "|-")
+      .drop(1)
       .takeWhile(l => l.trim.nonEmpty)
       .map(_.split("\\|"))
       .collect {
