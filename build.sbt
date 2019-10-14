@@ -77,10 +77,14 @@ def check(code: String) = {
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 libraryDependencies ++= Seq(
-  "org.scala-lang"                  %     "scala-reflect"           % scalaVersion.value,
+  "org.scala-lang"                  %     "scala-reflect"           % scalaVersion.value      % "provided",
   "org.scala-lang"                  %     "scala-compiler"          % scalaVersion.value      % "provided",
-  "org.scala-lang.modules"          %%    "scala-xml"               % "1.2.0",
-  "org.scala-lang.modules"          %%    "scala-collection-compat" % "2.0.0",
+  "org.scala-lang.modules"          %%    "scala-xml"               % "1.2.0" excludeAll(
+    ExclusionRule(organization = "org.scala-lang")
+  ),
+  "org.scala-lang.modules"          %%    "scala-collection-compat" % "2.1.2" excludeAll(
+    ExclusionRule(organization = "org.scala-lang")
+  ),
   "org.scala-lang"                  %     "scala-compiler"          % scalaVersion.value      % "test",
   "commons-io"                      %     "commons-io"              % "2.5"                   % "test",
   "org.scalatest"                   %%    "scalatest"               % "3.0.8"                 % "test",
@@ -132,3 +136,19 @@ pomExtra := {
       </developer>
     </developers>
 }
+
+// include the scala xml and compat modules into the final jar, shaded
+assemblyShadeRules in assembly := Seq(
+  ShadeRule.rename("scala.xml.**" -> "scapegoat.xml.@1").inAll,
+  ShadeRule.rename("scala.collection.compat.**" -> "scapegoat.compat.@1").inAll
+)
+
+// do not run tests during assembly
+test in assembly := {}
+
+autoScalaLibrary := false
+makePom := makePom.dependsOn(assembly).value
+packageBin in Compile := crossTarget.value / (assemblyJarName in assembly).value
+
+// debug assembly process
+//logLevel in assembly := Level.Debug
