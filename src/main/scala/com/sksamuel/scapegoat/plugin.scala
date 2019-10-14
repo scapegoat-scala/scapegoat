@@ -17,22 +17,22 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override val components: List[PluginComponent] = List(component)
 
   override def init(options: List[String], error: String => Unit): Boolean = {
-    options.find(_.startsWith("disabledInspections:")) match {
+    forProperty("disabledInspections:") match {
       case Some(option) => component.disabled = option.drop("disabledInspections:".length).split(':').toList
       case _            =>
     }
-    options.find(_.startsWith("consoleOutput:")) match {
+    forProperty("consoleOutput:") match {
       case Some(option) => component.consoleOutput = option.drop("consoleOutput:".length).toBoolean
       case _            =>
     }
-    options.find(_.startsWith("ignoredFiles:")) match {
+    forProperty("ignoredFiles:") match {
       case Some(option) => component.ignoredFiles = option.drop("ignoredFiles:".length).split(':').toList
       case _            =>
     }
-    for (verbose <- options.find(_.startsWith("verbose:"))) {
+    for (verbose <- forProperty("verbose:")) {
       component.verbose = verbose.drop("verbose:".length).toBoolean
     }
-    options.find(_.startsWith("customInspectors:")) match {
+    forProperty("customInspectors:") match {
       case Some(option) => component.customInpections =
         option.drop("customInspectors:".length)
           .split(':')
@@ -40,7 +40,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
           .map(inspection => Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection])
       case _ =>
     }
-    options.find(_.startsWith("reports:")) match {
+    forProperty("reports:") match {
       case Some(option) =>
         option.drop("reports:".length)
           .split(':')
@@ -64,7 +64,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         component.disableHTML = false
         component.disableScalastyleXML = false
     }
-    options.find(_.startsWith("overrideLevels:")) foreach {
+    forProperty("overrideLevels:") foreach {
       case option =>
         component.feedback.levelOverridesByInspectionSimpleName =
           option.drop("overrideLevels:".length).split(":").map {
@@ -80,13 +80,19 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
               }
           }.toMap
     }
-    options.find(_.startsWith("sourcePrefix:")) match {
+    forProperty("sourcePrefix:") match {
       case Some(option) => {
         component.sourcePrefix = option.drop("sourcePrefix:".length)
       }
       case None => component.sourcePrefix = "src/main/scala/"
     }
-    options.find(_.startsWith("dataDir:")) match {
+    forProperty("minimalLevel:") match {
+      case Some(level) => {
+        component.minimalLevel = Levels.fromName(level)
+      }
+      case None => component.minimalLevel = Levels.Info
+    }
+    forProperty("dataDir:") match {
       case Some(option) =>
         component.dataDir = new File(option.drop("dataDir:".length))
         true
@@ -114,8 +120,15 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     "                                                     and 'level' is the simple name of a",
     "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.",
     "-P:scapegoat:sourcePrefix:<prefix>                   overrides source prefix if it differs from src/main/scala",
-    "                                                     for ex., in Play applications where sources are in app/ folder")
+    "                                                     for ex., in Play applications where sources are in app/ folder",
+    "-P:scapegoat:minimalWarnLevel:<level>                provides minimal level of triggered inspections,",
+    "                                                     that will be shown in a report.",
+    "                                                     'level' is the simple name of a",
+    "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.")
     .mkString("\n"))
+
+  private def forProperty(name: String): Option[String] =
+    options.find(_.startsWith(name))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
@@ -137,6 +150,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disableScalastyleXML = true
   var customInpections: Seq[Inspection] = Nil
   var sourcePrefix = "src/main/scala/"
+  var minimalLevel: Level = Levels.Info
 
   private val count = new AtomicInteger(0)
 
@@ -148,7 +162,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def activeInspections: Seq[Inspection] = (inspections ++ customInpections)
     .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
-  lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix)
+  lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix, minimalLevel)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
     override def run(): Unit = {

@@ -89,7 +89,7 @@ object HtmlReportWriter {
     </body>
 
   def warnings(reporter: Feedback) = {
-    reporter.warnings.map {
+    reporter.warningsWithMinimalLevel.map {
       case warning =>
         val source = warning.sourceFileNormalized + ":" + warning.line
         <div class="warning">

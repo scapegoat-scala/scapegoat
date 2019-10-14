@@ -111,6 +111,7 @@ You can pass other configuration flags adding it to the `additionalParameters` l
 |`-P:scapegoat:reports:`|Colon separated list of reports to generate. Valid options are `none`, `xml`, `html`, `scalastyle`, or `all`.|false|
 |`-P:scapegoat:overrideLevels:`|Overrides the built in warning levels. Should be a colon separated list of `name=level` expressions.|false|
 |`-P:scapegoat:sourcePrefix:`|Overrides source prefix if it differs from `src/main/scala`, for ex. `app/` for Play applications.|false|
+|`-P:scapegoat:minimalWarnLevel:`|Provides minimal level of inspection displayed in reports.|false|
 
 ### Reports
 

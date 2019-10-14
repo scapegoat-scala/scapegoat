@@ -9,7 +9,7 @@ object XmlReportWriter {
 
   def toXML(feedback: Feedback): Node = {
     <scapegoat count={ feedback.warnings.size.toString } warns={ feedback.warns.size.toString } errors={ feedback.errors.size.toString } infos={ feedback.infos.size.toString }>
-      { feedback.warnings.map(warning2xml) }
+      { feedback.warningsWithMinimalLevel.map(warning2xml) }
     </scapegoat>
   }
 

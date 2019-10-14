@@ -70,5 +70,41 @@ class FeedbackTest
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
     }
+    "should use minimal wawrning level in reports" - {
+      "for `info`" in {
+        val inspectionError = new DummyInspection("My default is Error", Levels.Error)
+        val inspectionWarning = new DummyInspection("My default is Warning", Levels.Warning)
+        val inspectionInfo = new DummyInspection("My default is Info", Levels.Info)
+        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
+        val reporter = new StoreReporter
+        val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Info)
+        inspections.foreach(inspection => feedback.warn(position, inspection))
+        feedback.warningsWithMinimalLevel.length should be(3)
+      }
+
+      "for `warning`" in {
+        val inspectionError = new DummyInspection("My default is Error", Levels.Error)
+        val inspectionWarning = new DummyInspection("My default is Warning", Levels.Warning)
+        val inspectionInfo = new DummyInspection("My default is Info", Levels.Info)
+        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
+        val reporter = new StoreReporter
+        val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Warning)
+        inspections.foreach(inspection => feedback.warn(position, inspection))
+        feedback.warningsWithMinimalLevel.length should be(2)
+        feedback.warningsWithMinimalLevel.map(_.level) should contain only(Seq(Levels.Warning, Levels.Error): _*)
+      }
+
+      "for `error`" in {
+        val inspectionError = new DummyInspection("My default is Error", Levels.Error)
+        val inspectionWarning = new DummyInspection("My default is Warning", Levels.Warning)
+        val inspectionInfo = new DummyInspection("My default is Info", Levels.Info)
+        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
+        val reporter = new StoreReporter
+        val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Error)
+        inspections.foreach(inspection => feedback.warn(position, inspection))
+        feedback.warningsWithMinimalLevel.length should be(1)
+        feedback.warningsWithMinimalLevel.map(_.level) should contain only(Seq(Levels.Error): _*)
+      }
+    }
   }
 }
