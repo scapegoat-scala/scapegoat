@@ -18,7 +18,11 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override def init(options: List[String], error: String => Unit): Boolean = {
     forProperty("disabledInspections:") match {
-      case Some(option) => component.disabled = option.drop("disabledInspections:".length).split(':').toList
+      case Some(option) => component.disabledInspections = option.drop("disabledInspections:".length).split(':').toList
+      case _            =>
+    }
+    forProperty("enabledInspections:") match {
+      case Some(option) => component.enabledInspections = option.drop("enabledInspections:".length).split(':').toList
       case _            =>
     }
     forProperty("consoleOutput:") match {
@@ -104,7 +108,8 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val optionsHelp: Option[String] = Some(Seq(
     "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
-    "-P:scapegoat:disabled:<listofinspections>            colon separated list of disabled inspections",
+    "-P:scapegoat:disabledInspections:<listofinspections> colon separated list of disabled inspections (defauls to none)",
+    "-P:scapegoat:enabledInspections:<listofinspections>  colon separated list of enabled inspections (defaults to all)",
     "-P:scapegoat:customInspectors:<listofinspections>    colon separated list of custom inspections",
     "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
     "                                                     files to ignore.",
@@ -139,7 +144,8 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   import global._
 
   var dataDir: File = new File(".")
-  var disabled: List[String] = Nil
+  var disabledInspections: List[String] = Nil
+  var enabledInspections: List[String] = Nil
   var ignoredFiles: List[String] = Nil
   var consoleOutput: Boolean = false
   var verbose: Boolean = false
@@ -158,10 +164,17 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
-  def disableAll: Boolean = disabled.exists(_.compareToIgnoreCase("all") == 0)
+  def disableAll: Boolean = disabledInspections.exists(_.compareToIgnoreCase("all") == 0)
 
-  def activeInspections: Seq[Inspection] = (inspections ++ customInpections)
-    .filterNot(inspection => disabled.contains(inspection.getClass.getSimpleName))
+  def activeInspections: Seq[Inspection] = {
+    if (enabledInspections.isEmpty) {
+     (inspections ++ customInpections)
+      .filterNot(inspection => disabledInspections.contains(inspection.getClass.getSimpleName))
+    } else {
+     (inspections ++ customInpections)
+      .filter(inspection => enabledInspections.contains(inspection.getClass.getSimpleName))
+    }
+  }
   lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix, minimalLevel)
 
   override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
