@@ -103,7 +103,8 @@ You can pass other configuration flags adding it to the `additionalParameters` l
 | Flag | Parameters | Required |
 |------|------------|----------|
 |`-P:scapegoat:dataDir:`|Path to reports directory for the plugin.|true|
-|`-P:scapegoat:disabled:`|Colon separated list of disabled inspections.|false|
+|`-P:scapegoat:disabledInspections:`|Colon separated list of disabled inspections (defaults to none).|false|
+|`-P:scapegoat:enabledInspections:`|Colon separated list of enabled inspections (defaults to all).|false|
 |`-P:scapegoat:customInspectors:`|Colon separated list of custom inspections.|false|
 |`-P:scapegoat:ignoredFiles:`|Colon separated list of regexes to match files to ignore.|false|
 |`-P:scapegoat:verbose:`|Boolean flag that enables/disables verbose console messages.|false|
