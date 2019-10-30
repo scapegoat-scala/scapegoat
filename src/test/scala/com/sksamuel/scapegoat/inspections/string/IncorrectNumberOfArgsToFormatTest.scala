@@ -42,6 +42,11 @@ class IncorrectNumberOfArgsToFormatTest extends FreeSpec with Matchers with Plug
         compileCodeSnippet(code3)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for correct number of args when %n is used" in {
+        val code1 = """object Test {    "Hello %s%n".format("World")  }  """
+        compileCodeSnippet(code1)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
