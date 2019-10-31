@@ -170,6 +170,28 @@ class VarCouldBeValTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when var is written to inside a while condition " in {
+
+        val code =
+          """package com.sammy
+            |object Test {
+            |def something(): List[String] = List("a")
+            |def test(): Unit = {
+            |  var items = List.empty[String]
+            |  while ({
+            |   items = something()
+            |   items.size
+            |  } < 10) {
+            |    println(items)
+            |  }
+            |}
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+
+
       "when var is written to for nested defs" in {
         val code =
           """
