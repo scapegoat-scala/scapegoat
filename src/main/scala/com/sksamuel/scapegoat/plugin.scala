@@ -119,6 +119,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     "                                                     settings, where 'name' is the simple name of an inspection",
     "                                                     and 'level' is the simple name of a",
     "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.",
+    "                                                     You can use 'all' for inspection name to operate on all inspections.",
     "-P:scapegoat:sourcePrefix:<prefix>                   overrides source prefix if it differs from src/main/scala",
     "                                                     for ex., in Play applications where sources are in app/ folder",
     "-P:scapegoat:minimalWarnLevel:<level>                provides minimal level of triggered inspections,",

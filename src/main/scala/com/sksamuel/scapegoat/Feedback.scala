@@ -24,7 +24,11 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
     val level = inspection.defaultLevel
     val text = inspection.text
     val snippetText = inspection.explanation.orElse(snippet)
-    val adjustedLevel = levelOverridesByInspectionSimpleName.getOrElse(inspection.getClass.getSimpleName, level)
+    val adjustedLevel = (levelOverridesByInspectionSimpleName.get("all"), levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)) match {
+      case (Some(l), _) => l
+      case (None, Some(l)) => l
+      case _ => level
+    }
 
     val sourceFileFull = pos.source.file.path
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
