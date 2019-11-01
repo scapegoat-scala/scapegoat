@@ -37,6 +37,7 @@ class VarCouldBeVal extends Inspection("Var could be val", Levels.Warning) {
             containsUnwrittenVar(body, vars)
           case ModuleDef(_, _, Template(_, _, body)) => containsUnwrittenVar(body, vars)
           case If(cond, thenp, elsep) =>
+            unwrittenVars(cond, vars)
             unwrittenVars(thenp, vars)
             unwrittenVars(elsep, vars)
           case tree =>
