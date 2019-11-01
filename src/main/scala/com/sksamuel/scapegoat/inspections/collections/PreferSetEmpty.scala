@@ -15,10 +15,11 @@ class PreferSetEmpty extends Inspection("Prefer Set.empty", Levels.Info) {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(Select(_, SetTerm), ApplyTerm), _), List()) =>
-            context.warn(tree.pos, self,
-              "Set[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " +
-                tree.toString().take(500))
+          case a@Apply(TypeApply(Select(Select(_, SetTerm), ApplyTerm), _), List())
+            if a.tpe.toString.startsWith("scala.collection.immutable.") =>
+              context.warn(tree.pos, self,
+                "Set[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " +
+                  tree.toString().take(500))
           case _ => continue(tree)
         }
       }
