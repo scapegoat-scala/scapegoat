@@ -12,8 +12,7 @@ import scala.tools.nsc.reporters.ConsoleReporter
 trait PluginRunner {
 
   val scalaVersion = util.Properties.versionNumberString
-  val shortScalaVersion = scalaVersion.split('.').dropRight(1).mkString(".")
-
+ 
   val classPath = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
 
   val settings = {
@@ -74,7 +73,7 @@ trait PluginRunner {
   }
 
   def sbtCompileDir: File = {
-    val dir = new File("./target/scala-" + shortScalaVersion + "/classes")
+    val dir = new File("./target/scala-" + scalaVersion + "/classes")
     if (dir.exists) dir
     else throw new FileNotFoundException(s"Could not locate SBT compile directory for plugin files [$dir]")
   }

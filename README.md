@@ -27,8 +27,8 @@ Firstly you need to add scapegoat plugin as a dependency:
 ```xml
 <dependency>
     <groupId>com.sksamuel.scapegoat</groupId>
-    <artifactId>scalac-scapegoat-plugin_${scala.binary.version}</artifactId>
-    <version>1.3.3</version>
+    <artifactId>scalac-scapegoat-plugin_${scala.version}</artifactId>
+    <version>1.3.12</version>
 </dependency>
 ```
 
