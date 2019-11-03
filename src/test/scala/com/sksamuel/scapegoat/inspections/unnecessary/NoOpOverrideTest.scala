@@ -44,6 +44,22 @@ class NoOpOverrideTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when overriding method calls super with different args" in {
+
+        val code =
+          """
+            |class A {
+            |  def method(what: String) = "A " + what
+            |}
+            |class B extends A {
+            |  override def method(what: String) = super.method("something else than " + what)
+            |}
+          """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+
     }
   }
 }
