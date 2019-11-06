@@ -35,5 +35,18 @@ class ExistsSimplifiableToContainsTest extends FreeSpec with Matchers with Plugi
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
+    
+    "when exists is called on an Iterable" in {
+     val code =
+     """
+      |object Test {
+      | def method(): Unit = {
+      |   val l: Iterable[String] = List[String]("a", "b", "c")
+      |   print(l.exists(_ == "a"))
+      | }
+      |}""".stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
   }
 }
