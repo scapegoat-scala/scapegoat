@@ -8,8 +8,8 @@ class ExistsSimplifiableToContainsTest extends FreeSpec with Matchers with Plugi
 
   override val inspections = Seq(new ExistsSimplifiableToContains)
 
-  "exists with compatible type" - {
-    "should report warning" in {
+  "should report warning" - {
+    "when exists is called with compatible type" in {
       val code =
         """object Test {
           |val exists1 = List(1,2,3).exists(x => x == 2)
@@ -23,8 +23,8 @@ class ExistsSimplifiableToContainsTest extends FreeSpec with Matchers with Plugi
     }
   }
 
-  "exists with incompatible type" - {
-    "should not report warning" in {
+  "should not report warning" - {
+    "when exists is called with incompatible type" in {
       val code =
         """object Test {
           |val exists1 = List("sam").exists(x => x == new RuntimeException)
