@@ -10,8 +10,10 @@ class CollectionNamingConfusion extends Inspection("Collection naming Confusion"
 
       import context.global._
 
-      private def isNamedSet(name: String): Boolean = name.trim == "set" || name.trim.contains("Set")
-      private def isNamedList(name: String): Boolean = name.trim == "list" || name.trim.contains("List")
+      private def isNamedSet(name: String): Boolean = name.trim == "set" || name.trim.endsWith("Set") ||
+        name.matches(".*Set[A-Z].*")
+      private def isNamedList(name: String): Boolean = name.trim == "list" || name.trim.endsWith("List") ||
+        name.matches(".*List[A-Z].*")
 
       override def inspect(tree: Tree): Unit = {
         tree match {
