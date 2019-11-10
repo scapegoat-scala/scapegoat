@@ -16,6 +16,17 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
 
   "ComparingUnrelatedTypes" - {
     "should report warning" - {
+      "for comparing Option[Int] to Option[String]" in {
+        val code = """object Main {
+                        def main(args: Array[String]): Unit = {
+                          val stringOption: Option[String] = Some("1")
+                          val intOption: Option[Int] = Some(1)
+                          stringOption == intOption
+                        }
+                      }""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
       "for multiple comparisons" in {
         def code(comparisonOp: String) = s"""
           case class SomeValueClass(i: Int) extends AnyVal
