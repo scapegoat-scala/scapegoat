@@ -139,7 +139,7 @@ For instructions on suppressing warnings by file, by inspection or by line see [
 
 ### Inspections
 
-There are currently 118 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 117 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name | Brief Description | Default Level |
 |------|-------------------|---------------|
@@ -240,8 +240,6 @@ There are currently 118 inspections. An overview list is given, followed by a mo
 | SuspiciousMatchOnClassObject | Finds code where matching is taking place on class literals | Warning |
 | SwallowedException | Finds catch blocks that don't handle caught exceptions | Warning |
 | SwapSortFilter | `sort.filter` can be replaced with `filter.sort` for performance | Info |
-| TraversableHead | Looks for unsafe usage of `Traversable.head` | Error |
-| TraversableLast | Looks for unsafe usage of `Traversable.last` | Error |
 | TryGet | Checks for use of `Try.get` | Error |
 | TypeShadowing | Checks for shadowed type parameters in methods | Warning |
 | UnnecessaryIf | Checks for code like `if (expr) true else false` | Info |
@@ -251,6 +249,7 @@ There are currently 118 inspections. An overview list is given, followed by a mo
 | UnreachableCatch | Checks for catch clauses that cannot be reached | Warning |
 | UnsafeContains | Checks for `List.contains(value)` for invalid types | Error |
 | UnsafeStringContains | Checks for `String.contains(value)` for invalid types | Error |
+| UnsafeTraversableMethods | Check unsafe traversable method usages (head, tail, init, last, reduce, reduceLeft, reduceRight, max, maxBy, min, minBy) | Error |
 | UnusedMethodParameter | Checks for unused method parameters | Warning |
 | UseCbrt | Checks for use of `math.pow` for calculating `math.cbrt` | Info |
 | UseExpM1 | Checks for use of `math.exp(x) - 1` instead of `math.expm1(x)` | Info |
