@@ -14,12 +14,16 @@ class IncorrectNumberOfArgsToFormat extends Inspection("Incorrect number of args
 
       import context.global._
 
+      private def doesNotTakeArguments(formatSpecifier: String) = {
+        formatSpecifier == "%%" || formatSpecifier == "%n"
+      }
+
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(format)))),
             TermName("format")), args) =>
             // %% doesn't consume any arguments, but all other formats do
-            val argCount = argRegex.findAllIn(format.toString).matchData.filterNot(_.matched == "%%").size
+            val argCount = argRegex.findAllIn(format.toString).matchData.filterNot(m => doesNotTakeArguments(m.matched)).size
             if (argCount > args.size)
               context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
