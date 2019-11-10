@@ -22,5 +22,15 @@ class CollectionNamingConfusionTest extends FreeSpec with Matchers with PluginRu
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 6
     }
+    "should not report warning" in {
+      val code = """object Test {
+                      val currentLBListenerSettings = List(1)
+                      val exclusionsForAdvancedSetup = List(2, 3)
+                      val preSetupSteps = List(4)
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
   }
 }
