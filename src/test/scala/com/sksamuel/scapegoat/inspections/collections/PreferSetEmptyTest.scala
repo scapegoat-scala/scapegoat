@@ -42,4 +42,18 @@ class PreferSetEmptyTest extends FreeSpec with Matchers with PluginRunner with O
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
+  "mutable.Set" - {
+    "should not report a warning" in {
+      val code = """
+                 | import scala.collection.mutable
+                 | object Test {
+                 |  val set = mutable.Set[String]()
+                 |  set.add("a")
+                 | }""".stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+
+    }
+  }
 }
