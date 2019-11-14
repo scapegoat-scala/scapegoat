@@ -1,20 +1,31 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
 import com.sksamuel.scapegoat.PluginRunner
-import com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryToInt
+import com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryConversion
 import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
 
 /** @author Stephen Samuel */
-class UnnecessaryToIntTest
+class UnnecessaryConversionTest
     extends FreeSpec
     with Matchers
     with PluginRunner
     with OneInstancePerTest {
 
-  override val inspections = Seq(new UnnecessaryToInt)
+  override val inspections = Seq(new UnnecessaryConversion)
 
-  "Unnecessary to int" - {
+  "Unnecessary conversion" - {
     "should report warning" - {
+      "when invoking toString on a String" in {
+
+        val code =
+          """object Test {
+                      val i = "sam"
+                      val j = i.toString
+                    }""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
       "when invoking toInt on an int" in {
         val code =
           """object Test {
@@ -25,7 +36,6 @@ class UnnecessaryToIntTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
-
       "when invoking toInt on an integer literal" in  {
         val code =
           """object Example extends App {
@@ -36,9 +46,19 @@ class UnnecessaryToIntTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 2
       }
+      
     }
-
     "should not report warning" - {
+      "when invoking toString on a BigDecimal" in {
+        val code =
+          """object Test {
+                      val s = BigDecimal(5)
+                      val t = s.toString
+                    }""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
       "when invoking toInt on a String" in {
         val code =
           """object Test {
@@ -49,7 +69,7 @@ class UnnecessaryToIntTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-
+      
       "when invoking toInt on an Integer" in {
         val code =
           """object Test {
