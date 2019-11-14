@@ -18,7 +18,7 @@ class PreferSetEmpty extends Inspection("Prefer Set.empty", Levels.Info) {
           case a@Apply(TypeApply(Select(Select(_, SetTerm), ApplyTerm), _), List())
             if a.tpe.toString.startsWith("scala.collection.immutable.") =>
               context.warn(tree.pos, self,
-                "Set[T]() creates a new instance. Consider Set.empty which does not allocate a new object. " +
+                "Set[T]() allocates an intermediate object. Consider Set.empty which returns a singleton instance without creating a new object. " +
                   tree.toString().take(500))
           case _ => continue(tree)
         }

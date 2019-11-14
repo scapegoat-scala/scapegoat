@@ -8,8 +8,8 @@ class PreferSeqEmptyTest extends FreeSpec with Matchers with PluginRunner with O
 
   override val inspections = Seq(new PreferSeqEmpty)
 
-  "empty seq apply" - {
-    "should report warning" in {
+  "should report warning" - {
+    "with empty seq apply" in {
 
       val code = """object Test {
                       val a = Seq[String]()
@@ -20,9 +20,8 @@ class PreferSeqEmptyTest extends FreeSpec with Matchers with PluginRunner with O
       compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
   }
-  "non empty seq apply" - {
-    "should not report warning" in {
-
+  "should not report warning" - {
+    "with non empty seq apply" in {
       val code = """object Test {
                       val a = Seq("sam")
                     } """.stripMargin
@@ -30,16 +29,22 @@ class PreferSeqEmptyTest extends FreeSpec with Matchers with PluginRunner with O
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
-  }
-  "Set.empty" - {
-    "should not report warning" in {
-
+    "with Seq.empty" in {
       val code = """object Test {
-                      val b = Set.empty
+                      val b = Seq.empty
                     } """.stripMargin
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
+    "with mutable.Seq" in {
+      val code = """object Test {
+                      val b = scala.collection.mutable.Seq()
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+
   }
 }
