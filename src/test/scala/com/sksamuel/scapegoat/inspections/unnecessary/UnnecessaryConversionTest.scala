@@ -66,6 +66,36 @@ class UnnecessaryConversionTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+      "when invoking toList on a list" in {
+        val code =
+          """object Test {
+            | val list = List(1,2,3)
+            | val something = list.toList
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
+      "when invoking toSet on a set" in {
+        val code =
+          """object Test {
+            | val set = Set(4,3,6)
+            | val something = set.toSet
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
+      "when invoking toSeq on a seq" in {
+        val code =
+          """object Test {
+            | val seq = Seq(4,3,6)
+            | val something = seq.toSeq
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
     }
 
     "should not report warning" - {
@@ -111,6 +141,29 @@ class UnnecessaryConversionTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when invoking toSeq on a set" in {
+        val code =
+          """object Test {
+            | val set = Set(4,3,6)
+            | val something = set.toSeq
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "when invoking toSet on a list or seq" in {
+        val code =
+          """object Test {
+            | val list = List(4,3,6)
+            | val something = list.toSet
+            | val seq = Seq(1,3,6)
+            | val thing = seq.toSet
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      
     }
   }
 }
