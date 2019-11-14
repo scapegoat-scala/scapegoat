@@ -46,8 +46,28 @@ class UnnecessaryConversionTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 2
       }
-      
+      "when invoking toLong on a long" in {
+        val code =
+          """object Test {
+            | val i: Long = 436
+            | val j = i.toLong
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
+      "when invoking toLong on a Long literal" in  {
+        val code =
+          """object Example extends App {
+            |  val a = 123456789012L
+            |  val b = a.toLong
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
     }
+
     "should not report warning" - {
       "when invoking toString on a BigDecimal" in {
         val code =
@@ -76,6 +96,16 @@ class UnnecessaryConversionTest
             | def test(i: java.lang.Integer) = {
             |   val t = i.toInt
             | }
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "when invoking toLong on a int" in {
+        val code =
+          """object Test {
+            | val i: Int = 436
+            | val j = i.toLong
             |}""".stripMargin
 
         compileCodeSnippet(code)

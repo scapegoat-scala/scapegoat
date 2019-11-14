@@ -18,7 +18,11 @@ class UnnecessaryConversion extends Inspection("Unnecessary conversion", Levels.
 
           case Select(lhs, TermName("toInt"))
             if lhs.tpe <:< IntClass.tpe && Option(lhs.symbol).fold(ifEmpty = true)(_.baseClasses.nonEmpty) =>
-              context.warn(tree.pos, self, s"Unnecessary invocation of toInt on instance of Int: " + tree.toString.take(200))
+              context.warn(tree.pos, self, "Unnecessary toInt on instance of Int: " + tree.toString.take(200))
+
+          case Select(lhs, TermName("toLong")) if lhs.tpe <:< LongClass.tpe =>
+              context.warn(tree.pos, self, "Unnecessary toLong on instance of Long: " + tree.toString.take(200))
+
 
           case _ =>
         }
