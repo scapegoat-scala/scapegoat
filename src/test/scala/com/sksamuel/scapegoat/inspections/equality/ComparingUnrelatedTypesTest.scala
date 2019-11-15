@@ -150,6 +150,28 @@ class ComparingUnrelatedTypesTest extends FreeSpec with Matchers with PluginRunn
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for isSize comparison" - {
+        "equality check" in { verifyNoWarnings("""object A { val b = Seq("a", "b").sizeIs == 2 }""") }
+        "inequality check" in { verifyNoWarnings("""object A { val b = Seq("a", "b").sizeIs != 2 }""") }
+      }
+      "singleton types" - {
+        "sealed trait hierarchy match if guard" in {
+          verifyNoWarnings (
+            """
+              |sealed trait Enum
+              |object Enum {
+              |  case object E1 extends Enum
+              |
+              |  (E1: Enum) match {
+              |    case x if x == E1 =>
+              |  }
+              |}""".stripMargin
+          )
+        }
+        "bound variable if guard" in {
+          verifyNoWarnings("""object A { System.getProperty("x") match { case s if s == "y" => } }""")
+        }
+      }
     }
   }
 }

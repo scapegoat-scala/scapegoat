@@ -42,13 +42,24 @@ class ComparingUnrelatedTypes extends Inspection("Comparing unrelated types", Le
 
           // -- End special cases ------------------------------------------------------------------
 
-          case Apply(Select(lhs, TermName("$eq$eq" | "$bang$eq")), List(rhs)) =>
-            def related(lt: Type, rt: Type) =
-              lt <:< rt || rt <:< lt || lt =:= rt
-            def warn(): Unit = context.warn(tree.pos, self, tree.toString().take(500))
+          case Apply(Select(lhs, op @ TermName("$eq$eq" | "$bang$eq")), List(rhs)) =>
+            val equality = if (op string_== "$eq$eq") "==" else "!="
+            def related(lt: Type, rt: Type) = lt <:< rt || rt <:< lt || lt =:= rt
+            def hasSpecificEq(t: Type): Boolean = t.members.exists { sym =>
+              sym.isMethod && sym.nameString == equality && (sym.paramss match {
+                case List(List(p)) =>
+                  val pt = p.tpe.deconst
+                  val rt = rhs.tpe.deconst
 
-            if (!related(lhs.tpe.deconst, rhs.tpe.deconst)) {
-              warn()
+                  // rule out (synthetic) `==(Any)` methods
+                  !(pt =:= typeOf[Any]) && (pt =:= rt || rt <:< pt)
+
+                case _ => false
+              })
+            }
+
+            if (!hasSpecificEq(lhs.tpe.deconst) && !related(lhs.tpe.widen, rhs.tpe.widen)) {
+              context.warn(tree.pos, self, tree.toString().take(500))
             }
 
           case _ => continue(tree)
