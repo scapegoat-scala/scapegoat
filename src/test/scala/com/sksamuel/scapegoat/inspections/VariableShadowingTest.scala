@@ -116,6 +116,22 @@ class VariableShadowingTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
+      "when two if branches define the same variable" in {
+        val code =
+            """class Test {
+            |  if (1 > 0) {
+            |    val something = 4
+            |    println(something+1)
+            |  } else {
+            |    val something = 2
+            |    println(something+2)
+            |  }
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
