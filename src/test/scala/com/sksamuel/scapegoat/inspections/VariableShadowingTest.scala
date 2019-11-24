@@ -132,6 +132,24 @@ class VariableShadowingTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
+      "when two sibling cases define the same local variable" in {
+        val code =
+            """class Test {
+            |  val possibility: Option[Int] = Some(3) 
+            |  possibility match {
+            |    case Some(x) => 
+            |      val y = x + 1    
+            |      println(y)
+            |    case None =>
+            |      val y = 0
+            |      println(y)     
+            |  }
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
