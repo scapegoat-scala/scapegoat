@@ -135,6 +135,7 @@ object ScapegoatConfig extends App {
     new UseLog10,
     new UseLog1P,
     new UseSqrt,
+    new VariableShadowing,
     new VarClosure,
     new VarCouldBeVal,
     new WhileTrue,

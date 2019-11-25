@@ -139,7 +139,7 @@ For instructions on suppressing warnings by file, by inspection or by line see [
 
 ### Inspections
 
-There are currently 117 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 118 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name | Brief Description | Default Level |
 |------|-------------------|---------------|
@@ -258,6 +258,7 @@ There are currently 117 inspections. An overview list is given, followed by a mo
 | UseSqrt | Checks for use of `math.pow` for calculating `math.sqrt` | Info |
 | VarClosure | Finds closures that reference var | Warning |
 | VarCouldBeVal | Checks for `var`s that could be declared as `val`s | Warning |
+| VariableShadowing | Checks for multiple uses of the variable name in nested scopes | Warning |
 | WhileTrue | Checks for code that uses a `while(true)` or `do { } while(true)` block. | Warning |
 | ZeroNumerator | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0` | Warning |
 
