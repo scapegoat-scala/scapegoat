@@ -150,6 +150,22 @@ class VariableShadowingTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
+      "when visiting a match case, especially not visit it twice" in {
+        val code =
+            """class Test {
+            |  val possibility: Option[Int] = Some(3)
+            |  possibility match {
+            |    case Some(x) =>
+            |      val y = x + 1
+            |      println(y)
+            |    case None => println("None")
+            |  }
+            |}""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
