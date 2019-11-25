@@ -41,10 +41,9 @@ class VariableShadowing extends Inspection("Variable shadowing", Levels.Warning)
             cases.foreach {
               case CaseDef(Bind(name, _), _, _) =>
                 if (isDefined(name.toString)) warn(tree)
-                continue(tree)
-              case _ =>
-                continue(tree)
+              case _ => // do nothing
             }
+            continue(tree)
           case _ => continue(tree)
         }
       }
