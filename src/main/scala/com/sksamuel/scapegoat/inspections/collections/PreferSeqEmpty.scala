@@ -15,14 +15,16 @@ class PreferSeqEmpty extends Inspection("Prefer Seq.empty", Levels.Info) {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(Select(_, SeqTerm), ApplyTerm), _), List()) => warn(tree)
+          case a@Apply(TypeApply(Select(Select(_, SeqTerm), ApplyTerm), _), List())
+            if (!a.tpe.toString.startsWith("scala.collection.mutable.")) =>
+              warn(tree)
           case _ => continue(tree)
         }
       }
 
       private def warn(tree: Tree): Unit = {
         context.warn(tree.pos, self,
-          "Seq[T]() creates a new instance. Consider Seq.empty which does not allocate a new object. " +
+          "Seq[T]() allocates an intermediate object. Consider Seq.empty wich returns a singleton instance without creating a new object. " +
             tree.toString().take(500))
       }
     }
