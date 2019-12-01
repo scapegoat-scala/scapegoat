@@ -23,7 +23,7 @@ class UnnecessaryConversion extends Inspection("Unnecessary conversion", Levels.
           case Select(lhs, TermName("toLong")) if lhs.tpe <:< LongClass.tpe =>
               context.warn(tree.pos, self, "Unnecessary toLong on instance of Long: " + tree.toString.take(200))
 
-          case Select(lhs, TermName("toSet")) if isSet(lhs) =>
+          case Select(lhs, TermName("toSet")) if isSet(lhs, allowMutableSet = false) =>
               context.warn(tree.pos, self, "Unnecessary toSet on a set: " + tree.toString.take(200))
 
           case Select(lhs, TermName("toList")) if isList(lhs) =>
