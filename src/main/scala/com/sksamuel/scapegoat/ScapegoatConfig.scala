@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat
 
 import com.sksamuel.scapegoat.inspections._
 import com.sksamuel.scapegoat.inspections.collections._
-import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
+import com.sksamuel.scapegoat.inspections.controlflow._
 import com.sksamuel.scapegoat.inspections.empty._
 import com.sksamuel.scapegoat.inspections.equality._
 import com.sksamuel.scapegoat.inspections.exception._
@@ -110,6 +110,7 @@ object ScapegoatConfig extends App {
     new RedundantFinalModifierOnVar,
     new RedundantFinalizer,
     new RepeatedCaseBody,
+    new RepeatedIfElseBody,
     new ReverseFunc,
     new ReverseTailReverse,
     new ReverseTakeReverse,
