@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.{ Levels, Inspector, InspectionContext, Inspection }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class ZeroNumerator extends Inspection("Zero numerator", Levels.Warning,

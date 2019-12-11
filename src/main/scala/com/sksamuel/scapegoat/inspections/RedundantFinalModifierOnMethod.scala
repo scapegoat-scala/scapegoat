@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
-import scala.reflect.internal.Flags
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import scala.reflect.internal.Flags
 
 class RedundantFinalModifierOnMethod extends Inspection(
   "Redundant final modifier on method", Levels.Info) {

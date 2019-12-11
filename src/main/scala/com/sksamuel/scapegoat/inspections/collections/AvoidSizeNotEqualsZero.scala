@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class AvoidSizeNotEqualsZero extends Inspection("Avoid Traversable.size != 0, use Traversable.nonEmpty instead", Levels.Warning) {

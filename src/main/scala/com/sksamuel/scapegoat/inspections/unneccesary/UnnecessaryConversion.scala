@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.unneccesary
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class UnnecessaryConversion extends Inspection("Unnecessary conversion", Levels.Warning) {

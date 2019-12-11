@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 class RedundantFinalModifierOnVar extends Inspection(
   "Redundant final modifier on var", Levels.Info,

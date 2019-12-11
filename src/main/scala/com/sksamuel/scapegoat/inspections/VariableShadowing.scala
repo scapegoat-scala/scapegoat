@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections
 
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
 
 class VariableShadowing extends Inspection("Variable shadowing", Levels.Warning) {
 

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.empty
 
-import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class EmptyFor extends Inspection("Empty for loop", Levels.Warning) {

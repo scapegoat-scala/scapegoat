@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class NegationIsEmpty extends Inspection("!isEmpty can be replaced with nonEmpty", Levels.Info) {

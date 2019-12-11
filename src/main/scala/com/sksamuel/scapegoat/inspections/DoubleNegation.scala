@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class DoubleNegation extends Inspection("Double negation", Levels.Info) {

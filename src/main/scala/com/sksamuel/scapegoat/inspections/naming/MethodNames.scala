@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections.naming
 
-import scala.reflect.internal.Flags
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
 class MethodNames extends Inspection("Method name not recommended", Levels.Info,

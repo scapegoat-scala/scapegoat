@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector, isScala213 }
+import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class PredefSeqIsMutable extends Inspection("Predef.Seq is mutable", Levels.Info,

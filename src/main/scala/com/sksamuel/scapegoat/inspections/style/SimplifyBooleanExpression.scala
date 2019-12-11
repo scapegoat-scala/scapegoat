@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.style
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class SimplifyBooleanExpression extends Inspection("Simplify boolean expressions", Levels.Info) {

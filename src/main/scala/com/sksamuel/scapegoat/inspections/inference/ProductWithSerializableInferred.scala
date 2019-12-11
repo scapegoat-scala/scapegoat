@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.inference
 
-import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 import scala.reflect.internal.Flags
 

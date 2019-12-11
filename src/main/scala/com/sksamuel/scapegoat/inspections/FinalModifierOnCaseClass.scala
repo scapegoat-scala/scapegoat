@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 class FinalModifierOnCaseClass extends Inspection(
   "Missing final modifier on case class", Levels.Info, "Case classes should have final modifier") {

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class SuspiciousMatchOnClassObject extends Inspection("Suspicious match on class object", Levels.Warning) {
