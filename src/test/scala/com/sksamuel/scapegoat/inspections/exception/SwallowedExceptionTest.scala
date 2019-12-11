@@ -53,9 +53,23 @@ class SwallowedExceptionTest
         compileCodeSnippet(code1)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+      "when exception is masked" in {
+        val code1 = """object Test {
+                         try {
+                           println(Integer.valueOf("asdf"))
+                         } catch {
+                           case nfe: NumberFormatException =>
+                             throw new IllegalArgumentException("not a number")
+                         }
+                       }""".stripMargin
+
+        compileCodeSnippet(code1)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
     }
+
     "should not report warning" - {
-      "for exceptions all handled" in {
+      "for all exceptions handled" in {
         val code = """object Test {
                         try {
                         } catch {
