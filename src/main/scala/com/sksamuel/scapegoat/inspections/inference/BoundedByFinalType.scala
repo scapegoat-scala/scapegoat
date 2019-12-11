@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.inference
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class BoundedByFinalType extends Inspection("Bounded by final type", Levels.Warning) {
@@ -13,7 +13,7 @@ class BoundedByFinalType extends Inspection("Bounded by final type", Levels.Warn
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case dd @ DefDef(mods, _, _, _, _, _) if dd.symbol != null && dd.symbol.owner.tpe.baseClasses.contains(PartialFunctionClass) =>
+          case dd @ DefDef(_, _, _, _, _, _) if dd.symbol != null && dd.symbol.owner.tpe.baseClasses.contains(PartialFunctionClass) =>
           case tdef: TypeDef if tdef.symbol.isAliasType =>
           case TypeDef(_, _, _, typeTree: TypeTree) =>
             typeTree.original match {

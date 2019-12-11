@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.empty
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class EmptyWhileBlock extends Inspection("Empty while block", Levels.Warning) {

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.{ Levels, Inspector, InspectionContext, Inspection }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class ZeroNumerator extends Inspection("Zero numerator", Levels.Warning,
@@ -12,7 +12,7 @@ class ZeroNumerator extends Inspection("Zero numerator", Levels.Warning,
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(Literal(Constant(0)), TermName("$div")), args) =>
+          case Apply(Select(Literal(Constant(0)), TermName("$div")), _) =>
             context.warn(tree.pos, self)
           case _ => continue(tree)
         }

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.empty
 
-import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class EmptyFor extends Inspection("Empty for loop", Levels.Warning) {
@@ -14,7 +14,7 @@ class EmptyFor extends Inspection("Empty for loop", Levels.Warning) {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(_, Foreach), _), List(Function(List(ValDef(mods, _, _, EmptyTree)), Literal(Constant(()))))) =>
+          case Apply(TypeApply(Select(_, Foreach), _), List(Function(List(ValDef(_, _, _, EmptyTree)), Literal(Constant(()))))) =>
             context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }

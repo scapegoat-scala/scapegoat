@@ -19,7 +19,7 @@ class ConstantIf extends Inspection("Constant if expression", Levels.Warning) {
         tree match {
           // ignore while loops, this will be picked up by the WhileTrue inspection
           case LabelDef(_, _, _) =>
-          case If(cond, thenp, elsep) =>
+          case If(cond, _, _) =>
             if (cond.toString() == "false" || cond.toString() == "true")
               context.warn(tree.pos, self,
                 "Constant if expression " + tree.toString().take(500))

@@ -12,11 +12,11 @@ class UnnecessaryIf extends Inspection("Unnecessary if condition.", Levels.Info)
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case If(cond, Literal(Constant(true)), Literal(Constant(false))) =>
+          case If(_, Literal(Constant(true)), Literal(Constant(false))) =>
             context.warn(tree.pos, self,
               "If comparison is not needed. Use the condition. Eg, instead of if (a == b) true else false, simply use a == b. : " + tree
                 .toString().take(500))
-          case If(cond, Literal(Constant(false)), Literal(Constant(true))) =>
+          case If(_, Literal(Constant(false)), Literal(Constant(true))) =>
             context.warn(tree.pos, self,
               "If comparison is not needed. Use the negated condition. Eg, instead of if (a == b) false else true, simply use !(a == b). : " + tree
                 .toString().take(500))

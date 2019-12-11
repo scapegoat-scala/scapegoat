@@ -16,7 +16,7 @@ class AsInstanceOf extends Inspection("Use of asInstanceOf", Levels.Warning) {
             context.warn(tree.pos, self,
               "asInstanceOf used near " + tree.toString().take(500) + ". Consider using pattern matching.")
           case DefDef(modifiers, _, _, _, _, _) if modifiers.hasFlag(Flag.SYNTHETIC) => // no further
-          case m @ Match(selector, cases) => // ignore selector and process cases
+          case Match(_, cases) => // ignore selector and process cases
             cases.foreach(traverse)
           case _ => continue(tree)
         }

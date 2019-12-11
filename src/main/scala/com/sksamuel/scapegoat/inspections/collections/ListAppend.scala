@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class ListAppend extends Inspection("List append is slow", Levels.Info,

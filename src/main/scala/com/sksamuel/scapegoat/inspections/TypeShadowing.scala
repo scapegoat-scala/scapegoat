@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
-import scala.collection.mutable
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
+import scala.collection.mutable
 
 /** @author Stephen Samuel */
 class TypeShadowing extends Inspection("Type shadowing", Levels.Warning) {

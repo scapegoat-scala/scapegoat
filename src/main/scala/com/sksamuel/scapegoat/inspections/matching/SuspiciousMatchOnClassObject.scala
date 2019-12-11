@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class SuspiciousMatchOnClassObject extends Inspection("Suspicious match on class object", Levels.Warning) {
@@ -12,7 +12,7 @@ class SuspiciousMatchOnClassObject extends Inspection("Suspicious match on class
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Match(selector, cases) =>
+          case Match(_, cases) =>
             checkCases(cases)
             continue(tree)
           case _ => continue(tree)

@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.io
 
-import com.sksamuel.scapegoat.{ Warning, Feedback }
+import com.sksamuel.scapegoat.{Feedback, Warning}
 
 import scala.xml.Node
 

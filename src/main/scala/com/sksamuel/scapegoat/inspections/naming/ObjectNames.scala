@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.naming
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class ObjectNames extends Inspection("Object name not recommended", Levels.Info) {

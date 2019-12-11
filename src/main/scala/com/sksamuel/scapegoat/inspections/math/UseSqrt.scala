@@ -20,7 +20,7 @@ class UseSqrt extends Inspection("Use sqrt", Levels.Info) {
             val math = pack.toString().stripPrefix("java.lang.").stripPrefix("scala.").stripSuffix(".`package`")
             context.warn(tree.pos, self,
               s"$math.sqrt is clearer and more performant than $math.pow(x, 0.5)")
-          case other =>
+          case _ =>
             continue(tree)
         }
       }

@@ -9,7 +9,7 @@ class BigDecimalDoubleConstructor extends Inspection("Big decimal double constru
     override def postTyperTraverser = Some apply new context.Traverser {
 
       import context.global._
-      import definitions.{ DoubleClass, FloatClass }
+      import definitions.{DoubleClass, FloatClass}
 
       private def isBigDecimal(pack: Tree) =
         pack.toString == "scala.`package`.BigDecimal" || pack.toString == "java.math.BigDecimal"

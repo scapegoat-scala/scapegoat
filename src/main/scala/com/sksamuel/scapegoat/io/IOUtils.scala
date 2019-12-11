@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.io
 
-import java.io.{ BufferedWriter, File, FileWriter }
+import java.io.{BufferedWriter, File, FileWriter}
 
 import com.sksamuel.scapegoat.Feedback
 

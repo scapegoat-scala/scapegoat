@@ -6,8 +6,8 @@ import java.util.concurrent.atomic.AtomicInteger
 import com.sksamuel.scapegoat.io.IOUtils
 
 import scala.tools.nsc._
-import scala.tools.nsc.plugins.{ Plugin, PluginComponent }
-import scala.tools.nsc.transform.{ Transform, TypingTransformers }
+import scala.tools.nsc.plugins.{Plugin, PluginComponent}
+import scala.tools.nsc.transform.{Transform, TypingTransformers}
 
 class ScapegoatPlugin(val global: Global) extends Plugin {
 

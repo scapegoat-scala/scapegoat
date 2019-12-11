@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class SubstringZero extends Inspection("String.substring(0)", Levels.Info) {

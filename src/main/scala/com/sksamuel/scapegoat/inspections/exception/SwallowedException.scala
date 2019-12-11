@@ -23,7 +23,7 @@ class SwallowedException extends Inspection("Empty catch block", Levels.Warning)
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Try(body, catches, finalizer) => checkCatches(catches)
+          case Try(_, catches, _) => checkCatches(catches)
           case _                             => continue(tree)
         }
       }

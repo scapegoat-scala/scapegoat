@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 class FindAndNotEqualsNoneReplaceWithExists extends Inspection(
   "find(x => ) != None instead of exists(x =>)", Levels.Info) {

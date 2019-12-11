@@ -17,7 +17,7 @@ trait PluginRunner {
 
   val settings = {
     val s = new scala.tools.nsc.Settings
-    for (dummy <- Option(System.getProperty("printphases"))) {
+    for (_ <- Option(System.getProperty("printphases"))) {
       s.Xprint.value = List("all")
       s.Yrangepos.value = true
       s.Yposdebug.value = true
