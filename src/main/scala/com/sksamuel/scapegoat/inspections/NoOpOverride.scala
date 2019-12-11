@@ -20,7 +20,7 @@ class NoOpOverride extends Inspection("No op Override", Levels.Info) {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case DefDef(mods, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args))
+          case DefDef(_, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args))
             if name == name2 && vparamss.size == 1 && argumentsMatch(vparamss.head, args) =>
               context.warn(tree.pos, self,
                 "This method is overridden yet only calls super: " + tree.toString().take(200))

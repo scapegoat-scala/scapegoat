@@ -14,7 +14,7 @@ class PredefTraversableIsMutable extends Inspection(
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case DefDef(mods, _, _, _, _, _) if tree.symbol.isAccessor =>
+          case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor =>
           case TypeTree() if tree.tpe.erasure.toString() == "Traversable[Any]" => warn(tree)
           case _ => continue(tree)
         }

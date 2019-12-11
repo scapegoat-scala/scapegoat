@@ -17,7 +17,7 @@ class UseLog10 extends Inspection("Use log10", Levels.Info) {
             || pack == "java.lang.StrictMath")
 
         tree match {
-          case Apply(Select(Apply(Select(pack1, TermName("log")), List(number)), nme.DIV), List(Apply(Select(pack2, TermName("log")), List(Literal(Constant(10.0))))))
+          case Apply(Select(Apply(Select(pack1, TermName("log")), List(_)), nme.DIV), List(Apply(Select(pack2, TermName("log")), List(Literal(Constant(10.0))))))
             if isMathPackage(pack1.symbol.fullName) && isMathPackage(pack2.symbol.fullName) =>
             val math = pack1.toString().stripSuffix(".package").substring(pack2.toString().lastIndexOf('.'))
             context.warn(tree.pos, self,

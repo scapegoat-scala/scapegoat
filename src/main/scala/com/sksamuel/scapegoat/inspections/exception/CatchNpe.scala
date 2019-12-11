@@ -16,7 +16,7 @@ class CatchNpe extends Inspection("Catching NPE", Levels.Error) {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Try(block, catches, finalizer) if catchesNpe(catches) =>
+          case Try(_, catches, _) if catchesNpe(catches) =>
             context.warn(tree.pos, self)
           case _ => continue(tree)
         }

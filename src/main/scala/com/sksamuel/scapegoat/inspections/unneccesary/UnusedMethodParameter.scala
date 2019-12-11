@@ -67,7 +67,7 @@ class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warnin
 
           case ClassDef(mods, _, _, _) if mods.hasAbstractFlag =>
 
-          case ClassDef(mods, _, _, classBody @ Template(_, _, classTopLevelStmts)) =>
+          case ClassDef(_, _, _, classBody @ Template(_, _, classTopLevelStmts)) =>
 
             classTopLevelStmts.foreach {
               case DefDef(_, nme.CONSTRUCTOR, _, vparamss, _, constructorBody) =>
@@ -84,8 +84,8 @@ class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warnin
           case d @ DefDef(_, _, _, _, _, _) if d.symbol != null && d.symbol.isAbstract                =>
 
           // ignore constructors, they're handled above
-          case DefDef(_, nme.CONSTRUCTOR, _, vparamss, _, body)                                       =>
-          case DefDef(_, _, _, vparamss, _, body) if tree.symbol != null && tree.symbol.isConstructor =>
+          case DefDef(_, nme.CONSTRUCTOR, _, _, _, _)                                       =>
+          case DefDef(_, _, _, _, _, _) if tree.symbol != null && tree.symbol.isConstructor =>
 
           // ignore methods that just throw, e.g. "???"
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= NothingTpe                                   =>
@@ -106,7 +106,7 @@ class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warnin
             param.tpt.tpe =:= typeOf[Array[String]] =>
 
 
-          case d @ DefDef(mods, _, _, vparamss, _, rhs) =>
+          case DefDef(_, _, _, vparamss, _, rhs) =>
             for (
               vparams <- vparamss;
               vparam <- vparams

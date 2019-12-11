@@ -25,9 +25,9 @@ class VariableShadowing extends Inspection("Variable shadowing", Levels.Warning)
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case ClassDef(_, _, _, Template(_, _, body)) =>
+          case ClassDef(_, _, _, Template(_, _, _)) =>
             enter(); continue(tree); exit()
-          case ModuleDef(_, _, Template(_, _, body)) =>
+          case ModuleDef(_, _, Template(_, _, _)) =>
             enter(); continue(tree); exit()
           case DefDef(_, _, _, vparamss, _, rhs) =>
             enter()

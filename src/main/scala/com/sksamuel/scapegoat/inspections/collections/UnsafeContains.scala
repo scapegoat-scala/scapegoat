@@ -19,8 +19,8 @@ class UnsafeContains extends Inspection("Unsafe contains", Levels.Error) {
       }
 
       private def isCompatibleType(container: Tree, value: Tree, typ: Symbol): Boolean = container.tpe baseType typ match {
-        case TypeRef(a, typ, elem :: Nil) if elem.isInstanceOf[Any] && elem <:< value.tpe => true
-        case TypeRef(a, typ, elem :: Nil) => value.tpe <:< elem
+        case TypeRef(_, _, elem :: Nil) if elem.isInstanceOf[Any] && elem <:< value.tpe => true
+        case TypeRef(_, _, elem :: Nil) => value.tpe <:< elem
         case _                            => false
       }
 

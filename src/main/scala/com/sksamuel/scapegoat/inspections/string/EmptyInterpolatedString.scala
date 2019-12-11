@@ -12,7 +12,7 @@ class EmptyInterpolatedString extends Inspection("Empty interpolated string", Le
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(Apply(Select(lhs, TermName("apply")), List(string)), TermName("s")), Nil) =>
+          case Apply(Select(Apply(Select(_, TermName("apply")), List(_)), TermName("s")), Nil) =>
             context
               .warn(tree.pos, self,
                 "String declared as interpolated but has no parameters: " + tree.toString().take(500))

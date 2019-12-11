@@ -14,7 +14,7 @@ class ArraysInFormat extends Inspection("Array passed to String.format", Levels.
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("format")), args) if containsArrayType(args) =>
+          case Apply(Select(_, TermName("format")), args) if containsArrayType(args) =>
             context.warn(tree.pos, self, tree.toString().take(500))
           case _ => continue(tree)
         }

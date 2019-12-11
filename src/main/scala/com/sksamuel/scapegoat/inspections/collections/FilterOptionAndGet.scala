@@ -15,7 +15,7 @@ class FilterOptionAndGet extends Inspection(
         tree match {
           case Apply(TypeApply(
             Select(Apply(Select(_, TermName("filter")), List(Function(_, Select(_, TermName("isDefined"))))),
-              TermName("map")), args), List(Function(_, Select(_, TermName("get"))))) =>
+              TermName("map")), _), List(Function(_, Select(_, TermName("get"))))) =>
             context.warn(tree.pos, self,
               ".filter(_.isDefined).map(_.get) can be replaced with flatten: " + tree.toString().take(500))
           case _ => continue(tree)

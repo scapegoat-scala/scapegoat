@@ -13,7 +13,7 @@ class ReverseTakeReverse extends Inspection("reverse.take(...).reverse instead o
         tree match {
           case Select(Apply(Select(Select(c, TermName("reverse")), TermName("take")), _), TermName("reverse")) if isTraversable(c) =>
             warn(tree)
-          case Select(Apply(arrayOps0, List(Apply(Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(col)), TermName("reverse")))), TermName("take")), _))), TermName("reverse")) if (arrayOps0.toString.contains("ArrayOps"))
+          case Select(Apply(arrayOps0, List(Apply(Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))), TermName("take")), _))), TermName("reverse")) if (arrayOps0.toString.contains("ArrayOps"))
             && (arrayOps1.toString.contains("ArrayOps"))
             && (arrayOps2.toString.contains("ArrayOps")) =>
             warn(tree)

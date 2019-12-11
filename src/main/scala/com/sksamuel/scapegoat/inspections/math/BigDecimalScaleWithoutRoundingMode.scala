@@ -20,7 +20,7 @@ class BigDecimalScaleWithoutRoundingMode extends Inspection(
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("setScale")), List(arg)) if isBigDecimal(lhs) => warn(tree)
+          case Apply(Select(lhs, TermName("setScale")), List(_)) if isBigDecimal(lhs) => warn(tree)
           case _ => continue(tree)
         }
       }

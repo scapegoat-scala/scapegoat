@@ -13,7 +13,7 @@ class PredefIterableIsMutable extends Inspection("Default Iterable is mutable", 
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case DefDef(mods, _, _, _, _, _) if tree.symbol.isAccessor =>
+          case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor =>
           case TypeTree() if tree.tpe.erasure.toString() == "Iterable[Any]" => warn(tree)
           case _ => continue(tree)
         }

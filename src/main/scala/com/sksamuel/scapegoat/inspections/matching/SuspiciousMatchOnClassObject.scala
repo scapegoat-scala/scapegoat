@@ -12,7 +12,7 @@ class SuspiciousMatchOnClassObject extends Inspection("Suspicious match on class
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Match(selector, cases) =>
+          case Match(_, cases) =>
             checkCases(cases)
             continue(tree)
           case _ => continue(tree)

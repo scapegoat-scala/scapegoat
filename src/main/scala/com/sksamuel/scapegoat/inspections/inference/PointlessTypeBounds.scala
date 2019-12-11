@@ -12,7 +12,7 @@ class PointlessTypeBounds extends Inspection("Pointless Type Bounds", Levels.War
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case t @ TypeDef(_, _, _, rhs) if rhs.tpe.bounds.isEmptyBounds
+          case TypeDef(_, _, _, rhs) if rhs.tpe.bounds.isEmptyBounds
             && rhs.pos != null
             && (rhs.pos.lineContent.contains("<: Any") || rhs.pos.lineContent.contains(">: Nothing")) =>
             context.warn(tree.pos, self,

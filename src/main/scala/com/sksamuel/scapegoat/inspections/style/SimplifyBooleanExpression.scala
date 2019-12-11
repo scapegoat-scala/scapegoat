@@ -13,7 +13,7 @@ class SimplifyBooleanExpression extends Inspection("Simplify boolean expressions
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, Equals), List(Literal(Constant(false)))) =>
+          case Apply(Select(_, Equals), List(Literal(Constant(false)))) =>
             context.warn(tree.pos, self,
               "Boolean expressions such as x == false can be re-written as !x: " + tree.toString().take(200))
           case _ => continue(tree)

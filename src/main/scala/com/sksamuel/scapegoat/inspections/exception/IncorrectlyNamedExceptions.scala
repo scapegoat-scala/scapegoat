@@ -16,7 +16,7 @@ class IncorrectlyNamedExceptions extends Inspection("Incorrectly Named Exception
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case cdef @ ClassDef(mods, name, _, impl) =>
+          case cdef @ ClassDef(_, name, _, impl) =>
             val isNamedException = name.toString.endsWith("Exception")
             val isAnon = scala.util.Try {
               cdef.symbol.isAnonymousClass
