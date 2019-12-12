@@ -13,7 +13,7 @@ class JavaConversionsUse extends Inspection("Java conversions", Levels.Warning,
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Import(expr, selectors) if expr.symbol.fullName == "scala.collection.JavaConversions" =>
+          case Import(expr, _) if expr.symbol.fullName == "scala.collection.JavaConversions" =>
             context.warn(tree.pos, self)
           case _ => continue(tree)
         }

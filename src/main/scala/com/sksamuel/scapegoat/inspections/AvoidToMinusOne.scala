@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-import scala.runtime.{ RichLong, RichInt }
+import scala.runtime.{RichInt, RichLong}
 
 /** @author Stephen Samuel */
 class AvoidToMinusOne extends Inspection("Avoid To Minus One", Levels.Info) {

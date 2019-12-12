@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.option
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class ImpossibleOptionSizeCondition extends Inspection("Impossible Option.size condition", Levels.Error) {

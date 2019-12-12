@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.unneccesary
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 import scala.collection.mutable
 
@@ -52,7 +52,7 @@ class VarCouldBeVal extends Inspection("Var could be val", Levels.Warning) {
 
       override final def inspect(tree: Tree): Unit = {
         tree match {
-          case d @ DefDef(_, _, _, _, _, Block(stmt, expr)) =>
+          case DefDef(_, _, _, _, _, Block(stmt, expr)) =>
             for ((unwritten, definitionTree) <- containsUnwrittenVar(stmt :+ expr)) {
               context.warn(
                 definitionTree.pos,

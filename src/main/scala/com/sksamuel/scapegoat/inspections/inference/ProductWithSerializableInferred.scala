@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.inference
 
-import com.sksamuel.scapegoat.{ Levels, Inspection, InspectionContext, Inspector }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 import scala.reflect.internal.Flags
 
@@ -18,7 +18,7 @@ class ProductWithSerializableInferred extends Inspection("Product with Serializa
 
       private def isProductWithSerializable(tpe: Type): Boolean = {
         tpe.typeArgs match {
-          case List(RefinedType(parents, decls)) if parents.size == 3 =>
+          case List(RefinedType(parents, _)) if parents.size == 3 =>
             Seq(Product, Serializable, Obj).forall(t => parents.exists(_ =:= t))
 
           case _ => false
@@ -28,7 +28,7 @@ class ProductWithSerializableInferred extends Inspection("Product with Serializa
       override def inspect(tree: Tree): Unit = {
         tree match {
           case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
-          case ValDef(mods, name, tpt, rhs) if isProductWithSerializable(tpt.tpe) =>
+          case ValDef(_, _, tpt, _) if isProductWithSerializable(tpt.tpe) =>
             context.warn(tree.pos, self,
               "It is unlikely that this was your target type: " + tree.toString().take(300))
           case _ => continue(tree)

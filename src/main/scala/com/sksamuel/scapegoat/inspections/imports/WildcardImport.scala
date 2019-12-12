@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.imports
 
-import com.sksamuel.scapegoat.{ Inspection, InspectionContext, Inspector, Levels }
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class WildcardImport extends Inspection("Wildcard import", Levels.Warning) {
@@ -15,7 +15,7 @@ class WildcardImport extends Inspection("Wildcard import", Levels.Warning) {
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Import(expr, selector) if isWildcard(selector) =>
+          case Import(_, selector) if isWildcard(selector) =>
             context.warn(tree.pos, self, "Wildcard import used: " + tree.toString())
           case _ => continue(tree)
         }

@@ -34,10 +34,10 @@ class LonelySealedTrait extends Inspection("Lonely sealed trait", Levels.Error) 
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case cdef @ ClassDef(mods, name, _, _) if mods.isSealed =>
+          case cdef @ ClassDef(mods, _, _, _) if mods.isSealed =>
             sealedClasses.put(cdef.name.toString, cdef)
-          case ClassDef(_, name, _, Template(parents, _, _)) => inspectParents(parents)
-          case ModuleDef(_, name, Template(parents, _, _)) => inspectParents(parents)
+          case ClassDef(_, _, _, Template(parents, _, _)) => inspectParents(parents)
+          case ModuleDef(_, _, Template(parents, _, _)) => inspectParents(parents)
           case _ =>
         }
         continue(tree)
