@@ -53,9 +53,38 @@ class SwallowedExceptionTest
         compileCodeSnippet(code1)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+      "when exception is masked" in {
+        val code1 = """object Test {
+                         try {
+                           println(Integer.valueOf("asdf"))
+                         } catch {
+                           case nfe: NumberFormatException =>
+                             throw new IllegalArgumentException("not a number")
+                         }
+                       }""".stripMargin
+
+        compileCodeSnippet(code1)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
+      "when original exception is logged but not re-thrown" in {
+        val code1 = s"""object Test {
+                         def error(e: Exception, str: String) = println("Log ERROR " + str + " " + e)
+                         try {
+                           println(Integer.valueOf("asdf"))
+                         } catch {
+                           case nfe2: NumberFormatException =>
+                             error(nfe2, "Invalid format")
+                             throw new IllegalStateException("it's not a number")
+                         }
+                       }""".stripMargin
+
+        compileCodeSnippet(code1)
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
+      }
     }
+
     "should not report warning" - {
-      "for exceptions all handled" in {
+      "for all exceptions handled" in {
         val code = """object Test {
                         try {
                         } catch {
@@ -75,6 +104,19 @@ class SwallowedExceptionTest
       "for exception called ignore" in {
         val code = """object A { try { println() } catch { case ignore : Exception => } }"""
         compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+      "when exception is re-thrown with proper root cause" in {
+        val code1 = """object Test {
+                         try {
+                           println(Integer.valueOf("asdf"))
+                         } catch {
+                           case nfe: NumberFormatException =>
+                             throw new IllegalArgumentException("not a number", nfe)
+                         }
+                       }""".stripMargin
+
+        compileCodeSnippet(code1)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
     }
