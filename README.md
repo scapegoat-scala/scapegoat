@@ -231,6 +231,7 @@ There are currently 117 inspections. An overview list is given, followed by a mo
 | RedundantFinalModifierOnVar | Redundant `final` modifier on var that cannot be overridden | Info |
 | RedundantFinalizer | Checks for empty finalizers. | Warning |
 | RepeatedCaseBody | Checks for case statements which have the same body | Warning |
+| RepeatedIfElseBody | Checks for the main branch and the else branch of an `if` being the same | Warning |
 | ReverseFunc | `reverse` followed by `head`, `headOption`, `iterator`, or`map` can be replaced, respectively, with `last`, `lastOption`, `reverseIterator`, or `reverseMap` | Info |
 | ReverseTailReverse | `.reverse.tail.reverse` can be replaced with `init` | Info |
 | ReverseTakeReverse | `.reverse.take(...).reverse` can be replaced with `takeRight` | Info |
