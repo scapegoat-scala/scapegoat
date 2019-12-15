@@ -13,7 +13,7 @@ class MethodNames extends Inspection("Method name not recommended", Levels.Info,
 
       import context.global._
 
-      private val regex = "^[a-z][A-Za-z0-9]*(_\\$eq)?$"
+      private val regex = "^([a-z][A-Za-z0-9]*(_\\$eq)?)|(unary_\\$(minus|plus|bang|tilde))$"
 
       override def inspect(tree: Tree): Unit = {
         tree match {
