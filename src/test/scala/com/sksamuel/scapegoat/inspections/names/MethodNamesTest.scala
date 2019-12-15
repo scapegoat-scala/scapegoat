@@ -124,6 +124,13 @@ class MethodNamesTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings should have size 0
       }
+      "#271 for unary operators definition" in {
+        val code = """case class Amount(amount: BigDecimal) {
+                     |  def unary_- = Amount(-amount)
+                     |}""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings should have size 0
+      }
     }
   }
 }
