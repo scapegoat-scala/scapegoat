@@ -34,7 +34,15 @@ class MethodNamesTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+      "for something similar to unary operators, yet different (#271)" in {
+        val code = """case class Amount(amount: BigDecimal) {
+                     |  def unary_A = Amount(-amount)
+                     |}""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings should have size 1
+      }
     }
+
     "should not report warning" - {
       "for camel case methods" in {
         val code =
@@ -124,9 +132,12 @@ class MethodNamesTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings should have size 0
       }
-      "#271 for unary operators definition" in {
+      "for unary operators definition (#271)" in {
         val code = """case class Amount(amount: BigDecimal) {
                      |  def unary_- = Amount(-amount)
+                     |  def unary_+ = Amount(amount)
+                     |  def unary_! = Amount(-amount)
+                     |  def unary_~ = Amount(-amount)
                      |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings should have size 0
