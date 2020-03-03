@@ -16,3 +16,8 @@ credentials.sbt
 .ensime
 .ensime_cache
 target
+
+# metals
+.bloop
+.metals
+metals.sbt
