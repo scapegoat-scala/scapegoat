@@ -1,0 +1,19 @@
+template: |
+  ## What’s Changed
+  $CHANGES
+categories:
+  - title: "🚀 Features"
+    labels:
+      - "feature"
+      - "enhancement"
+      - "new inspection"
+  - title: "🐛 Bug Fixes"
+    labels:
+      - "fix"
+      - "bugfix"
+      - "bug"
+      - "false positive"
+  - title: "🧰 Maintenance"
+    label: "chore"
+  - title: "🔧 Dependency updates"
+    label: "dependency-update"
