@@ -20,10 +20,10 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
   def warns = warnings(Levels.Warning)
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
-  def warn(pos: Position, inspection: Inspection, snippet: Option[String] = None): Unit = {
+  def warn(pos: Position, inspection: Inspection, adhocDescription: Option[String] = None): Unit = {
     val level = inspection.defaultLevel
     val text = inspection.text
-    val snippetText = inspection.explanation.orElse(snippet)
+    val description = adhocDescription.getOrElse(inspection.description)
     val adjustedLevel = (levelOverridesByInspectionSimpleName.get("all"), levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)) match {
       case (Some(l), _) => l
       case (None, Some(l)) => l
@@ -32,11 +32,11 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
 
     val sourceFileFull = pos.source.file.path
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
-    val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, snippetText, inspection.getClass.getCanonicalName)
+    val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, description, inspection.getClass.getCanonicalName)
     warningsBuffer.append(warning)
     if (shouldPrint(warning)) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
-      snippetText.foreach(s => println(s"          $s"))
+      description.foreach(s => println(s"          $s"))
       println()
     }
 
@@ -55,14 +55,15 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
   }
 }
 
-case class Warning(text: String,
+case class Warning(
+  text: String,
   line: Int,
   level: Level,
   sourceFileFull: String,
   sourceFileNormalized: String,
-  snippet: Option[String],
-  inspection: String) {
-
+  description: String,
+  inspection: String
+) {
   def hasMinimalLevelOf(minimalLevel: Level): Boolean = {
     minimalLevel match {
       case Levels.Info => true
