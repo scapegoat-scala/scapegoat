@@ -2,7 +2,12 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-class ReverseTailReverse extends Inspection("reverse.tail.reverse instead of init", Levels.Info) {
+class ReverseTailReverse extends Inspection(
+  text = "reverse.tail.reverse instead of init",
+  defaultLevel = Levels.Info,
+  description = "Checks for use of reverse.tail.reverse.",
+  explanation = "reverse.tail.reverse can be replaced with init, which is more concise."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -12,18 +17,15 @@ class ReverseTailReverse extends Inspection("reverse.tail.reverse instead of ini
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Select(Select(c, TermName("reverse")), TermName("tail")), TermName("reverse")) if isTraversable(c) =>
-            warn(tree)
-          case Select(Apply(arrayOps0, List(Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))), TermName("tail")))), TermName("reverse")) if (arrayOps0.toString.contains("ArrayOps"))
+            context.warn(tree.pos, self)
+          case Select(Apply(arrayOps0, List(Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))), TermName("tail")))), TermName("reverse"))
+          if (arrayOps0.toString.contains("ArrayOps"))
             && arrayOps1.toString.contains("ArrayOps")
             && arrayOps2.toString.contains("ArrayOps") =>
-            warn(tree)
+              context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }
-
-      private def warn(tree: Tree) =
-        context.warn(tree.pos, self,
-          ".reverse.tail.reverse can be replaced with init: " + tree.toString().take(500))
     }
   }
 }

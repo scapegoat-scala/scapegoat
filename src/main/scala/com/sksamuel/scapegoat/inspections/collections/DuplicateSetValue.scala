@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class DuplicateSetValue extends Inspection("Duplicated set value", Levels.Warning) {
+class DuplicateSetValue extends Inspection(
+  text = "Duplicated set value",
+  defaultLevel = Levels.Warning,
+  description = "Checks for duplicate values in set literals.",
+  explanation = "A set value is overwritten by a later entry."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -18,14 +23,11 @@ class DuplicateSetValue extends Inspection("Duplicated set value", Levels.Warnin
         values.size < trees.size
       }
 
-      private def warn(tree: Tree) = {
-        context.warn(tree.pos, self,
-          "A set value is overwritten by a later entry: " + tree.toString().take(100))
-      }
-
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(Select(_, TermName("Set")), TermName("apply")), _), args) if hasDuplicates(args) => warn(tree)
+          case Apply(TypeApply(Select(Select(_, TermName("Set")), TermName("apply")), _), args)
+            if hasDuplicates(args) =>
+              context.warn(tree.pos, self) 
           case _ => continue(tree)
         }
       }

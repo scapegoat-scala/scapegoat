@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class DuplicateMapKey extends Inspection("Duplicated map key", Levels.Warning) {
+class DuplicateMapKey extends Inspection(
+  text = "Duplicated map key",
+  defaultLevel = Levels.Warning,
+  description = "Checks for duplicate key names in Map literals.",
+  explanation = "A map key is overwritten by a later entry."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -22,14 +27,9 @@ class DuplicateMapKey extends Inspection("Duplicated map key", Levels.Warning) {
         keys.toSet.size < keys.size
       }
 
-      private def warn(tree: Tree) = {
-        context.warn(tree.pos, self,
-          "A map key is overwritten by a later entry: " + tree.toString().take(100))
-      }
-
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _), args) if isDuplicateKeys(args) => warn(tree)
+          case Apply(TypeApply(Select(Select(_, TermName("Map")), TermName("apply")), _), args) if isDuplicateKeys(args) => context.warn(tree.pos, self) 
           case _ => continue(tree)
         }
       }

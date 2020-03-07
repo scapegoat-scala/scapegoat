@@ -4,8 +4,11 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class PredefTraversableIsMutable extends Inspection(
-  "Default Traversable is mutable", Levels.Info,
-  "Traversable aliases scala.collection.mutable.Traversable. Did you intend to use an immutable Traversable?") {
+  text = "Traversable is mutable",
+  defaultLevel = Levels.Info,
+  description = "",
+  explanation = "Traversable aliases scala.collection.mutable.Traversable. Did you intend to use an immutable Traversable?"
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

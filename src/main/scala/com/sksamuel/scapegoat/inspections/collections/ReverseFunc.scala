@@ -2,7 +2,12 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-class ReverseFunc extends Inspection("Unnecessary reverse", Levels.Info) {
+class ReverseFunc extends Inspection(
+  text = "Unnecessary reverse",
+  defaultLevel = Levels.Info,
+  description = "Checks for use of reverse followed by head/headOption/iterator/map.",
+  explanation = "reverse followed by head, headOption, iterator, or map can be replaced, respectively, with last, lastOption, reverseIterator, or reverseMap."
+) {
 
   object FuncReplace {
 
@@ -25,18 +30,13 @@ class ReverseFunc extends Inspection("Unnecessary reverse", Levels.Info) {
         tree match {
           case Select(Select(c, TermName("reverse")), TermName(FuncReplace(func, replace)))
             if c.tpe <:< typeOf[Traversable[Any]] =>
-            warn(func, replace, tree)
+              context.warn(tree.pos, self)
           case Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))), TermName(FuncReplace(func, replace)))
             if arrayOps1.toString.contains("ArrayOps") && arrayOps2.toString.contains("ArrayOps") =>
-            warn(func, replace, tree)
+              context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }
-
-      private def warn(func: String, replace: String, tree: Tree) =
-        context.warn(tree.pos, self,
-          s".reverse.$func can be replaced with $replace: " + tree.toString().take(500))
-
     }
   }
 }

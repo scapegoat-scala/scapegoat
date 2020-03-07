@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class ComparisonToEmptySet extends Inspection("Comparison to empty set", Levels.Info) {
+class ComparisonToEmptySet extends Inspection(
+  text = "Comparison to empty set",
+  defaultLevel = Levels.Info,
+  description = "Checks for code like a == Set() or a == Set.empty.",
+  explanation = "Prefer use of isEmpty instead of comparison to an empty Set."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -25,10 +30,8 @@ class ComparisonToEmptySet extends Inspection("Comparison to empty set", Levels.
         }
       }
 
-      private def warn(tree: Tree): Unit = {
-        context.warn(tree.pos, self,
-          "Prefer use of isEmpty instead of comparison to an empty Set: " + tree.toString().take(200))
-      }
+      private def warn(tree: Tree): Unit =
+        context.warn(tree.pos, self)
     }
   }
 }
