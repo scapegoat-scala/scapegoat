@@ -2,9 +2,10 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.option.EitherGet
-import org.scalatest.{ FreeSpec, Matchers }
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class EitherGetTest extends FreeSpec with Matchers with PluginRunner {
+class EitherGetTest extends AnyFreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new EitherGet)
 

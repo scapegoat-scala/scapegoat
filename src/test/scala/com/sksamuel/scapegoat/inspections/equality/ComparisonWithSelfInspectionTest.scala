@@ -1,10 +1,11 @@
 package com.sksamuel.scapegoat.inspections.equality
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers }
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class ComparisonWithSelfInspectionTest extends FreeSpec with Matchers with PluginRunner {
+class ComparisonWithSelfInspectionTest extends AnyFreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new ComparisonWithSelf)
 

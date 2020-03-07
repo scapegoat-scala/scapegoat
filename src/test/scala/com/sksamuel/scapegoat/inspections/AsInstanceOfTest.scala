@@ -2,9 +2,11 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unsafe.AsInstanceOf
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class AsInstanceOfTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class AsInstanceOfTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new AsInstanceOf)
 

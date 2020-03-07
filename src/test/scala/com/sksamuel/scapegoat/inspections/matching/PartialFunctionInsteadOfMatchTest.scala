@@ -1,12 +1,14 @@
 package com.sksamuel.scapegoat.inspections.matching
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 
 /** @author Stephen Samuel */
 class PartialFunctionInsteadOfMatchTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with PluginRunner
     with OneInstancePerTest {

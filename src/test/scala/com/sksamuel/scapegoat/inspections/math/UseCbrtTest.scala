@@ -1,10 +1,11 @@
 package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers }
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Matic Potočnik */
-class UseCbrtTest extends FreeSpec with Matchers with PluginRunner {
+class UseCbrtTest extends AnyFreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new UseCbrt)
 

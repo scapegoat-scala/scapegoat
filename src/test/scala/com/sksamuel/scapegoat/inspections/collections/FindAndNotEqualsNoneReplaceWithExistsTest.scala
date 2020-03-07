@@ -1,11 +1,13 @@
 package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
 class FindAndNotEqualsNoneReplaceWithExistsTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with PluginRunner
     with OneInstancePerTest {
