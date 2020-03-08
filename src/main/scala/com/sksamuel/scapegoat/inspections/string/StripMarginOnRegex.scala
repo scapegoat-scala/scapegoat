@@ -3,8 +3,12 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class StripMarginOnRegex extends Inspection("Strip margin on regex", Levels.Error,
-  "Strip margin will strip | from regex - possible corrupted regex") {
+class StripMarginOnRegex extends Inspection(
+  text = "Strip margin on regex",
+  defaultLevel = Levels.Error,
+  description = "Checks for .stripMargin calls on regex strings that contain a pipe.",
+  explanation = "Strip margin will strip | from regex - possible corrupted regex."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

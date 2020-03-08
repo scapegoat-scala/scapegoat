@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.nulls
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class NullParameter extends Inspection("Null parameter", Levels.Warning) {
+class NullParameter extends Inspection(
+  text = "Null parameter",
+  defaultLevel = Levels.Warning,
+  description = "Checks for use of null in method invocation.",
+  explanation = "Use an Option instead when the value can be empty and pass down a None instead."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -20,13 +25,10 @@ class NullParameter extends Inspection("Null parameter", Levels.Warning) {
           case Apply(_, _) if tree.tpe.toString == "scala.xml.Elem" =>
           case Apply(_, args) =>
             if (containsNull(args))
-              warn(tree)
+              context.warn(tree.pos, self)
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
           case _ => continue(tree)
         }
-      }
-      private def warn(tree: Tree): Unit = {
-        context.warn(tree.pos, self, "Null is used as a method parameter: " + tree.toString().take(300))
       }
     }
   }

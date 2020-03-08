@@ -5,8 +5,12 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class MethodNames extends Inspection("Method name not recommended", Levels.Info,
-  "Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods") {
+class MethodNames extends Inspection(
+  text = "Method name not recommended",
+  defaultLevel = Levels.Info,
+  description = "Warns on method names that don't adhere to the Scala style guidelines.",
+  explanation = "Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

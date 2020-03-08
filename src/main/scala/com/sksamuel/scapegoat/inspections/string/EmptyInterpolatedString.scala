@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class EmptyInterpolatedString extends Inspection("Empty interpolated string", Levels.Error) {
+class EmptyInterpolatedString extends Inspection(
+  text = "Empty interpolated string",
+  defaultLevel = Levels.Error,
+  description = "Looks for interpolated strings that have no arguments.",
+  explanation = "String declared as interpolated but has no parameters can be turned into a regular string."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -13,9 +18,7 @@ class EmptyInterpolatedString extends Inspection("Empty interpolated string", Le
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("apply")), List(_)), TermName("s")), Nil) =>
-            context
-              .warn(tree.pos, self,
-                "String declared as interpolated but has no parameters: " + tree.toString().take(500))
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }
