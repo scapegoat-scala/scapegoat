@@ -5,7 +5,12 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class ProductWithSerializableInferred extends Inspection("Product with Serializable inferred", Levels.Warning) {
+class ProductWithSerializableInferred extends Inspection(
+  text = "Product with Serializable inferred",
+  defaultLevel = Levels.Warning,
+  description = "Checks for values that have Product with Serializable as their inferred type.",
+  explanation = "It is unlikely that Product with Serializable was your target type. This is often an indication of mixing up incompatible types."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -29,8 +34,7 @@ class ProductWithSerializableInferred extends Inspection("Product with Serializa
         tree match {
           case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
           case ValDef(_, _, tpt, _) if isProductWithSerializable(tpt.tpe) =>
-            context.warn(tree.pos, self,
-              "It is unlikely that this was your target type: " + tree.toString().take(300))
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }

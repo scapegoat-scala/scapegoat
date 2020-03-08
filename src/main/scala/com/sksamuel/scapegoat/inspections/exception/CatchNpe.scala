@@ -3,8 +3,12 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class CatchNpe extends Inspection("Catching NPE", Levels.Error) {
-
+class CatchNpe extends Inspection(
+  text = "Catching NPE",
+  defaultLevel = Levels.Error,
+  description = "Checks for try blocks that catch null pointer exceptions.",
+  explanation = "Avoid using null at all cost and you shouldn't need to catch NullPointerExceptions. Prefer Option to indicate potentially missing values and use Try to materialize exceptions thrown by any external libraries."
+) {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
 

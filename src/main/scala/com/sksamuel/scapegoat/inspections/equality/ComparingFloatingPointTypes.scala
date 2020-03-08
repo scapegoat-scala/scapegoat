@@ -4,7 +4,11 @@ import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
 class ComparingFloatingPointTypes extends Inspection(
-  "Floating type comparison", Levels.Error) {
+  text = "Floating type comparison",
+  defaultLevel = Levels.Error,
+  description = "Checks for equality checks on floating point types.",
+  explanation = "Due to minor rounding errors, it is not advisable to compare floating-point numbers using the == operator. Either use a threshold based comparison, or switch to a BigDecimal."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

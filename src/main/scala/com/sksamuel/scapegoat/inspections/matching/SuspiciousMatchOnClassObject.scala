@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class SuspiciousMatchOnClassObject extends Inspection("Suspicious match on class object", Levels.Warning) {
+class SuspiciousMatchOnClassObject extends Inspection(
+  text = "Suspicious match on class object",
+  defaultLevel = Levels.Warning,
+  description = "Checks for code where matching is taking place on class literals.",
+  explanation = "Matching on an companion object of a case class is probably not what you intended."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -26,14 +31,10 @@ class SuspiciousMatchOnClassObject extends Inspection("Suspicious match on class
             pat.symbol.isModuleOrModuleClass &&
             pat.tpe.typeSymbol.companionClass.isClass &&
             !pat.tpe.typeSymbol.companionClass.isAbstractClass =>
-            warn(c)
-            true
+              context.warn(c.pos, self)
+              true
           case _ => false
         }
-      }
-
-      private def warn(tree: Tree): Unit = {
-        context.warn(tree.pos, self, tree.toString().take(500))
       }
     }
   }

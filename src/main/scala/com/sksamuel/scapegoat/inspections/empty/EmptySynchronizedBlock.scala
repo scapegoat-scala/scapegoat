@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.empty
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class EmptySynchronizedBlock extends Inspection("Empty synchronized block", Levels.Warning) {
+class EmptySynchronizedBlock extends Inspection(
+  text = "Empty synchronized block",
+  defaultLevel = Levels.Warning,
+  description = "Checks for empty synchronized blocks.",
+  explanation = "An empty synchronized block is considered as dead code."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -15,7 +20,7 @@ class EmptySynchronizedBlock extends Inspection("Empty synchronized block", Leve
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(_, Sync), _), List(Literal(Constant(())))) =>
-            context.warn(tree.pos, self, tree.toString().take(500))
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }
