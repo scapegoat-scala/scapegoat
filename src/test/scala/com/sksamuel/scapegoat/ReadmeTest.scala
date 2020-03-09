@@ -1,8 +1,9 @@
 package com.sksamuel.scapegoat
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class ReadmeTest extends FreeSpec with Matchers {
+class ReadmeTest extends AnyFreeSpec with Matchers {
 
   val readme =
     scala.io.Source.fromFile("README.md")

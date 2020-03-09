@@ -2,11 +2,13 @@ package com.sksamuel.scapegoat.inspections.unnecessary
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryConversion
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
 class UnnecessaryConversionTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with PluginRunner
     with OneInstancePerTest {

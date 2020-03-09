@@ -3,10 +3,12 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.unneccesary.ConstantIf
 
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class ConstantIfTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class ConstantIfTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new ConstantIf)
 

@@ -1,10 +1,12 @@
 package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 class DivideByOneTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with PluginRunner
     with Matchers
     with OneInstancePerTest {
