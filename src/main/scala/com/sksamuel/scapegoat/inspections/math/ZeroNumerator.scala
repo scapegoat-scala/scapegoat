@@ -9,6 +9,7 @@ class ZeroNumerator extends Inspection(
   description = "Checks for dividing 0 by a number.",
   explanation = "Dividing zero by any number will always return zero, e.g. 0 / x == 0."
 ) {
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
 

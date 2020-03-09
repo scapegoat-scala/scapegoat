@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class NoOpOverride extends Inspection("No op Override", Levels.Info) {
+class NoOpOverride extends Inspection(
+  text = "Noop override",
+  defaultLevel = Levels.Info,
+  description = "Checks for code that overrides parent method but simply calls super.",
+  explanation = "This method is overridden yet only calls super."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -22,8 +27,7 @@ class NoOpOverride extends Inspection("No op Override", Levels.Info) {
         tree match {
           case DefDef(_, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args))
             if name == name2 && vparamss.size == 1 && argumentsMatch(vparamss.head, args) =>
-              context.warn(tree.pos, self,
-                "This method is overridden yet only calls super: " + tree.toString().take(200))
+              context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }
