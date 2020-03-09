@@ -69,16 +69,16 @@ class UnusedMethodParameterTest
       "for methods not returning" in {
 
         val code = """class Test {
-                     |  def foo(name:String) = throw new RuntimeException
-                     |}""".stripMargin
+                      |  def foo(name:String) = throw new RuntimeException
+                      |}""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for methods not returning when their return type is specified" in {
         val code = """class Test {
-                   |  def foo(name:String): String = throw new RuntimeException
-                   |}""".stripMargin
+                      |  def foo(name:String): String = throw new RuntimeException
+                      |}""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
@@ -150,10 +150,7 @@ class UnusedMethodParameterTest
         val code = """case class Foo(x: Int)(y: Int)"""
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings match {
-          case Seq(warning: Warning) =>
-            warning.snippet.get should include("y")
-        }
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
 
       "not warn on case class secondary params used as fields" in {
@@ -180,10 +177,7 @@ class UnusedMethodParameterTest
         val code = """class Foo(x: Int)"""
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings match {
-          case Seq(warning: Warning) =>
-            warning.snippet.get should include("x")
-        }
+        compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
 
       "not warn on non-case class primary params used as fields" in {

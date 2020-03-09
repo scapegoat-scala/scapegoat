@@ -106,20 +106,16 @@ object HtmlReportWriter {
             }
             &nbsp;{ warning.text }
             &nbsp;<span class="inspection">{ warning.inspection }</span>
-          </div>{
-            warning.snippet match {
-              case None=>
-              case Some(snippet) =>
-                <div class="snippet">
-                  { snippet }
-                </div>
-            }
-          }
+          </div>
+          <div class="snippet">
+            { warning.description }
+          </div>
         </div>
     }
   }
 
-  def generate(reporter: Feedback) = <html>
-                                       { header }{ body(reporter) }
-                                     </html>
+  def generate(reporter: Feedback) = 
+    <html>
+      { header }{ body(reporter) }
+    </html>
 }
