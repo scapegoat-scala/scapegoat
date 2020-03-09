@@ -7,7 +7,7 @@ class EmptyFor extends Inspection(
   text = "Empty for loop",
   defaultLevel = Levels.Warning,
   description = "Checks for empty for loops.",
-  explanation = "An empty for loop isn't a common practice and in most cases is considered as dead code.",
+  explanation = "An empty for loop isn't a common practice and in most cases is considered as dead code."
 ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
@@ -27,4 +27,3 @@ class EmptyFor extends Inspection(
     }
   }
 }
-
