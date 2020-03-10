@@ -73,7 +73,7 @@ def check(code: String) = {
   // runner.reporter.reset
   val c = runner compileCodeSnippet code
   val feedback = c.scapegoat.feedback
-  feedback.warnings map (x => "%-40s  %s".format(x.text, x.snippet getOrElse "")) foreach println
+  feedback.warnings map (x => "%-40s %s %s".format(x.text, x.explanation, x.snippet.getOrElse(""))) foreach println
   feedback
 }
 """
