@@ -38,12 +38,12 @@ class VariableShadowing extends Inspection(
             inspect(rhs)
             exit()
           case ValDef(_, TermName(name), _, _) =>
-            if (isDefined(name)) context.warn(tree.pos, self)
+            if (isDefined(name)) context.warn(tree.pos, self, tree.toString.take(200))
             contexts.top.append(name.trim)
           case Match(_, cases) =>
             cases.foreach {
               case CaseDef(Bind(name, _), _, _) =>
-                if (isDefined(name.toString)) context.warn(tree.pos, self)
+                if (isDefined(name.toString)) context.warn(tree.pos, self, tree.toString.take(200))
               case _ => // do nothing
             }
             continue(tree)

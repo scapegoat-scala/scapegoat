@@ -19,18 +19,18 @@ class UnnecessaryConversion extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(lhs, TermName("toString")) if lhs.tpe <:< StringClass.tpe =>
-            context.warn(tree.pos, self, "Unnecessary toString on instance of String.")
+            context.warn(tree.pos, self, tree.toString.take(200), "Unnecessary toString on instance of String.")
           case Select(lhs, TermName("toInt"))
             if lhs.tpe <:< IntClass.tpe && Option(lhs.symbol).fold(ifEmpty = true)(_.baseClasses.nonEmpty) =>
-              context.warn(tree.pos, self, "Unnecessary toInt on instance of Int.")
+              context.warn(tree.pos, self, tree.toString.take(200), "Unnecessary toInt on instance of Int.")
           case Select(lhs, TermName("toLong")) if lhs.tpe <:< LongClass.tpe =>
-              context.warn(tree.pos, self, "Unnecessary toLong on instance of Long.")
+              context.warn(tree.pos, self, tree.toString.take(200), "Unnecessary toLong on instance of Long.")
           case Select(lhs, TermName("toSet")) if isSet(lhs, allowMutableSet = false) =>
-              context.warn(tree.pos, self, "Unnecessary toSet on a Set.")
+              context.warn(tree.pos, self, tree.toString.take(200), "Unnecessary toSet on a Set.")
           case Select(lhs, TermName("toList")) if isList(lhs) =>
-              context.warn(tree.pos, self, "Unnecessary toList on a List.")
+              context.warn(tree.pos, self, tree.toString.take(200), "Unnecessary toList on a List.")
           case Select(lhs, TermName("toSeq")) if isSeq(lhs) =>
-              context.warn(tree.pos, self, "Unnecessary toSeq on a Seq.")
+              context.warn(tree.pos, self, tree.toString.take(200), "Unnecessary toSeq on a Seq.")
           case _ =>
         }
         continue(tree)

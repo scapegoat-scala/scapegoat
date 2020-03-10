@@ -31,10 +31,10 @@ class SwallowedException extends Inspection(
         case CaseDef(Bind(TermName("ignored") | TermName("ignore"), _), _, _) =>
         case cdef @ CaseDef(_, _, Literal(Constant(())))
           if cdef.body.toString == "()" =>
-            context.warn(cdef.pos, self)
+            context.warn(cdef.pos, self, cdef.toString.take(100))
         case cdef @ CaseDef(Bind(caughtException, _), _, subtree)
           if containsMaskingThrow(caughtException, Seq(subtree)) =>
-            context.warn(cdef.pos, self)
+            context.warn(cdef.pos, self, cdef.toString.take(100))
         case _ =>
       }
 

@@ -26,7 +26,7 @@ class ConstantIf extends Inspection(
           case LabelDef(_, _, _) =>
           case If(cond, _, _) =>
             if (cond.toString() == "false" || cond.toString() == "true")
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

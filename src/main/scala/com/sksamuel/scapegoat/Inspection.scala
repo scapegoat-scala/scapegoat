@@ -41,14 +41,20 @@ abstract class Inspector(val context: InspectionContext) {
 }
 
 case class InspectionContext(global: Global, feedback: Feedback) {
-  
-  def warn(pos: Position, inspection: Inspection): Unit = {
-    feedback.warn(pos, inspection, None)
-  }
 
-  def warn(pos: Position, inspection: Inspection, adhocDescription: String): Unit = {
-    feedback.warn(pos, inspection, Some(adhocDescription))
-  }
+  def warn(pos: Position, inspection: Inspection): Unit =
+    feedback.warn(pos, inspection, None, None)
+  
+  def warn(pos: Position, inspection: Inspection, snippet: String): Unit =
+    feedback.warn(pos, inspection, Some(snippet), None)
+  
+  def warn(
+    pos: Position,
+    inspection: Inspection,
+    snippet: String,
+    adhocExplanation: String
+  ): Unit =
+    feedback.warn(pos, inspection, Some(snippet), Some(adhocExplanation))
 
   trait Traverser extends global.Traverser {
 

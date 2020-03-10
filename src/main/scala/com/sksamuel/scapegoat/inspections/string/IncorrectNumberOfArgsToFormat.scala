@@ -35,7 +35,7 @@ class IncorrectNumberOfArgsToFormat extends Inspection(
                 .filterNot(m => doesNotTakeArguments(m.matched))
                 .size
             if (argCount > args.size)
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

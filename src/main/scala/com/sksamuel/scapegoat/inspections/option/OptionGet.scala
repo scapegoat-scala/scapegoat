@@ -19,7 +19,7 @@ class OptionGet extends Inspection(
         tree match {
           case Select(left, TermName("get")) =>
             if (left.tpe.typeSymbol.fullName == "scala.Option")
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

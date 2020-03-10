@@ -36,7 +36,7 @@ class ExistsSimplifiableToContains extends Inspection(
         tree match {
           case Apply(Select(lhs, TermName("exists")), List(Function(_, Apply(Select(_, Equals), List(x)))))
             if isContainsTraversable(lhs) && doesElementTypeMatch(lhs, x) =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

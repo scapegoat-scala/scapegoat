@@ -18,7 +18,7 @@ class ParameterlessMethodReturnsUnit extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(_, name, _, vparamss, tpt, _) if tpt.tpe.toString == "Unit" && vparamss.isEmpty =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(300))
           case _ => continue(tree)
         }
       }

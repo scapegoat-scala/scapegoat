@@ -21,7 +21,7 @@ class AvoidSizeNotEqualsZero extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Select(_, Length | Size), TermName("$bang$eq")), List(Literal(Constant(0)))) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(100))
           case _ => continue(tree)
         }
       }

@@ -33,10 +33,10 @@ class UnsafeStringContains extends Inspection(
         tree match {
           case Applied(Select(lhs, Contains), targ :: Nil, (_ :: Nil) :: Nil)
             if isString(lhs) && !isCompatibleType(targ) =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(300))
           case Applied(Select(lhs, Contains), _, (arg :: Nil) :: Nil)
             if isString(lhs) && !isCompatibleType(arg) =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(300))
           case _ =>
             continue(tree)
         }

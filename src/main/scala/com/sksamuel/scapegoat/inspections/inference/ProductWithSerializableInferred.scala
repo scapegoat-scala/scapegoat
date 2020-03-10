@@ -34,7 +34,7 @@ class ProductWithSerializableInferred extends Inspection(
         tree match {
           case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
           case ValDef(_, _, tpt, _) if isProductWithSerializable(tpt.tpe) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(300))
           case _ => continue(tree)
         }
       }

@@ -23,7 +23,7 @@ class BoundedByFinalType extends Inspection(
           case TypeDef(_, _, _, typeTree: TypeTree) =>
             typeTree.original match {
               case TypeBoundsTree(lo, hi) if lo.tpe.isFinalType && hi.tpe.isFinalType =>
-                context.warn(tree.pos, self)
+                context.warn(tree.pos, self, tree.toString.take(300))
               case _ =>
             }
           case _ => continue(tree)

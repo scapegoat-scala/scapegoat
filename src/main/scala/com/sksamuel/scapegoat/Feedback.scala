@@ -20,10 +20,15 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
   def warns = warnings(Levels.Warning)
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
-  def warn(pos: Position, inspection: Inspection, adhocDescription: Option[String] = None): Unit = {
+  def warn(
+    pos: Position,
+    inspection: Inspection,
+    snippet: Option[String] = None,
+    adhocExplanation: Option[String] = None
+  ): Unit = {
     val level = inspection.defaultLevel
     val text = inspection.text
-    val description = adhocDescription.getOrElse(inspection.description)
+    val explanation = adhocExplanation.getOrElse(inspection.explanation)
     val adjustedLevel = (levelOverridesByInspectionSimpleName.get("all"), levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)) match {
       case (Some(l), _) => l
       case (None, Some(l)) => l
@@ -32,11 +37,21 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
 
     val sourceFileFull = pos.source.file.path
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
-    val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, description, inspection.getClass.getCanonicalName)
+    val warning = Warning(
+      text = text,
+      line = pos.line,
+      level = adjustedLevel,
+      sourceFileFull = sourceFileFull,
+      sourceFileNormalized = sourceFileNormalized,
+      snippet = snippet,
+      explanation = explanation,
+      inspection = inspection.getClass.getCanonicalName
+    )
     warningsBuffer.append(warning)
     if (shouldPrint(warning)) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
-      description.foreach(s => println(s"          $s"))
+      println(s"          $explanation")
+      snippet.foreach(s => println(s"          $s"))
       println()
     }
 
@@ -61,7 +76,8 @@ case class Warning(
   level: Level,
   sourceFileFull: String,
   sourceFileNormalized: String,
-  description: String,
+  snippet: Option[String],
+  explanation: String,
   inspection: String
 ) {
   def hasMinimalLevelOf(minimalLevel: Level): Boolean = {

@@ -23,7 +23,7 @@ class BrokenOddness extends Inspection(
         tree match {
           case Apply(Select(Apply(Select(_, TermName("$percent")), List(Literal(Constant(2)))),
             TermName("$eq$eq")), List(Literal(Constant(1)))) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

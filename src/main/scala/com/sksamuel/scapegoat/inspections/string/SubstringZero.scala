@@ -21,7 +21,7 @@ class SubstringZero extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, Substring), List(Literal(Constant(0)))) if lhs.tpe <:< StringType =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(100))
           case _ => continue(tree)
         }
       }

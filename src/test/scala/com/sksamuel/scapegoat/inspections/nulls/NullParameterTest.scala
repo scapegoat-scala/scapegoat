@@ -25,6 +25,7 @@ class NullParameterTest extends FreeSpec with Matchers with PluginRunner with On
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 1
+      compiler.scapegoat.feedback.warnings.forall(_.snippet.get.contains("println(null)"))
     }
     "should not report warning" - {
       "for override val in case class" in {

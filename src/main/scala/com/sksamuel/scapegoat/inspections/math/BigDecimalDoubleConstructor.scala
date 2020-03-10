@@ -26,10 +26,10 @@ class BigDecimalDoubleConstructor extends Inspection(
         tree match {
           case Apply(Select(pack, TermName("apply")), arg :: _)
             if isBigDecimal(pack) && isFloatingPointType(arg) =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(100))
           case Apply(Select(New(pack), nme.CONSTRUCTOR), arg :: _)
             if isBigDecimal(pack) && isFloatingPointType(arg) =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(100))
           case _ => continue(tree)
         }
       }

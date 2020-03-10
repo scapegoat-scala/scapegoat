@@ -26,17 +26,17 @@ class PartialFunctionInsteadOfMatch extends Inspection(
           // need to not warn on the partial function style, they use x0$1
           case Apply(_, List(Function(List(ValDef(_, name1, _, EmptyTree)), Match(name2, _))))
             if name1.toString == name2.toString() => 
-              if (!isPFBind(name1)) context.warn(tree.pos, self)
+              if (!isPFBind(name1)) context.warn(tree.pos, self, tree.toString.take(500))
           case Apply(TypeApply(_, _), List(Function(List(ValDef(_, name1, _, EmptyTree)), Match(name2, _)))) 
             if name1.toString == name2.toString() => 
-              if (!isPFBind(name1)) context.warn(tree.pos, self)
+              if (!isPFBind(name1)) context.warn(tree.pos, self, tree.toString.take(500))
           case TypeApply(_, List(Function(List(ValDef(_, name1, _, EmptyTree)), Match(name2, _))))
             if name1.toString == name2.toString() =>
-              if (!isPFBind(name1)) context.warn(tree.pos, self)
+              if (!isPFBind(name1)) context.warn(tree.pos, self, tree.toString.take(500))
           // a => a match { case ...; case ... }
           //          case Apply(_, List(Function(List(ValDef(mods, x1, TypeTree(), EmptyTree)), Match(x2, _))))
           //            if x1.toString == x2.toString() =>
-          //            context.warn(tree.pos, self)
+          //            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

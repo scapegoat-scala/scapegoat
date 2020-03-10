@@ -19,7 +19,7 @@ class OptionSize extends Inspection(
         tree match {
           case Select(Apply(option2Iterable, List(_)), TermName("size")) =>
             if (option2Iterable.symbol.fullName == "scala.Option.option2Iterable")
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

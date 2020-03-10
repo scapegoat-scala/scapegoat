@@ -21,7 +21,7 @@ class NegationIsEmpty extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Select(lhs, IsEmpty), Bang) if isTraversable(lhs) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(100))
           case _ => continue(tree)
         }
       }

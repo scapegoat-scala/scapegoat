@@ -32,7 +32,7 @@ class UnsafeTraversableMethods extends Inspection(
         tree match {
           case Select(left, TermName(method)) =>
             if (isTraversable(left) && unsafeMethods.contains(method))
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

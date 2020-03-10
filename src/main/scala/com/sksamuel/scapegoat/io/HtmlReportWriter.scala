@@ -107,9 +107,16 @@ object HtmlReportWriter {
             &nbsp;{ warning.text }
             &nbsp;<span class="inspection">{ warning.inspection }</span>
           </div>
-          <div class="snippet">
-            { warning.description }
+          <div>
+            { warning.explanation }
           </div>
+            { warning.snippet match {
+              case None =>
+              case Some(snippet) =>
+                <div class="snippet">
+                  { snippet }
+                </div>
+            }}
         </div>
     }
   }

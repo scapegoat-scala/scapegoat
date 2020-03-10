@@ -23,7 +23,7 @@ class ImpossibleOptionSizeCondition extends Inspection(
         tree match {
           case Apply(Select(Select(Apply(TypeApply(Select(_, Opt2Iterable), _), _), Size), Greater),
             List(Literal(Constant(x: Int)))) if x > 1 =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(200))
           case _ => continue(tree)
         }
       }

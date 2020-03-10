@@ -20,9 +20,9 @@ class WhileTrue extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case LabelDef(name, _, If(cond, _, _)) if isWhile(name) && isConstantCondition(cond) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case LabelDef(name, _, Block(_, If(cond, _, _))) if isWhile(name) && isConstantCondition(cond) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

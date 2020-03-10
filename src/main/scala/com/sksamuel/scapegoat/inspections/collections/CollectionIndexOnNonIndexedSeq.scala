@@ -23,7 +23,7 @@ class CollectionIndexOnNonIndexedSeq extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("apply")), List(idx)) if isSeq(lhs) && !isIndexedSeq(lhs) && !isLiteral(idx)=>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(100))
           case _ => continue(tree)
         }
       }

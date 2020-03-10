@@ -20,7 +20,7 @@ class PointlessTypeBounds extends Inspection(
           case TypeDef(_, _, _, rhs) if rhs.tpe.bounds.isEmptyBounds
             && rhs.pos != null
             && (rhs.pos.lineContent.contains("<: Any") || rhs.pos.lineContent.contains(">: Nothing")) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(300))
           case _ => continue(tree)
         }
       }

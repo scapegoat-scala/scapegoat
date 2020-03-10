@@ -23,7 +23,7 @@ class ModOne extends Inspection(
         tree match {
           case Apply(Select(lhs, TermName("$percent")), List(Literal(Constant(1))))
             if lhs.tpe <:< typeOf[Int] =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(300))
           case _ => continue(tree)
         }
       }

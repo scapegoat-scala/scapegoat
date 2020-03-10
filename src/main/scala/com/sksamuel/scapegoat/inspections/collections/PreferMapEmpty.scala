@@ -21,7 +21,7 @@ class PreferMapEmpty extends Inspection(
         tree match {
           case a@Apply(TypeApply(Select(Select(_, MapTerm), ApplyTerm), _), List())
             if a.tpe.toString.startsWith("scala.collection.immutable.") =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

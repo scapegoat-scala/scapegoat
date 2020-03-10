@@ -20,7 +20,7 @@ class ArraysToString extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, ToString), Nil) if isArray(lhs) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

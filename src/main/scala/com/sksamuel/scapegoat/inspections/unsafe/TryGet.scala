@@ -19,7 +19,7 @@ class TryGet extends Inspection(
         tree match {
           case Select(left, TermName("get")) =>
             if (left.tpe.typeSymbol.fullName == "scala.util.Try")
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

@@ -40,7 +40,7 @@ class UnreachableCatch extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Try(_, cases, _) if isUnreachable(cases) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(300))
           case _ => continue(tree)
         }
       }

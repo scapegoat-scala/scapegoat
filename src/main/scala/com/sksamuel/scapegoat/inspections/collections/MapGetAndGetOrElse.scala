@@ -24,7 +24,7 @@ class MapGetAndGetOrElse extends Inspection(
         tree match {
           case Apply(TypeApply(Select(Apply(Select(left, TermName("get")), List(key)),
             TermName("getOrElse")), _), List(defaultValue)) if isMap(left) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

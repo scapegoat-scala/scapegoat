@@ -20,7 +20,7 @@ class FilterOptionAndGet extends Inspection(
           case Apply(TypeApply(
             Select(Apply(Select(_, TermName("filter")), List(Function(_, Select(_, TermName("isDefined"))))),
               TermName("map")), _), List(Function(_, Select(_, TermName("get"))))) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

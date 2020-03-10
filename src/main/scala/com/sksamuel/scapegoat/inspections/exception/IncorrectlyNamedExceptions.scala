@@ -41,9 +41,9 @@ class IncorrectlyNamedExceptions extends Inspection(
 
             (isNamedException, isAnon, isException) match {
               case (true, _, false) =>
-                context.warn(tree.pos, self)
+                context.warn(tree.pos, self, tree.toString.take(500))
               case (false, false, true) =>
-                context.warn(tree.pos, self)
+                context.warn(tree.pos, self, tree.toString.take(500))
               case _ =>
             }
           case _ =>

@@ -20,7 +20,7 @@ class EmptyFor extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(_, Foreach), _), List(Function(List(ValDef(_, _, _, EmptyTree)), Literal(Constant(()))))) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

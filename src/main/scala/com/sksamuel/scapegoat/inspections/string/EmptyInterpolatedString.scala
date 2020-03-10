@@ -18,7 +18,7 @@ class EmptyInterpolatedString extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("apply")), List(_)), TermName("s")), Nil) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

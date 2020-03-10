@@ -18,11 +18,11 @@ class SwapSortFilter extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(Apply(TypeApply(Select(lhs, TermName("sorted")), _), _), TermName("filter")), _) if isSeq(lhs) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case Apply(Select(Apply(Apply(TypeApply(Select(lhs, TermName("sortBy")), _), _), _), TermName("filter")), _) if isSeq(lhs) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case Apply(Select(Apply(Select(lhs, TermName("sortWith")), _), TermName("filter")), _) if isSeq(lhs) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

@@ -36,7 +36,7 @@ class UnsafeContains extends Inspection(
       override def inspect(tree: Tree): Unit = tree match {
         case Applied(Select(lhs, Contains), _, (arg :: Nil) :: Nil)
           if isSeqOrOption(lhs) && !isCompatibleType(lhs, arg) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
         case _ =>
           continue(tree)
       }

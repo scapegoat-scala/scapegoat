@@ -18,7 +18,7 @@ class EmptyWhileBlock extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case LabelDef(_, _, If(_, Block(List(Literal(Constant(()))), _), _)) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

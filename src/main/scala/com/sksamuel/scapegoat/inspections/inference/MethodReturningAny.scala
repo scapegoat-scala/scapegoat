@@ -26,7 +26,7 @@ class MethodReturningAny extends Inspection(
           /// ignore overridden methods as the parent will receive the warning
           case DefDef(mods, _, _, _, _, _) if mods.isOverride                 =>
           case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] || tpt.tpe =:= typeOf[AnyRef] =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(300))
           case _ => continue(tree)
         }
       }

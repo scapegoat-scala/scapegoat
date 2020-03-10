@@ -18,7 +18,7 @@ class FindAndNotEqualsNoneReplaceWithExists extends Inspection(
         tree match {
           case Apply(Select(Apply(Select(_, TermName("find")), _), TermName("$bang$eq")),
             List(Select(_, TermName("None")))) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

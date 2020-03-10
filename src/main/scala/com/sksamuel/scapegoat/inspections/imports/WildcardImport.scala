@@ -21,7 +21,7 @@ class WildcardImport extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Import(_, selector) if isWildcard(selector) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString)
           case _ => continue(tree)
         }
       }

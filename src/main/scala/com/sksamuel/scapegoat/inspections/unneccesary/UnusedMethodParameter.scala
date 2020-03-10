@@ -58,7 +58,7 @@ class UnusedMethodParameter extends Inspection(
         ) {
           val paramName = vparam.name.toString
           if (!usesParameter(paramName, constructorBody) && !usesField(paramName, classBody))
-            context.warn(vparam.pos, self)
+            context.warn(vparam.pos, self, s"Unused constructor parameter (${vparam.name}).")
         }
       }
 
@@ -111,7 +111,7 @@ class UnusedMethodParameter extends Inspection(
               vparam <- vparams
             ) {
               if (!usesParameter(vparam.name.toString, rhs))
-                context.warn(tree.pos, self)
+                context.warn(tree.pos, self, s"Unused method parameter ($vparam).")
             }
           case _ => continue(tree)
         }

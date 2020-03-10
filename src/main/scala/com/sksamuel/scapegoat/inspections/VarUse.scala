@@ -25,7 +25,7 @@ class VarUse extends Inspection(
           case ValDef(mods, _, _, _) if mods.isSynthetic || mods.isMacro =>
           case ValDef(_, _, tpt, _) if isXmlLiteral(tpt.tpe) =>
           case ValDef(modifiers, _, _, _) if modifiers.hasFlag(Flag.MUTABLE) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(300))
           case _ => continue(tree)
         }
       }

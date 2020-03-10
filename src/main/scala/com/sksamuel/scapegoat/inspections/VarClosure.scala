@@ -21,7 +21,7 @@ class VarClosure extends Inspection(
         case Apply(Select(_, _), args) =>
           args.filter(_.symbol != null)
             .foreach(arg => if (arg.symbol.isMethod && arg.symbol.isGetter && !arg.symbol.isStable) {
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
             })
         case _ =>
       }

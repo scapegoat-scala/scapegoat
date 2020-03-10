@@ -59,7 +59,7 @@ class VarCouldBeVal extends Inspection(
         tree match {
           case DefDef(_, _, _, _, _, Block(stmt, expr)) =>
             for ((unwritten, definitionTree) <- containsUnwrittenVar(stmt :+ expr)) {
-              context.warn(definitionTree.pos, self)
+              context.warn(definitionTree.pos, self, tree.toString.take(200))
             }
           case _ => continue(tree)
         }

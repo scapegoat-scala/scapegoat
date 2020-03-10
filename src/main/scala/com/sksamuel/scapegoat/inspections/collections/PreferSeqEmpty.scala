@@ -22,7 +22,7 @@ class PreferSeqEmpty extends Inspection(
         tree match {
           case a@Apply(TypeApply(Select(Select(_, SeqTerm), ApplyTerm), _), List())
             if (!a.tpe.toString.startsWith("scala.collection.mutable.")) =>
-              context.warn(tree.pos, self)              
+              context.warn(tree.pos, self, tree.toString.take(500))              
           case _ => continue(tree)
         }
       }

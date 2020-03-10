@@ -31,7 +31,7 @@ class SuspiciousMatchOnClassObject extends Inspection(
             pat.symbol.isModuleOrModuleClass &&
             pat.tpe.typeSymbol.companionClass.isClass &&
             !pat.tpe.typeSymbol.companionClass.isAbstractClass =>
-              context.warn(c.pos, self)
+              context.warn(c.pos, self, c.toString.take(500))
               true
           case _ => false
         }

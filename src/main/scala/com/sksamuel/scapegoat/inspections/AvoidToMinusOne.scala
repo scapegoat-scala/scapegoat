@@ -31,7 +31,7 @@ class AvoidToMinusOne extends Inspection(
           case Apply(TypeApply(Select(Apply(Select(lhs, To),
             List(Apply(Select(loopvar, Minus), List(Literal(Constant(1)))))), Foreach), _), _)
               if isIntegral(lhs) && isIntegral(loopvar) =>
-                context.warn(tree.pos, self)
+                context.warn(tree.pos, self, tree.toString.take(200))
           case _ => continue(tree)
         }
       }

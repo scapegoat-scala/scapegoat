@@ -25,7 +25,7 @@ class NullParameter extends Inspection(
           case Apply(_, _) if tree.tpe.toString == "scala.xml.Elem" =>
           case Apply(_, args) =>
             if (containsNull(args))
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(300))
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
           case _ => continue(tree)
         }

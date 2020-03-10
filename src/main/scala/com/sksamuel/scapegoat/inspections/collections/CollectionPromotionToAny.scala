@@ -39,7 +39,7 @@ class CollectionPromotionToAny extends Inspection(
         tree match {
           case TypeApply(Select(l, TermName("$colon$plus")), a :: _) =>
             if (!isAnySeq(l) && isAny(a))
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(100))
           case _ => continue(tree)
         }
       }

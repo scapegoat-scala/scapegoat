@@ -31,7 +31,7 @@ class ComparisonToEmptyList extends Inspection(
       }
 
       private def warn(tree: Tree): Unit = 
-        context.warn(tree.pos, self)
+        context.warn(tree.pos, self, tree.toString.take(200))
     }
   }
 }

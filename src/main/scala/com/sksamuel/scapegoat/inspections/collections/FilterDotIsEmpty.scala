@@ -18,7 +18,7 @@ class FilterDotIsEmpty extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(Select(_, TermName("filter")), _), TermName("isEmpty")) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

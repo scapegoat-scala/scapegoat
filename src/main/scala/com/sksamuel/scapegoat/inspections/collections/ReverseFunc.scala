@@ -30,10 +30,10 @@ class ReverseFunc extends Inspection(
         tree match {
           case Select(Select(c, TermName("reverse")), TermName(FuncReplace(func, replace)))
             if c.tpe <:< typeOf[Traversable[Any]] =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case Select(Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))), TermName(FuncReplace(func, replace)))
             if arrayOps1.toString.contains("ArrayOps") && arrayOps2.toString.contains("ArrayOps") =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

@@ -23,11 +23,19 @@ class CollectionNamingConfusion extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case ValDef(_, TermName(name), tpt, _) if isSet(tpt) && isNamedList(name) =>
-            context.warn(tree.pos, self,
-              "An instance of a Set is confusingly referred to by a variable called/containing list.")
+            context.warn(
+              tree.pos,
+              self,
+              tree.toString.take(300),
+              "An instance of a Set is confusingly referred to by a variable called/containing list."
+            )
           case ValDef(_, TermName(name), tpt, _) if isList(tpt) && isNamedSet(name) =>
-            context.warn(tree.pos, self,
-              "An instance of a List is confusingly referred to by a variable called/containing set.")
+            context.warn(
+              tree.pos,
+              self,
+              tree.toString.take(300),
+              "An instance of a List is confusingly referred to by a variable called/containing set."
+            )
           case _ => continue(tree)
         }
       }

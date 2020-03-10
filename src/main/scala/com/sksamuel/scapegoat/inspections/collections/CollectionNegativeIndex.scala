@@ -19,7 +19,7 @@ class CollectionNegativeIndex extends Inspection(
         tree match {
           case Apply(Select(lhs, TermName("apply")), List(Literal(Constant(x: Int)))) 
             if isList(lhs) && x < 0 =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(100))
           case _ => continue(tree)
         }
       }

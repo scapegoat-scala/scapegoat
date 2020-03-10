@@ -20,7 +20,7 @@ class DoubleNegation extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Select(_, Bang), Bang) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(200))
           case _ => continue(tree)
         }
       }

@@ -22,7 +22,7 @@ class RedundantFinalizer extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(mods, name, _, _, tpt, _) if mods.hasFlag(Flag.OVERRIDE) && name.toString == "finalize" && tpt.toString() == "Unit" =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

@@ -18,7 +18,7 @@ class FindDotIsDefined extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Apply(Select(_, TermName("find")), _), TermName("isDefined")) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

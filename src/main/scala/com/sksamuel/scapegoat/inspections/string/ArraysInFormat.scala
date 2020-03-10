@@ -20,7 +20,7 @@ class ArraysInFormat extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(_, TermName("format")), args) if containsArrayType(args) =>
-            context.warn(tree.pos, self)
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

@@ -27,7 +27,7 @@ class DuplicateSetValue extends Inspection(
         tree match {
           case Apply(TypeApply(Select(Select(_, TermName("Set")), TermName("apply")), _), args)
             if hasDuplicates(args) =>
-              context.warn(tree.pos, self) 
+              context.warn(tree.pos, self, tree.toString.take(100)) 
           case _ => continue(tree)
         }
       }

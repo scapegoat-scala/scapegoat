@@ -19,7 +19,7 @@ class AsInstanceOf extends Inspection(
           // this will skip any uses of manifest etc
           case TypeApply(Select(qual, TermName("asInstanceOf")), _)
             if qual.toString != "classOf[java.lang.Class]" =>
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
           case DefDef(modifiers, _, _, _, _, _) if modifiers.hasFlag(Flag.SYNTHETIC) => // no further
           case Match(_, cases) => // ignore selector and process cases
             cases.foreach(traverse)

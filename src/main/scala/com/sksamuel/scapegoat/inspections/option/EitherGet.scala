@@ -18,9 +18,9 @@ class EitherGet extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Select(Select(_, TermName("right")), TermName("get")) =>
-            context.warn(tree.pos, self, "Use of Either Right Projection get: " + tree.toString().take(500))
+            context.warn(tree.pos, self, tree.toString.take(500))
           case Select(Select(_, TermName("left")), TermName("get")) =>
-            context.warn(tree.pos, self, "Use of Either Left Projection get: " + tree.toString().take(500))
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

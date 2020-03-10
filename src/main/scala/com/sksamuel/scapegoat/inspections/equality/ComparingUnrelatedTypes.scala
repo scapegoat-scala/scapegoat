@@ -64,7 +64,7 @@ class ComparingUnrelatedTypes extends Inspection(
             }
 
             if (!hasSpecificEq(lhs.tpe.deconst) && !related(lhs.tpe.widen, rhs.tpe.widen)) {
-              context.warn(tree.pos, self)
+              context.warn(tree.pos, self, tree.toString.take(500))
             }
 
           case _ => continue(tree)

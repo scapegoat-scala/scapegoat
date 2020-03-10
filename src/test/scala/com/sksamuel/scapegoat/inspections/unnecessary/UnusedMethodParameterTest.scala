@@ -150,7 +150,10 @@ class UnusedMethodParameterTest
         val code = """case class Foo(x: Int)(y: Int)"""
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warnings match {
+          case Seq(warning: Warning) =>
+            warning.snippet.get should include("y")
+        }
       }
 
       "not warn on case class secondary params used as fields" in {
@@ -177,7 +180,10 @@ class UnusedMethodParameterTest
         val code = """class Foo(x: Int)"""
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 1
+        compiler.scapegoat.feedback.warnings match {
+          case Seq(warning: Warning) =>
+            warning.snippet.get should include("x")
+        }
       }
 
       "not warn on non-case class primary params used as fields" in {

@@ -28,10 +28,10 @@ class RepeatedIfElseBody extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case If(_, mainBranch, elseBranch) if isRepeated(mainBranch, elseBranch) =>
-            context.warn(tree.pos, self, "Main and else branches of if are repeated.")
+            context.warn(tree.pos, self, tree.toString.take(500), "Main and else branches of if are repeated.")
           case If(_, mainBranch@Block(_, _), elseBranch@Block(_, _)) 
             if twoBlocksStartWithTheSame(mainBranch, elseBranch) =>
-              context.warn(tree.pos, self, "Main and else branches start with the same command.")
+              context.warn(tree.pos, self, tree.toString.take(500), "Main and else branches start with the same command.")
           case _ => continue(tree)
         }
       }
