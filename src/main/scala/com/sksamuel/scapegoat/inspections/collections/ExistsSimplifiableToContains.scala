@@ -2,8 +2,6 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-import scala.collection.mutable
-
 /**
  * @author Stephen Samuel
  *
