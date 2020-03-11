@@ -1,10 +1,11 @@
 package com.sksamuel.scapegoat.inspections.empty
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers }
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class EmptySynchronizedBlockTest extends FreeSpec with Matchers with PluginRunner {
+class EmptySynchronizedBlockTest extends AnyFreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new EmptySynchronizedBlock)
 

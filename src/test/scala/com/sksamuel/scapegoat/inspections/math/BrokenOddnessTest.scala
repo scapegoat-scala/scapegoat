@@ -1,10 +1,11 @@
 package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers }
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class BrokenOddnessTest extends FreeSpec with Matchers with PluginRunner {
+class BrokenOddnessTest extends AnyFreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new BrokenOddness)
 

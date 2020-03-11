@@ -1,10 +1,12 @@
 package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class ExistsSimplifiableToContainsTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class ExistsSimplifiableToContainsTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new ExistsSimplifiableToContains)
 

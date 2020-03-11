@@ -1,9 +1,10 @@
 package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ FreeSpec, Matchers }
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class UseLog10Test extends FreeSpec with Matchers with PluginRunner {
+class UseLog10Test extends AnyFreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new UseLog10)
 

@@ -2,10 +2,12 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.{ PluginRunner, isScala213 }
 
-import org.scalatest.{ FreeSpec, Matchers, OneInstancePerTest }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class PredefSeqIsMutableTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class PredefSeqIsMutableTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new PredefSeqIsMutable)
 

@@ -1,9 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class MaxParameterTest extends FreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class MaxParameterTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new MaxParameters)
 

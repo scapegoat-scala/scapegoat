@@ -1,11 +1,13 @@
 package com.sksamuel.scapegoat.inspections.option
 
 import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.{ OneInstancePerTest, FreeSpec, Matchers }
+import org.scalatest.OneInstancePerTest
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
 class ImpossibleOptionSizeConditionTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with PluginRunner
     with OneInstancePerTest {

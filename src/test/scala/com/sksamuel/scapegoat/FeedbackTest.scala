@@ -1,13 +1,15 @@
 package com.sksamuel.scapegoat
 
-import org.scalatest.{FreeSpec, Matchers, OneInstancePerTest, PrivateMethodTester}
+import org.scalatest.{OneInstancePerTest, PrivateMethodTester}
 
 import scala.reflect.internal.util.NoPosition
 import scala.tools.nsc.reporters.StoreReporter
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
 class FeedbackTest
-    extends FreeSpec
+    extends AnyFreeSpec
     with Matchers
     with OneInstancePerTest with PrivateMethodTester {
 
