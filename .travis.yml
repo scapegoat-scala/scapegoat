@@ -4,7 +4,6 @@ scala:
    - 2.12.8
    - 2.12.9
    - 2.12.10
-   - 2.13.0
    - 2.13.1
 script:
    - sbt clean test
@@ -24,4 +23,3 @@ cache:
   directories:
     - $HOME/.ivy2/cache
     - $HOME/.sbt/boot/
-
