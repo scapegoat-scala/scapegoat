@@ -7,7 +7,7 @@ class NegationIsEmpty extends Inspection(
   text = "!isEmpty can be replaced with nonEmpty",
   defaultLevel = Levels.Info,
   description = "Checks whether !isEmpty can be replaced with nonEmpty.",
-  explanation = "!Traversable.isEmpty can be replaced with Traversable.nonEmpty to make it easier to reason about."
+  explanation = "!.isEmpty can be replaced with.nonEmpty to make it easier to reason about."
 ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
