@@ -9,7 +9,7 @@ class LonelySealedTrait extends Inspection(
   text = "Lonely sealed trait",
   defaultLevel = Levels.Error,
   description = "Checks for sealed traits without any classes extending it.",
-  explanation = "A sealed traits that is not extended is considered dead code."
+  explanation = "A sealed trait that is not extended is considered dead code."
 ) {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
