@@ -32,10 +32,24 @@ class ExistsSimplifiableToContains extends Inspection(
         isSet(tree) || isSeq(tree) || isList(tree) || isMap(tree)
       }
 
+      private def countUsagesOfAVariable(trees: List[Tree], symbolName: String): Int = {
+        trees.map {
+          case Select(Ident(TermName(termName)), _) if termName == symbolName =>
+            1
+          case tree =>
+            countUsagesOfAVariable(tree.children, symbolName)
+        }.sum
+      }
+
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("exists")), List(Function(_, Apply(Select(_, Equals), List(x)))))
-            if isContainsTraversable(lhs) && doesElementTypeMatch(lhs, x) =>
+
+          case Apply(
+                Select(lhs, TermName("exists")),
+                List(Function(List(ValDef(_, TermName(iterationVariable), _, _)), subtree@Apply(Select(name, Equals), List(x))))
+               )
+            if isContainsTraversable(lhs) && doesElementTypeMatch(lhs, x)
+               && countUsagesOfAVariable(List(subtree), iterationVariable) == 1 =>
               context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }

@@ -156,3 +156,6 @@ packageBin in Compile := crossTarget.value / (assemblyJarName in assembly).value
 
 // debug assembly process
 //logLevel in assembly := Level.Debug
+
+// https://github.com/sksamuel/scapegoat/issues/298
+ThisBuild / useCoursier := false
