@@ -5,7 +5,12 @@ import com.sksamuel.scapegoat._
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warning) {
+class UnusedMethodParameter extends Inspection(
+  text = "Unused parameter",
+  defaultLevel = Levels.Warning,
+  description = "Checks for unused method parameters.",
+  explanation = "Unused constructor or method parameters should be removed."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -52,11 +57,8 @@ class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warnin
           vparam <- vparams
         ) {
           val paramName = vparam.name.toString
-          if (!usesParameter(paramName, constructorBody) &&
-            !usesField(paramName, classBody)) {
-
-            context.warn(vparam.pos, self, s"Unused constructor parameter (${vparam.name})")
-          }
+          if (!usesParameter(paramName, constructorBody) && !usesField(paramName, classBody))
+            context.warn(vparam.pos, self, s"Unused constructor parameter (${vparam.name}).")
         }
       }
 
@@ -68,7 +70,6 @@ class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warnin
           case ClassDef(mods, _, _, _) if mods.hasAbstractFlag =>
 
           case ClassDef(_, _, _, classBody @ Template(_, _, classTopLevelStmts)) =>
-
             classTopLevelStmts.foreach {
               case DefDef(_, nme.CONSTRUCTOR, _, vparamss, _, constructorBody) =>
                 checkConstructor(vparamss, constructorBody, classBody)
@@ -76,7 +77,6 @@ class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warnin
                 checkConstructor(vparamss, constructorBody, classBody)
               case _ =>
             }
-
             continue(tree)
 
           // ignore abstract methods obv.
@@ -105,15 +105,13 @@ class UnusedMethodParameter extends Inspection("Unused parameter", Levels.Warnin
             tpt.tpe =:= UnitTpe &&
             param.tpt.tpe =:= typeOf[Array[String]] =>
 
-
           case DefDef(_, _, _, vparamss, _, rhs) =>
             for (
               vparams <- vparamss;
               vparam <- vparams
             ) {
-              if (!usesParameter(vparam.name.toString, rhs)) {
-                context.warn(tree.pos, self, s"Unused method parameter ($vparam)")
-              }
+              if (!usesParameter(vparam.name.toString, rhs))
+                context.warn(tree.pos, self, s"Unused method parameter ($vparam).")
             }
           case _ => continue(tree)
         }

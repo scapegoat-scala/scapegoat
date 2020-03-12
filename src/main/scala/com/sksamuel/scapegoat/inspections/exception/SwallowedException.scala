@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class SwallowedException extends Inspection("Empty catch block", Levels.Warning) {
+class SwallowedException extends Inspection(
+  text = "Empty catch block",
+  defaultLevel = Levels.Warning,
+  description = "Finds catch blocks that don't handle caught exceptions.",
+  explanation = "If you use a try/catch block to deal with an exception, you should handle all of the caught exceptions and if for some reason you're throwing another exception in the result, you should include the original exception as the cause."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -24,16 +29,12 @@ class SwallowedException extends Inspection("Empty catch block", Levels.Warning)
 
       private def checkCatches(defs: List[CaseDef]) = defs.foreach {
         case CaseDef(Bind(TermName("ignored") | TermName("ignore"), _), _, _) =>
-
         case cdef @ CaseDef(_, _, Literal(Constant(())))
           if cdef.body.toString == "()" =>
-            context.warn(cdef.pos, self, "Empty catch block " + cdef.toString().take(100))
-
+            context.warn(cdef.pos, self, cdef.toString.take(100))
         case cdef @ CaseDef(Bind(caughtException, _), _, subtree)
           if containsMaskingThrow(caughtException, Seq(subtree)) =>
-            context.warn(cdef.pos, self,
-              "Masking exception by not passing the original exception as cause: " + cdef.toString().take(100))
-
+            context.warn(cdef.pos, self, cdef.toString.take(100))
         case _ =>
       }
 

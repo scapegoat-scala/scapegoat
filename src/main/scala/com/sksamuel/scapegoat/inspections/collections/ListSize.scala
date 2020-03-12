@@ -3,8 +3,12 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class ListSize extends Inspection("List.size is O(n)", Levels.Info,
-  "List.size is O(n). Consider using a different data type with O(1) size lookup such as Vector or Array.") {
+class ListSize extends Inspection(
+  text = "List.size is O(n)",
+  defaultLevel = Levels.Info,
+  description = "Checks for use of List.size.",
+  explanation = "List.size is O(n). Consider using a different data type with O(1) size lookup such as Vector or an Array."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

@@ -11,7 +11,7 @@ class MapGetAndGetOrElseTest extends AnyFreeSpec with Matchers with PluginRunner
   private def getOrElseAssertion(code: String): Unit = {
     compileCodeSnippet(code)
     compiler.scapegoat.feedback.warnings.size shouldBe 1
-    compiler.scapegoat.feedback.warnings.head.text shouldBe ("Use of .get.getOrElse instead of .getOrElse")
+    compiler.scapegoat.feedback.warnings.head.text shouldBe ("Use of Map.get().getOrElse instead of Map.getOrElse")
   }
 
   "Map with get followed by getOrElse" - {

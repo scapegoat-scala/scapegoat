@@ -67,9 +67,9 @@ class VarCouldBeValTest
         val warningsInOrder = compiler.scapegoat.feedback.warnings.sortBy(_.line)
         val Seq(barWarning, bazWarning) = warningsInOrder
         barWarning.line shouldBe 3
-        barWarning.snippet should contain("bar is never written to, so could be a val: var bar: Int = 1")
+        barWarning.snippet.exists(_.contains("var bar: Int = 1")) shouldBe true
         bazWarning.line shouldBe 5
-        bazWarning.snippet should contain("baz is never written to, so could be a val: var baz: Int = 3")
+        bazWarning.snippet.exists(_.contains("var baz: Int = 3")) shouldBe true
       }
     }
     "should not report warning" - {

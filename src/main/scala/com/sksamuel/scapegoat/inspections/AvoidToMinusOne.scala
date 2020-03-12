@@ -5,7 +5,12 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.runtime.{RichInt, RichLong}
 
 /** @author Stephen Samuel */
-class AvoidToMinusOne extends Inspection("Avoid To Minus One", Levels.Info) {
+class AvoidToMinusOne extends Inspection(
+  text = "Avoid (j to k - 1)",
+  defaultLevel = Levels.Info,
+  description = "Checks for ranges using (j to k - 1).",
+  explanation = "A range in the following format (j to k - 1) can be simplified to (j until k)."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -24,9 +29,9 @@ class AvoidToMinusOne extends Inspection("Avoid To Minus One", Levels.Info) {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(TypeApply(Select(Apply(Select(lhs, To),
-            List(Apply(Select(loopvar, Minus), List(Literal(Constant(1)))))), Foreach), _), _) if isIntegral(lhs) && isIntegral(loopvar) =>
-            context.warn(tree.pos, self,
-              "j to k - 1 can be better written as j until k: " + tree.toString().take(200))
+            List(Apply(Select(loopvar, Minus), List(Literal(Constant(1)))))), Foreach), _), _)
+              if isIntegral(lhs) && isIntegral(loopvar) =>
+                context.warn(tree.pos, self, tree.toString.take(200))
           case _ => continue(tree)
         }
       }

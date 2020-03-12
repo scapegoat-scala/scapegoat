@@ -5,7 +5,12 @@ import java.util.regex.PatternSyntaxException
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class InvalidRegex extends Inspection("Invalid regex", Levels.Info) {
+class InvalidRegex extends Inspection(
+  text = "Invalid regex",
+  defaultLevel = Levels.Info,
+  description = "Checks for invalid regex literals.",
+  explanation = "Invalid regex literals can fail at compile time with a PatternSyntaxException. This could be caused by e.g. dangling meta characters, or unclosed escape characters, etc."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -19,7 +24,7 @@ class InvalidRegex extends Inspection("Invalid regex", Levels.Info) {
               regex.toString.r
             } catch {
               case e: PatternSyntaxException =>
-                context.warn(tree.pos, self, e.getMessage)
+                context.warn(tree.pos, self)
             }
           case _ => continue(tree)
         }

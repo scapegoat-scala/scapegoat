@@ -2,7 +2,12 @@ package com.sksamuel.scapegoat.inspections.controlflow
 
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-class RepeatedIfElseBody extends Inspection("Repeated body of if main and else branch", Levels.Warning) {
+class RepeatedIfElseBody extends Inspection(
+  text = "Repeated body of if main and else branch",
+  defaultLevel = Levels.Warning,
+  description = "Checks for the main branch and the else branch of an if being the same.",
+  explanation = "The if statement could be refactored if both branches are the same or start with the same."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -23,9 +28,10 @@ class RepeatedIfElseBody extends Inspection("Repeated body of if main and else b
       override def inspect(tree: Tree): Unit = {
         tree match {
           case If(_, mainBranch, elseBranch) if isRepeated(mainBranch, elseBranch) =>
-            context.warn(tree.pos, self, "Main and else branches of if are repeated: " + tree.toString().take(500))
-          case If(_, mainBranch@Block(_, _), elseBranch@Block(_, _)) if twoBlocksStartWithTheSame(mainBranch, elseBranch) =>
-            context.warn(tree.pos, self, "Main and else branches start with the same command: " + tree.toString().take(500))
+            context.warn(tree.pos, self, tree.toString.take(500), "Main and else branches of if are repeated.")
+          case If(_, mainBranch@Block(_, _), elseBranch@Block(_, _)) 
+            if twoBlocksStartWithTheSame(mainBranch, elseBranch) =>
+              context.warn(tree.pos, self, tree.toString.take(500), "Main and else branches start with the same command.")
           case _ => continue(tree)
         }
       }

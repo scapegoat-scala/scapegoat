@@ -7,7 +7,12 @@ import com.sksamuel.scapegoat._
  *
  *         Inspired by http://codenarc.sourceforge.net/codenarc-rules-basic.html#BrokenOddnessCheck
  */
-class BrokenOddness extends Inspection("Broken odd check", Levels.Warning) {
+class BrokenOddness extends Inspection(
+  text = "Broken odd check",
+  defaultLevel = Levels.Warning,
+  description = "Checks for potentially broken odd checks.",
+  explanation = "Code that attempts to check for oddness using x % 2 == 1 will fail on negative numbers. Consider using x % 2 != 0"
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -18,9 +23,7 @@ class BrokenOddness extends Inspection("Broken odd check", Levels.Warning) {
         tree match {
           case Apply(Select(Apply(Select(_, TermName("$percent")), List(Literal(Constant(2)))),
             TermName("$eq$eq")), List(Literal(Constant(1)))) =>
-            context.warn(tree.pos, self,
-              "Potentially broken odd check. " + tree.toString().take(500) + "." +
-                "Code that attempts to check for oddness using x % 2 == 1 will fail on negative numbers. Consider using x % 2 != 0")
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

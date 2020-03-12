@@ -5,7 +5,11 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.reflect.internal.Flags
 
 class RedundantFinalModifierOnMethod extends Inspection(
-  "Redundant final modifier on method", Levels.Info) {
+  text = "Redundant final modifier on a method",
+  defaultLevel = Levels.Info,
+  description = "Checks for redundant final modifiers on methods.",
+  explanation = "A final modifier on methods that cannot be overridden is redundant."
+) {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -25,8 +29,7 @@ class RedundantFinalModifierOnMethod extends Inspection(
               tree.symbol.enclClass.isCase ||
               tree.symbol.enclClass.isModuleOrModuleClass ||
               tree.symbol.enclClass.isPackageObjectOrClass) =>
-            context.warn(tree.pos, self,
-              s"${dd.symbol.fullName} cannot be overridden, final modifier is redundant")
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }

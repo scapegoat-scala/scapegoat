@@ -4,12 +4,14 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global
 
 /** @author Stephen Samuel */
-abstract class Inspection(val text: String, val defaultLevel: Level, val explanation: Option[String] = None) {
+abstract class Inspection(
+  val text: String,
+  val defaultLevel: Level,
+  val description: String,
+  val explanation: String
+) {
 
   val self = this
-
-  def this(text: String, defaultLevel: Level, explanation: String) =
-    this(text, defaultLevel, Option(explanation))
 
   def inspector(context: InspectionContext): Inspector
 }
@@ -40,13 +42,19 @@ abstract class Inspector(val context: InspectionContext) {
 
 case class InspectionContext(global: Global, feedback: Feedback) {
 
-  def warn(pos: Position, inspection: Inspection, snippet: String): Unit = {
-    feedback.warn(pos, inspection, Some(snippet))
-  }
-
-  def warn(pos: Position, inspection: Inspection): Unit = {
-    feedback.warn(pos, inspection)
-  }
+  def warn(pos: Position, inspection: Inspection): Unit =
+    feedback.warn(pos, inspection, None, None)
+  
+  def warn(pos: Position, inspection: Inspection, snippet: String): Unit =
+    feedback.warn(pos, inspection, Some(snippet), None)
+  
+  def warn(
+    pos: Position,
+    inspection: Inspection,
+    snippet: String,
+    adhocExplanation: String
+  ): Unit =
+    feedback.warn(pos, inspection, Some(snippet), Some(adhocExplanation))
 
   trait Traverser extends global.Traverser {
 

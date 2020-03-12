@@ -5,7 +5,12 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class VarCouldBeVal extends Inspection("Var could be val", Levels.Warning) {
+class VarCouldBeVal extends Inspection(
+  text = "Var could be val",
+  defaultLevel = Levels.Warning,
+  description = "Checks for vars that could be declared as vals.",
+  explanation = "A variable (var) that is never written to could be turned into a value (val)."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -54,11 +59,7 @@ class VarCouldBeVal extends Inspection("Var could be val", Levels.Warning) {
         tree match {
           case DefDef(_, _, _, _, _, Block(stmt, expr)) =>
             for ((unwritten, definitionTree) <- containsUnwrittenVar(stmt :+ expr)) {
-              context.warn(
-                definitionTree.pos,
-                self,
-                s"$unwritten is never written to, so could be a val: " + definitionTree.toString().take(200)
-              )
+              context.warn(definitionTree.pos, self, tree.toString.take(200))
             }
           case _ => continue(tree)
         }

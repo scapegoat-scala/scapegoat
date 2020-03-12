@@ -4,7 +4,11 @@ import com.sksamuel.scapegoat._
 
 /** @author Josh Rosen */
 class CollectionIndexOnNonIndexedSeq extends Inspection(
-  "Seq.apply() on a non-IndexedSeq may cause performance problems", Levels.Warning) {
+  text = "Use of apply method on a non-indexed Seq",
+  defaultLevel = Levels.Warning,
+  description = "Checks for indexing on a Seq which is not an IndexedSeq.",
+  explanation = "Using an index to access elements of an IndexedSeq may cause performance problems."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -19,7 +23,7 @@ class CollectionIndexOnNonIndexedSeq extends Inspection(
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(lhs, TermName("apply")), List(idx)) if isSeq(lhs) && !isIndexedSeq(lhs) && !isLiteral(idx)=>
-            context.warn(tree.pos, self, tree.toString().take(100))
+            context.warn(tree.pos, self, tree.toString.take(100))
           case _ => continue(tree)
         }
       }

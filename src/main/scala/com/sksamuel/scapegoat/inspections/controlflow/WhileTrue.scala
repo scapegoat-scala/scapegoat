@@ -5,7 +5,12 @@ import com.sksamuel.scapegoat._
 /**
  * @author Stephen Samuel
  */
-class WhileTrue extends Inspection("While true loop", Levels.Warning) {
+class WhileTrue extends Inspection(
+  text = "While true loop",
+  defaultLevel = Levels.Warning,
+  description = "Checks for code that uses a while(true) or do {...} while(true) block.",
+  explanation = "A (do) while true loop is unlikely to be meant for production."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -15,11 +20,9 @@ class WhileTrue extends Inspection("While true loop", Levels.Warning) {
       override def inspect(tree: Tree): Unit = {
         tree match {
           case LabelDef(name, _, If(cond, _, _)) if isWhile(name) && isConstantCondition(cond) =>
-            context.warn(tree.pos, self,
-              "A while true loop is unlikely to be meant for production: " + tree.toString().take(500))
+            context.warn(tree.pos, self, tree.toString.take(500))
           case LabelDef(name, _, Block(_, If(cond, _, _))) if isWhile(name) && isConstantCondition(cond) =>
-            context.warn(tree.pos, self,
-              "A do while true loop is unlikely to be meant for production: " + tree.toString().take(500))
+            context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
       }

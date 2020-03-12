@@ -5,7 +5,12 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class LonelySealedTrait extends Inspection("Lonely sealed trait", Levels.Error) {
+class LonelySealedTrait extends Inspection(
+  text = "Lonely sealed trait",
+  defaultLevel = Levels.Error,
+  description = "Checks for sealed traits without any classes extending it.",
+  explanation = "A sealed trait that is not extended is considered dead code."
+) {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -17,7 +22,7 @@ class LonelySealedTrait extends Inspection("Lonely sealed trait", Levels.Error) 
     override def postInspection(): Unit = {
       for ((name, cdef) <- sealedClasses) {
         if (!implementedClasses.contains(name)) {
-          context.warn(cdef.pos, self, s"Sealed trait ${cdef.name} has no implementing classes")
+          context.warn(cdef.pos, self)
         }
       }
     }

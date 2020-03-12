@@ -3,8 +3,12 @@ package com.sksamuel.scapegoat.inspections.unsafe
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class FinalizerWithoutSuper extends Inspection("Finalizer without super", Levels.Warning,
-  "Finalizers should call super.finalize() to ensure superclasses are able to run any finalization logic") {
+class FinalizerWithoutSuper extends Inspection(
+  text = "Finalizer without super",
+  defaultLevel = Levels.Warning,
+  description = "Checks for overridden finalizers that do not call super.",
+  explanation = "Finalizers should call super.finalize() to ensure superclasses are able to run their finalization logic."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

@@ -7,7 +7,12 @@ import com.sksamuel.scapegoat._
  *
  *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#NM_CLASS_NOT_EXCEPTION
  */
-class IncorrectlyNamedExceptions extends Inspection("Incorrectly Named Exceptions", Levels.Error) {
+class IncorrectlyNamedExceptions extends Inspection(
+  text = "Incorrectly named exceptions",
+  defaultLevel = Levels.Error,
+  description = "Checks for exceptions that are not called *Exception and vice versa.",
+  explanation = "Class named exception does not derive from Exception / class derived from Exception is not named *Exception."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -36,11 +41,9 @@ class IncorrectlyNamedExceptions extends Inspection("Incorrectly Named Exception
 
             (isNamedException, isAnon, isException) match {
               case (true, _, false) =>
-                context.warn(tree.pos, self,
-                  "Class named exception does not derive from Exception" + tree.toString().take(500))
+                context.warn(tree.pos, self, tree.toString.take(500))
               case (false, false, true) =>
-                context.warn(tree.pos, self,
-                  "Class derived from Exception is not named *Exception" + tree.toString().take(500))
+                context.warn(tree.pos, self, tree.toString.take(500))
               case _ =>
             }
           case _ =>

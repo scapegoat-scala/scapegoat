@@ -71,16 +71,16 @@ class UnusedMethodParameterTest
       "for methods not returning" in {
 
         val code = """class Test {
-                     |  def foo(name:String) = throw new RuntimeException
-                     |}""".stripMargin
+                      |  def foo(name:String) = throw new RuntimeException
+                      |}""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for methods not returning when their return type is specified" in {
         val code = """class Test {
-                   |  def foo(name:String): String = throw new RuntimeException
-                   |}""".stripMargin
+                      |  def foo(name:String): String = throw new RuntimeException
+                      |}""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0

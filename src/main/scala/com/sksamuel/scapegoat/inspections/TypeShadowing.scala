@@ -5,7 +5,12 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class TypeShadowing extends Inspection("Type shadowing", Levels.Warning) {
+class TypeShadowing extends Inspection(
+  text = "Type shadowing",
+  defaultLevel = Levels.Warning,
+  description = "Checks for shadowed type parameters in methods.",
+  explanation = "Shadowing type parameters is considered a bad practice and should be avoided."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -20,15 +25,11 @@ class TypeShadowing extends Inspection("Type shadowing", Levels.Warning) {
           case dd @ DefDef(_, name, deftparams, _, _, _) =>
             deftparams.foreach(tparam => {
               if (types.contains(tparam.name.toString))
-                warn(dd, name, tparam)
+                context.warn(dd.pos, self)
             })
           case ClassDef(_, _, tparams2, Template(_, _, body)) => checkShadowing(tparams2, body)
           case _ =>
         }
-      }
-
-      private def warn(dd: DefDef, name: TermName, tparam: TypeDef): Unit = {
-        context.warn(dd.pos, self, s"Method $name declares shadowed type parameter ${tparam.name}")
       }
 
       override def inspect(tree: Tree): Unit = {

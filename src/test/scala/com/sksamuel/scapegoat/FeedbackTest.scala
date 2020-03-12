@@ -16,28 +16,48 @@ class FeedbackTest
   val position = NoPosition
   val defaultSourcePrefix = "src/main/scala/"
 
-  class DummyInspection(text: String, defaultLevel: Level) extends Inspection(text, defaultLevel) {
+  class DummyInspection(
+    text: String,
+    defaultLevel: Level,
+    description: String,
+    explanation: String
+  ) extends Inspection(text, defaultLevel, description, explanation) {
     override def inspector(context: InspectionContext): Inspector = ???
   }
 
   "Feedback" - {
     "should report to reporter" - {
       "for error" in {
-        val inspection = new DummyInspection("My default is Error", Levels.Error)
+        val inspection = new DummyInspection(
+          "My default is Error",
+          Levels.Error,
+          "This is description.",
+          "This is explanation."
+        )
         val reporter = new StoreReporter
         val feedback = new Feedback(false, reporter, defaultSourcePrefix)
         feedback.warn(position, inspection)
         reporter.infos should contain(reporter.Info(position, "My default is Error", reporter.ERROR))
       }
       "for warning" in {
-        val inspection = new DummyInspection("My default is Warning", Levels.Warning)
+        val inspection = new DummyInspection(
+          "My default is Warning",
+          Levels.Warning,
+          "This is description.",
+          "This is explanation."
+        )
         val reporter = new StoreReporter
         val feedback = new Feedback(false, reporter, defaultSourcePrefix)
         feedback.warn(position, inspection)
         reporter.infos should contain(reporter.Info(position, "My default is Warning", reporter.WARNING))
       }
       "for info" in {
-        val inspection = new DummyInspection("My default is Info", Levels.Info)
+        val inspection = new DummyInspection(
+          "My default is Info",
+          Levels.Info,
+          "This is description.",
+          "This is explanation."
+        )
         val reporter = new StoreReporter
         val feedback = new Feedback(false, reporter, defaultSourcePrefix)
         feedback.warn(position, inspection)
@@ -74,9 +94,24 @@ class FeedbackTest
     }
     "should use minimal wawrning level in reports" - {
       "for `info`" in {
-        val inspectionError = new DummyInspection("My default is Error", Levels.Error)
-        val inspectionWarning = new DummyInspection("My default is Warning", Levels.Warning)
-        val inspectionInfo = new DummyInspection("My default is Info", Levels.Info)
+        val inspectionError = new DummyInspection(
+          "My default is Error",
+          Levels.Error,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspectionWarning = new DummyInspection(
+          "My default is Warning",
+          Levels.Warning,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspectionInfo = new DummyInspection(
+          "My default is Info",
+          Levels.Info,
+          "This is description.",
+          "This is explanation."
+        )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter
         val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Info)
@@ -85,9 +120,24 @@ class FeedbackTest
       }
 
       "for `warning`" in {
-        val inspectionError = new DummyInspection("My default is Error", Levels.Error)
-        val inspectionWarning = new DummyInspection("My default is Warning", Levels.Warning)
-        val inspectionInfo = new DummyInspection("My default is Info", Levels.Info)
+        val inspectionError = new DummyInspection(
+          "My default is Error",
+          Levels.Error,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspectionWarning = new DummyInspection(
+          "My default is Warning",
+          Levels.Warning,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspectionInfo = new DummyInspection(
+          "My default is Info",
+          Levels.Info,
+          "This is description.",
+          "This is explanation."
+        )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter
         val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Warning)
@@ -97,9 +147,24 @@ class FeedbackTest
       }
 
       "for `error`" in {
-        val inspectionError = new DummyInspection("My default is Error", Levels.Error)
-        val inspectionWarning = new DummyInspection("My default is Warning", Levels.Warning)
-        val inspectionInfo = new DummyInspection("My default is Info", Levels.Info)
+        val inspectionError = new DummyInspection(
+          "My default is Error",
+          Levels.Error,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspectionWarning = new DummyInspection(
+          "My default is Warning",
+          Levels.Warning,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspectionInfo = new DummyInspection(
+          "My default is Info",
+          Levels.Info,
+          "This is description.",
+          "This is explanation."
+        )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter
         val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Error)

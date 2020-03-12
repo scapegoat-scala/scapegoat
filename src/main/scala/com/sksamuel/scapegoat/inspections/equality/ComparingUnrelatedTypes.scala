@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections.equality
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class ComparingUnrelatedTypes extends Inspection("Comparing unrelated types", Levels.Error) {
+class ComparingUnrelatedTypes extends Inspection(
+  text = "Comparing unrelated types",
+  defaultLevel = Levels.Error,
+  description = "Checks for equality comparisons that cannot succeed.",
+  explanation = "In most case comparing unrelated types cannot succeed and it's usually an indication of a bug."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -59,7 +64,7 @@ class ComparingUnrelatedTypes extends Inspection("Comparing unrelated types", Le
             }
 
             if (!hasSpecificEq(lhs.tpe.deconst) && !related(lhs.tpe.widen, rhs.tpe.widen)) {
-              context.warn(tree.pos, self, tree.toString().take(500))
+              context.warn(tree.pos, self, tree.toString.take(500))
             }
 
           case _ => continue(tree)

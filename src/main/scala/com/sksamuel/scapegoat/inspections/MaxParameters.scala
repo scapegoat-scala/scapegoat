@@ -3,7 +3,12 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class MaxParameters extends Inspection("Max parameters", Levels.Info) {
+class MaxParameters extends Inspection(
+  text = "Max parameters",
+  defaultLevel = Levels.Info,
+  description = "Checks for methods that have over 10 parameters.",
+  explanation = "Methods having a large number of parameters are more difficult to reason about, consider refactoring this code."
+) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -21,8 +26,7 @@ class MaxParameters extends Inspection("Max parameters", Levels.Info) {
           case DefDef(_, name, _, _, _, _) if name == nme.CONSTRUCTOR =>
           case DefDef(mods, _, _, _, _, _) if mods.isSynthetic        =>
           case DefDef(_, name, _, vparamss, _, _) if countExceeds(vparamss, 10) =>
-            context.warn(tree.pos, self,
-              s"Method $name has ${count(vparamss)} parameters. Consider refactoring to a containing instance.")
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }

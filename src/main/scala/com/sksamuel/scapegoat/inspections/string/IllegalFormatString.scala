@@ -5,7 +5,12 @@ import java.util.IllegalFormatException
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class IllegalFormatString extends Inspection("Illegal format string", Levels.Error) {
+class IllegalFormatString extends Inspection(
+  text = "Illegal format string",
+  defaultLevel = Levels.Error,
+  description = "Checks for invalid format strings.",
+  explanation = "An unchecked exception will be thrown when a format string contains an illegal syntax or a format specifier that is incompatible with the given arguments."
+) {
 
   // format is: %[argument_index$][flags][width][.precision][t]conversion
   final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d*(\\.\\d+)?[tT]?[a-zA-Z]".r
@@ -24,9 +29,8 @@ class IllegalFormatString extends Inspection("Illegal format string", Levels.Err
             try {
               String.format(format.toString, args: _*)
             } catch {
-              case e: IllegalFormatException =>
-                println(e)
-                context.warn(tree.pos, self, "A format string contains an illegal syntax: " + e.getMessage)
+              case _: IllegalFormatException =>
+                context.warn(tree.pos, self)
             }
           case _ => continue(tree)
         }
