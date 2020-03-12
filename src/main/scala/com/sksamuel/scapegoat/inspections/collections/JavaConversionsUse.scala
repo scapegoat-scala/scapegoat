@@ -7,7 +7,7 @@ class JavaConversionsUse extends Inspection(
   text = "Java conversions",
   defaultLevel = Levels.Warning,
   description = "Checks for use of Java conversions.",
-  explanation = "Use of java conversions can lead to unusual behaviour. It is recommended to use JavaConverters."
+  explanation = "Use of Java conversions can lead to unusual behaviour. It is recommended to use JavaConverters."
 ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
