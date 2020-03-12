@@ -7,7 +7,7 @@ class AvoidSizeNotEqualsZero extends Inspection(
   text = "Avoid Traversable.size != 0",
   defaultLevel = Levels.Warning,
   description = "Checks for use of Traversable.size.",
-  explanation = "Traversable.size can be slow for some data structures, prefer Traversable.nonEmpty, which is O(1)."
+  explanation = ".size can be slow for some data structures, prefer .nonEmpty, which is O(1)."
 ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
