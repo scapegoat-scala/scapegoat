@@ -13,7 +13,7 @@ class LooksLikeInterpolatedString extends Inspection(
   final val regex2 = "\\$[a-z][.a-zA-Z0-9_]*".r
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
 
       import context.global._
 

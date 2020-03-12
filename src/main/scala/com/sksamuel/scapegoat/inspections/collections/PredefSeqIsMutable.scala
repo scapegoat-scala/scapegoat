@@ -10,13 +10,14 @@ class PredefSeqIsMutable extends Inspection(
   explanation = "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?"
 ) {
 
+  override def isEnabled = !isScala213
+
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = if (isScala213) None else Some(
-      new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
+      import context.global._
 
-        import context.global._
-
-        override def inspect(tree: Tree): Unit = {
+      override def inspect(tree: Tree): Unit = {
+        if (!isScala213) {
           tree match {
             case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor =>
             case TypeTree() if tree.tpe.erasure.toString() == "Seq[Any]" =>
@@ -25,6 +26,6 @@ class PredefSeqIsMutable extends Inspection(
           }
         }
       }
-    )
+    }
   }
 }

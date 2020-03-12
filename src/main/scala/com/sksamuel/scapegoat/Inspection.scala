@@ -14,14 +14,15 @@ abstract class Inspection(
   val self = this
 
   def inspector(context: InspectionContext): Inspector
+
+  def isEnabled: Boolean = true
 }
 
 abstract class Inspector(val context: InspectionContext) {
-
   /**
    * This traverser, if defined, is invoked after the typer phase of the compiler has returned.
    */
-  def postTyperTraverser: Option[context.Traverser] = None
+  def postTyperTraverser: context.Traverser
 
   /**
    * This method is invoked after all phases of the compiler have completed.
@@ -82,6 +83,7 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       symbol != null &&
         symbol.annotations.exists(an => isSkipAnnotation(an) && isThisDisabled(an))
     }
+
 
     protected def continue(tree: Tree) = super.traverse(tree)
 
