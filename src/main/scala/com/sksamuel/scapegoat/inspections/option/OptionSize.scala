@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.option
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class OptionSize extends Inspection(
-  text = "Prefer Option.isDefined instead of Option.size",
-  defaultLevel = Levels.Error,
-  description = "Checks for use of Option.size.",
-  explanation = "Prefer to use Option.isDefined, Option.isEmpty or Option.nonEmpty instead of Option.size."
-) {
+class OptionSize
+    extends Inspection(
+      text = "Prefer Option.isDefined instead of Option.size",
+      defaultLevel = Levels.Error,
+      description = "Checks for use of Option.size.",
+      explanation =
+        "Prefer to use Option.isDefined, Option.isEmpty or Option.nonEmpty instead of Option.size."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

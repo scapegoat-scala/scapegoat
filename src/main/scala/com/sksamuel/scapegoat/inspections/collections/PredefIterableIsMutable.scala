@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class PredefIterableIsMutable extends Inspection(
-  text = "Default Iterable is mutable",
-  defaultLevel = Levels.Info,
-  description = "Checks for use of mutable Iterable.",
-  explanation = "Iterable aliases scala.collection.mutable.Iterable. Did you intend to use an immutable Iterable?"
-) {
+class PredefIterableIsMutable
+    extends Inspection(
+      text = "Default Iterable is mutable",
+      defaultLevel = Levels.Info,
+      description = "Checks for use of mutable Iterable.",
+      explanation =
+        "Iterable aliases scala.collection.mutable.Iterable. Did you intend to use an immutable Iterable?"
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

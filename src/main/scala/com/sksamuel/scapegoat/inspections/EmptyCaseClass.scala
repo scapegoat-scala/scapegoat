@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class EmptyCaseClass extends Inspection(
-  text = "Empty case class",
-  defaultLevel = Levels.Info,
-  description = "Checks for empty case classes like, e.g. case class Faceman().",
-  explanation = "An empty case class can be rewritten as a case object."
-) {
+class EmptyCaseClass
+    extends Inspection(
+      text = "Empty case class",
+      defaultLevel = Levels.Info,
+      description = "Checks for empty case classes like, e.g. case class Faceman().",
+      explanation = "An empty case class can be rewritten as a case object."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -16,9 +17,11 @@ class EmptyCaseClass extends Inspection(
       import context.global._
 
       def accessors(trees: List[Tree]): List[ValDef] = {
-        trees.collect {
-          case v: ValDef => v
-        }.filter(_.mods.isCaseAccessor)
+        trees
+          .collect {
+            case v: ValDef => v
+          }
+          .filter(_.mods.isCaseAccessor)
       }
 
       override def inspect(tree: Tree): Unit = {
@@ -32,4 +35,3 @@ class EmptyCaseClass extends Inspection(
     }
   }
 }
-

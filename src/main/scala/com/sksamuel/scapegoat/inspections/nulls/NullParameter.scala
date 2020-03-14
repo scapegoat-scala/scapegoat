@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.nulls
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class NullParameter extends Inspection(
-  text = "Null parameter",
-  defaultLevel = Levels.Warning,
-  description = "Checks for use of null in method invocation.",
-  explanation = "Use an Option instead when the value can be empty and pass down a None instead."
-) {
+class NullParameter
+    extends Inspection(
+      text = "Null parameter",
+      defaultLevel = Levels.Warning,
+      description = "Checks for use of null in method invocation.",
+      explanation = "Use an Option instead when the value can be empty and pass down a None instead."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -27,7 +28,7 @@ class NullParameter extends Inspection(
             if (containsNull(args))
               context.warn(tree.pos, self, tree.toString.take(300))
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.SYNTHETIC) =>
-          case _ => continue(tree)
+          case _                                                           => continue(tree)
         }
       }
     }

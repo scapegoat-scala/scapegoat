@@ -27,19 +27,19 @@ class MapGetAndGetOrElseTest extends AnyFreeSpec with Matchers with PluginRunner
 
       "when used with a mutable Map" in {
         val code = """class Test {
-             | val numMap = scala.collection.mutable.Map("one" -> 1, "two" -> 2)
-             | numMap.get("one").getOrElse(-1)
+                     | val numMap = scala.collection.mutable.Map("one" -> 1, "two" -> 2)
+                     | numMap.get("one").getOrElse(-1)
              } """.stripMargin
 
-       getOrElseAssertion(code)
+        getOrElseAssertion(code)
       }
 
       "when used with a Map definition" in {
         val code = """class Test {
-             | Map("John" -> "Smith", "Peter" -> "Rabbit").get("Sarah").getOrElse("-")
+                     | Map("John" -> "Smith", "Peter" -> "Rabbit").get("Sarah").getOrElse("-")
              } """.stripMargin
 
-       getOrElseAssertion(code)
+        getOrElseAssertion(code)
       }
     }
   }

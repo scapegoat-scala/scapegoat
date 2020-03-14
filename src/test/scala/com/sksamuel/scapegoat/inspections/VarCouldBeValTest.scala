@@ -6,11 +6,7 @@ import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-class VarCouldBeValTest
-    extends AnyFreeSpec
-    with Matchers
-    with PluginRunner
-    with OneInstancePerTest {
+class VarCouldBeValTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new VarCouldBeVal)
 
@@ -193,23 +189,22 @@ class VarCouldBeValTest
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
 
-
       "when var is written to for nested defs" in {
         val code =
           """
-          |package com.sam
-          |trait Iterator {
-          |  def next : Int
-          |}
-          |object Test {
-          |  val iterator = new Iterator {
-          |    var last = -1
-          |    def next: Int = {
-          |      last = last + 1
-          |      last
-          |    }
-          |  }
-          |}
+            |package com.sam
+            |trait Iterator {
+            |  def next : Int
+            |}
+            |object Test {
+            |  val iterator = new Iterator {
+            |    var last = -1
+            |    def next: Int = {
+            |      last = last + 1
+            |      last
+            |    }
+            |  }
+            |}
         """.stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0

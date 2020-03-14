@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class ArraysToString extends Inspection(
-  text = "Use of Array.toString",
-  defaultLevel = Levels.Warning,
-  description = "Checks for explicit toString calls on arrays.",
-  explanation = "Calling toString on an array does not perform a deep toString."
-) {
+class ArraysToString
+    extends Inspection(
+      text = "Use of Array.toString",
+      defaultLevel = Levels.Warning,
+      description = "Checks for explicit toString calls on arrays.",
+      explanation = "Calling toString on an array does not perform a deep toString."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

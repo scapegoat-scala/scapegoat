@@ -12,7 +12,7 @@ import scala.tools.nsc.reporters.ConsoleReporter
 trait PluginRunner {
 
   val scalaVersion = util.Properties.versionNumberString
- 
+
   val classPath = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
 
   val settings = {
@@ -39,14 +39,14 @@ trait PluginRunner {
     file
   }
 
-  def addToClassPath(groupId: String, artifactId: String, version: String): Unit = {
-    settings.classpath.value = settings.classpath.value + ":" + findIvyJar(groupId, artifactId, version).getAbsolutePath
-  }
+  def addToClassPath(groupId: String, artifactId: String, version: String): Unit =
+    settings.classpath.value =
+      settings.classpath.value + ":" + findIvyJar(groupId, artifactId, version).getAbsolutePath
 
-  def compileCodeSnippet(code: String): ScapegoatCompiler = compileSourceFiles(writeCodeSnippetToTempFile(code))
-  def compileSourceResources(urls: URL*): ScapegoatCompiler = {
+  def compileCodeSnippet(code: String): ScapegoatCompiler =
+    compileSourceFiles(writeCodeSnippetToTempFile(code))
+  def compileSourceResources(urls: URL*): ScapegoatCompiler =
     compileSourceFiles(urls.map(_.getFile).map(new File(_)): _*)
-  }
   def compileSourceFiles(files: File*): ScapegoatCompiler = {
     reporter.flush()
     val command = new scala.tools.nsc.CompilerCommand(files.map(_.getAbsolutePath).toList, settings)
@@ -64,7 +64,8 @@ trait PluginRunner {
   def findIvyJar(groupId: String, artifactId: String, version: String): File = {
     val userHome = System.getProperty("user.home")
     val sbtHome = userHome + "/.ivy2"
-    val jarPath = sbtHome + "/cache/" + groupId + "/" + artifactId + "/jars/" + artifactId + "-" + version + ".jar"
+    val jarPath =
+      sbtHome + "/cache/" + groupId + "/" + artifactId + "/jars/" + artifactId + "-" + version + ".jar"
     val file = new File(jarPath)
     if (file.exists) {
       // println(s"Located ivy jar [$file]")
@@ -79,10 +80,11 @@ trait PluginRunner {
   }
 }
 
-class ScapegoatCompiler(settings: scala.tools.nsc.Settings,
+class ScapegoatCompiler(
+  settings: scala.tools.nsc.Settings,
   inspections: Seq[Inspection],
-  reporter: ConsoleReporter)
-    extends scala.tools.nsc.Global(settings, reporter) {
+  reporter: ConsoleReporter
+) extends scala.tools.nsc.Global(settings, reporter) {
 
   val scapegoat = new ScapegoatComponent(this, inspections)
   scapegoat.disableHTML = true

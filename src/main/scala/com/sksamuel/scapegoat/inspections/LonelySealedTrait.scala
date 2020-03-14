@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class LonelySealedTrait extends Inspection(
-  text = "Lonely sealed trait",
-  defaultLevel = Levels.Error,
-  description = "Checks for sealed traits without any classes extending it.",
-  explanation = "A sealed trait that is not extended is considered dead code."
-) {
+class LonelySealedTrait
+    extends Inspection(
+      text = "Lonely sealed trait",
+      defaultLevel = Levels.Error,
+      description = "Checks for sealed traits without any classes extending it.",
+      explanation = "A sealed trait that is not extended is considered dead code."
+    ) {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -42,8 +43,8 @@ class LonelySealedTrait extends Inspection(
           case cdef @ ClassDef(mods, _, _, _) if mods.isSealed =>
             sealedClasses.put(cdef.name.toString, cdef)
           case ClassDef(_, _, _, Template(parents, _, _)) => inspectParents(parents)
-          case ModuleDef(_, _, Template(parents, _, _)) => inspectParents(parents)
-          case _ =>
+          case ModuleDef(_, _, Template(parents, _, _))   => inspectParents(parents)
+          case _                                          =>
         }
         continue(tree)
       }

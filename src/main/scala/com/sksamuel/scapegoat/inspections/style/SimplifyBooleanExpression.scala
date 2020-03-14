@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.style
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class SimplifyBooleanExpression extends Inspection(
-  text = "Simplify boolean expressions",
-  defaultLevel = Levels.Info,
-  description = "Checks for boolean expressions that can be simplified.",
-  explanation = "Boolean expressions such as x == false can be re-written as !x."
-) {
+class SimplifyBooleanExpression
+    extends Inspection(
+      text = "Simplify boolean expressions",
+      defaultLevel = Levels.Info,
+      description = "Checks for boolean expressions that can be simplified.",
+      explanation = "Boolean expressions such as x == false can be re-written as !x."
+    ) {
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
 

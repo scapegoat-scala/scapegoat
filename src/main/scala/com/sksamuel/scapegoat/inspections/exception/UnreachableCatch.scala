@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class UnreachableCatch extends Inspection(
-  text = "Unreachable catch",
-  defaultLevel = Levels.Warning,
-  description = "Checks for catch clauses that cannot be reached.",
-  explanation = "One or more cases are unreachable."
-) {
+class UnreachableCatch
+    extends Inspection(
+      text = "Unreachable catch",
+      defaultLevel = Levels.Warning,
+      description = "Checks for catch clauses that cannot be reached.",
+      explanation = "One or more cases are unreachable."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -31,9 +32,9 @@ class UnreachableCatch extends Inspection(
         }
         cases.exists {
           // matches t : Throwable
-          case CaseDef(Bind(_, Typed(_, tpt)), guard, _) => check(tpt.tpe, guard)
+          case CaseDef(Bind(_, Typed(_, tpt)), guard, _)                         => check(tpt.tpe, guard)
           case CaseDef(Typed(_, tpt), guard, _) if tpt.tpe =:= typeOf[Throwable] => check(tpt.tpe, guard)
-          case _ => false
+          case _                                                                 => false
         }
       }
 
@@ -47,4 +48,3 @@ class UnreachableCatch extends Inspection(
     }
   }
 }
-

@@ -6,6 +6,9 @@ scala:
   - 2.12.10
   - 2.13.0
   - 2.13.1
+env:
+  global:
+    - CI=true
 script:
   - sbt clean test
 jdk:

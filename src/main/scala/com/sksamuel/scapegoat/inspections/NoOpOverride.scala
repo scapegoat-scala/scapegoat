@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class NoOpOverride extends Inspection(
-  text = "Noop override",
-  defaultLevel = Levels.Info,
-  description = "Checks for code that overrides parent method but simply calls super.",
-  explanation = "This method is overridden yet only calls super."
-) {
+class NoOpOverride
+    extends Inspection(
+      text = "Noop override",
+      defaultLevel = Levels.Info,
+      description = "Checks for code that overrides parent method but simply calls super.",
+      explanation = "This method is overridden yet only calls super."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -17,17 +18,17 @@ class NoOpOverride extends Inspection(
 
       private def argumentsMatch(signatureArgs: List[ValDef], actualArgs: List[Tree]) = {
         signatureArgs.size == actualArgs.size &&
-         signatureArgs.zip(actualArgs).forall {
+        signatureArgs.zip(actualArgs).forall {
           case (sig, act: Ident) => sig.name == act.name
-          case _ => false
-         }
+          case _                 => false
+        }
       }
 
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(_, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args))
-            if name == name2 && vparamss.size == 1 && argumentsMatch(vparamss.head, args) =>
-              context.warn(tree.pos, self, tree.toString.take(200))
+              if name == name2 && vparamss.size == 1 && argumentsMatch(vparamss.head, args) =>
+            context.warn(tree.pos, self, tree.toString.take(200))
           case _ => continue(tree)
         }
       }
