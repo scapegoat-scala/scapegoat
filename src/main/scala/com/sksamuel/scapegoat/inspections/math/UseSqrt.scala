@@ -19,9 +19,9 @@ class UseSqrt
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(Select(pack, TermName("pow")), List(_, Literal(Constant(0.5d))))
-              if pack.symbol.fullNameString == "scala.math.package"
-              || pack.symbol.fullNameString == "java.lang.StrictMath"
-              || pack.symbol.fullNameString == "java.lang.Math" =>
+              if pack.symbol.fullNameString == "scala.math.package" ||
+              pack.symbol.fullNameString == "java.lang.StrictMath" ||
+              pack.symbol.fullNameString == "java.lang.Math" =>
             context.warn(tree.pos, self)
           case _ =>
             continue(tree)

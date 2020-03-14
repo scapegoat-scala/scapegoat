@@ -18,9 +18,9 @@ class UseLog10
       override def inspect(tree: Tree): Unit = {
 
         def isMathPackage(pack: String) =
-          (pack == "scala.math.package"
-          || pack == "java.lang.Math"
-          || pack == "java.lang.StrictMath")
+          pack == "scala.math.package" ||
+          pack == "java.lang.Math" ||
+          pack == "java.lang.StrictMath"
 
         tree match {
           case Apply(

@@ -16,9 +16,9 @@ class UseLog1P
       import context.global._
 
       def isMathPackage(pack: String) =
-        (pack == "scala.math.package"
-        || pack == "java.lang.Math"
-        || pack == "java.lang.StrictMath")
+        pack == "scala.math.package" ||
+        pack == "java.lang.Math" ||
+        pack == "java.lang.StrictMath"
 
       override def inspect(tree: Tree): Unit = {
         tree match {
