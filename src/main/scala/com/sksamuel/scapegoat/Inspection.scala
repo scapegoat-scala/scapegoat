@@ -14,24 +14,16 @@ abstract class Inspection(
   val self = this
 
   def inspector(context: InspectionContext): Inspector
+
+  def isEnabled: Boolean = true
 }
 
 abstract class Inspector(val context: InspectionContext) {
 
   /**
-   * This traverser, if defined, is invoked after the parser phase of the compiler has returned.
-   */
-  def postParseTraverser: Option[context.Traverser] = None
-
-  /**
    * This traverser, if defined, is invoked after the typer phase of the compiler has returned.
    */
-  def postTyperTraverser: Option[context.Traverser] = None
-
-  /**
-   * This traverser, if defined, is invoked after the refChecks phase of the compiler has returned.
-   */
-  def postRefChecksTraverser: Option[context.Traverser] = None
+  def postTyperTraverser: context.Traverser
 
   /**
    * This method is invoked after all phases of the compiler have completed.

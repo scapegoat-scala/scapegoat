@@ -249,12 +249,13 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           reporter.echo(s"[debug] Scapegoat analysis [$unit] .....")
         }
         val context = new InspectionContext(global, feedback)
-        activeInspections.foreach { inspection =>
-          val inspector = inspection.inspector(context)
-          for (traverser <- inspector.postTyperTraverser)
-            traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
-          inspector.postInspection()
-        }
+        activeInspections
+          .filter(_.isEnabled)
+          .foreach { inspection =>
+            val inspector = inspection.inspector(context)
+            inspector.postTyperTraverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
+            inspector.postInspection()
+          }
       }
       tree
     }
