@@ -19,6 +19,7 @@ abstract class Inspection(
 }
 
 abstract class Inspector(val context: InspectionContext) {
+
   /**
    * This traverser, if defined, is invoked after the typer phase of the compiler has returned.
    */
@@ -81,7 +82,6 @@ case class InspectionContext(global: Global, feedback: Feedback) {
     private def isSuppressed(symbol: Symbol) =
       symbol != null &&
       symbol.annotations.exists(an => isSkipAnnotation(an) && isThisDisabled(an))
-
 
     protected def continue(tree: Tree) = super.traverse(tree)
 
