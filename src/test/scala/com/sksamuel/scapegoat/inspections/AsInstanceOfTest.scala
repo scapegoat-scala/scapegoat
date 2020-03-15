@@ -63,9 +63,6 @@ class AsInstanceOfTest extends AnyFreeSpec with Matchers with PluginRunner with 
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
-
-      val mf = manifest[Class[_]]
-
     }
     "should not warn on manifest of class" in {
       val code = """object Test {

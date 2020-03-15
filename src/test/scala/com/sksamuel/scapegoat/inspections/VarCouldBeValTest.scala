@@ -59,13 +59,16 @@ class VarCouldBeValTest extends AnyFreeSpec with Matchers with PluginRunner with
             |}""".stripMargin
 
         compileCodeSnippet(code)
-        compiler.scapegoat.feedback.warnings.size shouldBe 2
         val warningsInOrder = compiler.scapegoat.feedback.warnings.sortBy(_.line)
-        val Seq(barWarning, bazWarning) = warningsInOrder
-        barWarning.line shouldBe 3
-        barWarning.snippet.exists(_.contains("var bar: Int = 1")) shouldBe true
-        bazWarning.line shouldBe 5
-        bazWarning.snippet.exists(_.contains("var baz: Int = 3")) shouldBe true
+
+        warningsInOrder.size shouldBe 2
+        warningsInOrder match {
+          case Seq(barWarning, bazWarning) =>
+            barWarning.line shouldBe 3
+            barWarning.snippet.exists(_.contains("var bar: Int = 1")) shouldBe true
+            bazWarning.line shouldBe 5
+            bazWarning.snippet.exists(_.contains("var baz: Int = 3")) shouldBe true
+        }
       }
     }
     "should not report warning" - {

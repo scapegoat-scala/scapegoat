@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.io
 
-import com.sksamuel.scapegoat.{Feedback, Warning}
-
 import scala.xml.Node
+
+import com.sksamuel.scapegoat.{Feedback, Warning}
 
 /** @author Eugene Sypachev (Axblade) */
 object ScalastyleReportWriter {

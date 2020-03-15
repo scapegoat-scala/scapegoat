@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections.style
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
-
 import scala.reflect.internal.Flags
+
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
  * @author Stephen Samuel
