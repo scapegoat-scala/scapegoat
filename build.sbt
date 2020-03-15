@@ -1,6 +1,9 @@
 import com.typesafe.sbt.pgp.PgpKeys
 import sbt.Keys._
 
+// compiler plugins
+addCompilerPlugin(scalafixSemanticdb)
+
 name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
@@ -23,7 +26,9 @@ val scalac13Options = Seq(
   "-Xlint:inaccessible",
   "-Xlint:infer-any",
   "-Xlint:nullary-override",
-  "-Xlint:nullary-unit"
+  "-Xlint:nullary-unit",
+  "-Yrangepos",
+  "-Ywarn-unused"
 )
 
 val scalac12Options = Seq(
@@ -161,6 +166,14 @@ packageBin in Compile := crossTarget.value / (assemblyJarName in assembly).value
 // https://github.com/sksamuel/scapegoat/issues/298
 ThisBuild / useCoursier := false
 
+// Scalafix
+scalafixDependencies in ThisBuild += "com.nequissimus" %% "sort-imports" % "0.3.1"
+addCommandAlias("fix", "all compile:scalafix test:scalafix; fixImports")
+addCommandAlias("fixImports", "compile:scalafix SortImports; test:scalafix SortImports")
+addCommandAlias("fixCheck", "compile:scalafix --check; test:scalafix --check; fixCheckImports")
+addCommandAlias("fixCheckImports", "compile:scalafix --check SortImports; test:scalafix --check SortImports")
+
+// Scalafmt
 scalafmtOnCompile in ThisBuild :=
   sys.env
     .get("CI")

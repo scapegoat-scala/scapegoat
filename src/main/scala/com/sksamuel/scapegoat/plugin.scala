@@ -3,11 +3,11 @@ package com.sksamuel.scapegoat
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
-import com.sksamuel.scapegoat.io.IOUtils
-
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
+
+import com.sksamuel.scapegoat.io.IOUtils
 
 class ScapegoatPlugin(val global: Global) extends Plugin {
 

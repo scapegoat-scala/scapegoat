@@ -2,7 +2,6 @@ package com.sksamuel.scapegoat.inspections.names
 
 import com.sksamuel.scapegoat.PluginRunner
 import com.sksamuel.scapegoat.inspections.naming.MethodNames
-
 import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
