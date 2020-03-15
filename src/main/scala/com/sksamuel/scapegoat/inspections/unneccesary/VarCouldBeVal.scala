@@ -5,7 +5,13 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class VarCouldBeVal extends Inspection("Var could be val", Levels.Warning) {
+class VarCouldBeVal
+    extends Inspection(
+      text = "Var could be val",
+      defaultLevel = Levels.Warning,
+      description = "Checks for vars that could be declared as vals.",
+      explanation = "A variable (var) that is never written to could be turned into a value (val)."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -19,14 +25,17 @@ class VarCouldBeVal extends Inspection("Var could be val", Levels.Warning) {
         }
       }
 
-      private def containsUnwrittenVar(trees: List[Tree], vars: mutable.HashMap[String, Tree]): List[(String, Tree)] = {
+      private def containsUnwrittenVar(
+        trees: List[Tree],
+        vars: mutable.HashMap[String, Tree]
+      ): List[(String, Tree)] = {
         // As we scan the tree, in `vars: HashMap[String, Tree]` we store an entry for each var
         // that we encounter. The key gives the name and the value gives the tree of the ValDef
         // that defines it. Whenever a var is written to, we remove its entry. What remains are
         // vars that are never written to (and the trees corresponding to the places where they
         // were defined).
         trees.foreach {
-          case defn@ValDef(mods, name, _, _) if mods.isMutable =>
+          case defn @ ValDef(mods, name, _, _) if mods.isMutable =>
             vars.put(name.toString, defn)
           case Assign(lhs, _) =>
             if (lhs.symbol != null)
@@ -46,19 +55,14 @@ class VarCouldBeVal extends Inspection("Var could be val", Levels.Warning) {
         vars.toList
       }
 
-      private def containsUnwrittenVar(trees: List[Tree]): List[(String, Tree)] = {
+      private def containsUnwrittenVar(trees: List[Tree]): List[(String, Tree)] =
         containsUnwrittenVar(trees, mutable.HashMap[String, Tree]())
-      }
 
       override final def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(_, _, _, _, _, Block(stmt, expr)) =>
             for ((unwritten, definitionTree) <- containsUnwrittenVar(stmt :+ expr)) {
-              context.warn(
-                definitionTree.pos,
-                self,
-                s"$unwritten is never written to, so could be a val: " + definitionTree.toString().take(200)
-              )
+              context.warn(definitionTree.pos, self, tree.toString.take(200))
             }
           case _ => continue(tree)
         }

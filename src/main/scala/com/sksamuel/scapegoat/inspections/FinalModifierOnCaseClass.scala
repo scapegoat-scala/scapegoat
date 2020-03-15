@@ -2,8 +2,13 @@ package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-class FinalModifierOnCaseClass extends Inspection(
-  "Missing final modifier on case class", Levels.Info, "Case classes should have final modifier") {
+class FinalModifierOnCaseClass
+    extends Inspection(
+      text = "Missing final modifier on case class",
+      defaultLevel = Levels.Info,
+      description = "Checks for case classes without a final modifier.",
+      explanation = "Using case classes without final modifier can lead to surprising breakage."
+    ) {
 
   override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 

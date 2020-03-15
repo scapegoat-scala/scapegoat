@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.{ Warning, PluginRunner }
+import com.sksamuel.scapegoat.{PluginRunner, Warning}
 import com.sksamuel.scapegoat.inspections.unneccesary.UnusedMethodParameter
 
 import org.scalatest.OneInstancePerTest
@@ -8,9 +8,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class UnusedMethodParameterTest
-    extends AnyFreeSpec
-    with Matchers with PluginRunner with OneInstancePerTest {
+class UnusedMethodParameterTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new UnusedMethodParameter)
 
@@ -79,8 +77,8 @@ class UnusedMethodParameterTest
       }
       "for methods not returning when their return type is specified" in {
         val code = """class Test {
-                   |  def foo(name:String): String = throw new RuntimeException
-                   |}""".stripMargin
+                     |  def foo(name:String): String = throw new RuntimeException
+                     |}""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
@@ -159,22 +157,20 @@ class UnusedMethodParameterTest
       }
 
       "not warn on case class secondary params used as fields" in {
-        assertNoWarnings(
-          """case class Foo(x: Int)(y: Int) {
-            |  def example: String = {
-            |    s"x = $x, y = $y"
-            |  }
-            |}
+        assertNoWarnings("""case class Foo(x: Int)(y: Int) {
+                           |  def example: String = {
+                           |    s"x = $x, y = $y"
+                           |  }
+                           |}
           """.stripMargin)
       }
 
       "not warn on case class secondary params used as params" in {
-        assertNoWarnings(
-          """case class Foo(x: Int)(y: Int) {
-            |  println(s"x = $x, y = $y")
-            |
-            |  def example: String = "irrelevant"
-            |}
+        assertNoWarnings("""case class Foo(x: Int)(y: Int) {
+                           |  println(s"x = $x, y = $y")
+                           |
+                           |  def example: String = "irrelevant"
+                           |}
           """.stripMargin)
       }
 
@@ -189,22 +185,20 @@ class UnusedMethodParameterTest
       }
 
       "not warn on non-case class primary params used as fields" in {
-        assertNoWarnings(
-          """class Foo(x: Int) {
-            |  def example: String = {
-            |    s"x = $x"
-            |  }
-            |}
+        assertNoWarnings("""class Foo(x: Int) {
+                           |  def example: String = {
+                           |    s"x = $x"
+                           |  }
+                           |}
           """.stripMargin)
       }
 
       "not warn on non-case class primary params used as params" in {
-        assertNoWarnings(
-          """class Foo(x: Int) {
-            |  println(s"x = $x")
-            |
-            |  def example: String = "irrelevant"
-            |}
+        assertNoWarnings("""class Foo(x: Int) {
+                           |  println(s"x = $x")
+                           |
+                           |  def example: String = "irrelevant"
+                           |}
           """.stripMargin)
       }
 
@@ -219,4 +213,3 @@ class UnusedMethodParameterTest
     compiler.scapegoat.feedback.warnings.size shouldBe 0
   }
 }
-

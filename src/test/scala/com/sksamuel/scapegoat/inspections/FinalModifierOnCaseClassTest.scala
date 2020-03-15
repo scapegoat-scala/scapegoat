@@ -5,7 +5,11 @@ import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-class FinalModifierOnCaseClassTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class FinalModifierOnCaseClassTest
+    extends AnyFreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(new FinalModifierOnCaseClass)
 
@@ -17,7 +21,7 @@ class FinalModifierOnCaseClassTest extends AnyFreeSpec with Matchers with Plugin
 
   private def assertNoFinalModOnCaseClass(code: String): Unit = {
     compileCodeSnippet(code)
-    compiler.scapegoat.feedback.warnings should be ('empty)
+    compiler.scapegoat.feedback.warnings should be('empty)
   }
 
   "Missing final modifier on case class" - {
@@ -30,7 +34,7 @@ class FinalModifierOnCaseClassTest extends AnyFreeSpec with Matchers with Plugin
 
       "when used within an object definition" in {
         val code = """object Test{
-                      |  case class Person(name: String)
+                     |  case class Person(name: String)
                       }""".stripMargin
 
         assertFinalModOnCaseClass(code)
@@ -46,11 +50,11 @@ class FinalModifierOnCaseClassTest extends AnyFreeSpec with Matchers with Plugin
 
       "when used on issue example" in {
         val code = """object Test {
-                      |  sealed abstract case class Nat(toInt: Int)
-                      |  object Nat {
-                      |    def fromInt(n: Int): Option[Nat] =
-                      |      if (n >= 0) Some(new Nat(n) {}) else None
-                      |  }
+                     |  sealed abstract case class Nat(toInt: Int)
+                     |  object Nat {
+                     |    def fromInt(n: Int): Option[Nat] =
+                     |      if (n >= 0) Some(new Nat(n) {}) else None
+                     |  }
                       }""".stripMargin
 
         assertNoFinalModOnCaseClass(code)

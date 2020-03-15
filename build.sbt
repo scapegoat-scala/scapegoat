@@ -23,7 +23,7 @@ val scalac13Options = Seq(
   "-Xlint:inaccessible",
   "-Xlint:infer-any",
   "-Xlint:nullary-override",
-  "-Xlint:nullary-unit",
+  "-Xlint:nullary-unit"
 )
 
 val scalac12Options = Seq(
@@ -32,7 +32,8 @@ val scalac12Options = Seq(
   "-Ywarn-infer-any",
   "-Xlint:nullary-override",
   "-Xlint:nullary-unit",
-  "-Xmax-classfile-name", "254"
+  "-Xmax-classfile-name",
+  "254"
 )
 
 val scalac11Options = Seq(
@@ -43,7 +44,8 @@ val scalac11Options = Seq(
   "-Ywarn-dead-code",
   "-Ywarn-nullary-unit",
   "-Ywarn-numeric-widen",
-  "-Xmax-classfile-name", "254",
+  "-Xmax-classfile-name",
+  "254"
   //"-Ywarn-value-discard"
 )
 
@@ -52,7 +54,8 @@ scalacOptions := {
     "-unchecked",
     "-deprecation",
     "-feature",
-    "-encoding", "utf8",
+    "-encoding",
+    "utf8",
     "-Xlint"
   )
 
@@ -73,7 +76,7 @@ def check(code: String) = {
   // runner.reporter.reset
   val c = runner compileCodeSnippet code
   val feedback = c.scapegoat.feedback
-  feedback.warnings map (x => "%-40s  %s".format(x.text, x.snippet getOrElse "")) foreach println
+  feedback.warnings map (x => "%-40s %s %s".format(x.text, x.explanation, x.snippet.getOrElse(""))) foreach println
   feedback
 }
 """
@@ -81,21 +84,21 @@ def check(code: String) = {
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 libraryDependencies ++= Seq(
-  "org.scala-lang"                  %     "scala-reflect"           % scalaVersion.value      % "provided",
-  "org.scala-lang"                  %     "scala-compiler"          % scalaVersion.value      % "provided",
-  "org.scala-lang.modules"          %%    "scala-xml"               % "1.2.0" excludeAll(
+  "org.scala-lang"         % "scala-reflect"  % scalaVersion.value % "provided",
+  "org.scala-lang"         % "scala-compiler" % scalaVersion.value % "provided",
+  "org.scala-lang.modules" %% "scala-xml"     % "1.2.0" excludeAll (
     ExclusionRule(organization = "org.scala-lang")
   ),
-  "org.scala-lang.modules"          %%    "scala-collection-compat" % "2.1.4" excludeAll(
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.4" excludeAll (
     ExclusionRule(organization = "org.scala-lang")
   ),
-  "org.scala-lang"                  %     "scala-compiler"          % scalaVersion.value      % "test",
-  "commons-io"                      %     "commons-io"              % "2.6"                   % "test",
-  "org.scalatest"                   %%    "scalatest"               % "3.1.1"                 % "test",
-  "org.mockito"                     %     "mockito-all"             % "1.10.19"               % "test",
-  "joda-time"                       %     "joda-time"               % "2.10.5"                 % "test",
-  "org.joda"                        %     "joda-convert"            % "2.2.1"                 % "test",
-  "org.slf4j"                       %     "slf4j-api"               % "1.7.30"                % "test"
+  "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
+  "commons-io"     % "commons-io"     % "2.6"              % "test",
+  "org.scalatest"  %% "scalatest"     % "3.1.1"            % "test",
+  "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
+  "joda-time"      % "joda-time"      % "2.10.5"           % "test",
+  "org.joda"       % "joda-convert"   % "2.2.1"            % "test",
+  "org.slf4j"      % "slf4j-api"      % "1.7.30"           % "test"
 )
 
 sbtrelease.ReleasePlugin.autoImport.releasePublishArtifactsAction := PgpKeys.publishSigned.value
@@ -115,9 +118,7 @@ publishArtifact in Test := false
 
 parallelExecution in Test := false
 
-pomIncludeRepository := {
-  _ => false
-}
+pomIncludeRepository := { _ => false }
 
 pomExtra := {
   <url>https://github.com/sksamuel/scapegoat</url>
@@ -156,3 +157,11 @@ packageBin in Compile := crossTarget.value / (assemblyJarName in assembly).value
 
 // debug assembly process
 //logLevel in assembly := Level.Debug
+
+// https://github.com/sksamuel/scapegoat/issues/298
+ThisBuild / useCoursier := false
+
+scalafmtOnCompile in ThisBuild :=
+  sys.env
+    .get("CI")
+    .forall(_.toLowerCase == "false")

@@ -3,8 +3,14 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class JavaConversionsUse extends Inspection("Java conversions", Levels.Warning,
-  "Use of java conversions can lead to unusual behaviour. It is recommended to use JavaConverters") {
+class JavaConversionsUse
+    extends Inspection(
+      text = "Java conversions",
+      defaultLevel = Levels.Warning,
+      description = "Checks for use of Java conversions.",
+      explanation =
+        "Use of Java conversions can lead to unusual behaviour. It is recommended to use JavaConverters."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

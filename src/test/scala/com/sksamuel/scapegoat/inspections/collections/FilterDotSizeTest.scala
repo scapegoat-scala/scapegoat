@@ -5,8 +5,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class FilterDotSizeTest
-    extends AnyFreeSpec with Matchers with PluginRunner {
+class FilterDotSizeTest extends AnyFreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new FilterDotSize)
 

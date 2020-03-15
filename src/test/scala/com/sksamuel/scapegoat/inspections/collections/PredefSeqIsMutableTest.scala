@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{ PluginRunner, isScala213 }
+import com.sksamuel.scapegoat.{isScala213, PluginRunner}
 
 import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
@@ -13,7 +13,7 @@ class PredefSeqIsMutableTest extends AnyFreeSpec with Matchers with PluginRunner
 
   "PredefSeqUse" - {
     "should report warning (for Scala < 2.13)" - {
-      "for predef seq apply" in  {
+      "for predef seq apply" in {
         val code = """object Test { val a = Seq("sammy") }""".stripMargin
         val expectedWarnings = if (isScala213) 0 else 1
         compileCodeSnippet(code)

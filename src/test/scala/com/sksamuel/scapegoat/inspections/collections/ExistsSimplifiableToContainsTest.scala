@@ -6,7 +6,11 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class ExistsSimplifiableToContainsTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class ExistsSimplifiableToContainsTest
+    extends AnyFreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(new ExistsSimplifiableToContains)
 
@@ -23,6 +27,21 @@ class ExistsSimplifiableToContainsTest extends AnyFreeSpec with Matchers with Pl
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 3
     }
+
+    "when exists is called with a function mapping to something else" in {
+      val code =
+        """
+          |object Test {
+          |  def isItA(strings: String*): Boolean = {
+          |    strings.exists { element =>
+          |      element.toLowerCase == "a"
+          |    }
+          |  }
+          |}
+          |""".stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
+    }
   }
 
   "should not report warning" - {
@@ -37,16 +56,46 @@ class ExistsSimplifiableToContainsTest extends AnyFreeSpec with Matchers with Pl
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
-    
+
     "when exists is called on an Iterable" in {
-     val code =
-     """
-      |object Test {
-      | def method(): Unit = {
-      |   val l: Iterable[String] = List[String]("a", "b", "c")
-      |   print(l.exists(_ == "a"))
-      | }
-      |}""".stripMargin
+      val code =
+        """
+          |object Test {
+          | def method(): Unit = {
+          |   val l: Iterable[String] = List[String]("a", "b", "c")
+          |   print(l.exists(_ == "a"))
+          | }
+          |}""".stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+
+    "when exists is called with item comparing to a function of itself" in {
+      val code =
+        """
+          |object Test {
+          |  def atLeastOneIsAllLowercase(strings: String*): Boolean = {
+          |    strings.exists { element =>
+          |      element == element.toLowerCase
+          |    }
+          |  }
+          |}
+          |""".stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+
+    "when exists is called with a function transforming the elements in two different ways" in {
+      val code =
+        """
+          |object Test {
+          |  def containsNoA(strings: String*): Boolean = {
+          |    strings.exists { element =>
+          |      element.replaceAll("a", "").size == element.size
+          |    }
+          |  }
+          |}
+          |""".stripMargin
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }

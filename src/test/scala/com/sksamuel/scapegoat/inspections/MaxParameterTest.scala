@@ -12,7 +12,8 @@ class MaxParameterTest extends AnyFreeSpec with Matchers with PluginRunner with 
   "MaxParameters" - {
     "should report warning" - {
       "for methods with over 10 parameters" in {
-        val code = """class Test {
+        val code =
+          """class Test {
                       def foo(a:String, b:Int, c:Int, d:String, e:String, f:Int, g:Int, h:Int, i:Int, j:Long, k:Double) = ()
                     } """.stripMargin
 
@@ -20,7 +21,8 @@ class MaxParameterTest extends AnyFreeSpec with Matchers with PluginRunner with 
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
       "for curried methods with over 10 parameters" in {
-        val code = """class Test {
+        val code =
+          """class Test {
                       def foo(a:String, b:Int)(c:Int, d:String, e:String, f:Int, g:Int, h:Int, i:Int, j:Long, k:Double) = ()
                     } """.stripMargin
 
@@ -30,19 +32,21 @@ class MaxParameterTest extends AnyFreeSpec with Matchers with PluginRunner with 
     }
     "should not report warning" - {
       "for methods with 10 or less parameters" in {
-        val code = """class Test {
+        val code =
+          """class Test {
                       def foo(a:String, b:Int, c:Int, d:String, e:String, f:Int, g:Int, h:Int, i:Int, j:Long) = ()
-                     |def foo(a:String, b:Int, c:Int, d:String, e:String, f:Int, g:Int, h:Int, i:Int) = ()
-                     |def foo(a:String, b:Int, c:Int, d:String, e:String, f:Int, g:Int, h:Int) = ()
-                     |def foo(a:String, b:Int, c:Int) = ()
-                     |def foo(a:String) = ()
+            |def foo(a:String, b:Int, c:Int, d:String, e:String, f:Int, g:Int, h:Int, i:Int) = ()
+            |def foo(a:String, b:Int, c:Int, d:String, e:String, f:Int, g:Int, h:Int) = ()
+            |def foo(a:String, b:Int, c:Int) = ()
+            |def foo(a:String) = ()
                      } """.stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for case classes" in {
-        val code = """case class Foo(a:String, b:Int, c:Int, d:String, e:String, f:Int, g:Int, h:Int, i:Int, j:Long, k:Double)"""
+        val code =
+          """case class Foo(a:String, b:Int, c:Int, d:String, e:String, f:Int, g:Int, h:Int, i:Int, j:Long, k:Double)"""
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0

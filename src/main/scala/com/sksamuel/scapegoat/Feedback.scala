@@ -5,7 +5,12 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.reporters.Reporter
 
 /** @author Stephen Samuel */
-class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String, minimalLevel: Level = Levels.Info) {
+class Feedback(
+  consoleOutput: Boolean,
+  reporter: Reporter,
+  sourcePrefix: String,
+  minimalLevel: Level = Levels.Info
+) {
 
   private val warningsBuffer = new ListBuffer[Warning]
 
@@ -20,23 +25,41 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
   def warns = warnings(Levels.Warning)
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
-  def warn(pos: Position, inspection: Inspection, snippet: Option[String] = None): Unit = {
+  def warn(
+    pos: Position,
+    inspection: Inspection,
+    snippet: Option[String]          = None,
+    adhocExplanation: Option[String] = None
+  ): Unit = {
     val level = inspection.defaultLevel
     val text = inspection.text
-    val snippetText = inspection.explanation.orElse(snippet)
-    val adjustedLevel = (levelOverridesByInspectionSimpleName.get("all"), levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)) match {
-      case (Some(l), _) => l
+    val explanation = adhocExplanation.getOrElse(inspection.explanation)
+    val adjustedLevel = (
+      levelOverridesByInspectionSimpleName.get("all"),
+      levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)
+    ) match {
+      case (Some(l), _)    => l
       case (None, Some(l)) => l
-      case _ => level
+      case _               => level
     }
 
     val sourceFileFull = pos.source.file.path
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
-    val warning = Warning(text, pos.line, adjustedLevel, sourceFileFull, sourceFileNormalized, snippetText, inspection.getClass.getCanonicalName)
+    val warning = Warning(
+      text = text,
+      line = pos.line,
+      level = adjustedLevel,
+      sourceFileFull = sourceFileFull,
+      sourceFileNormalized = sourceFileNormalized,
+      snippet = snippet,
+      explanation = explanation,
+      inspection = inspection.getClass.getCanonicalName
+    )
     warningsBuffer.append(warning)
     if (shouldPrint(warning)) {
       println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
-      snippetText.foreach(s => println(s"          $s"))
+      println(s"          $explanation")
+      snippet.foreach(s => println(s"          $s"))
       println()
     }
 
@@ -55,19 +78,21 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
   }
 }
 
-case class Warning(text: String,
+case class Warning(
+  text: String,
   line: Int,
   level: Level,
   sourceFileFull: String,
   sourceFileNormalized: String,
   snippet: Option[String],
-  inspection: String) {
-
+  explanation: String,
+  inspection: String
+) {
   def hasMinimalLevelOf(minimalLevel: Level): Boolean = {
     minimalLevel match {
-      case Levels.Info => true
+      case Levels.Info    => true
       case Levels.Warning => this.level == Levels.Warning || this.level == Levels.Error
-      case Levels.Error => this.level == Levels.Error
+      case Levels.Error   => this.level == Levels.Error
     }
   }
 }

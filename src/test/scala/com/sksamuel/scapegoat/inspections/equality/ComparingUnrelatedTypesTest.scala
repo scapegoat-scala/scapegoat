@@ -7,7 +7,11 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class ComparingUnrelatedTypesTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class ComparingUnrelatedTypesTest
+    extends AnyFreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(new ComparingUnrelatedTypes)
 
@@ -126,11 +130,17 @@ class ComparingUnrelatedTypesTest extends AnyFreeSpec with Matchers with PluginR
         "compared to int literal" in { verifyNoWarnings("""object A { val l = 100l; val b = l == 100 }""") }
       }
       "for char" - {
-        "compared to char-sized long literal" in { verifyNoWarnings("""object A { val c = 'a'; val c = l == 97L }""") }
-        "compared to char-sized int literal" in { verifyNoWarnings("""object A { val c = 'a'; val c = l == 97 }""") }
+        "compared to char-sized long literal" in {
+          verifyNoWarnings("""object A { val c = 'a'; val c = l == 97L }""")
+        }
+        "compared to char-sized int literal" in {
+          verifyNoWarnings("""object A { val c = 'a'; val c = l == 97 }""")
+        }
       }
       "for short" - {
-        "compared to Short.MaxValue as int literal" in { verifyNoWarnings("""object A { val s = 1.toShort; val b = s == 32767 }""") }
+        "compared to Short.MaxValue as int literal" in {
+          verifyNoWarnings("""object A { val s = 1.toShort; val b = s == 32767 }""")
+        }
       }
       "for double" - {
         "compared to zero" in { verifyNoWarnings("""object A { val d = 100d; val b = d == 0 }""") }
@@ -158,7 +168,7 @@ class ComparingUnrelatedTypesTest extends AnyFreeSpec with Matchers with PluginR
       }
       "singleton types" - {
         "sealed trait hierarchy match if guard" in {
-          verifyNoWarnings (
+          verifyNoWarnings(
             """
               |sealed trait Enum
               |object Enum {

@@ -45,7 +45,6 @@ object Levels {
     case "error"   => Error
     case "warning" => Warning
     case "info"    => Info
-    case _ => throw new IllegalArgumentException(
-      s"Unrecognised level '$name'")
+    case _         => throw new IllegalArgumentException(s"Unrecognised level '$name'")
   }
 }

@@ -6,11 +6,7 @@ import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-class VarCouldBeValTest
-    extends AnyFreeSpec
-    with Matchers
-    with PluginRunner
-    with OneInstancePerTest {
+class VarCouldBeValTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new VarCouldBeVal)
 
@@ -67,9 +63,9 @@ class VarCouldBeValTest
         val warningsInOrder = compiler.scapegoat.feedback.warnings.sortBy(_.line)
         val Seq(barWarning, bazWarning) = warningsInOrder
         barWarning.line shouldBe 3
-        barWarning.snippet should contain("bar is never written to, so could be a val: var bar: Int = 1")
+        barWarning.snippet.exists(_.contains("var bar: Int = 1")) shouldBe true
         bazWarning.line shouldBe 5
-        bazWarning.snippet should contain("baz is never written to, so could be a val: var baz: Int = 3")
+        bazWarning.snippet.exists(_.contains("var baz: Int = 3")) shouldBe true
       }
     }
     "should not report warning" - {
@@ -193,23 +189,22 @@ class VarCouldBeValTest
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
 
-
       "when var is written to for nested defs" in {
         val code =
           """
-          |package com.sam
-          |trait Iterator {
-          |  def next : Int
-          |}
-          |object Test {
-          |  val iterator = new Iterator {
-          |    var last = -1
-          |    def next: Int = {
-          |      last = last + 1
-          |      last
-          |    }
-          |  }
-          |}
+            |package com.sam
+            |trait Iterator {
+            |  def next : Int
+            |}
+            |object Test {
+            |  val iterator = new Iterator {
+            |    var last = -1
+            |    def next: Int = {
+            |      last = last + 1
+            |      last
+            |    }
+            |  }
+            |}
         """.stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0

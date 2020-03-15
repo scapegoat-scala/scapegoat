@@ -3,8 +3,13 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class NanComparison extends Inspection("Nan comparision", Levels.Error,
-  "NaN comparision will always fail. Use value.isNan instead.") {
+class NanComparison
+    extends Inspection(
+      text = "Nan comparison",
+      defaultLevel = Levels.Error,
+      description = "Checks for x == Double.NaN which will always fail.",
+      explanation = "NaN comparison will always fail. Use value.isNan instead."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -21,21 +26,18 @@ class NanComparison extends Inspection("Nan comparision", Levels.Error,
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(lhs, TermName("$eq$eq")), List(Literal(Constant(x)))) if isFloatingPointType(lhs) && isNan(x) =>
-            warn(tree)
-          case Apply(Select(Literal(Constant(x)), TermName("$eq$eq")), List(rhs)) if isFloatingPointType(rhs) && isNan(x) =>
-            warn(tree)
+          case Apply(Select(lhs, TermName("$eq$eq")), List(Literal(Constant(x))))
+              if isFloatingPointType(lhs) && isNan(x) =>
+            context.warn(tree.pos, self)
+          case Apply(Select(Literal(Constant(x)), TermName("$eq$eq")), List(rhs))
+              if isFloatingPointType(rhs) && isNan(x) =>
+            context.warn(tree.pos, self)
           case _ => continue(tree)
         }
       }
 
-      private def isFloatingPointType(lhs: Tree): Boolean = {
+      private def isFloatingPointType(lhs: Tree): Boolean =
         lhs.tpe <:< DoubleClass.tpe || lhs.tpe <:< FloatClass.tpe
-      }
-
-      private def warn(tree: Tree): Unit = {
-        context.warn(tree.pos, self)
-      }
     }
   }
 }

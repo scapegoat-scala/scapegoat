@@ -6,11 +6,12 @@ import java.util.UUID
 class FindbugsReportWriter {
 
   def xml(projectName: String) =
-
-    <bugcollection analysistimestamp={ System.currentTimeMillis.toString } release=" " sequence="0" timestamp={ System.currentTimeMillis.toString } version="1.3.9">
-      <project projectname={ projectName }>
+    <bugcollection analysistimestamp={System.currentTimeMillis.toString} release=" " sequence="0" timestamp={
+      System.currentTimeMillis.toString
+    } version="1.3.9">
+      <project projectname={projectName}>
       </project>
-      <buginstance abbrev="CN" category="BAD_PRACTICE" instancehash={ UUID.randomUUID.toString } instanceoccurrencemax="0" instanceoccurrencenum="0" priority="2" type="CN_IMPLEMENTS_CLONE_BUT_NOT_CLONEABLE">
+      <buginstance abbrev="CN" category="BAD_PRACTICE" instancehash={UUID.randomUUID.toString} instanceoccurrencemax="0" instanceoccurrencenum="0" priority="2" type="CN_IMPLEMENTS_CLONE_BUT_NOT_CLONEABLE">
         <shortmessage>Class defines clone() but doesn't implement Cloneable</shortmessage>
         <longmessage>org.sprunck.bee.Bee defines clone() but doesn't implement Cloneable</longmessage>
         <class classname="org.sprunck.bee.Bee" primary="true">

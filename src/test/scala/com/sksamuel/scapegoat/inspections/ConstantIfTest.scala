@@ -54,4 +54,3 @@ class ConstantIfTest extends AnyFreeSpec with Matchers with PluginRunner with On
     }
   }
 }
-
