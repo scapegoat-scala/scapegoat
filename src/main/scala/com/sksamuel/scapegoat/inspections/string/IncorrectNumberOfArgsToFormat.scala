@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class IncorrectNumberOfArgsToFormat extends Inspection(
-  text = "Incorrect number of args for format",
-  defaultLevel = Levels.Error,
-  description = "Checks for wrong number of arguments to String.format.",
-  explanation = "The number of arguments passed to String.format doesn't correspond to the number of fields in the format string."
-) {
+class IncorrectNumberOfArgsToFormat
+    extends Inspection(
+      text = "Incorrect number of args for format",
+      defaultLevel = Levels.Error,
+      description = "Checks for wrong number of arguments to String.format.",
+      explanation =
+        "The number of arguments passed to String.format doesn't correspond to the number of fields in the format string."
+    ) {
 
   // format is: %[argument_index$][flags][width][.precision][t]conversion
   //        OR: %%
@@ -19,14 +21,18 @@ class IncorrectNumberOfArgsToFormat extends Inspection(
 
       import context.global._
 
-      private def doesNotTakeArguments(formatSpecifier: String) = {
+      private def doesNotTakeArguments(formatSpecifier: String) =
         formatSpecifier == "%%" || formatSpecifier == "%n"
-      }
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case Apply(Select(Apply(Select(_, TermName("augmentString")), List(Literal(Constant(format)))),
-            TermName("format")), args) =>
+          case Apply(
+              Select(
+                Apply(Select(_, TermName("augmentString")), List(Literal(Constant(format)))),
+                TermName("format")
+              ),
+              args
+              ) =>
             // %% doesn't consume any arguments, but all other formats do
             val argCount =
               argRegex

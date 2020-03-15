@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class SubstringZero extends Inspection(
-  text = "String.substring(0)",
-  defaultLevel = Levels.Info,
-  description = "Checks for String.substring(0).",
-  explanation = "Use of String.substring(0) will always return the same string."
-) {
+class SubstringZero
+    extends Inspection(
+      text = "String.substring(0)",
+      defaultLevel = Levels.Info,
+      description = "Checks for String.substring(0).",
+      explanation = "Use of String.substring(0) will always return the same string."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

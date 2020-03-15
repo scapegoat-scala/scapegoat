@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class NegationIsEmpty extends Inspection(
-  text = "!isEmpty can be replaced with nonEmpty",
-  defaultLevel = Levels.Info,
-  description = "Checks whether !isEmpty can be replaced with nonEmpty.",
-  explanation = "!.isEmpty can be replaced with.nonEmpty to make it easier to reason about."
-) {
+class NegationIsEmpty
+    extends Inspection(
+      text = "!isEmpty can be replaced with nonEmpty",
+      defaultLevel = Levels.Info,
+      description = "Checks whether !isEmpty can be replaced with nonEmpty.",
+      explanation = "!.isEmpty can be replaced with.nonEmpty to make it easier to reason about."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.style
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class ParameterlessMethodReturnsUnit extends Inspection(
-  text = "Parameterless methods returns unit",
-  defaultLevel = Levels.Warning,
-  description = "Checks for methods returning Unit that are defined without empty parentheses.",
-  explanation = "Methods should be defined with empty parentheses if they have side effects. A method returning Unit must have side effects, therefore you should declare it with ()."
-) {
+class ParameterlessMethodReturnsUnit
+    extends Inspection(
+      text = "Parameterless methods returns unit",
+      defaultLevel = Levels.Warning,
+      description = "Checks for methods returning Unit that are defined without empty parentheses.",
+      explanation =
+        "Methods should be defined with empty parentheses if they have side effects. A method returning Unit must have side effects, therefore you should declare it with ()."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

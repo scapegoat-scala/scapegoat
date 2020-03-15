@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class TypeShadowing extends Inspection(
-  text = "Type shadowing",
-  defaultLevel = Levels.Warning,
-  description = "Checks for shadowed type parameters in methods.",
-  explanation = "Shadowing type parameters is considered a bad practice and should be avoided."
-) {
+class TypeShadowing
+    extends Inspection(
+      text = "Type shadowing",
+      defaultLevel = Levels.Warning,
+      description = "Checks for shadowed type parameters in methods.",
+      explanation = "Shadowing type parameters is considered a bad practice and should be avoided."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {
@@ -23,22 +24,21 @@ class TypeShadowing extends Inspection(
         trees.foreach {
           case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic =>
           case dd @ DefDef(_, name, deftparams, _, _, _) =>
-            deftparams.foreach(tparam => {
+            deftparams.foreach { tparam =>
               if (types.contains(tparam.name.toString))
                 context.warn(dd.pos, self)
-            })
+            }
           case ClassDef(_, _, tparams2, Template(_, _, body)) => checkShadowing(tparams2, body)
-          case _ =>
+          case _                                              =>
         }
       }
 
       override def inspect(tree: Tree): Unit = {
         tree match {
           case ClassDef(_, _, tparams, Template(_, _, body)) => checkShadowing(tparams, body)
-          case _ => continue(tree)
+          case _                                             => continue(tree)
         }
       }
     }
   }
 }
-

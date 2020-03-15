@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.unsafe
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class IsInstanceOf extends Inspection(
-  text = "Use of isInstanceOf",
-  defaultLevel = Levels.Warning,
-  description = "Checks for use of isInstanceOf.",
-  explanation = "Use of isInstanceOf is considered a bad practice - consider using pattern matching instead."
-) {
+class IsInstanceOf
+    extends Inspection(
+      text = "Use of isInstanceOf",
+      defaultLevel = Levels.Warning,
+      description = "Checks for use of isInstanceOf.",
+      explanation =
+        "Use of isInstanceOf is considered a bad practice - consider using pattern matching instead."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class PredefSeqIsMutable extends Inspection(
-  text = "Predef.Seq is mutable",
-  defaultLevel = Levels.Info,
-  description = "Checks for use of mutable Seq.",
-  explanation = "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?"
-) {
+class PredefSeqIsMutable
+    extends Inspection(
+      text = "Predef.Seq is mutable",
+      defaultLevel = Levels.Info,
+      description = "Checks for use of mutable Seq.",
+      explanation = "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?"
+    ) {
 
   override def isEnabled = !isScala213
 

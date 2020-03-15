@@ -1,17 +1,21 @@
 language: scala
 scala:
-   - 2.11.12
-   - 2.12.8
-   - 2.12.9
-   - 2.12.10
-   - 2.13.1
+  - 2.11.12
+  - 2.12.8
+  - 2.12.9
+  - 2.12.10
+  - 2.13.0
+  - 2.13.1
+env:
+  global:
+    - CI=true
 script:
-   - sbt clean test
+  - sbt clean test
 jdk:
-   - oraclejdk11
+  - oraclejdk11
 before_script:
- - "echo $JAVA_OPTS"
- - "export JAVA_OPTS=-Xmx1024m"
+  - "echo $JAVA_OPTS"
+  - "export JAVA_OPTS=-Xmx1024m"
 
 before_cache:
   # Tricks to avoid unnecessary cache updates

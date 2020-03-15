@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.empty
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class EmptyWhileBlock extends Inspection(
-  text = "Empty while block",
-  defaultLevel = Levels.Warning,
-  description = "Checks for empty while blocks.",
-  explanation = "An empty while block is considered as dead code."
-) {
+class EmptyWhileBlock
+    extends Inspection(
+      text = "Empty while block",
+      defaultLevel = Levels.Warning,
+      description = "Checks for empty while blocks.",
+      explanation = "An empty while block is considered as dead code."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

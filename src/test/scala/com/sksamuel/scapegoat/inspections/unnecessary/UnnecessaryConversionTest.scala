@@ -7,11 +7,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class UnnecessaryConversionTest
-    extends AnyFreeSpec
-    with Matchers
-    with PluginRunner
-    with OneInstancePerTest {
+class UnnecessaryConversionTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new UnnecessaryConversion)
 
@@ -38,7 +34,7 @@ class UnnecessaryConversionTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
-      "when invoking toInt on an integer literal" in  {
+      "when invoking toInt on an integer literal" in {
         val code =
           """object Example extends App {
             |  val a = 3.toInt        // NullPointerException here (v1.3.6).
@@ -58,7 +54,7 @@ class UnnecessaryConversionTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
-      "when invoking toLong on a Long literal" in  {
+      "when invoking toLong on a Long literal" in {
         val code =
           """object Example extends App {
             |  val a = 123456789012L
@@ -121,7 +117,7 @@ class UnnecessaryConversionTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      
+
       "when invoking toInt on an Integer" in {
         val code =
           """object Test {
@@ -165,7 +161,7 @@ class UnnecessaryConversionTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      
+
     }
   }
 }

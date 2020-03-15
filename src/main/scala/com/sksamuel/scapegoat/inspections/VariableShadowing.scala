@@ -5,12 +5,14 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class VariableShadowing extends Inspection(
-  text = "Variable shadowing",
-  defaultLevel = Levels.Warning,
-  description = "Checks for multiple uses of the variable name in nested scopes.",
-  explanation = "Variable shadowing is very useful, but can easily lead to nasty bugs in your code. Shadowed variables can be potentially confusing to other maintainers when the same name is adopted to have a new meaning in a nested scope."
-) {
+class VariableShadowing
+    extends Inspection(
+      text = "Variable shadowing",
+      defaultLevel = Levels.Warning,
+      description = "Checks for multiple uses of the variable name in nested scopes.",
+      explanation =
+        "Variable shadowing is very useful, but can easily lead to nasty bugs in your code. Shadowed variables can be potentially confusing to other maintainers when the same name is adopted to have a new meaning in a nested scope."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class ListAppend extends Inspection(
-  text = "List append is slow",
-  defaultLevel = Levels.Info,
-  description = "Checks for when elements are appended to a list.",
-  explanation = "List append is O(n). For large lists, consider using cons (::) or another data structure such as ListBuffer, Vector or a cats.data.Chain (which has constant prepend and append)."
-) {
+class ListAppend
+    extends Inspection(
+      text = "List append is slow",
+      defaultLevel = Levels.Info,
+      description = "Checks for when elements are appended to a list.",
+      explanation =
+        "List append is O(n). For large lists, consider using cons (::) or another data structure such as ListBuffer, Vector or a cats.data.Chain (which has constant prepend and append)."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class MaxParameters extends Inspection(
-  text = "Max parameters",
-  defaultLevel = Levels.Info,
-  description = "Checks for methods that have over 10 parameters.",
-  explanation = "Methods having a large number of parameters are more difficult to reason about, consider refactoring this code."
-) {
+class MaxParameters
+    extends Inspection(
+      text = "Max parameters",
+      defaultLevel = Levels.Info,
+      description = "Checks for methods that have over 10 parameters.",
+      explanation =
+        "Methods having a large number of parameters are more difficult to reason about, consider refactoring this code."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

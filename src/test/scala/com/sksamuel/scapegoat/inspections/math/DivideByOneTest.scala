@@ -5,11 +5,7 @@ import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-class DivideByOneTest
-    extends AnyFreeSpec
-    with PluginRunner
-    with Matchers
-    with OneInstancePerTest {
+class DivideByOneTest extends AnyFreeSpec with PluginRunner with Matchers with OneInstancePerTest {
 
   override val inspections = Seq(new DivideByOne)
 

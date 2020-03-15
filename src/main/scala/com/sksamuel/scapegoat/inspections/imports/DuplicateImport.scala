@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class DuplicateImport extends Inspection(
-  text = "Duplicate import",
-  defaultLevel = Levels.Info,
-  description = "Checks for duplicate import statements.",
-  explanation = "Duplicate imports should be removed."
-) {
+class DuplicateImport
+    extends Inspection(
+      text = "Duplicate import",
+      defaultLevel = Levels.Info,
+      description = "Checks for duplicate import statements.",
+      explanation = "Duplicate imports should be removed."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
 
@@ -29,13 +30,13 @@ class DuplicateImport extends Inspection(
           case ClassDef(_, _, _, _) =>
             imports.clear(); continue(tree)
           case Import(expr, selectors) =>
-            selectors.foreach(selector => {
+            selectors.foreach { selector =>
               val name = expr.toString + "." + selector.name
               if (imports.contains(name)) {
                 context.warn(tree.pos, self)
               }
               imports.add(name)
-            })
+            }
           case DefDef(_, _, _, _, _, _) => // check imports inside defs
           case _                        => continue(tree)
         }
@@ -43,4 +44,3 @@ class DuplicateImport extends Inspection(
     }
   }
 }
-

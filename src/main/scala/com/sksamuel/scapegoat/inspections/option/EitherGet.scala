@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.option
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class EitherGet extends Inspection(
-  text = "Use of Either.right or Either.left projection followed by a get",
-  defaultLevel = Levels.Error,
-  description = "Checks for use of .get on Left or Right projection.",
-  explanation = "Method .get on a Left and a Right projection in deprecated since 2.13, use Either.getOrElse or Either.swap.getOrElse instead."
-) {
+class EitherGet
+    extends Inspection(
+      text = "Use of Either.right or Either.left projection followed by a get",
+      defaultLevel = Levels.Error,
+      description = "Checks for use of .get on Left or Right projection.",
+      explanation =
+        "Method .get on a Left and a Right projection in deprecated since 2.13, use Either.getOrElse or Either.swap.getOrElse instead."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

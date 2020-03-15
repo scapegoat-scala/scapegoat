@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat._
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class UnusedMethodParameter extends Inspection(
-  text = "Unused parameter",
-  defaultLevel = Levels.Warning,
-  description = "Checks for unused method parameters.",
-  explanation = "Unused constructor or method parameters should be removed."
-) {
+class UnusedMethodParameter
+    extends Inspection(
+      text = "Unused parameter",
+      defaultLevel = Levels.Warning,
+      description = "Checks for unused method parameters.",
+      explanation = "Unused constructor or method parameters should be removed."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {
@@ -50,12 +51,13 @@ class UnusedMethodParameter extends Inspection(
       private def checkConstructor(
         vparamss: List[List[ValDef]],
         constructorBody: Tree,
-        classBody: Tree): Unit = {
+        classBody: Tree
+      ): Unit = {
 
-        for (
-          vparams <- vparamss;
-          vparam <- vparams
-        ) {
+        for {
+          vparams <- vparamss
+          vparam  <- vparams
+        } {
           val paramName = vparam.name.toString
           if (!usesParameter(paramName, constructorBody) && !usesField(paramName, classBody))
             context.warn(vparam.pos, self, s"Unused constructor parameter (${vparam.name}).")
@@ -65,51 +67,45 @@ class UnusedMethodParameter extends Inspection(
       override final def inspect(tree: Tree): Unit = {
         tree match {
           // ignore traits, quite often you define a method in a trait with default impl that does nothing
-          case ClassDef(_, _, _, _) if tree.symbol.isTrait =>
-
+          case ClassDef(_, _, _, _) if tree.symbol.isTrait     =>
           case ClassDef(mods, _, _, _) if mods.hasAbstractFlag =>
-
           case ClassDef(_, _, _, classBody @ Template(_, _, classTopLevelStmts)) =>
             classTopLevelStmts.foreach {
               case DefDef(_, nme.CONSTRUCTOR, _, vparamss, _, constructorBody) =>
                 checkConstructor(vparamss, constructorBody, classBody)
-              case DefDef(_, _, _, vparamss, _, constructorBody) if tree.symbol != null && tree.symbol.isConstructor =>
+              case DefDef(_, _, _, vparamss, _, constructorBody)
+                  if tree.symbol != null && tree.symbol.isConstructor =>
                 checkConstructor(vparamss, constructorBody, classBody)
               case _ =>
             }
             continue(tree)
 
           // ignore abstract methods obv.
-          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.ABSTRACT)                             =>
-          case d @ DefDef(_, _, _, _, _, _) if d.symbol != null && d.symbol.isAbstract                =>
-
+          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flag.ABSTRACT)              =>
+          case d @ DefDef(_, _, _, _, _, _) if d.symbol != null && d.symbol.isAbstract =>
           // ignore constructors, they're handled above
           case DefDef(_, nme.CONSTRUCTOR, _, _, _, _)                                       =>
           case DefDef(_, _, _, _, _, _) if tree.symbol != null && tree.symbol.isConstructor =>
-
           // ignore methods that just throw, e.g. "???"
-          case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= NothingTpe                                   =>
-
+          case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= NothingTpe =>
           // ignore methods that just throw, e.g. "???" or "js.native"
-          case DefDef(_, _, _, _, _, rhs) if rhs.tpe =:= NothingTpe                                   =>
-
+          case DefDef(_, _, _, _, _, rhs) if rhs.tpe =:= NothingTpe =>
           // ignore overridden methods, the parameter might be used by other classes
-          case DefDef(mods, _, _, _, _, _) if mods.isOverride ||
-            mods.hasFlag(Flags.OVERRIDE) ||
-            (tree.symbol != null && (tree.symbol.isAnyOverride || tree.symbol.isOverridingSymbol)) =>
-
+          case DefDef(mods, _, _, _, _, _)
+              if mods.isOverride ||
+              mods.hasFlag(Flags.OVERRIDE) ||
+              (tree.symbol != null && (tree.symbol.isAnyOverride || tree.symbol.isOverridingSymbol)) =>
           // ignore main method
-          case DefDef(_, name, _, List(List(param)), tpt, _) if
-            name.toString == "main" &&
-            param.name.toString == "args" &&
-            tpt.tpe =:= UnitTpe &&
-            param.tpt.tpe =:= typeOf[Array[String]] =>
-
+          case DefDef(_, name, _, List(List(param)), tpt, _)
+              if name.toString == "main" &&
+              param.name.toString == "args" &&
+              tpt.tpe =:= UnitTpe &&
+              param.tpt.tpe =:= typeOf[Array[String]] =>
           case DefDef(_, _, _, vparamss, _, rhs) =>
-            for (
-              vparams <- vparamss;
-              vparam <- vparams
-            ) {
+            for {
+              vparams <- vparamss
+              vparam  <- vparams
+            } {
               if (!usesParameter(vparam.name.toString, rhs))
                 context.warn(tree.pos, self, s"Unused method parameter ($vparam).")
             }

@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.inference
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class BoundedByFinalType extends Inspection(
-  text = "Bounded by a final type",
-  defaultLevel = Levels.Warning,
-  description = "Checks for types with upper bounds of a final type.",
-  explanation = "Pointless type bound. Type parameter can only be a single value."
-) {
+class BoundedByFinalType
+    extends Inspection(
+      text = "Bounded by a final type",
+      defaultLevel = Levels.Warning,
+      description = "Checks for types with upper bounds of a final type.",
+      explanation = "Pointless type bound. Type parameter can only be a single value."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {
@@ -18,8 +19,9 @@ class BoundedByFinalType extends Inspection(
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case dd @ DefDef(_, _, _, _, _, _) if dd.symbol != null && dd.symbol.owner.tpe.baseClasses.contains(PartialFunctionClass) =>
-          case tdef: TypeDef if tdef.symbol.isAliasType =>
+          case dd @ DefDef(_, _, _, _, _, _)
+              if dd.symbol != null && dd.symbol.owner.tpe.baseClasses.contains(PartialFunctionClass) =>
+          case tdef: TypeDef if tdef.symbol.isAliasType                                              =>
           case TypeDef(_, _, _, typeTree: TypeTree) =>
             typeTree.original match {
               case TypeBoundsTree(lo, hi) if lo.tpe.isFinalType && hi.tpe.isFinalType =>

@@ -11,20 +11,21 @@ object ScalastyleReportWriter {
   private val scapegoat = "scapegoat"
 
   def toXML(feedback: Feedback): Node = {
-    <checkstyle version={ checkstyleVersion } generatedBy={ scapegoat }>
-      { feedback.warningsWithMinimalLevel.groupBy(_.sourceFileFull).map(fileToXml) }
+    <checkstyle version={checkstyleVersion} generatedBy={scapegoat}>
+      {feedback.warningsWithMinimalLevel.groupBy(_.sourceFileFull).map(fileToXml)}
     </checkstyle>
   }
 
   private def fileToXml(fileWarningMapEntry: (String, Seq[Warning])) = {
     val (file, warnings) = fileWarningMapEntry
-    <file name={ file }>
-      { warnings.map(warningToXml) }
+    <file name={file}>
+      {warnings.map(warningToXml)}
     </file>
   }
 
-  private def warningToXml(warning: Warning) = {
-    <error line={ warning.line.toString } message={ warning.text } severity={ warning.level.toString } source={ warning.inspection } snippet={ warning.snippet.orNull } explanation={ warning.explanation }></error>
-  }
+  private def warningToXml(warning: Warning) =
+    <error line={warning.line.toString} message={warning.text} severity={warning.level.toString} source={
+      warning.inspection
+    } snippet={warning.snippet.orNull} explanation={warning.explanation}></error>
 
 }

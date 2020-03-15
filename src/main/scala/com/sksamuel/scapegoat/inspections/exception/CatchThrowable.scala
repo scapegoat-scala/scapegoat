@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class CatchThrowable extends Inspection(
-  text = "Catch throwable",
-  defaultLevel = Levels.Warning,
-  description = "Checks for try blocks that catch Throwable.",
-  explanation = "Did you intend to catch all throwables? Consider catching a more specific exception class."
-) {
+class CatchThrowable
+    extends Inspection(
+      text = "Catch throwable",
+      defaultLevel = Levels.Warning,
+      description = "Checks for try blocks that catch Throwable.",
+      explanation =
+        "Did you intend to catch all throwables? Consider catching a more specific exception class."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {
@@ -21,7 +23,7 @@ class CatchThrowable extends Inspection(
           case CaseDef(Bind(_, Typed(_, tpt)), _, _) if tpt.tpe =:= typeOf[Throwable] => true
           // matches _ : Throwable
           case CaseDef(Typed(_, tpt), _, _) if tpt.tpe =:= typeOf[Throwable] => true
-          case _ => false
+          case _                                                             => false
         }
       }
 
@@ -35,4 +37,3 @@ class CatchThrowable extends Inspection(
     }
   }
 }
-

@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.option
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class OptionGet extends Inspection(
-  text = "Use of Option.get",
-  defaultLevel = Levels.Error,
-  description = "Checks for use of Option.get",
-  explanation = "Using Option.get defeats the purpose of using Option in the first place. Use the following instead: Option.getOrElse, Option.fold, pattern matching or don't take the value out of the container and map over it to transform it."
-) {
+class OptionGet
+    extends Inspection(
+      text = "Use of Option.get",
+      defaultLevel = Levels.Error,
+      description = "Checks for use of Option.get",
+      explanation =
+        "Using Option.get defeats the purpose of using Option in the first place. Use the following instead: Option.getOrElse, Option.fold, pattern matching or don't take the value out of the container and map over it to transform it."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

@@ -5,7 +5,12 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.reporters.Reporter
 
 /** @author Stephen Samuel */
-class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String, minimalLevel: Level = Levels.Info) {
+class Feedback(
+  consoleOutput: Boolean,
+  reporter: Reporter,
+  sourcePrefix: String,
+  minimalLevel: Level = Levels.Info
+) {
 
   private val warningsBuffer = new ListBuffer[Warning]
 
@@ -23,16 +28,19 @@ class Feedback(consoleOutput: Boolean, reporter: Reporter, sourcePrefix: String,
   def warn(
     pos: Position,
     inspection: Inspection,
-    snippet: Option[String] = None,
+    snippet: Option[String]          = None,
     adhocExplanation: Option[String] = None
   ): Unit = {
     val level = inspection.defaultLevel
     val text = inspection.text
     val explanation = adhocExplanation.getOrElse(inspection.explanation)
-    val adjustedLevel = (levelOverridesByInspectionSimpleName.get("all"), levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)) match {
-      case (Some(l), _) => l
+    val adjustedLevel = (
+      levelOverridesByInspectionSimpleName.get("all"),
+      levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)
+    ) match {
+      case (Some(l), _)    => l
       case (None, Some(l)) => l
-      case _ => level
+      case _               => level
     }
 
     val sourceFileFull = pos.source.file.path
@@ -82,9 +90,9 @@ case class Warning(
 ) {
   def hasMinimalLevelOf(minimalLevel: Level): Boolean = {
     minimalLevel match {
-      case Levels.Info => true
+      case Levels.Info    => true
       case Levels.Warning => this.level == Levels.Warning || this.level == Levels.Error
-      case Levels.Error => this.level == Levels.Error
+      case Levels.Error   => this.level == Levels.Error
     }
   }
 }

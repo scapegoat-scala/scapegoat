@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.equality
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class ComparingUnrelatedTypes extends Inspection(
-  text = "Comparing unrelated types",
-  defaultLevel = Levels.Error,
-  description = "Checks for equality comparisons that cannot succeed.",
-  explanation = "In most case comparing unrelated types cannot succeed and it's usually an indication of a bug."
-) {
+class ComparingUnrelatedTypes
+    extends Inspection(
+      text = "Comparing unrelated types",
+      defaultLevel = Levels.Error,
+      description = "Checks for equality comparisons that cannot succeed.",
+      explanation =
+        "In most case comparing unrelated types cannot succeed and it's usually an indication of a bug."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {
@@ -34,17 +36,19 @@ class ComparingUnrelatedTypes extends Inspection(
           // -- Special cases ---------------------------------------------------------------------
 
           // Comparing any numeric value to a literal 0 should be ignored:
-          case Apply(Select(lhs, TermName("$eq$eq" | "$bang$eq")), List(Literal(Constant(0)))) if lhs.tpe.typeSymbol.isNumericValueClass =>
-          case Apply(Select(Literal(Constant(0)), TermName("$eq$eq" | "$bang$eq")), List(rhs)) if rhs.tpe.typeSymbol.isNumericValueClass =>
-
+          case Apply(Select(lhs, TermName("$eq$eq" | "$bang$eq")), List(Literal(Constant(0))))
+              if lhs.tpe.typeSymbol.isNumericValueClass =>
+          case Apply(Select(Literal(Constant(0)), TermName("$eq$eq" | "$bang$eq")), List(rhs))
+              if rhs.tpe.typeSymbol.isNumericValueClass =>
           // Comparing a integral value to a integral literal should be ignored if the literal
           // fits in the in range of the other value's type. For example, in general it may be
           // unsafe to compare ints to chars because not all ints fit in the range of a char, but
           // such comparisons are safe for small integers: thus `(c: Char) == 97` is a valid
           // comparision but `(c: Char) == 128000` is not.
-          case Apply(Select(value, TermName("$eq$eq" | "$bang$eq")), List(lit @ Literal(_))) if integralLiteralFitsInType(lit, value.tpe) =>
-          case Apply(Select(lit @ Literal(_), TermName("$eq$eq" | "$bang$eq")), List(value)) if integralLiteralFitsInType(lit, value.tpe)  =>
-
+          case Apply(Select(value, TermName("$eq$eq" | "$bang$eq")), List(lit @ Literal(_)))
+              if integralLiteralFitsInType(lit, value.tpe) =>
+          case Apply(Select(lit @ Literal(_), TermName("$eq$eq" | "$bang$eq")), List(value))
+              if integralLiteralFitsInType(lit, value.tpe) =>
           // -- End special cases ------------------------------------------------------------------
 
           case Apply(Select(lhs, op @ TermName("$eq$eq" | "$bang$eq")), List(rhs)) =>

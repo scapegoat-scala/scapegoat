@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class FindDotIsDefined extends Inspection(
-  text = "find().isDefined() instead of exists()",
-  defaultLevel = Levels.Info,
-  description = "Checks whether find() can be replaced with exists().",
-  explanation = "find().isDefined can be replaced with exists(), which is more concise."
-) {
+class FindDotIsDefined
+    extends Inspection(
+      text = "find().isDefined() instead of exists()",
+      defaultLevel = Levels.Info,
+      description = "Checks whether find() can be replaced with exists().",
+      explanation = "find().isDefined can be replaced with exists(), which is more concise."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

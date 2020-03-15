@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class AnyUse extends Inspection(
-  text = "Use of Any",
-  defaultLevel = Levels.Info,
-  description = "Checks for code returning Any.",
-  explanation = "Code returning Any is most likely an indication of a programming error."
-) {
+class AnyUse
+    extends Inspection(
+      text = "Use of Any",
+      defaultLevel = Levels.Info,
+      description = "Checks for code returning Any.",
+      explanation = "Code returning Any is most likely an indication of a programming error."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {
@@ -19,7 +20,7 @@ class AnyUse extends Inspection(
 
       override def inspect(tree: Tree): Unit = {
         tree match {
-          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic =>
+          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic                =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
           case ValDef(_, _, tpt, _) if tpt.tpe =:= typeOf[Any] =>
@@ -32,4 +33,3 @@ class AnyUse extends Inspection(
     }
   }
 }
-

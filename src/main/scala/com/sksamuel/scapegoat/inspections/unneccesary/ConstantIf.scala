@@ -8,12 +8,14 @@ import com.sksamuel.scapegoat._
  *         Checks for if statements where the condition evaluates to a constant true or a constant false.
  *
  */
-class ConstantIf extends Inspection(
-  text = "Constant if expression",
-  defaultLevel = Levels.Warning,
-  description = "Checks for code where the if condition compiles to a constant.",
-  explanation = "An if condition which gets compiled to a constant, like e.g. if (1 < 2) or if (false) doesn't add any value and should be avoided."
-) {
+class ConstantIf
+    extends Inspection(
+      text = "Constant if expression",
+      defaultLevel = Levels.Warning,
+      description = "Checks for code where the if condition compiles to a constant.",
+      explanation =
+        "An if condition which gets compiled to a constant, like e.g. if (1 < 2) or if (false) doesn't add any value and should be avoided."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class UnnecessaryReturnUse extends Inspection(
-  text = "Unnecessary return",
-  defaultLevel = Levels.Info,
-  description = "Checks for use of return keyword in blocks.",
-  explanation = "Scala returns the value of the last expression in a block. Use of return here is not an idiomatic Scala."
-) {
+class UnnecessaryReturnUse
+    extends Inspection(
+      text = "Unnecessary return",
+      defaultLevel = Levels.Info,
+      description = "Checks for use of return keyword in blocks.",
+      explanation =
+        "Scala returns the value of the last expression in a block. Use of return here is not an idiomatic Scala."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

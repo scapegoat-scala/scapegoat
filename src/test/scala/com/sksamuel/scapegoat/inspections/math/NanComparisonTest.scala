@@ -5,11 +5,7 @@ import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-class NanComparisonTest
-    extends AnyFreeSpec
-    with Matchers
-    with PluginRunner
-    with OneInstancePerTest {
+class NanComparisonTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new NanComparison)
 

@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class NegativeSeqPad extends Inspection(
-  text = "Negative seq padTo",
-  defaultLevel = Levels.Error,
-  description = "Checks for use of padTo with negative length.",
-  explanation = "Seq.padTo with a negative length will not have any effect."
-) {
+class NegativeSeqPad
+    extends Inspection(
+      text = "Negative seq padTo",
+      defaultLevel = Levels.Error,
+      description = "Checks for use of padTo with negative length.",
+      explanation = "Seq.padTo with a negative length will not have any effect."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

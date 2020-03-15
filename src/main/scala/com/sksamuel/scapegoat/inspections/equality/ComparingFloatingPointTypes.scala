@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.equality
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class ComparingFloatingPointTypes extends Inspection(
-  text = "Floating type comparison",
-  defaultLevel = Levels.Error,
-  description = "Checks for equality checks on floating point types.",
-  explanation = "Due to minor rounding errors, it is not advisable to compare floating-point numbers using the == operator. Either use a threshold based comparison, or switch to a BigDecimal."
-) {
+class ComparingFloatingPointTypes
+    extends Inspection(
+      text = "Floating type comparison",
+      defaultLevel = Levels.Error,
+      description = "Checks for equality checks on floating point types.",
+      explanation =
+        "Due to minor rounding errors, it is not advisable to compare floating-point numbers using the == operator. Either use a threshold based comparison, or switch to a BigDecimal."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {
@@ -16,7 +18,7 @@ class ComparingFloatingPointTypes extends Inspection(
       import context.global._
 
       private val EqEq = TermName("$eq$eq")
-      private val BangEq =  TermName("$bang$eq")
+      private val BangEq = TermName("$bang$eq")
 
       override def inspect(tree: Tree): Unit = {
         tree match {

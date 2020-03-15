@@ -5,8 +5,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class FindDotIsDefinedTest
-    extends AnyFreeSpec with Matchers with PluginRunner {
+class FindDotIsDefinedTest extends AnyFreeSpec with Matchers with PluginRunner {
 
   override val inspections = Seq(new FindDotIsDefined)
 

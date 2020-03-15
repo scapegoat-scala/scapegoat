@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.empty
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class EmptyTryBlock extends Inspection(
-  text = "Empty try block",
-  defaultLevel = Levels.Warning,
-  description = "Checks for empty try blocks.",
-  explanation = "An empty try block is considered as dead code."
-) {
+class EmptyTryBlock
+    extends Inspection(
+      text = "Empty try block",
+      defaultLevel = Levels.Warning,
+      description = "Checks for empty try blocks.",
+      explanation = "An empty try block is considered as dead code."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

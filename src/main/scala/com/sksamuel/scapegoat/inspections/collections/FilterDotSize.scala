@@ -7,12 +7,13 @@ import com.sksamuel.scapegoat._
  *
  *         Inspired by IntelliJ
  */
-class FilterDotSize extends Inspection(
-  text = "filter().size() instead of count()",
-  defaultLevel = Levels.Info,
-  description = "Checks if filter().size can be simplified to count().",
-  explanation = "filter().size can be replaced with count(), which is more concise."
-) {
+class FilterDotSize
+    extends Inspection(
+      text = "filter().size() instead of count()",
+      defaultLevel = Levels.Info,
+      description = "Checks if filter().size can be simplified to count().",
+      explanation = "filter().size can be replaced with count(), which is more concise."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {

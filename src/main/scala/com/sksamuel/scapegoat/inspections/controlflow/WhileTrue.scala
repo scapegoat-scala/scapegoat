@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat._
 /**
  * @author Stephen Samuel
  */
-class WhileTrue extends Inspection(
-  text = "While true loop",
-  defaultLevel = Levels.Warning,
-  description = "Checks for code that uses a while(true) or do {...} while(true) block.",
-  explanation = "A (do) while true loop is unlikely to be meant for production."
-) {
+class WhileTrue
+    extends Inspection(
+      text = "While true loop",
+      defaultLevel = Levels.Warning,
+      description = "Checks for code that uses a while(true) or do {...} while(true) block.",
+      explanation = "A (do) while true loop is unlikely to be meant for production."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = new context.Traverser {
@@ -32,9 +33,8 @@ class WhileTrue extends Inspection(
         case _                       => false
       }
 
-      private def isWhile(name: TermName): Boolean = {
+      private def isWhile(name: TermName): Boolean =
         name.toString.startsWith("while$") || name.toString.startsWith("doWhile$")
-      }
     }
   }
 }
