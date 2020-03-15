@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.collection.mutable
 
 /** @author Stephen Samuel */
-class RepeatedCaseBody extends Inspection(
-  text = "Repeated case body",
-  defaultLevel = Levels.Warning,
-  description = "Checks for case statements which have the same body.",
-  explanation = "Case body is repeated. Consider merging pattern clauses together."
-) {
+class RepeatedCaseBody
+    extends Inspection(
+      text = "Repeated case body",
+      defaultLevel = Levels.Warning,
+      description = "Checks for case statements which have the same body.",
+      explanation = "Case body is repeated. Consider merging pattern clauses together."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

@@ -3,12 +3,13 @@ package com.sksamuel.scapegoat.inspections.naming
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
-class ObjectNames extends Inspection(
-  text = "Object name not recommended",
-  defaultLevel = Levels.Info,
-  description = "Ensures object names adhere to the Scala style guidelines.",
-  explanation = "Object names should only contain alphanumeric characters."
-) {
+class ObjectNames
+    extends Inspection(
+      text = "Object name not recommended",
+      defaultLevel = Levels.Info,
+      description = "Ensures object names adhere to the Scala style guidelines.",
+      explanation = "Object names should only contain alphanumeric characters."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

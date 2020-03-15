@@ -47,11 +47,11 @@ class PreferSetEmptyTest extends AnyFreeSpec with Matchers with PluginRunner wit
   "mutable.Set" - {
     "should not report a warning" in {
       val code = """
-                 | import scala.collection.mutable
-                 | object Test {
-                 |  val set = mutable.Set[String]()
-                 |  set.add("a")
-                 | }""".stripMargin
+                   | import scala.collection.mutable
+                   | object Test {
+                   |  val set = mutable.Set[String]()
+                   |  set.add("a")
+                   | }""".stripMargin
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0

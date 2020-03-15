@@ -8,10 +8,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class FeedbackTest
-    extends AnyFreeSpec
-    with Matchers
-    with OneInstancePerTest with PrivateMethodTester {
+class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest with PrivateMethodTester {
 
   val position = NoPosition
   val defaultSourcePrefix = "src/main/scala/"
@@ -143,7 +140,7 @@ class FeedbackTest
         val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Warning)
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(2)
-        feedback.warningsWithMinimalLevel.map(_.level) should contain only(Seq(Levels.Warning, Levels.Error): _*)
+        feedback.warningsWithMinimalLevel.map(_.level) should contain only (Seq(Levels.Warning, Levels.Error): _*)
       }
 
       "for `error`" in {
@@ -170,7 +167,7 @@ class FeedbackTest
         val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Error)
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(1)
-        feedback.warningsWithMinimalLevel.map(_.level) should contain only(Seq(Levels.Error): _*)
+        feedback.warningsWithMinimalLevel.map(_.level) should contain only (Seq(Levels.Error): _*)
       }
     }
   }

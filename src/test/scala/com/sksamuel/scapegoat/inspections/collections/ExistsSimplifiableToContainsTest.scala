@@ -6,7 +6,11 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class ExistsSimplifiableToContainsTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class ExistsSimplifiableToContainsTest
+    extends AnyFreeSpec
+    with Matchers
+    with PluginRunner
+    with OneInstancePerTest {
 
   override val inspections = Seq(new ExistsSimplifiableToContains)
 
@@ -52,16 +56,16 @@ class ExistsSimplifiableToContainsTest extends AnyFreeSpec with Matchers with Pl
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
-    
+
     "when exists is called on an Iterable" in {
-     val code =
-     """
-      |object Test {
-      | def method(): Unit = {
-      |   val l: Iterable[String] = List[String]("a", "b", "c")
-      |   print(l.exists(_ == "a"))
-      | }
-      |}""".stripMargin
+      val code =
+        """
+          |object Test {
+          | def method(): Unit = {
+          |   val l: Iterable[String] = List[String]("a", "b", "c")
+          |   print(l.exists(_ == "a"))
+          | }
+          |}""".stripMargin
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }

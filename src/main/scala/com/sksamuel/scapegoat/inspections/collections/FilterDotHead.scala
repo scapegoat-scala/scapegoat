@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class FilterDotHead extends Inspection(
-  text = "filter().head can throw an exception",
-  defaultLevel = Levels.Info,
-  description = "Checks for use of filter().head.",
-  explanation = "filter().head can throw an exception if the collection is empty - it can be replaced with find() match {...}."
-) {
+class FilterDotHead
+    extends Inspection(
+      text = "filter().head can throw an exception",
+      defaultLevel = Levels.Info,
+      description = "Checks for use of filter().head.",
+      explanation =
+        "filter().head can throw an exception if the collection is empty - it can be replaced with find() match {...}."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

@@ -7,12 +7,14 @@ import com.sksamuel.scapegoat._
  *
  *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#NM_CLASS_NOT_EXCEPTION
  */
-class IncorrectlyNamedExceptions extends Inspection(
-  text = "Incorrectly named exceptions",
-  defaultLevel = Levels.Error,
-  description = "Checks for exceptions that are not called *Exception and vice versa.",
-  explanation = "Class named exception does not derive from Exception / class derived from Exception is not named *Exception."
-) {
+class IncorrectlyNamedExceptions
+    extends Inspection(
+      text = "Incorrectly named exceptions",
+      defaultLevel = Levels.Error,
+      description = "Checks for exceptions that are not called *Exception and vice versa.",
+      explanation =
+        "Class named exception does not derive from Exception / class derived from Exception is not named *Exception."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {
@@ -24,8 +26,8 @@ class IncorrectlyNamedExceptions extends Inspection(
           case cdef @ ClassDef(_, name, _, impl) =>
             val isNamedException = name.toString.endsWith("Exception")
             val isAnon = scala.util.Try {
-              cdef.symbol.isAnonymousClass
-            } getOrElse false
+                cdef.symbol.isAnonymousClass
+              } getOrElse false
 
             val extendsException = impl.tpe <:< typeOf[Exception]
             val selfTypeIsException = impl match {

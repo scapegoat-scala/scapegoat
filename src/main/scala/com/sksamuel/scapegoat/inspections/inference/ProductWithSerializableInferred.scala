@@ -5,12 +5,14 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 import scala.reflect.internal.Flags
 
 /** @author Stephen Samuel */
-class ProductWithSerializableInferred extends Inspection(
-  text = "Product with Serializable inferred",
-  defaultLevel = Levels.Warning,
-  description = "Checks for values that have Product with Serializable as their inferred type.",
-  explanation = "It is unlikely that Product with Serializable was your target type. This is often an indication of mixing up incompatible types."
-) {
+class ProductWithSerializableInferred
+    extends Inspection(
+      text = "Product with Serializable inferred",
+      defaultLevel = Levels.Warning,
+      description = "Checks for values that have Product with Serializable as their inferred type.",
+      explanation =
+        "It is unlikely that Product with Serializable was your target type. This is often an indication of mixing up incompatible types."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

@@ -7,11 +7,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class VariableShadowingTest
-    extends AnyFreeSpec
-    with Matchers
-    with PluginRunner
-    with OneInstancePerTest {
+class VariableShadowingTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new VariableShadowing)
 
@@ -121,7 +117,7 @@ class VariableShadowingTest
 
       "when two if branches define the same variable" in {
         val code =
-            """class Test {
+          """class Test {
             |  if (1 > 0) {
             |    val something = 4
             |    println(something+1)
@@ -137,7 +133,7 @@ class VariableShadowingTest
 
       "when two sibling cases define the same local variable" in {
         val code =
-            """class Test {
+          """class Test {
             |  val possibility: Option[Int] = Some(3) 
             |  possibility match {
             |    case Some(x) => 
@@ -155,7 +151,7 @@ class VariableShadowingTest
 
       "when visiting a match case, especially not visit it twice" in {
         val code =
-            """class Test {
+          """class Test {
             |  val possibility: Option[Int] = Some(3)
             |  possibility match {
             |    case Some(x) =>

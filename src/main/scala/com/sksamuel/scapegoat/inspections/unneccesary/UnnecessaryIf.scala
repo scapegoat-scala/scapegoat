@@ -3,12 +3,14 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
-class UnnecessaryIf extends Inspection(
-  text = "Unnecessary if condition.",
-  defaultLevel = Levels.Info,
-  description = "Checks for code like if (expr) true else false.",
-  explanation = "If comparison is not needed. Use the condition, e.g. instead of if (a == b) true else false, use a == b or instead of if (a == b) false else true, use !(a == b)."
-) {
+class UnnecessaryIf
+    extends Inspection(
+      text = "Unnecessary if condition.",
+      defaultLevel = Levels.Info,
+      description = "Checks for code like if (expr) true else false.",
+      explanation =
+        "If comparison is not needed. Use the condition, e.g. instead of if (a == b) true else false, use a == b or instead of if (a == b) false else true, use !(a == b)."
+    ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
     override def postTyperTraverser = Some apply new context.Traverser {

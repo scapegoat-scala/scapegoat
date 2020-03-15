@@ -18,12 +18,14 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override def init(options: List[String], error: String => Unit): Boolean = {
     forProperty("disabledInspections:") match {
-      case Some(option) => component.disabledInspections = option.drop("disabledInspections:".length).split(':').toList
-      case _            =>
+      case Some(option) =>
+        component.disabledInspections = option.drop("disabledInspections:".length).split(':').toList
+      case _ =>
     }
     forProperty("enabledInspections:") match {
-      case Some(option) => component.enabledInspections = option.drop("enabledInspections:".length).split(':').toList
-      case _            =>
+      case Some(option) =>
+        component.enabledInspections = option.drop("enabledInspections:".length).split(':').toList
+      case _ =>
     }
     forProperty("consoleOutput:") match {
       case Some(option) => component.consoleOutput = option.drop("consoleOutput:".length).toBoolean
@@ -37,16 +39,20 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       component.verbose = verbose.drop("verbose:".length).toBoolean
     }
     forProperty("customInspectors:") match {
-      case Some(option) => component.customInpections =
-        option.drop("customInspectors:".length)
+      case Some(option) =>
+        component.customInpections = option
+          .drop("customInspectors:".length)
           .split(':')
           .toSeq
-          .map(inspection => Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection])
+          .map(inspection =>
+            Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection]
+          )
       case _ =>
     }
     forProperty("reports:") match {
       case Some(option) =>
-        option.drop("reports:".length)
+        option
+          .drop("reports:".length)
           .split(':')
           .toSeq
           .foreach {
@@ -70,19 +76,23 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     }
     forProperty("overrideLevels:") foreach {
       case option =>
-        component.feedback.levelOverridesByInspectionSimpleName =
-          option.drop("overrideLevels:".length).split(":").map {
+        component.feedback.levelOverridesByInspectionSimpleName = option
+          .drop("overrideLevels:".length)
+          .split(":")
+          .map {
             case nameLevel =>
               nameLevel.split("=") match {
                 case Array(insp, level) => insp -> Levels.fromName(level)
                 case _ =>
                   throw new IllegalArgumentException(
                     s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
-                      "Expecting 'name=level' where 'name' is the simple name of " +
-                      "an inspection and 'level' is the simple name of a " +
-                      "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.")
+                    "Expecting 'name=level' where 'name' is the simple name of " +
+                    "an inspection and 'level' is the simple name of a " +
+                    "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
+                  )
               }
-          }.toMap
+          }
+          .toMap
     }
     forProperty("sourcePrefix:") match {
       case Some(option) => {
@@ -106,39 +116,43 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     }
   }
 
-  override val optionsHelp: Option[String] = Some(Seq(
-    "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
-    "-P:scapegoat:disabledInspections:<listofinspections> colon separated list of disabled inspections (defauls to none)",
-    "-P:scapegoat:enabledInspections:<listofinspections>  colon separated list of enabled inspections (defaults to all)",
-    "-P:scapegoat:customInspectors:<listofinspections>    colon separated list of custom inspections",
-    "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
-    "                                                     files to ignore.",
-    "-P:scapegoat:verbose:<boolean>                       enable/disable verbose console messages",
-    "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
-    "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
-    "                                                     Valid options are `xml', `html', `scalastyle',",
-    "                                                     or `all'. Use `none' to disable reports.",
-    "-P:scapegoat:overrideLevels:<levels>                 override the built in warning levels, e.g. to",
-    "                                                     downgrade a Error to a Warning.",
-    "                                                     <levels> should be a colon separated list of name=level",
-    "                                                     settings, where 'name' is the simple name of an inspection",
-    "                                                     and 'level' is the simple name of a",
-    "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.",
-    "                                                     You can use 'all' for inspection name to operate on all inspections.",
-    "-P:scapegoat:sourcePrefix:<prefix>                   overrides source prefix if it differs from src/main/scala",
-    "                                                     for ex., in Play applications where sources are in app/ folder",
-    "-P:scapegoat:minimalWarnLevel:<level>                provides minimal level of triggered inspections,",
-    "                                                     that will be shown in a report.",
-    "                                                     'level' is the simple name of a",
-    "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.")
-    .mkString("\n"))
+  override val optionsHelp: Option[String] = Some(
+    Seq(
+      "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
+      "-P:scapegoat:disabledInspections:<listofinspections> colon separated list of disabled inspections (defauls to none)",
+      "-P:scapegoat:enabledInspections:<listofinspections>  colon separated list of enabled inspections (defaults to all)",
+      "-P:scapegoat:customInspectors:<listofinspections>    colon separated list of custom inspections",
+      "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
+      "                                                     files to ignore.",
+      "-P:scapegoat:verbose:<boolean>                       enable/disable verbose console messages",
+      "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
+      "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
+      "                                                     Valid options are `xml', `html', `scalastyle',",
+      "                                                     or `all'. Use `none' to disable reports.",
+      "-P:scapegoat:overrideLevels:<levels>                 override the built in warning levels, e.g. to",
+      "                                                     downgrade a Error to a Warning.",
+      "                                                     <levels> should be a colon separated list of name=level",
+      "                                                     settings, where 'name' is the simple name of an inspection",
+      "                                                     and 'level' is the simple name of a",
+      "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'.",
+      "                                                     You can use 'all' for inspection name to operate on all inspections.",
+      "-P:scapegoat:sourcePrefix:<prefix>                   overrides source prefix if it differs from src/main/scala",
+      "                                                     for ex., in Play applications where sources are in app/ folder",
+      "-P:scapegoat:minimalWarnLevel:<level>                provides minimal level of triggered inspections,",
+      "                                                     that will be shown in a report.",
+      "                                                     'level' is the simple name of a",
+      "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
+    ).mkString("\n")
+  )
 
   private def forProperty(name: String): Option[String] =
     options.find(_.startsWith(name))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
-    extends PluginComponent with TypingTransformers with Transform {
+    extends PluginComponent
+    with TypingTransformers
+    with Transform {
 
   require(inspections != null)
 
@@ -169,11 +183,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def activeInspections: Seq[Inspection] = {
     if (enabledInspections.isEmpty) {
-     (inspections ++ customInpections)
-      .filterNot(inspection => disabledInspections.contains(inspection.getClass.getSimpleName))
+      (inspections ++ customInpections)
+        .filterNot(inspection => disabledInspections.contains(inspection.getClass.getSimpleName))
     } else {
-     (inspections ++ customInpections)
-      .filter(inspection => enabledInspections.contains(inspection.getClass.getSimpleName))
+      (inspections ++ customInpections)
+        .filter(inspection => enabledInspections.contains(inspection.getClass.getSimpleName))
     }
   }
   lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix, minimalLevel)
@@ -195,7 +209,9 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           val warns = feedback.warns.size
           val infos = feedback.infos.size
           val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
-          reporter.echo(s"[$level] [scapegoat] Analysis complete: ${count.get} files - $errors errors $warns warns $infos infos")
+          reporter.echo(
+            s"[$level] [scapegoat] Analysis complete: ${count.get} files - $errors errors $warns warns $infos infos"
+          )
         }
 
         if (!disableHTML) {
@@ -233,12 +249,12 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           reporter.echo(s"[debug] Scapegoat analysis [$unit] .....")
         }
         val context = new InspectionContext(global, feedback)
-        activeInspections.foreach(inspection => {
+        activeInspections.foreach { inspection =>
           val inspector = inspection.inspector(context)
           for (traverser <- inspector.postTyperTraverser)
             traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
           inspector.postInspection()
-        })
+        }
       }
       tree
     }

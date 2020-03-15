@@ -6,11 +6,7 @@ import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class RepeatedCaseBodyTest
-    extends AnyFreeSpec
-    with Matchers
-    with PluginRunner
-    with OneInstancePerTest {
+class RepeatedCaseBodyTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
 
   override val inspections = Seq(new RepeatedCaseBody)
 
@@ -18,7 +14,8 @@ class RepeatedCaseBodyTest
     "should report warning" - {
       "for repeated no-guard cases" in {
 
-        val code = """object Test {
+        val code =
+          """object Test {
                       val s : Any = null
                       s match {
                        case "sam" => println("foo"); println("foo"); println("foo"); println("foo"); println("foo")
@@ -32,7 +29,8 @@ class RepeatedCaseBodyTest
       }
       "for repeated no-guard cases with ignored guard cases" in {
 
-        val code = """object Test {
+        val code =
+          """object Test {
                       val s : Any = null
                       s match {
                        case str : String if str.length == 3 => println("foo"); println("foo"); println("foo"); println("foo"); println("foo")
