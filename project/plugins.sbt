@@ -5,4 +5,8 @@ addSbtPlugin("com.github.gseitz" % "sbt-release"  % "1.0.13")
 addSbtPlugin("com.eed3si9n"      % "sbt-assembly" % "0.14.10")
 addSbtPlugin("com.dwijnand"      % "sbt-travisci" % "1.2.0")
 addSbtPlugin("org.scalameta"     % "sbt-scalafmt" % "2.3.2")
-addSbtPlugin("ch.epfl.scala"     % "sbt-scalafix" % "0.9.11")
+addSbtPlugin("ch.epfl.scala"     % "sbt-scalafix" % "0.9.12")
+
+if (System.getProperty("add-scapegoat-plugin") == "true")
+  Seq(addSbtPlugin("com.sksamuel.scapegoat" %% "sbt-scapegoat" % "1.1.0"))
+else Seq.empty
