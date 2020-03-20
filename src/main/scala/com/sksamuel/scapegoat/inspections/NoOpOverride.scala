@@ -27,7 +27,10 @@ class NoOpOverride
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(_, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args))
-              if name == name2 && argumentsMatch(vparamss.headOption.getOrElse(List.empty), args) =>
+              if name == name2 && vparamss.size == 1 && argumentsMatch(
+                vparamss.headOption.getOrElse(List.empty),
+                args
+              ) =>
             context.warn(tree.pos, self, tree.toString.take(200))
           case _ => continue(tree)
         }
