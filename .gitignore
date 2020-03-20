@@ -1,5 +1,6 @@
 *.class
 *.log
+cobertura.xml
 
 # sbt specific
 dist/*
