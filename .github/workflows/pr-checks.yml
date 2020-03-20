@@ -50,10 +50,8 @@ jobs:
           key: sbt-${{hashFiles('**/*.sbt')}}-${{hashFiles('project/build.properties')}}
           restore-keys: sbt-
       - name: Generate coverage report
-        run: sbt clean coverage test
+        run: sbt clean coverage test coverageReport
       - uses: codecov/codecov-action@v1
-        with:
-          file: ./cobertura.xml
       - name: Run Scalafix check
         run: sbt fixCheck
       - name: Run Scapegoat

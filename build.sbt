@@ -179,10 +179,3 @@ scalafmtOnCompile in ThisBuild :=
   sys.env
     .get("CI")
     .forall(_.toLowerCase == "false")
-
-val copyCoverageReport = taskKey[Unit]("copy coverage report into the project root directory")
-copyCoverageReport := {
-  val coberturaReport = (crossTarget.value / "coverage-report" / "cobertura.xml")
-  val target = baseDirectory.value / "cobertura.xml"
-  IO.copyFile(coberturaReport, target)
-}
