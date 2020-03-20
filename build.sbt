@@ -8,6 +8,7 @@ name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
+scalaVersion := "2.13.1"
 crossVersion := CrossVersion.full
 crossTarget := {
   // workaround for https://github.com/sbt/sbt/issues/5097
