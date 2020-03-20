@@ -53,5 +53,5 @@ jobs:
         run: sbt fixCheck
       - name: Run Scapegoat
         run: |
-          sbt 'set version := "99-SNAPSHOT"; publishLocal'
-          sbt -Dadd-scapegoat-plugin=true 'set name := "scapegoat-test"; set scapegoatVersion in ThisBuild := "99-SNAPSHOT"; scapegoat'
+          sbt 'set version := "99.0-SNAPSHOT"; publishLocal'
+          sbt -Dadd-scapegoat-plugin=true 'set name := "scapegoat-test"; set scapegoatVersion in ThisBuild := "99.0-SNAPSHOT"; scapegoat'
