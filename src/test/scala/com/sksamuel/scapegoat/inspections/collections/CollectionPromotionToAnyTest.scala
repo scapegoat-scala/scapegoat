@@ -88,6 +88,15 @@ class CollectionPromotionToAnyTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when adding a string to seq[Any]" in {
+        val code = """object Test {
+                     | val xs = Seq.empty[Any]
+                     | println(xs :+ "hello")
+                     |} """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
