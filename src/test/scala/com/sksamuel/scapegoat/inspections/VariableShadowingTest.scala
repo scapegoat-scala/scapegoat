@@ -163,6 +163,17 @@ class VariableShadowingTest extends AnyFreeSpec with Matchers with PluginRunner 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
+      "when sibling case classes use the same argument name" in {
+        val code =
+          """
+            |final case class A(value: String)
+            |final case class B(value: String)
+            |final case class C(value: Int)
+            |""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
