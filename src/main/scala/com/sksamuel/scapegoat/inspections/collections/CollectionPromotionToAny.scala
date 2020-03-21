@@ -22,7 +22,7 @@ class CollectionPromotionToAny
 
       private def isSeq(symbol: Symbol): Boolean = {
         val full = symbol.typeSignature.resultType.typeSymbol.fullName
-        full.startsWith("scala.collection.immutable") &&
+        full.startsWith("scala.collection.") &&
         (full.endsWith("List") || full.endsWith("Set") || full.endsWith("Seq") || full.endsWith("Vector"))
       }
 
