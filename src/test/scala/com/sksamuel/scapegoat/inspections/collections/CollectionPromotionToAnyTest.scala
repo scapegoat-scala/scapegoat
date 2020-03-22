@@ -56,6 +56,15 @@ class CollectionPromotionToAnyTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+      "mutable seqs" in {
+        val code = """object Test {
+                     |  val a = collection.mutable.Buffer[Any]()
+                     |  a += "hello"
+                    } """.stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
     "should not report warning" - {
       "Vectors using colon add with non seq" in {
@@ -88,7 +97,7 @@ class CollectionPromotionToAnyTest
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
-      "when adding a string to seq[Any]" in {
+      "when adding a string to seq.empty[Any]" in {
         val code = """object Test {
                      | val xs = Seq.empty[Any]
                      | println(xs :+ "hello")
