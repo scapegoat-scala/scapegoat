@@ -16,7 +16,7 @@ class NoOpOverride
 
       import context.global._
 
-      private def argumentsMatch(signatureArgs: List[ValDef], actualArgs: List[Tree]) = {
+      private def argumentsMatch(signatureArgs: List[ValDef], actualArgs: List[Tree]): Boolean = {
         signatureArgs.size == actualArgs.size &&
         signatureArgs.zip(actualArgs).forall {
           case (sig, act: Ident) => sig.name == act.name
@@ -27,7 +27,10 @@ class NoOpOverride
       override def inspect(tree: Tree): Unit = {
         tree match {
           case DefDef(_, name, _, vparamss, _, Apply(Select(Super(This(_), _), name2), args))
-              if name == name2 && vparamss.size == 1 && argumentsMatch(vparamss.head, args) =>
+              if name == name2 && vparamss.size == 1 && argumentsMatch(
+                vparamss.headOption.getOrElse(List.empty),
+                args
+              ) =>
             context.warn(tree.pos, self, tree.toString.take(200))
           case _ => continue(tree)
         }

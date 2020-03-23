@@ -3,6 +3,7 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
+@SuppressWarnings(Array("IncorrectlyNamedExceptions"))
 class SwallowedException
     extends Inspection(
       text = "Empty catch block",
