@@ -3,11 +3,11 @@ package com.sksamuel.scapegoat
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
 
-import com.sksamuel.scapegoat.io.IOUtils
-
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
+
+import com.sksamuel.scapegoat.io.IOUtils
 
 class ScapegoatPlugin(val global: Global) extends Plugin {
 
@@ -249,12 +249,13 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           reporter.echo(s"[debug] Scapegoat analysis [$unit] .....")
         }
         val context = new InspectionContext(global, feedback)
-        activeInspections.foreach { inspection =>
-          val inspector = inspection.inspector(context)
-          for (traverser <- inspector.postTyperTraverser)
-            traverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
-          inspector.postInspection()
-        }
+        activeInspections
+          .filter(_.isEnabled)
+          .foreach { inspection =>
+            val inspector = inspection.inspector(context)
+            inspector.postTyperTraverser.traverse(tree.asInstanceOf[inspector.context.global.Tree])
+            inspector.postInspection()
+          }
       }
       tree
     }

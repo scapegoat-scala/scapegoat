@@ -15,7 +15,7 @@ class VarClosure
 
     import context.global._
 
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
 
       private def capturesVar(tree: Tree): Unit = tree match {
         case Block(stmt, expr) => (stmt :+ expr).foreach(capturesVar)

@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections.style
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
-
 import scala.reflect.internal.Flags
+
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
  * @author Stephen Samuel
@@ -20,7 +20,7 @@ class AvoidOperatorOverload
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
 
       import context.global._
 

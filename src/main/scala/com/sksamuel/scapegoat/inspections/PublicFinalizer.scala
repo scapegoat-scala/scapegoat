@@ -15,7 +15,7 @@ class PublicFinalizer
 
     import context.global._
 
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
 
       override def inspect(tree: Tree): Unit = {
         tree match {

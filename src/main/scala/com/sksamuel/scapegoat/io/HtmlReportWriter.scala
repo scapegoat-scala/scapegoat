@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.io
 
-import com.sksamuel.scapegoat.{Feedback, Levels}
-
 import scala.xml.Unparsed
+
+import com.sksamuel.scapegoat.{Feedback, Levels}
 
 /** @author Stephen Samuel */
 object HtmlReportWriter {

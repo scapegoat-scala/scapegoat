@@ -3,6 +3,7 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat._
 
 /** @author Stephen Samuel */
+@SuppressWarnings(Array("IncorrectlyNamedExceptions"))
 class SwallowedException
     extends Inspection(
       text = "Empty catch block",
@@ -13,7 +14,7 @@ class SwallowedException
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
 
       import context.global._
 

@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
-
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 class VariableShadowing
     extends Inspection(
@@ -15,7 +15,7 @@ class VariableShadowing
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
 
       import context.global._
 
@@ -34,9 +34,13 @@ class VariableShadowing
             enter(); continue(tree); exit()
           case ModuleDef(_, _, Template(_, _, _)) =>
             enter(); continue(tree); exit()
-          case DefDef(_, _, _, vparamss, _, rhs) =>
+          case DefDef(_, name, _, vparamss, _, rhs) =>
             enter()
-            vparamss.foreach(_.foreach(inspect))
+            // For case classes there's a synthetic constructor (not marked as <synthentic>) which takes
+            // the same argument name.
+            if (name.toString != "<init>") {
+              vparamss.foreach(_.foreach(inspect))
+            }
             inspect(rhs)
             exit()
           case ValDef(_, TermName(name), _, _) =>

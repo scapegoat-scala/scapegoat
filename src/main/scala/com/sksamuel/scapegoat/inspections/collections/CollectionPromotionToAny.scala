@@ -16,14 +16,16 @@ class CollectionPromotionToAny
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
 
       import context.global._
 
       private def isSeq(symbol: Symbol): Boolean = {
         val full = symbol.typeSignature.resultType.typeSymbol.fullName
-        full.startsWith("scala.collection.immutable") &&
-        (full.endsWith("List") || full.endsWith("Set") || full.endsWith("Seq") || full.endsWith("Vector"))
+        val immutableCollection = full.startsWith("scala.collection.immutable") &&
+          (full.endsWith("List") || full.endsWith("Set") || full.endsWith("Seq") || full.endsWith("Vector"))
+
+        immutableCollection || full == "scala.collection.Seq"
       }
 
       private def isAny(tree: Tree): Boolean = tree.toString() == "Any"

@@ -1,0 +1,62 @@
+name: PR checks
+on:
+  pull_request:
+env:
+  CI: true
+jobs:
+  test:
+    name: Test using JDK ${{matrix.java}} and Scala ${{matrix.scala}}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [8, 11]
+        scala:
+          - 2.11.12
+          - 2.12.10
+          - 2.12.11
+          - 2.13.0
+          - 2.13.1
+    steps:
+      - uses: actions/checkout@v2
+      - uses: olafurpg/setup-scala@v7
+        with:
+          java-version: adopt@1.${{matrix.java}}
+      - uses: actions/cache@v1
+        with:
+          path: ~/.ivy2/cache
+          key: ivy-${{hashFiles('**/*.sbt')}}-${{matrix.scala}}
+          restore-keys: ivy-
+      - uses: actions/cache@v1
+        with:
+          path: ~/.sbt
+          key: sbt-${{hashFiles('**/*.sbt')}}-${{hashFiles('project/build.properties')}}-${{matrix.scala}}
+          restore-keys: sbt-
+      - run: sbt ++${{matrix.scala}}! test
+  additional-checks:
+    name: Run additional checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: olafurpg/setup-scala@v7
+        with:
+          java-version: adopt@1.11
+      - uses: actions/cache@v1
+        with:
+          path: ~/.ivy2/cache
+          key: ivy-${{hashFiles('**/*.sbt')}}
+          restore-keys: ivy-
+      - uses: actions/cache@v1
+        with:
+          path: ~/.sbt
+          key: sbt-${{hashFiles('**/*.sbt')}}-${{hashFiles('project/build.properties')}}
+          restore-keys: sbt-
+      - name: Generate coverage report
+        run: sbt clean coverage test coverageReport
+      - uses: codecov/codecov-action@v1
+      - name: Run Scalafix check
+        run: sbt fixCheck
+      - name: Run Scapegoat
+        run: |
+          sbt 'set version := "99.0-SNAPSHOT"; publishLocal'
+          sbt -Dadd-scapegoat-plugin=true 'set name := "scapegoat-test"; set scapegoatVersion in ThisBuild := "99.0-SNAPSHOT"; scapegoat'

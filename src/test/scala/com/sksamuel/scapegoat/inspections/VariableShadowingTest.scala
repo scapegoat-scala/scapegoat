@@ -1,7 +1,6 @@
 package com.sksamuel.scapegoat.inspections
 
 import com.sksamuel.scapegoat.PluginRunner
-
 import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
@@ -161,6 +160,17 @@ class VariableShadowingTest extends AnyFreeSpec with Matchers with PluginRunner 
             |  }
             |}""".stripMargin
 
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+
+      "when sibling case classes use the same argument name" in {
+        val code =
+          """
+            |final case class A(value: String)
+            |final case class B(value: String)
+            |final case class C(value: Int)
+            |""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }

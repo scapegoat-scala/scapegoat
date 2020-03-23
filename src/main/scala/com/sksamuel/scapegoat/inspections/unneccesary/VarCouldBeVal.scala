@@ -1,8 +1,8 @@
 package com.sksamuel.scapegoat.inspections.unneccesary
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
-
 import scala.collection.mutable
+
+import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /** @author Stephen Samuel */
 class VarCouldBeVal
@@ -14,7 +14,7 @@ class VarCouldBeVal
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = Some apply new context.Traverser {
+    override def postTyperTraverser = new context.Traverser {
 
       import context.global._
 

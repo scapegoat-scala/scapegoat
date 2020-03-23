@@ -1,10 +1,14 @@
 import com.typesafe.sbt.pgp.PgpKeys
 import sbt.Keys._
 
+// compiler plugins
+addCompilerPlugin(scalafixSemanticdb)
+
 name := "scalac-scapegoat-plugin"
 
 organization := "com.sksamuel.scapegoat"
 
+scalaVersion := "2.13.1"
 crossVersion := CrossVersion.full
 crossTarget := {
   // workaround for https://github.com/sbt/sbt/issues/5097
@@ -23,7 +27,9 @@ val scalac13Options = Seq(
   "-Xlint:inaccessible",
   "-Xlint:infer-any",
   "-Xlint:nullary-override",
-  "-Xlint:nullary-unit"
+  "-Xlint:nullary-unit",
+  "-Yrangepos",
+  "-Ywarn-unused"
 )
 
 val scalac12Options = Seq(
@@ -86,7 +92,7 @@ javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 libraryDependencies ++= Seq(
   "org.scala-lang"         % "scala-reflect"  % scalaVersion.value % "provided",
   "org.scala-lang"         % "scala-compiler" % scalaVersion.value % "provided",
-  "org.scala-lang.modules" %% "scala-xml"     % "1.2.0" excludeAll (
+  "org.scala-lang.modules" %% "scala-xml"     % "1.3.0" excludeAll (
     ExclusionRule(organization = "org.scala-lang")
   ),
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.4" excludeAll (
@@ -161,6 +167,14 @@ packageBin in Compile := crossTarget.value / (assemblyJarName in assembly).value
 // https://github.com/sksamuel/scapegoat/issues/298
 ThisBuild / useCoursier := false
 
+// Scalafix
+scalafixDependencies in ThisBuild += "com.nequissimus" %% "sort-imports" % "0.3.1"
+addCommandAlias("fix", "all compile:scalafix test:scalafix; fixImports")
+addCommandAlias("fixImports", "compile:scalafix SortImports; test:scalafix SortImports")
+addCommandAlias("fixCheck", "compile:scalafix --check; test:scalafix --check; fixCheckImports")
+addCommandAlias("fixCheckImports", "compile:scalafix --check SortImports; test:scalafix --check SortImports")
+
+// Scalafmt
 scalafmtOnCompile in ThisBuild :=
   sys.env
     .get("CI")
