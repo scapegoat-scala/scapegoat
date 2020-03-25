@@ -246,7 +246,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
         if (debug) {
           reporter.echo(s"[debug] Scapegoat analysis [$unit] .....")
         }
-        val context = new InspectionContext(global, feedback)
+        val context = InspectionContext(global, feedback)
         activeInspections
           .filter(_.isEnabled)
           .foreach { inspection =>
