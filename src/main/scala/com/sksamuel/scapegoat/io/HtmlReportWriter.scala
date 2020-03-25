@@ -94,35 +94,30 @@ object HtmlReportWriter {
 
   def warnings(reporter: Feedback) = {
     reporter.warningsWithMinimalLevel.map {
-      case warning =>
+      warning =>
         val source = warning.sourceFileNormalized + ":" + warning.line
         <div class="warning">
           <div class="source">
             {source}
           </div>
           <div class="title">
-            {
-          warning.level match {
-            case Levels.Info    => <span class="label label-info">Info</span>
+            {warning.level match {
+            case Levels.Info => <span class="label label-info">Info</span>
             case Levels.Warning => <span class="label label-warning">Warning</span>
-            case Levels.Error   => <span class="label label-danger">Error</span>
-          }
-        }
-            &nbsp;{warning.text}
-            &nbsp;<span class="inspection">{warning.inspection}</span>
+            case Levels.Error => <span class="label label-danger">Error</span>
+          }}&nbsp;{warning.text}&nbsp; <span class="inspection">
+            {warning.inspection}
+          </span>
           </div>
           <div>
             {warning.explanation}
-          </div>
-            {
-          warning.snippet match {
-            case None =>
-            case Some(snippet) =>
-              <div class="snippet">
-                  {snippet}
-                </div>
-          }
-        }
+          </div>{warning.snippet match {
+          case None =>
+          case Some(snippet) =>
+            <div class="snippet">
+              {snippet}
+            </div>
+        }}
         </div>
     }
   }
