@@ -32,7 +32,7 @@ class ReverseTailReverse
               ),
               TermName("reverse")
               )
-              if (arrayOps0.toString.contains("ArrayOps"))
+              if arrayOps0.toString.contains("ArrayOps")
               && arrayOps1.toString.contains("ArrayOps")
               && arrayOps2.toString.contains("ArrayOps") =>
             context.warn(tree.pos, self, tree.toString.take(500))
