@@ -54,6 +54,7 @@ case class InspectionContext(global: Global, feedback: Feedback) {
 
     private val SuppressWarnings = typeOf[SuppressWarnings]
 
+    @scala.annotation.tailrec
     private def inspectionClass(klass: Class[_]): Class[_] = Option(klass.getEnclosingClass) match {
       case None    => klass
       case Some(k) => inspectionClass(k)
