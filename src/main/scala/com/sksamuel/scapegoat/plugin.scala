@@ -95,15 +95,13 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
           .toMap
     }
     forProperty("sourcePrefix:") match {
-      case Some(option) => {
+      case Some(option) =>
         component.sourcePrefix = option.drop("sourcePrefix:".length)
-      }
       case None => component.sourcePrefix = "src/main/scala/"
     }
     forProperty("minimalLevel:") match {
-      case Some(level) => {
+      case Some(level) =>
         component.minimalLevel = Levels.fromName(level)
-      }
       case None => component.minimalLevel = Levels.Info
     }
     forProperty("dataDir:") match {
