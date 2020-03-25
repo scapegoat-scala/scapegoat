@@ -30,7 +30,7 @@ class LonelySealedTrait
 
     private def inspectParents(parents: List[Tree]): Unit = {
       parents.foreach {
-        case parent =>
+        parent =>
           for (c <- parent.tpe.baseClasses)
             implementedClasses.add(c.name.toString)
       }

@@ -22,20 +22,20 @@ object IOUtils {
 
   def writeHTMLReport(targetDir: File, reporter: Feedback): File = {
     val html = HtmlReportWriter.generate(reporter).toString()
-    writeFile(targetDir, reporter, html, HtmlFile)
+    writeFile(targetDir, html, HtmlFile)
   }
 
   def writeXMLReport(targetDir: File, reporter: Feedback): File = {
-    val html = XmlReportWriter.toXML(reporter).toString()
-    writeFile(targetDir, reporter, html, XmlFile)
+    val xml = XmlReportWriter.toXML(reporter).toString()
+    writeFile(targetDir, xml, XmlFile)
   }
 
   def writeScalastyleReport(targetDir: File, reporter: Feedback): File = {
-    val html = ScalastyleReportWriter.toXML(reporter).toString()
-    writeFile(targetDir, reporter, html, ScalastyleXmlFile)
+    val xml = ScalastyleReportWriter.toXML(reporter).toString()
+    writeFile(targetDir, xml, ScalastyleXmlFile)
   }
 
-  private def writeFile(targetDir: File, reporter: Feedback, data: String, fileName: String) = {
+  private def writeFile(targetDir: File, data: String, fileName: String) = {
     targetDir.mkdirs()
     val file = new File(targetDir.getAbsolutePath + "/" + fileName)
     serialize(file, data)

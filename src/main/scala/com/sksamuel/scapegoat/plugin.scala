@@ -75,35 +75,33 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         component.disableScalastyleXML = false
     }
     forProperty("overrideLevels:") foreach {
-      case option =>
+      option =>
         component.feedback.levelOverridesByInspectionSimpleName = option
           .drop("overrideLevels:".length)
           .split(":")
           .map {
-            case nameLevel =>
+            nameLevel =>
               nameLevel.split("=") match {
                 case Array(insp, level) => insp -> Levels.fromName(level)
                 case _ =>
                   throw new IllegalArgumentException(
                     s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
-                    "Expecting 'name=level' where 'name' is the simple name of " +
-                    "an inspection and 'level' is the simple name of a " +
-                    "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
+                      "Expecting 'name=level' where 'name' is the simple name of " +
+                      "an inspection and 'level' is the simple name of a " +
+                      "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
                   )
               }
           }
           .toMap
     }
     forProperty("sourcePrefix:") match {
-      case Some(option) => {
+      case Some(option) =>
         component.sourcePrefix = option.drop("sourcePrefix:".length)
-      }
       case None => component.sourcePrefix = "src/main/scala/"
     }
     forProperty("minimalLevel:") match {
-      case Some(level) => {
+      case Some(level) =>
         component.minimalLevel = Levels.fromName(level)
-      }
       case None => component.minimalLevel = Levels.Info
     }
     forProperty("dataDir:") match {
@@ -164,7 +162,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var ignoredFiles: List[String] = Nil
   var consoleOutput: Boolean = false
   var verbose: Boolean = false
-  var debug: Boolean = false
+  val debug: Boolean = false
   var summary: Boolean = true
   var disableXML = true
   var disableHTML = true
@@ -248,7 +246,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
         if (debug) {
           reporter.echo(s"[debug] Scapegoat analysis [$unit] .....")
         }
-        val context = new InspectionContext(global, feedback)
+        val context = InspectionContext(global, feedback)
         activeInspections
           .filter(_.isEnabled)
           .foreach { inspection =>

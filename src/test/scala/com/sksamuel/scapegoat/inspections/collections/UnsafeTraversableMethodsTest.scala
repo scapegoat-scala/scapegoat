@@ -28,14 +28,14 @@ class UnsafeTraversableMethodsTest
   )
 
   unsafeMethodUsages.foreach { unsafeMethodUsage =>
-    s"Traversable.${unsafeMethodUsage} use" - {
+    s"Traversable.$unsafeMethodUsage use" - {
       "should report warning" in {
 
         val code = s"""class Test {
-                      Seq(1).${unsafeMethodUsage}
-                      List(1).${unsafeMethodUsage}
-                      Vector(1).${unsafeMethodUsage}
-                      Iterable(1).${unsafeMethodUsage}
+                      Seq(1).$unsafeMethodUsage
+                      List(1).$unsafeMethodUsage
+                      Vector(1).$unsafeMethodUsage
+                      Iterable(1).$unsafeMethodUsage
                     } """.stripMargin
 
         compileCodeSnippet(code)
