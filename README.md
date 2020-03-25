@@ -297,7 +297,7 @@ Checks for invalid regex literals that would fail at compile time. Either dangli
 
 Checks for .size on an instance of List. Eg, `val a = List(1,2,3); a.size`
 
-*Rationale* List.size is O(n) so for performance reasons if .size is needed on a list that could be large, consider using an alternative with O(1), eg Array, Vector or ListBuffer.
+*Rationale*: List.size is O(n) so for performance reasons if .size is needed on a list that could be large, consider using an alternative with O(1), eg Array, Vector or ListBuffer.
 
 ##### Redundant finalizer
 
