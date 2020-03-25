@@ -162,7 +162,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var ignoredFiles: List[String] = Nil
   var consoleOutput: Boolean = false
   var verbose: Boolean = false
-  var debug: Boolean = false
+  val debug: Boolean = false
   var summary: Boolean = true
   var disableXML = true
   var disableHTML = true
