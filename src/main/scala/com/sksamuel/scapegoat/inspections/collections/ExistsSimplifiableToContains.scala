@@ -49,7 +49,7 @@ class ExistsSimplifiableToContains
               List(
                 Function(
                   List(ValDef(_, TermName(iterationVariable), _, _)),
-                  subtree @ Apply(Select(name, Equals), List(x))
+                  subtree @ Apply(Select(_, Equals), List(x))
                 )
               )
               )

@@ -30,7 +30,7 @@ class VariableShadowing
         tree match {
           case Block(_, _) =>
             enter(); continue(tree); exit()
-          case ClassDef(_, _, _, Template(_, _, body)) =>
+          case ClassDef(_, _, _, Template(_, _, _)) =>
             enter(); continue(tree); exit()
           case ModuleDef(_, _, Template(_, _, _)) =>
             enter(); continue(tree); exit()

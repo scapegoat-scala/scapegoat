@@ -19,7 +19,7 @@ class UseExpM1
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(
-              Select(Apply(Select(pack, TermName("exp")), List(_)), nme.SUB),
+              Select(Apply(Select(_, TermName("exp")), List(_)), nme.SUB),
               List(Literal(Constant(1)))
               ) =>
             context.warn(tree.pos, self)

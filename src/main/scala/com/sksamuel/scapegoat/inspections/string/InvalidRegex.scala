@@ -28,7 +28,7 @@ class InvalidRegex
             try {
               regex.toString.r
             } catch {
-              case e: PatternSyntaxException =>
+              case _: PatternSyntaxException =>
                 context.warn(tree.pos, self)
             }
           case _ => continue(tree)

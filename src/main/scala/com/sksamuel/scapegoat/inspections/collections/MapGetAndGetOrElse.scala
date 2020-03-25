@@ -25,8 +25,8 @@ class MapGetAndGetOrElse
       override def inspect(tree: Tree): Unit = {
         tree match {
           case Apply(
-              TypeApply(Select(Apply(Select(left, TermName("get")), List(key)), TermName("getOrElse")), _),
-              List(defaultValue)
+              TypeApply(Select(Apply(Select(left, TermName("get")), List(_)), TermName("getOrElse")), _),
+              List(_)
               ) if isMap(left) =>
             context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
