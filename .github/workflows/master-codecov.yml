@@ -2,8 +2,6 @@ name: Codecov
 on:
   push:
     branches: [master]
-env:
-  CI: true
 jobs:
   codecov:
     name: Run codecov on master

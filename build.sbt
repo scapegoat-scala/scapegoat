@@ -177,5 +177,5 @@ addCommandAlias("fixCheckImports", "compile:scalafix --check SortImports; test:s
 // Scalafmt
 scalafmtOnCompile in ThisBuild :=
   sys.env
-    .get("CI")
+    .get("GITHUB_ACTIONS")
     .forall(_.toLowerCase == "false")
