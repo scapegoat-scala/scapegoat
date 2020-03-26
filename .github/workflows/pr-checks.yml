@@ -1,8 +1,6 @@
 name: PR checks
 on:
   pull_request:
-env:
-  CI: true
 jobs:
   test:
     name: Test using JDK ${{matrix.java}} and Scala ${{matrix.scala}}
