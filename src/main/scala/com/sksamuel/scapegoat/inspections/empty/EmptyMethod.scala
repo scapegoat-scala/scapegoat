@@ -22,7 +22,7 @@ class EmptyMethod
           case DefDef(mods, _, _, _, _, _) if mods.isOverride                                   =>
           case ClassDef(mods, _, _, _) if mods.isTrait                                          => continue(tree)
           case DefDef(_, _, _, _, _, _) if tree.symbol != null && tree.symbol.enclClass.isTrait =>
-          case DefDef(_, _, _, _, _, Literal(Constant(()))) =>
+          case d @ DefDef(_, _, _, _, _, Literal(Constant(()))) if d.symbol != null && d.symbol.isPrivate =>
             context.warn(tree.pos, self, tree.toString.take(500))
           case _ => continue(tree)
         }
