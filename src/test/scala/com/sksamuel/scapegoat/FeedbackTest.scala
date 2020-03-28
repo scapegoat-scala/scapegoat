@@ -32,9 +32,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter
-        val feedback = new Feedback(false, reporter, defaultSourcePrefix)
+        val feedback = new Feedback(true, reporter, defaultSourcePrefix)
         feedback.warn(position, inspection)
-        reporter.infos should contain(reporter.Info(position, "My default is Error", reporter.ERROR))
+        reporter.infos should contain(
+          reporter.Info(position, "[scapegoat] My default is Error\n  This is explanation.", reporter.ERROR)
+        )
       }
       "for warning" in {
         val inspection = new DummyInspection(
@@ -44,9 +46,12 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter
-        val feedback = new Feedback(false, reporter, defaultSourcePrefix)
+        val feedback = new Feedback(true, reporter, defaultSourcePrefix)
         feedback.warn(position, inspection)
-        reporter.infos should contain(reporter.Info(position, "My default is Warning", reporter.WARNING))
+        reporter.infos should contain(
+          reporter
+            .Info(position, "[scapegoat] My default is Warning\n  This is explanation.", reporter.WARNING)
+        )
       }
       "for info" in {
         val inspection = new DummyInspection(
@@ -56,9 +61,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter
-        val feedback = new Feedback(false, reporter, defaultSourcePrefix)
+        val feedback = new Feedback(true, reporter, defaultSourcePrefix)
         feedback.warn(position, inspection)
-        reporter.infos should contain(reporter.Info(position, "My default is Info", reporter.INFO))
+        reporter.infos should contain(
+          reporter.Info(position, "[scapegoat] My default is Info\n  This is explanation.", reporter.INFO)
+        )
       }
     }
     "should use proper paths" - {
@@ -111,7 +118,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter
-        val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Info)
+        val feedback = new Feedback(true, reporter, defaultSourcePrefix, Levels.Info)
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(3)
       }
