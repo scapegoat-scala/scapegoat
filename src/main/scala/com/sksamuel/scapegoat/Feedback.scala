@@ -56,17 +56,17 @@ class Feedback(
       inspection = inspection.getClass.getCanonicalName
     )
     warningsBuffer.append(warning)
-    if (shouldPrint(warning)) {
-      println(s"[${warning.level.toString.toLowerCase}] $sourceFileNormalized:${warning.line}: $text")
-      println(s"          $explanation")
-      snippet.foreach(s => println(s"          $s"))
-      println()
-    }
 
-    adjustedLevel match {
-      case Levels.Error   => reporter.error(pos, text)
-      case Levels.Warning => reporter.warning(pos, text)
-      case Levels.Info    => reporter.info(pos, text, force = false)
+    if (shouldPrint(warning)) {
+      val snippetText = snippet.fold("")("\n  " + _ + "\n")
+      val report = s"""|[scapegoat] $text
+                       |  $explanation$snippetText""".stripMargin
+
+      adjustedLevel match {
+        case Levels.Error   => reporter.error(pos, report)
+        case Levels.Warning => reporter.warning(pos, report)
+        case Levels.Info    => reporter.info(pos, report, force = false)
+      }
     }
   }
 
