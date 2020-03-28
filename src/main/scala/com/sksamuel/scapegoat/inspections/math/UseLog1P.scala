@@ -6,7 +6,7 @@ class UseLog1P
     extends Inspection(
       text = "Use log1p",
       defaultLevel = Levels.Info,
-      description = "Checks for use of math.log(x + 1) instead of math.log1p(x)",
+      description = "Checks for use of math.log(x + 1) instead of math.log1p(x).",
       explanation = "Use math.log1p(x) is clearer and more performant than $math.log(1 + x)."
     ) {
 

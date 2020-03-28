@@ -7,7 +7,7 @@ class OptionGet
     extends Inspection(
       text = "Use of Option.get",
       defaultLevel = Levels.Error,
-      description = "Checks for use of Option.get",
+      description = "Checks for use of Option.get.",
       explanation =
         "Using Option.get defeats the purpose of using Option in the first place. Use the following instead: Option.getOrElse, Option.fold, pattern matching or don't take the value out of the container and map over it to transform it."
     ) {
