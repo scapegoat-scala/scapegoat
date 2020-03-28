@@ -1,7 +1,7 @@
 Scapegoat
 =========
 
-[![travis image](https://travis-ci.org/sksamuel/scapegoat.svg?branch=master)](https://travis-ci.org/sksamuel/scapegoat)
+[![Codecov](https://img.shields.io/codecov/c/github/sksamuel/scapegoat)](https://codecov.io/gh/sksamuel/scapegoat)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.11.12.svg?label=latest%20release%20for%202.11.12"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.11.12%22)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.12.10.svg?label=latest%20release%20for%202.12.10"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.12.10%22)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.13.1.svg?label=latest%20release%20for%202.13.1"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.13.1%22)
