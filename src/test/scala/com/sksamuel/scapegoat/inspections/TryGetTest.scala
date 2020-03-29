@@ -1,12 +1,10 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.InspectionTest
 import com.sksamuel.scapegoat.inspections.unsafe.TryGet
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class TryGetTest extends AnyFreeSpec with PluginRunner with Matchers {
+class TryGetTest extends InspectionTest {
 
   override val inspections = Seq(new TryGet)
 

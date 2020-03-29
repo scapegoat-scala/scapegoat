@@ -1,11 +1,9 @@
 package com.sksamuel.scapegoat.inspections.option
 
-import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should.Matchers
+import com.sksamuel.scapegoat.InspectionTest
 
 /** @author Stephen Samuel */
-class OptionSizeTest extends AnyFreeSpec with Matchers with PluginRunner {
+class OptionSizeTest extends InspectionTest {
 
   override val inspections = Seq(new OptionSize)
 

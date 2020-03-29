@@ -1,12 +1,9 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.OneInstancePerTest
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should.Matchers
+import com.sksamuel.scapegoat.InspectionTest
 
 /** @author Stephen Samuel */
-class AvoidToMinusOneTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class AvoidToMinusOneTest extends InspectionTest {
 
   override val inspections = Seq(new AvoidToMinusOne)
 
