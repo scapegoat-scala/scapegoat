@@ -7,7 +7,7 @@ class ReverseTakeReverse
       text = "reverse.take().reverse instead of takeRight",
       defaultLevel = Levels.Info,
       description = "Checks for use of reverse.take().reverse.",
-      explanation = "reverse.take().reverse can be replaced with takeRight, which is more concise."
+      explanation = "`reverse.take().reverse` can be replaced with `takeRight`, which is more concise."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

@@ -5,12 +5,13 @@ import com.sksamuel.scapegoat._
 /** @author Stephen Samuel */
 class BigDecimalScaleWithoutRoundingMode
     extends Inspection(
-      text = "BigDecimal setScale() without rounding mode",
+      text = "BigDecimal `setScale()` without rounding mode",
       defaultLevel = Levels.Warning,
       description =
-        "Checks for use of setScale() on a BigDecimal without setting the rounding mode can throw an exception.",
+        "Checks for use of `setScale()` on a BigDecimal without setting the rounding mode can throw an exception.",
       explanation =
-        "When using setScale() on a BigDecimal without setting the rounding mode, this can throw an exception if rounding is required. Did you mean to call setScale(s, RoundingMode.XYZ)?"
+        "When using `setScale()` on a BigDecimal without setting the rounding mode, this can throw an exception " +
+        "if rounding is required. Did you mean to call `setScale(s, RoundingMode.XYZ)`?"
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

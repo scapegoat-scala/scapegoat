@@ -7,8 +7,8 @@ class FindDotIsDefined
     extends Inspection(
       text = "find().isDefined() instead of exists()",
       defaultLevel = Levels.Info,
-      description = "Checks whether find() can be replaced with exists().",
-      explanation = "find().isDefined can be replaced with exists(), which is more concise."
+      description = "Checks whether `find()` can be replaced with `exists()`.",
+      explanation = "`find().isDefined` can be replaced with `exists()`, which is more concise."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

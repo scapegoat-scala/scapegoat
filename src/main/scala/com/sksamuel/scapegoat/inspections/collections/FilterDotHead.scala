@@ -9,7 +9,7 @@ class FilterDotHead
       defaultLevel = Levels.Info,
       description = "Checks for use of filter().head.",
       explanation =
-        "filter().head can throw an exception if the collection is empty - it can be replaced with find() match {...}."
+        "`filter().head` can throw an exception if the collection is empty - it can be replaced with `find() match {...}`."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

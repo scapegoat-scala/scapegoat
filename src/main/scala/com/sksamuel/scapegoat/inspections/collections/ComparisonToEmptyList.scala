@@ -7,8 +7,8 @@ class ComparisonToEmptyList
     extends Inspection(
       text = "Comparison to empty list",
       defaultLevel = Levels.Info,
-      description = "Checks for code like a == List() or a == Nil.",
-      explanation = "Prefer use of isEmpty instead of comparison to an empty List."
+      description = "Checks for code like `a == List()` or `a == Nil`.",
+      explanation = "Prefer use of `isEmpty` instead of comparison to an empty List."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
