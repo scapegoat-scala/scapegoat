@@ -7,12 +7,16 @@ class AllInspectionsTest extends AnyFreeSpec with Matchers {
 
   ScapegoatConfig.inspections.foreach { insp =>
     insp.getClass.getSimpleName - {
-      "should have a description" in {
+      "should have a properly-formatted description" in {
         insp.description.trim shouldNot be("")
+        insp.description.last should be('.')
+        insp.description.head.toUpper should be(insp.description.head)
       }
 
-      "its description should end in ." in {
-        insp.description.last should be('.')
+      "should have a properly-formatted explanation" in {
+        insp.explanation.trim shouldNot be("")
+        insp.explanation.last should (be('.') or be('?'))
+        insp.explanation.head.toUpper should be(insp.explanation.head)
       }
     }
   }
