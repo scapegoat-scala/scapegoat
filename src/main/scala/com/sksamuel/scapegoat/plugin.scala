@@ -158,7 +158,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disabledInspections: List[String] = Nil
   var enabledInspections: List[String] = Nil
   var ignoredFiles: List[String] = Nil
-  var consoleOutput: Boolean = false
+  var consoleOutput: Boolean = true
   var verbose: Boolean = false
   val debug: Boolean = false
   var summary: Boolean = true
