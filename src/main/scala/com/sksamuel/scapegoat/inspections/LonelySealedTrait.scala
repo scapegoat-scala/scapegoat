@@ -29,10 +29,9 @@ class LonelySealedTrait
     }
 
     private def inspectParents(parents: List[Tree]): Unit = {
-      parents.foreach {
-        parent =>
-          for (c <- parent.tpe.baseClasses)
-            implementedClasses.add(c.name.toString)
+      parents.foreach { parent =>
+        for (c <- parent.tpe.baseClasses)
+          implementedClasses.add(c.name.toString)
       }
     }
 

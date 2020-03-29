@@ -22,7 +22,7 @@ class RepeatedIfElseBody
       private def twoBlocksStartWithTheSame(oneBlock: Block, another: Block): Boolean = {
         (oneBlock.children.headOption, another.children.headOption) match {
           case (Some(statement1), Some(statement2)) if statement1.toString == statement2.toString => true
-          case _                                                                                    => false
+          case _                                                                                  => false
         }
       }
 

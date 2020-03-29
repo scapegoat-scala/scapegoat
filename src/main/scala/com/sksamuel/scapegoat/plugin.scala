@@ -74,25 +74,23 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
         component.disableHTML = false
         component.disableScalastyleXML = false
     }
-    forProperty("overrideLevels:") foreach {
-      option =>
-        component.feedback.levelOverridesByInspectionSimpleName = option
-          .drop("overrideLevels:".length)
-          .split(":")
-          .map {
-            nameLevel =>
-              nameLevel.split("=") match {
-                case Array(insp, level) => insp -> Levels.fromName(level)
-                case _ =>
-                  throw new IllegalArgumentException(
-                    s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
-                      "Expecting 'name=level' where 'name' is the simple name of " +
-                      "an inspection and 'level' is the simple name of a " +
-                      "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
-                  )
-              }
+    forProperty("overrideLevels:") foreach { option =>
+      component.feedback.levelOverridesByInspectionSimpleName = option
+        .drop("overrideLevels:".length)
+        .split(":")
+        .map { nameLevel =>
+          nameLevel.split("=") match {
+            case Array(insp, level) => insp -> Levels.fromName(level)
+            case _ =>
+              throw new IllegalArgumentException(
+                s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
+                "Expecting 'name=level' where 'name' is the simple name of " +
+                "an inspection and 'level' is the simple name of a " +
+                "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
+              )
           }
-          .toMap
+        }
+        .toMap
     }
     forProperty("sourcePrefix:") match {
       case Some(option) =>
