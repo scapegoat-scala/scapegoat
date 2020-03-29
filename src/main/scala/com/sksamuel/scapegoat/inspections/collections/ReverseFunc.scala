@@ -8,7 +8,8 @@ class ReverseFunc
       defaultLevel = Levels.Info,
       description = "Checks for use of reverse followed by head/headOption/iterator/map.",
       explanation =
-        "reverse followed by head, headOption, iterator, or map can be replaced, respectively, with last, lastOption, reverseIterator, or reverseMap."
+        "`reverse` followed by `head`, `headOption`, `iterator`, or `map` can be replaced, respectively, with " +
+        "`last`, `lastOption`, `reverseIterator`, or `reverseMap`."
     ) {
 
   object FuncReplace {

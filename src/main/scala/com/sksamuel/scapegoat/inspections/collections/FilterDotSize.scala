@@ -12,7 +12,7 @@ class FilterDotSize
       text = "filter().size() instead of count()",
       defaultLevel = Levels.Info,
       description = "Checks if filter().size can be simplified to count().",
-      explanation = "filter().size can be replaced with count(), which is more concise."
+      explanation = "`filter().size` can be replaced with `count()`, which is more concise."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

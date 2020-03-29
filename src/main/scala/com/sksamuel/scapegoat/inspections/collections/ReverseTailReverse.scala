@@ -7,7 +7,7 @@ class ReverseTailReverse
       text = "reverse.tail.reverse instead of init",
       defaultLevel = Levels.Info,
       description = "Checks for use of reverse.tail.reverse.",
-      explanation = "reverse.tail.reverse can be replaced with init, which is more concise."
+      explanation = "`reverse.tail.reverse` can be replaced with `init`, which is more concise."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

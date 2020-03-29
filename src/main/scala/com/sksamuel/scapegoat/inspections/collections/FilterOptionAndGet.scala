@@ -8,7 +8,7 @@ class FilterOptionAndGet
       text = "filter(_.isDefined).map(_.get) instead of flatten",
       defaultLevel = Levels.Info,
       description = "Checks whether the expression can be rewritten using flatten.",
-      explanation = "filter(_.isDefined).map(_.get) can be replaced with flatten."
+      explanation = "`filter(_.isDefined).map(_.get)` can be replaced with `flatten`."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

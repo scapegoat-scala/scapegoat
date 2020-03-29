@@ -7,7 +7,7 @@ class FindAndNotEqualsNoneReplaceWithExists
       text = "find(x => ) != None instead of exists(x =>)",
       defaultLevel = Levels.Info,
       description = "Checks whether find() can be replaced with exists().",
-      explanation = "find() != None can be replaced with exists(), which is more concise."
+      explanation = "`find() != None` can be replaced with `exists()`, which is more concise."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
