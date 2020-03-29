@@ -11,8 +11,8 @@ class ExistsSimplifiableToContains
     extends Inspection(
       text = "Exists simplifiable to contains",
       defaultLevel = Levels.Info,
-      description = "Checks if exists() can be simplified to contains().",
-      explanation = "`exists(x => x == y)` can be replaced with contains(y)."
+      description = "Checks if `exists()` can be simplified to `contains()`.",
+      explanation = "`exists(x => x == y)` can be replaced with `contains(y)`."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

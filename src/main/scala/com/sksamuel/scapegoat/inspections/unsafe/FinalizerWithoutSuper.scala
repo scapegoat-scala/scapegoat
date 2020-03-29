@@ -9,7 +9,7 @@ class FinalizerWithoutSuper
       defaultLevel = Levels.Warning,
       description = "Checks for overridden finalizers that do not call super.",
       explanation =
-        "Finalizers should call super.finalize() to ensure superclasses are able to run their finalization logic."
+        "Finalizers should call `super.finalize()` to ensure superclasses are able to run their finalization logic."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {

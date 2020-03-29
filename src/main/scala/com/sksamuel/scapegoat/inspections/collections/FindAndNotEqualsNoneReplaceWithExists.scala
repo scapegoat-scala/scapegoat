@@ -6,7 +6,7 @@ class FindAndNotEqualsNoneReplaceWithExists
     extends Inspection(
       text = "find(x => ) != None instead of exists(x =>)",
       defaultLevel = Levels.Info,
-      description = "Checks whether find() can be replaced with exists().",
+      description = "Checks whether `find()` can be replaced with exists().",
       explanation = "`find() != None` can be replaced with `exists()`, which is more concise."
     ) {
 

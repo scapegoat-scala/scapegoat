@@ -7,8 +7,8 @@ class ComparisonToEmptySet
     extends Inspection(
       text = "Comparison to empty set",
       defaultLevel = Levels.Info,
-      description = "Checks for code like a == Set() or a == Set.empty.",
-      explanation = "Prefer use of isEmpty instead of comparison to an empty Set."
+      description = "Checks for code like `a == Set()` or `a == Set.empty`.",
+      explanation = "Prefer use of `isEmpty` instead of comparison to an empty Set."
     ) {
 
   def inspector(context: InspectionContext): Inspector = new Inspector(context) {
