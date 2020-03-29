@@ -6,7 +6,7 @@ class AsInstanceOf
     extends Inspection(
       text = "Use of asInstanceOf",
       defaultLevel = Levels.Warning,
-      description = "",
+      description = "Checks for use of asInstanceOf.",
       explanation =
         "Use of asInstanceOf is considered a bad practice - consider using pattern matching instead."
     ) {
