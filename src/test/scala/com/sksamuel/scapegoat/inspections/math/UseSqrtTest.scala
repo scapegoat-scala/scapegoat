@@ -1,10 +1,7 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should.Matchers
-
-class UseSqrtTest extends AnyFreeSpec with Matchers with PluginRunner {
+import com.sksamuel.scapegoat.InspectionTest
+class UseSqrtTest extends InspectionTest {
 
   override val inspections = Seq(new UseSqrt)
 

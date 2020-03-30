@@ -1,13 +1,10 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
 import com.sksamuel.scapegoat.inspections.unneccesary.UnusedMethodParameter
-import com.sksamuel.scapegoat.{PluginRunner, Warning}
-import org.scalatest.OneInstancePerTest
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should.Matchers
+import com.sksamuel.scapegoat.{InspectionTest, Warning}
 
 /** @author Stephen Samuel */
-class UnusedMethodParameterTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class UnusedMethodParameterTest extends InspectionTest {
 
   override val inspections = Seq(new UnusedMethodParameter)
 

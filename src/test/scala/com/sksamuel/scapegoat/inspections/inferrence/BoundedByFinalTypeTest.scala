@@ -1,13 +1,10 @@
 package com.sksamuel.scapegoat.inspections.inferrence
 
-import com.sksamuel.scapegoat.PluginRunner
+import com.sksamuel.scapegoat.InspectionTest
 import com.sksamuel.scapegoat.inspections.inference.BoundedByFinalType
-import org.scalatest.OneInstancePerTest
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should.Matchers
 
 /** @author Stephen Samuel */
-class BoundedByFinalTypeTest extends AnyFreeSpec with Matchers with PluginRunner with OneInstancePerTest {
+class BoundedByFinalTypeTest extends InspectionTest {
 
   override val inspections = Seq(new BoundedByFinalType)
 

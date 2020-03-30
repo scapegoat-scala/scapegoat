@@ -1,11 +1,9 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.PluginRunner
-import org.scalatest.freespec.AnyFreeSpec
-import org.scalatest.matchers.should.Matchers
+import com.sksamuel.scapegoat.InspectionTest
 
 /** @author Stephen Samuel */
-class FindDotIsDefinedTest extends AnyFreeSpec with Matchers with PluginRunner {
+class FindDotIsDefinedTest extends InspectionTest {
 
   override val inspections = Seq(new FindDotIsDefined)
 
