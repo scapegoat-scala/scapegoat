@@ -1,1 +1,1 @@
-sonatypeProfileName := "sksamuel"
+sonatypeProfileName := "com.sksamuel"
