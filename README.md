@@ -3,7 +3,7 @@ Scapegoat
 
 [![Codecov](https://img.shields.io/codecov/c/github/sksamuel/scapegoat)](https://codecov.io/gh/sksamuel/scapegoat)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.11.12.svg?label=latest%20release%20for%202.11.12"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.11.12%22)
-[<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.12.10.svg?label=latest%20release%20for%202.12.10"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.12.10%22)
+[<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.12.11.svg?label=latest%20release%20for%202.12.11"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.12.11%22)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.13.1.svg?label=latest%20release%20for%202.13.1"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.13.1%22)
 [![Scala Steward badge](https://img.shields.io/badge/Scala_Steward-helping-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAMAAAARSr4IAAAAVFBMVEUAAACHjojlOy5NWlrKzcYRKjGFjIbp293YycuLa3pYY2LSqql4f3pCUFTgSjNodYRmcXUsPD/NTTbjRS+2jomhgnzNc223cGvZS0HaSD0XLjbaSjElhIr+AAAAAXRSTlMAQObYZgAAAHlJREFUCNdNyosOwyAIhWHAQS1Vt7a77/3fcxxdmv0xwmckutAR1nkm4ggbyEcg/wWmlGLDAA3oL50xi6fk5ffZ3E2E3QfZDCcCN2YtbEWZt+Drc6u6rlqv7Uk0LdKqqr5rk2UCRXOk0vmQKGfc94nOJyQjouF9H/wCc9gECEYfONoAAAAASUVORK5CYII=)](https://scala-steward.org)
 
