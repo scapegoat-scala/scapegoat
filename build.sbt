@@ -1,5 +1,5 @@
 // compiler plugins
-addCompilerPlugin(scalafixSemanticdb)
+addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.3.10" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
@@ -22,8 +22,8 @@ developers := List(
   )
 )
 
-scalaVersion := "2.13.1"
-crossScalaVersions := Seq("2.11.12", "2.12.10", "2.12.11", "2.13.0", "2.13.1")
+scalaVersion := "2.13.2"
+crossScalaVersions := Seq("2.11.12", "2.12.10", "2.12.11", "2.13.1", "2.13.2")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -102,14 +102,14 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-xml"     % "1.3.0" excludeAll (
     ExclusionRule(organization = "org.scala-lang")
   ),
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.5" excludeAll (
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.1.6" excludeAll (
     ExclusionRule(organization = "org.scala-lang")
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
   "commons-io"     % "commons-io"     % "2.6"              % "test",
   "org.scalatest"  %% "scalatest"     % "3.1.1"            % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
-  "joda-time"      % "joda-time"      % "2.10.5"           % "test",
+  "joda-time"      % "joda-time"      % "2.10.6"           % "test",
   "org.joda"       % "joda-convert"   % "2.2.1"            % "test",
   "org.slf4j"      % "slf4j-api"      % "1.7.30"           % "test"
 )
