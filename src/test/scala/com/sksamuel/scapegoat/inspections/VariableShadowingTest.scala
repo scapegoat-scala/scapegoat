@@ -183,6 +183,20 @@ class VariableShadowingTest extends InspectionTest {
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
+      "when using for-comprehension (#343)" in {
+        val code =
+          """
+            |object Test {
+            |  for {
+            |    c <- "Hello, world!"
+            |    if c != ','
+            |  } println(c)
+            |}
+            |""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
