@@ -13,40 +13,41 @@ class LonelySealedTrait
       explanation = "A sealed trait that is not extended is considered dead code."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+  override def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
 
-    import context.global._
+      import context.global._
 
-    private val sealedClasses = mutable.HashMap[String, ClassDef]()
-    private val implementedClasses = mutable.HashSet[String]()
+      private val sealedClasses = mutable.HashMap[String, ClassDef]()
+      private val implementedClasses = mutable.HashSet[String]()
 
-    override def postInspection(): Unit = {
-      for ((name, cdef) <- sealedClasses) {
-        if (!implementedClasses.contains(name)) {
-          context.warn(cdef.pos, self)
+      override def postInspection(): Unit = {
+        for ((name, cdef) <- sealedClasses) {
+          if (!implementedClasses.contains(name))
+            context.warn(cdef.pos, self)
         }
       }
-    }
 
-    private def inspectParents(parents: List[Tree]): Unit = {
-      parents.foreach { parent =>
-        for (c <- parent.tpe.baseClasses)
-          implementedClasses.add(c.name.toString)
-      }
-    }
-
-    override def postTyperTraverser = new context.Traverser {
-
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case cdef @ ClassDef(mods, _, _, _) if mods.isSealed =>
-            sealedClasses.put(cdef.name.toString, cdef)
-          case ClassDef(_, _, _, Template(parents, _, _)) => inspectParents(parents)
-          case ModuleDef(_, _, Template(parents, _, _))   => inspectParents(parents)
-          case _                                          =>
+      private def inspectParents(parents: List[Tree]): Unit = {
+        parents.foreach { parent =>
+          for (c <- parent.tpe.baseClasses)
+            implementedClasses.add(c.name.toString)
         }
-        continue(tree)
       }
+
+      override def postTyperTraverser =
+        new context.Traverser {
+
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case cdef @ ClassDef(mods, _, _, _) if mods.isSealed =>
+                sealedClasses.put(cdef.name.toString, cdef)
+              case ClassDef(_, _, _, Template(parents, _, _)) => inspectParents(parents)
+              case ModuleDef(_, _, Template(parents, _, _))   => inspectParents(parents)
+              case _                                          =>
+            }
+            continue(tree)
+          }
+        }
     }
-  }
 }

@@ -12,20 +12,22 @@ class EitherGet
         "Method .get on a Left and a Right projection in deprecated since 2.13, use Either.getOrElse or Either.swap.getOrElse instead."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(Select(_, TermName("right")), TermName("get")) =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case Select(Select(_, TermName("left")), TermName("get")) =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Select(Select(_, TermName("right")), TermName("get")) =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case Select(Select(_, TermName("left")), TermName("get")) =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

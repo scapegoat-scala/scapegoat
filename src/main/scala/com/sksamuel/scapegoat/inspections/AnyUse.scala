@@ -13,23 +13,25 @@ class AnyUse
       explanation = "Code returning Any is most likely an indication of a programming error."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic                =>
-          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
-          case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
-          case ValDef(_, _, tpt, _) if tpt.tpe =:= typeOf[Any] =>
-            context.warn(tree.pos, self, tree.toString.take(200))
-          case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] =>
-            context.warn(tree.pos, self, tree.toString.take(200))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case DefDef(mods, _, _, _, _, _) if mods.isSynthetic                =>
+              case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
+              case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
+              case ValDef(_, _, tpt, _) if tpt.tpe =:= typeOf[Any] =>
+                context.warn(tree.pos, self, tree.toString.take(200))
+              case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] =>
+                context.warn(tree.pos, self, tree.toString.take(200))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

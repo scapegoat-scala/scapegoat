@@ -11,20 +11,22 @@ class DoubleNegation
       explanation = "Double negation can be removed, e.g. !(!b) it equal to just b."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Bang = TermName("unary_$bang")
+          private val Bang = TermName("unary_$bang")
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(Select(_, Bang), Bang) =>
-            context.warn(tree.pos, self, tree.toString.take(200))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Select(Select(_, Bang), Bang) =>
+                context.warn(tree.pos, self, tree.toString.take(200))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

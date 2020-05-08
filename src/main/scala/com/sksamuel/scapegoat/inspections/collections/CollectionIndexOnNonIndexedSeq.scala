@@ -11,24 +11,27 @@ class CollectionIndexOnNonIndexedSeq
       explanation = "Using an index to access elements of an IndexedSeq may cause performance problems."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private def isLiteral(t: Tree) = t match {
-        case Literal(_) => true
-        case _          => false
-      }
+          private def isLiteral(t: Tree) =
+            t match {
+              case Literal(_) => true
+              case _          => false
+            }
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(lhs, TermName("apply")), List(idx))
-              if isSeq(lhs) && !isIndexedSeq(lhs) && !isLiteral(idx) =>
-            context.warn(tree.pos, self, tree.toString.take(100))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(Select(lhs, TermName("apply")), List(idx))
+                  if isSeq(lhs) && !isIndexedSeq(lhs) && !isLiteral(idx) =>
+                context.warn(tree.pos, self, tree.toString.take(100))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

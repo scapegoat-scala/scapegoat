@@ -14,26 +14,27 @@ class InvalidRegex
         "Invalid regex literals can fail at compile time with a PatternSyntaxException. This could be caused by e.g. dangling meta characters, or unclosed escape characters, etc."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(
-              Apply(Select(_, TermName("augmentString")), List(Literal(Constant(regex)))),
-              TermName("r")
-              ) =>
-            try {
-              regex.toString.r
-            } catch {
-              case _: PatternSyntaxException =>
-                context.warn(tree.pos, self)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Select(
+                    Apply(Select(_, TermName("augmentString")), List(Literal(Constant(regex)))),
+                    TermName("r")
+                  ) =>
+                try regex.toString.r
+                catch {
+                  case _: PatternSyntaxException =>
+                    context.warn(tree.pos, self)
+                }
+              case _ => continue(tree)
             }
-          case _ => continue(tree)
+          }
         }
-      }
     }
-  }
 }

@@ -13,38 +13,39 @@ class UnreachableCatch
       explanation = "One or more cases are unreachable."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      def isUnreachable(cases: List[CaseDef]) = {
-        val types = mutable.HashSet[Type]()
-        def check(tpe: Type, guard: Tree): Boolean = {
-          if (types.exists(tpe <:< _)) {
-            true
-          } else {
-            if (guard == EmptyTree) {
-              types.add(tpe)
+          def isUnreachable(cases: List[CaseDef]) = {
+            val types = mutable.HashSet[Type]()
+            def check(tpe: Type, guard: Tree): Boolean = {
+              if (types.exists(tpe <:< _))
+                true
+              else {
+                if (guard == EmptyTree)
+                  types.add(tpe)
+                false
+              }
             }
-            false
+            cases.exists {
+              // matches t : Throwable
+              case CaseDef(Bind(_, Typed(_, tpt)), guard, _)                         => check(tpt.tpe, guard)
+              case CaseDef(Typed(_, tpt), guard, _) if tpt.tpe =:= typeOf[Throwable] => check(tpt.tpe, guard)
+              case _                                                                 => false
+            }
+          }
+
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Try(_, cases, _) if isUnreachable(cases) =>
+                context.warn(tree.pos, self, tree.toString.take(300))
+              case _ => continue(tree)
+            }
           }
         }
-        cases.exists {
-          // matches t : Throwable
-          case CaseDef(Bind(_, Typed(_, tpt)), guard, _)                         => check(tpt.tpe, guard)
-          case CaseDef(Typed(_, tpt), guard, _) if tpt.tpe =:= typeOf[Throwable] => check(tpt.tpe, guard)
-          case _                                                                 => false
-        }
-      }
-
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Try(_, cases, _) if isUnreachable(cases) =>
-            context.warn(tree.pos, self, tree.toString.take(300))
-          case _ => continue(tree)
-        }
-      }
     }
-  }
 }

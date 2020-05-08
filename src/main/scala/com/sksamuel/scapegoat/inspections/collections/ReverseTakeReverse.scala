@@ -10,38 +10,42 @@ class ReverseTakeReverse
       explanation = "`reverse.take().reverse` can be replaced with `takeRight`, which is more concise."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(Apply(Select(Select(c, TermName("reverse")), TermName("take")), _), TermName("reverse"))
-              if isTraversable(c) =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case Select(
-              Apply(
-                arrayOps0,
-                List(
-                  Apply(
-                    Select(
-                      Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))),
-                      TermName("take")
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Select(
+                    Apply(Select(Select(c, TermName("reverse")), TermName("take")), _),
+                    TermName("reverse")
+                  ) if isTraversable(c) =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case Select(
+                    Apply(
+                      arrayOps0,
+                      List(
+                        Apply(
+                          Select(
+                            Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))),
+                            TermName("take")
+                          ),
+                          _
+                        )
+                      )
                     ),
-                    _
+                    TermName("reverse")
                   )
-                )
-              ),
-              TermName("reverse")
-              )
-              if arrayOps0.toString.contains("ArrayOps")
-              && arrayOps1.toString.contains("ArrayOps")
-              && arrayOps2.toString.contains("ArrayOps") =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case _ => continue(tree)
+                  if arrayOps0.toString.contains("ArrayOps")
+                  && arrayOps1.toString.contains("ArrayOps")
+                  && arrayOps2.toString.contains("ArrayOps") =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

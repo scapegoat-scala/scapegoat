@@ -60,7 +60,7 @@ class Feedback(
     if (shouldPrint(warning)) {
       val snippetText = snippet.fold("")("\n  " + _ + "\n")
       val report = s"""|[scapegoat] $text
-                       |  $explanation$snippetText""".stripMargin
+                      |  $explanation$snippetText""".stripMargin
 
       adjustedLevel match {
         case Levels.Error   => reporter.error(pos, report)

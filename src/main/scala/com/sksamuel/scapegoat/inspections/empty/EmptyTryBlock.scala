@@ -11,18 +11,20 @@ class EmptyTryBlock
       explanation = "An empty try block is considered as dead code."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Try(Literal(Constant(())), _, _) =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Try(Literal(Constant(())), _, _) =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

@@ -10,29 +10,31 @@ class UseLog1P
       explanation = "Use math.log1p(x) is clearer and more performant than $math.log(1 + x)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      def isMathPackage(pack: String) =
-        pack == "scala.math.package" ||
-        pack == "java.lang.Math" ||
-        pack == "java.lang.StrictMath"
+          def isMathPackage(pack: String) =
+            pack == "scala.math.package" ||
+            pack == "java.lang.Math" ||
+            pack == "java.lang.StrictMath"
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(pack, TermName("log")), List(Apply(Select(Literal(Constant(1)), nme.ADD), _)))
-              if isMathPackage(pack.symbol.fullName) =>
-            context.warn(tree.pos, self)
-          case Apply(
-              Select(pack, TermName("log")),
-              List(Apply(Select(_, nme.ADD), List(Literal(Constant(1)))))
-              ) if isMathPackage(pack.symbol.fullName) =>
-            context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(Select(pack, TermName("log")), List(Apply(Select(Literal(Constant(1)), nme.ADD), _)))
+                  if isMathPackage(pack.symbol.fullName) =>
+                context.warn(tree.pos, self)
+              case Apply(
+                    Select(pack, TermName("log")),
+                    List(Apply(Select(_, nme.ADD), List(Literal(Constant(1)))))
+                  ) if isMathPackage(pack.symbol.fullName) =>
+                context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }
