@@ -55,10 +55,11 @@ case class InspectionContext(global: Global, feedback: Feedback) {
     private val SuppressWarnings = typeOf[SuppressWarnings]
 
     @scala.annotation.tailrec
-    private def inspectionClass(klass: Class[_]): Class[_] = Option(klass.getEnclosingClass) match {
-      case None    => klass
-      case Some(k) => inspectionClass(k)
-    }
+    private def inspectionClass(klass: Class[_]): Class[_] =
+      Option(klass.getEnclosingClass) match {
+        case None    => klass
+        case Some(k) => inspectionClass(k)
+      }
 
     private def isThisDisabled(an: AnnotationInfo): Boolean = {
       val cls = inspectionClass(getClass)
@@ -113,8 +114,9 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       }
     }
     protected def isList(t: Tree): Boolean = t.tpe <:< typeOf[scala.collection.immutable.List[Any]]
-    protected def isMap(tree: Tree): Boolean = tree.tpe.baseClasses.exists {
-      _.fullName == "scala.collection.Map"
-    }
+    protected def isMap(tree: Tree): Boolean =
+      tree.tpe.baseClasses.exists {
+        _.fullName == "scala.collection.Map"
+      }
   }
 }

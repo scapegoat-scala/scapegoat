@@ -11,20 +11,22 @@ class ObjectNames
       explanation = "Object names should only contain alphanumeric characters."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val regex = "^[A-Za-z0-9]*$"
+          private val regex = "^[A-Za-z0-9]*$"
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case ModuleDef(mods, name, _) if !mods.isSynthetic && !name.toString.matches(regex) =>
-            context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case ModuleDef(mods, name, _) if !mods.isSynthetic && !name.toString.matches(regex) =>
+                context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

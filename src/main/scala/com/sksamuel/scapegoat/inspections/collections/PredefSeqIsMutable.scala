@@ -13,18 +13,20 @@ class PredefSeqIsMutable
 
   override def isEnabled = !isScala213
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
-      import context.global._
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor =>
-          case TypeTree() if tree.tpe.erasure.toString() == "Seq[Any]" =>
-            context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor =>
+              case TypeTree() if tree.tpe.erasure.toString() == "Seq[Any]" =>
+                context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

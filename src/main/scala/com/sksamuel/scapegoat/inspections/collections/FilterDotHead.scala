@@ -12,21 +12,23 @@ class FilterDotHead
         "`filter().head` can throw an exception if the collection is empty - it can be replaced with `find() match {...}`."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Filter = TermName("filter")
-      private val Head = TermName("head")
+          private val Filter = TermName("filter")
+          private val Head = TermName("head")
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(Apply(Select(_, Filter), _), Head) =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Select(Apply(Select(_, Filter), _), Head) =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

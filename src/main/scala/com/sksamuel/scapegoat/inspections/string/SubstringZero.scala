@@ -11,21 +11,23 @@ class SubstringZero
       explanation = "Use of String.substring(0) will always return the same string."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Substring = TermName("substring")
-      private val StringType = typeOf[String]
+          private val Substring = TermName("substring")
+          private val StringType = typeOf[String]
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(lhs, Substring), List(Literal(Constant(0)))) if lhs.tpe <:< StringType =>
-            context.warn(tree.pos, self, tree.toString.take(100))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(Select(lhs, Substring), List(Literal(Constant(0)))) if lhs.tpe <:< StringType =>
+                context.warn(tree.pos, self, tree.toString.take(100))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

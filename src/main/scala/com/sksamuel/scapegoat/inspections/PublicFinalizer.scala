@@ -11,20 +11,22 @@ class PublicFinalizer
       explanation = "Public finalizer should be avoided as finalizers should not be programmatically invoked."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+  override def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
 
-    import context.global._
+      import context.global._
 
-    override def postTyperTraverser = new context.Traverser {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case DefDef(mods, TermName("finalize"), Nil, Nil, tpt, _)
-              if mods.isPublic && tpt.tpe <:< typeOf[Unit] =>
-            context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case DefDef(mods, TermName("finalize"), Nil, Nil, tpt, _)
+                  if mods.isPublic && tpt.tpe <:< typeOf[Unit] =>
+                context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

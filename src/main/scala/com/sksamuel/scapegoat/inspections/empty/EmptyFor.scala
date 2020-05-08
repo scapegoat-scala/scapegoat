@@ -11,23 +11,25 @@ class EmptyFor
       explanation = "An empty for loop isn't a common practice and in most cases is considered as dead code."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Foreach = TermName("foreach")
+          private val Foreach = TermName("foreach")
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(
-              TypeApply(Select(_, Foreach), _),
-              List(Function(List(ValDef(_, _, _, EmptyTree)), Literal(Constant(()))))
-              ) =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(
+                    TypeApply(Select(_, Foreach), _),
+                    List(Function(List(ValDef(_, _, _, EmptyTree)), Literal(Constant(()))))
+                  ) =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

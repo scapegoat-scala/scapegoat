@@ -12,22 +12,24 @@ class AvoidSizeEqualsZero
         "Traversable.size can be slow for some data structures, prefer Traversable.isEmpty, which is O(1)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Size = TermName("size")
-      private val Length = TermName("length")
+          private val Size = TermName("size")
+          private val Length = TermName("length")
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(Select(q, Size | Length), TermName("$eq$eq")), List(Literal(Constant(0))))
-              if isTraversable(q) =>
-            context.warn(tree.pos, self, tree.toString.take(100))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(Select(Select(q, Size | Length), TermName("$eq$eq")), List(Literal(Constant(0))))
+                  if isTraversable(q) =>
+                context.warn(tree.pos, self, tree.toString.take(100))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

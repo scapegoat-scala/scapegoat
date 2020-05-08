@@ -35,9 +35,8 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       case Some(option) => component.ignoredFiles = option.drop("ignoredFiles:".length).split(':').toList
       case _            =>
     }
-    for (verbose <- forProperty("verbose:")) {
+    for (verbose <- forProperty("verbose:"))
       component.verbose = verbose.drop("verbose:".length).toBoolean
-    }
     forProperty("customInspectors:") match {
       case Some(option) =>
         component.customInpections = option
@@ -178,56 +177,55 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   def disableAll: Boolean = disabledInspections.exists(_.compareToIgnoreCase("all") == 0)
 
   def activeInspections: Seq[Inspection] = {
-    if (enabledInspections.isEmpty) {
+    if (enabledInspections.isEmpty)
       (inspections ++ customInpections)
         .filterNot(inspection => disabledInspections.contains(inspection.getClass.getSimpleName))
-    } else {
+    else
       (inspections ++ customInpections)
         .filter(inspection => enabledInspections.contains(inspection.getClass.getSimpleName))
-    }
   }
   lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix, minimalLevel)
 
-  override def newPhase(prev: scala.tools.nsc.Phase): Phase = new Phase(prev) {
-    override def run(): Unit = {
-      if (disableAll) {
-        reporter.echo("[info] [scapegoat] All inspections disabled")
-      } else {
-        reporter.echo(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
-        if (verbose) {
-          if (ignoredFiles.nonEmpty)
-            reporter.echo(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
-        }
-        super.run()
+  override def newPhase(prev: scala.tools.nsc.Phase): Phase =
+    new Phase(prev) {
+      override def run(): Unit = {
+        if (disableAll)
+          reporter.echo("[info] [scapegoat] All inspections disabled")
+        else {
+          reporter.echo(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
+          if (verbose)
+            if (ignoredFiles.nonEmpty)
+              reporter.echo(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
+          super.run()
 
-        if (summary) {
-          val errors = feedback.errors.size
-          val warns = feedback.warns.size
-          val infos = feedback.infos.size
-          val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
-          reporter.echo(
-            s"[$level] [scapegoat] Analysis complete: ${count.get} files - $errors errors $warns warns $infos infos"
-          )
-        }
+          if (summary) {
+            val errors = feedback.errors.size
+            val warns = feedback.warns.size
+            val infos = feedback.infos.size
+            val level = if (errors > 0) "error" else if (warns > 0) "warn" else "info"
+            reporter.echo(
+              s"[$level] [scapegoat] Analysis complete: ${count.get} files - $errors errors $warns warns $infos infos"
+            )
+          }
 
-        if (!disableHTML) {
-          val html = IOUtils.writeHTMLReport(dataDir, feedback)
-          if (verbose)
-            reporter.echo(s"[info] [scapegoat] Written HTML report [$html]")
-        }
-        if (!disableXML) {
-          val xml = IOUtils.writeXMLReport(dataDir, feedback)
-          if (verbose)
-            reporter.echo(s"[info] [scapegoat] Written XML report [$xml]")
-        }
-        if (!disableScalastyleXML) {
-          val xml = IOUtils.writeScalastyleReport(dataDir, feedback)
-          if (verbose)
-            reporter.echo(s"[info] [scapegoat] Written Scalastyle XML report [$xml]")
+          if (!disableHTML) {
+            val html = IOUtils.writeHTMLReport(dataDir, feedback)
+            if (verbose)
+              reporter.echo(s"[info] [scapegoat] Written HTML report [$html]")
+          }
+          if (!disableXML) {
+            val xml = IOUtils.writeXMLReport(dataDir, feedback)
+            if (verbose)
+              reporter.echo(s"[info] [scapegoat] Written XML report [$xml]")
+          }
+          if (!disableScalastyleXML) {
+            val xml = IOUtils.writeScalastyleReport(dataDir, feedback)
+            if (verbose)
+              reporter.echo(s"[info] [scapegoat] Written Scalastyle XML report [$xml]")
+          }
         }
       }
     }
-  }
 
   protected def newTransformer(unit: CompilationUnit): Transformer = {
     count.incrementAndGet()
@@ -237,13 +235,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: global.Tree): global.Tree = {
       if (ignoredFiles.exists(unit.source.path.matches)) {
-        if (debug) {
+        if (debug)
           reporter.echo(s"[debug] Skipping scapegoat [$unit]")
-        }
       } else {
-        if (debug) {
+        if (debug)
           reporter.echo(s"[debug] Scapegoat analysis [$unit] .....")
-        }
         val context = InspectionContext(global, feedback)
         activeInspections
           .filter(_.isEnabled)
