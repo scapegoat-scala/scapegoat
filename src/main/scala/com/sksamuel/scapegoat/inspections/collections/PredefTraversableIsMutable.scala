@@ -12,21 +12,23 @@ class PredefTraversableIsMutable
         "Traversable aliases scala.collection.mutable.Traversable. Did you intend to use an immutable Traversable?"
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor              =>
-          case TypeTree() if tree.tpe.erasure.toString() == "Traversable[Any]" => warn(tree)
-          case _                                                               => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor              =>
+              case TypeTree() if tree.tpe.erasure.toString() == "Traversable[Any]" => warn(tree)
+              case _                                                               => continue(tree)
+            }
+          }
+
+          def warn(tree: Tree): Unit =
+            context.warn(tree.pos, self)
         }
-      }
-
-      def warn(tree: Tree): Unit =
-        context.warn(tree.pos, self)
     }
-  }
 }

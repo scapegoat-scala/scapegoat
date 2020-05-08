@@ -11,27 +11,32 @@ class FilterOptionAndGet
       explanation = "`filter(_.isDefined).map(_.get)` can be replaced with `flatten`."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(
-              TypeApply(
-                Select(
-                  Apply(Select(_, TermName("filter")), List(Function(_, Select(_, TermName("isDefined"))))),
-                  TermName("map")
-                ),
-                _
-              ),
-              List(Function(_, Select(_, TermName("get"))))
-              ) =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(
+                    TypeApply(
+                      Select(
+                        Apply(
+                          Select(_, TermName("filter")),
+                          List(Function(_, Select(_, TermName("isDefined"))))
+                        ),
+                        TermName("map")
+                      ),
+                      _
+                    ),
+                    List(Function(_, Select(_, TermName("get"))))
+                  ) =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

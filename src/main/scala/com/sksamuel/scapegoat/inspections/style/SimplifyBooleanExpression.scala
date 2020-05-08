@@ -10,20 +10,22 @@ class SimplifyBooleanExpression
       description = "Checks for boolean expressions that can be simplified.",
       explanation = "Boolean expressions such as x == false can be re-written as !x."
     ) {
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Equals = TermName("$eq$eq")
+          private val Equals = TermName("$eq$eq")
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(_, Equals), List(Literal(Constant(false)))) =>
-            context.warn(tree.pos, self, tree.toString.take(200))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(Select(_, Equals), List(Literal(Constant(false)))) =>
+                context.warn(tree.pos, self, tree.toString.take(200))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

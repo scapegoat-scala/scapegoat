@@ -14,32 +14,34 @@ class ProductWithSerializableInferred
         "It is unlikely that Product with Serializable was your target type. This is often an indication of mixing up incompatible types."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Product = typeOf[Product]
-      private val Serializable = typeOf[Serializable]
-      private val Obj = typeOf[Object]
+          private val Product = typeOf[Product]
+          private val Serializable = typeOf[Serializable]
+          private val Obj = typeOf[Object]
 
-      private def isProductWithSerializable(tpe: Type): Boolean = {
-        tpe.typeArgs match {
-          case List(RefinedType(parents, _)) if parents.size == 3 =>
-            Seq(Product, Serializable, Obj).forall(t => parents.exists(_ =:= t))
+          private def isProductWithSerializable(tpe: Type): Boolean = {
+            tpe.typeArgs match {
+              case List(RefinedType(parents, _)) if parents.size == 3 =>
+                Seq(Product, Serializable, Obj).forall(t => parents.exists(_ =:= t))
 
-          case _ => false
+              case _ => false
+            }
+          }
+
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
+              case ValDef(_, _, tpt, _) if isProductWithSerializable(tpt.tpe) =>
+                context.warn(tree.pos, self, tree.toString.take(300))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
-
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case ValDef(mods, _, _, _) if mods.hasFlag(Flags.SYNTHETIC) =>
-          case ValDef(_, _, tpt, _) if isProductWithSerializable(tpt.tpe) =>
-            context.warn(tree.pos, self, tree.toString.take(300))
-          case _ => continue(tree)
-        }
-      }
     }
-  }
 }

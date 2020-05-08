@@ -10,19 +10,21 @@ class FinalModifierOnCaseClass
       explanation = "Using case classes without final modifier can lead to surprising breakage."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector = new Inspector(context) {
+  override def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
 
-    import context.global._
+      import context.global._
 
-    override def postTyperTraverser = new context.Traverser {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case ClassDef(mods, _, _, _) if !mods.hasAbstractFlag && mods.isCase && !mods.isFinal =>
-            context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case ClassDef(mods, _, _, _) if !mods.hasAbstractFlag && mods.isCase && !mods.isFinal =>
+                context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

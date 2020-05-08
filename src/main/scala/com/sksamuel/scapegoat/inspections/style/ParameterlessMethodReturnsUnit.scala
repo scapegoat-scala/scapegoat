@@ -12,18 +12,20 @@ class ParameterlessMethodReturnsUnit
         "Methods should be defined with empty parentheses if they have side effects. A method returning Unit must have side effects, therefore you should declare it with ()."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case DefDef(_, _, _, vparamss, tpt, _) if tpt.tpe.toString == "Unit" && vparamss.isEmpty =>
-            context.warn(tree.pos, self, tree.toString.take(300))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case DefDef(_, _, _, vparamss, tpt, _) if tpt.tpe.toString == "Unit" && vparamss.isEmpty =>
+                context.warn(tree.pos, self, tree.toString.take(300))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }
