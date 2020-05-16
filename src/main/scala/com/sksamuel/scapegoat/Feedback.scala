@@ -59,7 +59,7 @@ class Feedback(
 
     if (shouldPrint(warning)) {
       val snippetText = snippet.fold("")("\n  " + _ + "\n")
-      val report = s"""|[scapegoat] $text
+      val report = s"""[scapegoat] $text
                       |  $explanation$snippetText""".stripMargin
 
       adjustedLevel match {
