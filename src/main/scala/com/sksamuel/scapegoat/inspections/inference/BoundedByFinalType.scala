@@ -23,7 +23,7 @@ class BoundedByFinalType
             tree match {
               case dd @ DefDef(_, _, _, _, _, _)
                   if dd.symbol != null && dd.symbol.owner.tpe.baseClasses.contains(PartialFunctionClass) =>
-              case tdef: TypeDef if tdef.symbol.isAliasType                                              =>
+              case tdef: TypeDef if tdef.symbol.isAliasType =>
               case TypeDef(_, _, _, typeTree: TypeTree) =>
                 typeTree.original match {
                   case TypeBoundsTree(lo, hi) if lo.tpe.isFinalType && hi.tpe.isFinalType =>

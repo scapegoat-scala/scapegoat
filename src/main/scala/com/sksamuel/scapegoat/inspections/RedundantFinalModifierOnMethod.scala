@@ -25,7 +25,7 @@ class RedundantFinalModifierOnMethod
             tree match {
               case DefDef(_, _, _, _, _, _)
                   if tree.symbol != null && tree.symbol.owner.tpe.baseClasses
-                    .contains(PartialFunctionClass)                            =>
+                    .contains(PartialFunctionClass) =>
               case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic    =>
               case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR) =>
               case DefDef(_, nme.CONSTRUCTOR, _, _, _, _)                      =>

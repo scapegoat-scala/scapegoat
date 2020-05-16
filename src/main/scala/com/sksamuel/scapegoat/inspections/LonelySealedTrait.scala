@@ -22,10 +22,9 @@ class LonelySealedTrait
       private val implementedClasses = mutable.HashSet[String]()
 
       override def postInspection(): Unit = {
-        for ((name, cdef) <- sealedClasses) {
+        for ((name, cdef) <- sealedClasses)
           if (!implementedClasses.contains(name))
             context.warn(cdef.pos, self)
-        }
       }
 
       private def inspectParents(parents: List[Tree]): Unit = {
