@@ -99,8 +99,8 @@ case class InspectionContext(global: Global, feedback: Feedback) {
         case tri @ Try(_, _, _) if isSuppressed(tri.symbol)      =>
         case ClassDef(_, _, _, Template(parents, _, _))
             if parents.map(_.tpe.typeSymbol.fullName).contains("scala.reflect.api.TypeCreator") =>
-        case _ if analyzer.hasMacroExpansionAttachment(tree)                                    => //skip macros as per http://bit.ly/2uS8BrU
-        case _                                                                                  => inspect(tree)
+        case _ if analyzer.hasMacroExpansionAttachment(tree) => //skip macros as per http://bit.ly/2uS8BrU
+        case _                                               => inspect(tree)
       }
     }
 
