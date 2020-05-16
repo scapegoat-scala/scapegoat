@@ -12,26 +12,28 @@ class MaxParameters
         "Methods having a large number of parameters are more difficult to reason about, consider refactoring this code."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private def count(vparamss: List[List[ValDef]]): Int =
-        vparamss.foldLeft(0)((a, b) => a + b.size)
+          private def count(vparamss: List[List[ValDef]]): Int =
+            vparamss.foldLeft(0)((a, b) => a + b.size)
 
-      private def countExceeds(vparamss: List[List[ValDef]], limit: Int) =
-        count(vparamss) > limit
+          private def countExceeds(vparamss: List[List[ValDef]], limit: Int) =
+            count(vparamss) > limit
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case DefDef(_, name, _, _, _, _) if name == nme.CONSTRUCTOR =>
-          case DefDef(mods, _, _, _, _, _) if mods.isSynthetic        =>
-          case DefDef(_, _, _, vparamss, _, _) if countExceeds(vparamss, 10) =>
-            context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case DefDef(_, name, _, _, _, _) if name == nme.CONSTRUCTOR =>
+              case DefDef(mods, _, _, _, _, _) if mods.isSynthetic        =>
+              case DefDef(_, _, _, vparamss, _, _) if countExceeds(vparamss, 10) =>
+                context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

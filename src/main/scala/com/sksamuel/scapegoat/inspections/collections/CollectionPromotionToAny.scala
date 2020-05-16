@@ -15,38 +15,45 @@ class CollectionPromotionToAny
         "The :+ (append) operator on collections accepts any argument you give it, which means that you can end up with e.g. Seq[Any] if your types don't match."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private def isSeq(symbol: Symbol): Boolean = {
-        val full = symbol.typeSignature.resultType.typeSymbol.fullName
-        val immutableCollection = full.startsWith("scala.collection.immutable") &&
-          (full.endsWith("List") || full.endsWith("Set") || full.endsWith("Seq") || full.endsWith("Vector"))
+          private def isSeq(symbol: Symbol): Boolean = {
+            val full = symbol.typeSignature.resultType.typeSymbol.fullName
+            val immutableCollection = full.startsWith("scala.collection.immutable") &&
+              (full.endsWith("List") || full.endsWith("Set") || full.endsWith("Seq") || full.endsWith(
+                "Vector"
+              ))
 
-        immutableCollection || full == "scala.collection.Seq"
-      }
+            immutableCollection || full == "scala.collection.Seq"
+          }
 
-      private def isAny(tree: Tree): Boolean = tree.toString() == "Any"
-      private def isAny(symbol: Symbol): Boolean = symbol.typeSignature.resultType.typeArgs.headOption match {
-        case Some(t) => t.toString == "Any"
-        case None    => false
-      }
+          private def isAny(tree: Tree): Boolean = tree.toString() == "Any"
+          private def isAny(symbol: Symbol): Boolean =
+            symbol.typeSignature.resultType.typeArgs.headOption match {
+              case Some(t) => t.toString == "Any"
+              case None    => false
+            }
 
-      private def isAnySeq(tree: Tree): Boolean = tree match {
-        case select @ Select(_, _) if select.symbol != null => isSeq(select.symbol) && isAny(select.symbol)
-        case _                                              => false
-      }
+          private def isAnySeq(tree: Tree): Boolean =
+            tree match {
+              case select @ Select(_, _) if select.symbol != null =>
+                isSeq(select.symbol) && isAny(select.symbol)
+              case _ => false
+            }
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case TypeApply(Select(l, TermName("$colon$plus")), a :: _) =>
-            if (!isAnySeq(l) && isAny(a))
-              context.warn(tree.pos, self, tree.toString.take(100))
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case TypeApply(Select(l, TermName("$colon$plus")), a :: _) =>
+                if (!isAnySeq(l) && isAny(a))
+                  context.warn(tree.pos, self, tree.toString.take(100))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

@@ -10,35 +10,37 @@ class ReverseTailReverse
       explanation = "`reverse.tail.reverse` can be replaced with `init`, which is more concise."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Select(Select(Select(c, TermName("reverse")), TermName("tail")), TermName("reverse"))
-              if isTraversable(c) =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case Select(
-              Apply(
-                arrayOps0,
-                List(
-                  Select(
-                    Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))),
-                    TermName("tail")
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Select(Select(Select(c, TermName("reverse")), TermName("tail")), TermName("reverse"))
+                  if isTraversable(c) =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case Select(
+                    Apply(
+                      arrayOps0,
+                      List(
+                        Select(
+                          Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))),
+                          TermName("tail")
+                        )
+                      )
+                    ),
+                    TermName("reverse")
                   )
-                )
-              ),
-              TermName("reverse")
-              )
-              if arrayOps0.toString.contains("ArrayOps")
-              && arrayOps1.toString.contains("ArrayOps")
-              && arrayOps2.toString.contains("ArrayOps") =>
-            context.warn(tree.pos, self, tree.toString.take(500))
-          case _ => continue(tree)
+                  if arrayOps0.toString.contains("ArrayOps")
+                  && arrayOps1.toString.contains("ArrayOps")
+                  && arrayOps2.toString.contains("ArrayOps") =>
+                context.warn(tree.pos, self, tree.toString.take(500))
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

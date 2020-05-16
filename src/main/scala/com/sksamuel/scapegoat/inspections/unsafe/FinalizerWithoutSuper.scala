@@ -12,26 +12,29 @@ class FinalizerWithoutSuper
         "Finalizers should call `super.finalize()` to ensure superclasses are able to run their finalization logic."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Finalize = TermName("finalize")
-      private def containsSuper(tree: Tree): Boolean = tree match {
-        case Apply(Select(Super(_, _), Finalize), List()) => true
-        case Block(stmts, expr)                           => (stmts :+ expr).exists(containsSuper)
-        case _                                            => false
-      }
+          private val Finalize = TermName("finalize")
+          private def containsSuper(tree: Tree): Boolean =
+            tree match {
+              case Apply(Select(Super(_, _), Finalize), List()) => true
+              case Block(stmts, expr)                           => (stmts :+ expr).exists(containsSuper)
+              case _                                            => false
+            }
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case DefDef(_, Finalize, _, _, tpt, rhs) if tpt.tpe <:< typeOf[Unit] =>
-            if (!containsSuper(rhs))
-              context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case DefDef(_, Finalize, _, _, tpt, rhs) if tpt.tpe <:< typeOf[Unit] =>
+                if (!containsSuper(rhs))
+                  context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

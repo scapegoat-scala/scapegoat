@@ -12,20 +12,22 @@ class ListAppend
         "List append is O(n). For large lists, consider using cons (::) or another data structure such as ListBuffer, Vector or a cats.data.Chain (which has constant prepend and append)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      private val Append = TermName("$colon$plus")
+          private val Append = TermName("$colon$plus")
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(TypeApply(Select(lhs, Append), _), _) if isList(lhs) =>
-            context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(TypeApply(Select(lhs, Append), _), _) if isList(lhs) =>
+                context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }

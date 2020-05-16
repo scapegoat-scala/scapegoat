@@ -11,18 +11,20 @@ class ZeroNumerator
       explanation = "Dividing zero by any number will always return zero, e.g. 0 / x == 0."
     ) {
 
-  def inspector(context: InspectionContext): Inspector = new Inspector(context) {
-    override def postTyperTraverser = new context.Traverser {
+  def inspector(context: InspectionContext): Inspector =
+    new Inspector(context) {
+      override def postTyperTraverser =
+        new context.Traverser {
 
-      import context.global._
+          import context.global._
 
-      override def inspect(tree: Tree): Unit = {
-        tree match {
-          case Apply(Select(Literal(Constant(0)), TermName("$div")), _) =>
-            context.warn(tree.pos, self)
-          case _ => continue(tree)
+          override def inspect(tree: Tree): Unit = {
+            tree match {
+              case Apply(Select(Literal(Constant(0)), TermName("$div")), _) =>
+                context.warn(tree.pos, self)
+              case _ => continue(tree)
+            }
+          }
         }
-      }
     }
-  }
 }
