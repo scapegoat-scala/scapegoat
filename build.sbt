@@ -106,7 +106,7 @@ libraryDependencies ++= Seq(
     ExclusionRule(organization = "org.scala-lang")
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "commons-io"     % "commons-io"     % "2.6"              % "test",
+  "commons-io"     % "commons-io"     % "2.7"              % "test",
   "org.scalatest"  %% "scalatest"     % "3.1.2"            % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.10.6"           % "test",
