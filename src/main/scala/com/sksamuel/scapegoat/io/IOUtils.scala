@@ -16,4 +16,7 @@ object IOUtils {
 
   def writeScalastyleReport(targetDir: File, reporter: Feedback): File =
     ScalastyleReportWriter.write(targetDir, reporter)
+
+  def writeMarkdownReport(targetDir: File, reporter: Feedback): File =
+    MarkdownReportWriter.write(targetDir, reporter)
 }

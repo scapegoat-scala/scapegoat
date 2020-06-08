@@ -58,14 +58,17 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
             case "xml"        => component.disableXML = false
             case "html"       => component.disableHTML = false
             case "scalastyle" => component.disableScalastyleXML = false
+            case "markdown"   => component.disableMarkdown = false
             case "all" =>
               component.disableXML = false
               component.disableHTML = false
               component.disableScalastyleXML = false
+              component.disableMarkdown = false
             case "none" =>
               component.disableXML = true
               component.disableHTML = true
               component.disableScalastyleXML = true
+              component.disableMarkdown = true
             case _ =>
           }
       case None =>
@@ -122,7 +125,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       "-P:scapegoat:verbose:<boolean>                       enable/disable verbose console messages",
       "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
       "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
-      "                                                     Valid options are `xml', `html', `scalastyle',",
+      "                                                     Valid options are `xml', `html', `scalastyle', 'markdown',",
       "                                                     or `all'. Use `none' to disable reports.",
       "-P:scapegoat:overrideLevels:<levels>                 override the built in warning levels, e.g. to",
       "                                                     downgrade a Error to a Warning.",
@@ -164,6 +167,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   var disableXML = true
   var disableHTML = true
   var disableScalastyleXML = true
+  var disableMarkdown = true
   var customInpections: Seq[Inspection] = Nil
   var sourcePrefix = "src/main/scala/"
   var minimalLevel: Level = Levels.Info
@@ -222,6 +226,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
             val xml = IOUtils.writeScalastyleReport(dataDir, feedback)
             if (verbose)
               reporter.echo(s"[info] [scapegoat] Written Scalastyle XML report [$xml]")
+          }
+          if (!disableMarkdown) {
+            val md = IOUtils.writeMarkdownReport(dataDir, feedback)
+            if (verbose)
+              reporter.echo(s"[info] [scapegoat] Written Markdown report [$md]")
           }
         }
       }

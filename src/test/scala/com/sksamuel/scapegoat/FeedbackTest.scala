@@ -147,7 +147,8 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val feedback = new Feedback(false, reporter, defaultSourcePrefix, Levels.Warning)
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(2)
-        feedback.warningsWithMinimalLevel.map(_.level) should contain only (Seq(Levels.Warning, Levels.Error): _*)
+        feedback.warningsWithMinimalLevel
+          .map(_.level) should contain only (Seq(Levels.Warning, Levels.Error): _*)
       }
 
       "for `error`" in {

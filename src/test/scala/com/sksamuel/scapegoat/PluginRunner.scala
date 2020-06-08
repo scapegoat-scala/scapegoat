@@ -67,10 +67,10 @@ trait PluginRunner {
     val jarPath =
       sbtHome + "/cache/" + groupId + "/" + artifactId + "/jars/" + artifactId + "-" + version + ".jar"
     val file = new File(jarPath)
-    if (file.exists) {
+    if (file.exists)
       // println(s"Located ivy jar [$file]")
       file
-    } else throw new FileNotFoundException(s"Could not locate [$jarPath].")
+    else throw new FileNotFoundException(s"Could not locate [$jarPath].")
   }
 
   def sbtCompileDir: File = {
