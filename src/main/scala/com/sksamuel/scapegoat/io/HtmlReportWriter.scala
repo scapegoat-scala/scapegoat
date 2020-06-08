@@ -1,13 +1,15 @@
 package com.sksamuel.scapegoat.io
 
-import scala.xml.Unparsed
-
 import com.sksamuel.scapegoat.{Feedback, Levels}
 
-/** @author Stephen Samuel */
-object HtmlReportWriter {
+import scala.xml.Unparsed
 
-  val css =
+/** @author Stephen Samuel */
+object HtmlReportWriter extends ReportWriter {
+
+  override protected def fileName: String = "scapegoat.html"
+
+  private val css =
     """
       |      body {
       |        font-family: 'Ubuntu', sans-serif;
@@ -60,7 +62,7 @@ object HtmlReportWriter {
       |
     """.stripMargin
 
-  def header =
+  private def header =
     <head>
       <title>Scapegoat Inspection Reporter</title>{
       Unparsed(
@@ -79,7 +81,7 @@ object HtmlReportWriter {
        </style>
     </head>
 
-  def body(reporter: Feedback) =
+  private def body(reporter: Feedback) =
     <body>
       <h1>Scapegoat Inspections</h1>
       <h3>
@@ -92,7 +94,7 @@ object HtmlReportWriter {
       </h3>{warnings(reporter)}
     </body>
 
-  def warnings(reporter: Feedback) = {
+  private def warnings(reporter: Feedback) = {
     reporter.warningsWithMinimalLevel.map { warning =>
       val source = warning.sourceFileNormalized + ":" + warning.line
       <div class="warning">
@@ -125,8 +127,10 @@ object HtmlReportWriter {
     }
   }
 
-  def generate(reporter: Feedback) =
+  private def toHTML(reporter: Feedback) =
     <html>
       {header}{body(reporter)}
     </html>
+
+  override protected def generate(feedback: Feedback): String = toHTML(feedback).toString()
 }
