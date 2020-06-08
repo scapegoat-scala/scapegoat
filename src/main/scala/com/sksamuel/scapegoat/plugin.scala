@@ -190,6 +190,14 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   }
   lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix, minimalLevel)
 
+  def writeReport(isDisabled: Boolean, reportName: String, writer: (File, Feedback) => File): Unit = {
+    if (!isDisabled) {
+      val output = writer(dataDir, feedback)
+      if (verbose)
+        reporter.echo(s"[info] [scapegoat] Written $reportName report [$output]")
+    }
+  }
+
   override def newPhase(prev: scala.tools.nsc.Phase): Phase =
     new Phase(prev) {
       override def run(): Unit = {
@@ -212,26 +220,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
             )
           }
 
-          if (!disableHTML) {
-            val html = IOUtils.writeHTMLReport(dataDir, feedback)
-            if (verbose)
-              reporter.echo(s"[info] [scapegoat] Written HTML report [$html]")
-          }
-          if (!disableXML) {
-            val xml = IOUtils.writeXMLReport(dataDir, feedback)
-            if (verbose)
-              reporter.echo(s"[info] [scapegoat] Written XML report [$xml]")
-          }
-          if (!disableScalastyleXML) {
-            val xml = IOUtils.writeScalastyleReport(dataDir, feedback)
-            if (verbose)
-              reporter.echo(s"[info] [scapegoat] Written Scalastyle XML report [$xml]")
-          }
-          if (!disableMarkdown) {
-            val md = IOUtils.writeMarkdownReport(dataDir, feedback)
-            if (verbose)
-              reporter.echo(s"[info] [scapegoat] Written Markdown report [$md]")
-          }
+          writeReport(disableHTML, "HTML", IOUtils.writeHTMLReport)
+          writeReport(disableXML, "XML", IOUtils.writeXMLReport)
+          writeReport(disableScalastyleXML, "Scalastyle XML", IOUtils.writeScalastyleReport)
+          writeReport(disableMarkdown, "Markdown", IOUtils.writeMarkdownReport)
         }
       }
     }
