@@ -1,4 +1,5 @@
 package com.sksamuel.scapegoat.io
+
 import com.sksamuel.scapegoat.{Feedback, Levels, Warning}
 
 object MarkdownReportWriter extends ReportWriter {
