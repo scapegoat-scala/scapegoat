@@ -96,7 +96,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
     }
-    "should use minimal wawrning level in reports" - {
+    "should use minimal warning level in reports" - {
       "for `info`" in {
         val inspectionError = new DummyInspection(
           "My default is Error",
