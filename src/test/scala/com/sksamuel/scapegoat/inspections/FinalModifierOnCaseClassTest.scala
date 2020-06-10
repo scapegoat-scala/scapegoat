@@ -13,7 +13,7 @@ class FinalModifierOnCaseClassTest extends InspectionTest {
 
   private def assertNoFinalModOnCaseClass(code: String): Unit = {
     compileCodeSnippet(code)
-    compiler.scapegoat.feedback.warnings should be('empty)
+    compiler.scapegoat.feedback.warnings shouldBe empty
   }
 
   "Missing final modifier on case class" - {
