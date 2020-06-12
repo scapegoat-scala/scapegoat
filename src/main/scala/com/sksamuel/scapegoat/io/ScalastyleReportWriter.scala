@@ -4,19 +4,19 @@ import scala.xml.Node
 
 import com.sksamuel.scapegoat.{Feedback, Warning}
 
-/** @author Eugene Sypachev (Axblade) */
-object ScalastyleReportWriter {
+object ScalastyleReportWriter extends ReportWriter {
 
   private val checkstyleVersion = "5.0"
   private val scapegoat = "scapegoat"
 
-  def toXML(feedback: Feedback): Node = {
+  override protected val fileName = "scapegoat-scalastyle.xml"
+
+  private def toXML(feedback: Feedback): Node =
     <checkstyle version={checkstyleVersion} generatedBy={scapegoat}>
       {feedback.warningsWithMinimalLevel.groupBy(_.sourceFileFull).map(fileToXml)}
     </checkstyle>
-  }
 
-  private def fileToXml(fileWarningMapEntry: (String, Seq[Warning])) = {
+  private def fileToXml(fileWarningMapEntry: (String, Seq[Warning])): Node = {
     val (file, warnings) = fileWarningMapEntry
     <file name={file}>
       {warnings.map(warningToXml)}
@@ -28,4 +28,5 @@ object ScalastyleReportWriter {
       warning.inspection
     } snippet={warning.snippet.orNull} explanation={warning.explanation}></error>
 
+  override protected def generate(feedback: Feedback): String = toXML(feedback).toString()
 }
