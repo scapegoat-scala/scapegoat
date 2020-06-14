@@ -7,8 +7,8 @@ class PointlessTypeBounds
     extends Inspection(
       text = "Pointless type bounds",
       defaultLevel = Levels.Warning,
-      description = "Finds type bounds of the form [A <: Any] or [A >: Nothing].",
-      explanation = "Type bound resolves to Nothing <: T <: Any. Did you mean to put in other bounds?"
+      description = "Finds type bounds of the form `A <: Any` or `A >: Nothing`.",
+      explanation = "Type bound resolves to `Nothing <: T <: Any`. Did you mean to put in other bounds?"
     ) {
 
   def inspector(context: InspectionContext): Inspector =

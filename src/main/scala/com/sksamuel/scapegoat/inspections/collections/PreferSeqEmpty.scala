@@ -9,7 +9,7 @@ class PreferSeqEmpty
       defaultLevel = Levels.Info,
       description = "Checks for use of Seq().",
       explanation =
-        "Seq[T]() allocates an intermediate object. Consider Seq.empty which returns a singleton instance without creating a new object."
+        "`Seq[T]()` allocates an intermediate object. Consider `Seq.empty` which returns a singleton instance without creating a new object."
     ) {
 
   def inspector(context: InspectionContext): Inspector =

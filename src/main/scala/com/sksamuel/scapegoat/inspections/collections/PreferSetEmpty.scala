@@ -9,7 +9,7 @@ class PreferSetEmpty
       defaultLevel = Levels.Info,
       description = "Checks for use of Set().",
       explanation =
-        "Set[T]() allocates an intermediate object. Consider Set.empty which returns a singleton instance without creating a new object."
+        "`Set[T]()` allocates an intermediate object. Consider `Set.empty` which returns a singleton instance without creating a new object."
     ) {
 
   def inspector(context: InspectionContext): Inspector =

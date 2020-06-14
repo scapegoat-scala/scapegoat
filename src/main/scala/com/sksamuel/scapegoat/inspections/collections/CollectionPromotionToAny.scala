@@ -12,7 +12,7 @@ class CollectionPromotionToAny
       defaultLevel = Levels.Warning,
       description = "Checks for collection operations that promote the collection to Any.",
       explanation =
-        "The :+ (append) operator on collections accepts any argument you give it, which means that you can end up with e.g. Seq[Any] if your types don't match."
+        "The `:+` (append) operator on collections accepts any argument you give it, which means that you can end up with e.g. `Seq[Any]` if your types don't match."
     ) {
 
   def inspector(context: InspectionContext): Inspector =

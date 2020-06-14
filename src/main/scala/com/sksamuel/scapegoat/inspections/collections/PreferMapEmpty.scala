@@ -8,7 +8,7 @@ class PreferMapEmpty
       defaultLevel = Levels.Info,
       description = "Checks for use of Map().",
       explanation =
-        "Map[K,V]() allocates an intermediate object. Consider Map.empty which returns a singleton instance without creating a new object."
+        "`Map[K,V]()` allocates an intermediate object. Consider `Map.empty` which returns a singleton instance without creating a new object."
     ) {
 
   def inspector(context: InspectionContext): Inspector =
