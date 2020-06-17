@@ -4,7 +4,8 @@ import java.util.IllegalFormatException
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class IllegalFormatString
     extends Inspection(
       text = "Illegal format string",

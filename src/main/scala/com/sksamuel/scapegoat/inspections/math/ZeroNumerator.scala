@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.math
 
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class ZeroNumerator
     extends Inspection(
       text = "Zero numerator",

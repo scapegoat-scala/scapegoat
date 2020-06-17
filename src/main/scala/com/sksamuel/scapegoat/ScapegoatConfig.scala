@@ -18,7 +18,8 @@ import com.sksamuel.scapegoat.inspections.style._
 import com.sksamuel.scapegoat.inspections.unneccesary._
 import com.sksamuel.scapegoat.inspections.unsafe._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 object ScapegoatConfig extends App {
 
   def inspections: Seq[Inspection] =

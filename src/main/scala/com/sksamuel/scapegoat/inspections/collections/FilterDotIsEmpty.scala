@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class FilterDotIsEmpty
     extends Inspection(
       text = "filter().isEmpty instead of !exists()",

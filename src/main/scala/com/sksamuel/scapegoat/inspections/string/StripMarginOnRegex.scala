@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.string
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class StripMarginOnRegex
     extends Inspection(
       text = "Strip margin on regex",

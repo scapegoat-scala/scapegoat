@@ -6,7 +6,6 @@ import com.sksamuel.scapegoat._
  * @author Stephen Samuel
  *
  *         Checks for if statements where the condition evaluates to a constant true or a constant false.
- *
  */
 class ConstantIf
     extends Inspection(

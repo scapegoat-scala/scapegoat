@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat
 import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 abstract class Inspection(
   val text: String,
   val defaultLevel: Level,

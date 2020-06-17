@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.string
 
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class SubstringZero
     extends Inspection(
       text = "String.substring(0)",

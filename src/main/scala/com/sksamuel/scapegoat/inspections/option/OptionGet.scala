@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.option
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class OptionGet
     extends Inspection(
       text = "Use of Option.get",
