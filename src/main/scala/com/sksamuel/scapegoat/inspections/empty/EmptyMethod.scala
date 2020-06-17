@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.empty
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class EmptyMethod
     extends Inspection(
       text = "Empty method",

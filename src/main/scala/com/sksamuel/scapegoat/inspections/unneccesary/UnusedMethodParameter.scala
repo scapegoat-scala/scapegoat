@@ -4,7 +4,8 @@ import scala.reflect.internal.Flags
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class UnusedMethodParameter
     extends Inspection(
       text = "Unused parameter",
@@ -46,7 +47,7 @@ class UnusedMethodParameter
            *   1. all params in the first argument list for case classes
            *   2. all params marked "val"
            *
-       * In both cases, by the time we see the tree, a "def x = this.x" method
+           * In both cases, by the time we see the tree, a "def x = this.x" method
            * will have been added by the compiler, so "usesField" will notice and
            * not mark the param as unused.
            */

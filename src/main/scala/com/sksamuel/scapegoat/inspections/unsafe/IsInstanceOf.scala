@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.unsafe
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class IsInstanceOf
     extends Inspection(
       text = "Use of isInstanceOf",

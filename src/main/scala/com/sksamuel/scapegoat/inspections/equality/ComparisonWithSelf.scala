@@ -2,7 +2,8 @@ package com.sksamuel.scapegoat.inspections.equality
 
 import com.sksamuel.scapegoat._
 
-/** @author Stephen Samuel */
+/**
+ * @author Stephen Samuel */
 class ComparisonWithSelf
     extends Inspection(
       text = "Comparision with self",

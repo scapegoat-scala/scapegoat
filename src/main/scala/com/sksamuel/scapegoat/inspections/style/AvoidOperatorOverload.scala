@@ -7,7 +7,6 @@ import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 /**
  * @author Stephen Samuel
  *
- *
  *         http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names
  */
 class AvoidOperatorOverload
