@@ -22,8 +22,8 @@ developers := List(
   )
 )
 
-scalaVersion := "2.13.2"
-crossScalaVersions := Seq("2.11.12", "2.12.10", "2.12.11", "2.13.1", "2.13.2")
+scalaVersion := "2.13.3"
+crossScalaVersions := Seq("2.11.12", "2.12.10", "2.12.11", "2.13.1", "2.13.2", "2.13.3")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -38,7 +38,6 @@ val scalac13Options = Seq(
   "-Xlint:adapted-args",
   "-Xlint:inaccessible",
   "-Xlint:infer-any",
-  "-Xlint:nullary-override",
   "-Xlint:nullary-unit",
   "-Yrangepos",
   "-Ywarn-unused"
@@ -76,7 +75,11 @@ scalacOptions := {
   common ++ (scalaBinaryVersion.value match {
     case "2.11" => scalac11Options
     case "2.12" => scalac12Options
-    case "2.13" => scalac13Options
+    case "2.13" => scalac13Options ++ (
+      scalaVersion.value.split('.') match {
+        case Array(_, _, patch) if Set("0", "1", "2")(patch) => Seq("-Xlint:nullary-override")
+        case _ => Seq.empty[String]
+      })
   })
 }
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
