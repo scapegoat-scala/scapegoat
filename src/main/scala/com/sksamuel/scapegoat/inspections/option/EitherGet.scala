@@ -10,7 +10,7 @@ class EitherGet
       defaultLevel = Levels.Error,
       description = "Checks for use of .get on Left or Right projection.",
       explanation =
-        "Method .get on a Left and a Right projection in deprecated since 2.13, use Either.getOrElse or Either.swap.getOrElse instead."
+        "Method .get on a Left and a Right projection is deprecated since 2.13, use Either.getOrElse or Either.swap.getOrElse instead."
     ) {
 
   def inspector(context: InspectionContext): Inspector =

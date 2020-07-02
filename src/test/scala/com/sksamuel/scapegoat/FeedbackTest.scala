@@ -70,7 +70,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
     }
     "should use proper paths" - {
       "for `src/main/scala`" in {
-        val normalizeSourceFile = PrivateMethod[String]('normalizeSourceFile)
+        val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter
         val feedback = new Feedback(true, reporter, defaultSourcePrefix)
         val source = "src/main/scala/com/sksamuel/scapegoat/Test.scala"
@@ -79,7 +79,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
       }
 
       "for `app`" in {
-        val normalizeSourceFile = PrivateMethod[String]('normalizeSourceFile)
+        val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter
         val feedback = new Feedback(true, reporter, "app/")
         val source = "app/com/sksamuel/scapegoat/Test.scala"
@@ -88,7 +88,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
       }
 
       "should add trailing / to the sourcePrefix automatically" in {
-        val normalizeSourceFile = PrivateMethod[String]('normalizeSourceFile)
+        val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter
         val feedback = new Feedback(true, reporter, "app/custom")
         val source = "app/custom/com/sksamuel/scapegoat/Test.scala"
@@ -96,7 +96,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
     }
-    "should use minimal wawrning level in reports" - {
+    "should use minimal warning level in reports" - {
       "for `info`" in {
         val inspectionError = new DummyInspection(
           "My default is Error",
