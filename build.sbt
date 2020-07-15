@@ -1,5 +1,5 @@
 // compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.3.18" cross CrossVersion.full)
+addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.3.20" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
@@ -23,7 +23,7 @@ developers := List(
 )
 
 scalaVersion := "2.13.3"
-crossScalaVersions := Seq("2.11.12", "2.12.10", "2.12.11", "2.13.2", "2.13.3")
+crossScalaVersions := Seq("2.11.12", "2.12.11", "2.12.12", "2.13.2", "2.13.3")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
