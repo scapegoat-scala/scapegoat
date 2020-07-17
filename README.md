@@ -325,6 +325,32 @@ Checks for code that uses a `while(true)` or `do { } while(true)` block.
 
 *Rationale*: This type of code is usually not meant for production as it will not return normally. If you need to loop until interrupted then consider using a flag.
 
+### Suppressing Warnings by Method or Class
+You can suppress a specific warning by method or by class using the java.lang.SuppressWarnings anotation.
+
+Use the simple name of the inspection to be ignored as the argument, or use "all" to suppress all scapegoat warnings in the specified scope.
+
+Some examples:
+
+```scala
+@SuppressWarnings(Array("all"))
+class Test {
+  def hello : Unit = {
+    val s : Any = "sammy"
+    println(s.asInstanceOf[String])
+  }
+} 
+
+class Test2 {
+  @SuppressWarnings(Array("AsInstanceOf"))
+  def hello : Unit = {
+    val s : Any = "sammy"
+    println(s.asInstanceOf[String])
+  }
+}
+```
+
+
 ### Other static analysis tools:
 
 * ScalaStyle (Scala) - https://github.com/scalastyle/scalastyle/wiki
