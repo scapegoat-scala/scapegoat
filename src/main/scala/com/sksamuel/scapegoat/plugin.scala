@@ -100,8 +100,8 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       case None => component.sourcePrefix = "src/main/scala/"
     }
     forProperty("minimalLevel:") match {
-      case Some(level) =>
-        component.minimalLevel = Levels.fromName(level)
+      case Some(option) =>
+        component.minimalLevel = Levels.fromName(option.drop("minimalLevel:".length))
       case None => component.minimalLevel = Levels.Info
     }
     forProperty("dataDir:") match {
