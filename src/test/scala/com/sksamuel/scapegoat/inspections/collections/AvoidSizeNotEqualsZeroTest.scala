@@ -25,5 +25,17 @@ class AvoidSizeNotEqualsZeroTest extends InspectionTest {
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 10
     }
+    // github issue #414
+    "should ignore durations" in {
+      val code = """object Test {
+                   |case class Duration(start: Long, stop: Long) {
+                   |  def length: Long = stop - start
+                   |  def nonEmpty: Boolean = length > 0
+                   |  }
+                    } """.stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
   }
 }
