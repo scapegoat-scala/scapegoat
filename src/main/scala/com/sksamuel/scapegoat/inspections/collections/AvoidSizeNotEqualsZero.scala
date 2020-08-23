@@ -25,9 +25,9 @@ class AvoidSizeNotEqualsZero
           override def inspect(tree: Tree): Unit = {
             tree match {
               case Apply(
-                    Select(Select(_, Length | Size), TermName("$bang$eq") | TermName("$greater")),
+                    Select(Select(q, Length | Size), TermName("$bang$eq") | TermName("$greater")),
                     List(Literal(Constant(0)))
-                  ) =>
+                  ) if isTraversable(q) =>
                 context.warn(tree.pos, self, tree.toString.take(100))
               case _ => continue(tree)
             }
