@@ -216,6 +216,28 @@ class VariableShadowingTest extends InspectionTest {
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
+      "when passing function as an argument (#419)" in {
+        val code =
+          """
+            |class TestVariableShadowing {
+            |  private def testCallbackFunction1(shadowedArg: Long): Boolean = shadowedArg > 10
+            |  private def testCallbackFunction2(arg: Long): Boolean = arg < 10
+            |
+            |  private def testCaller(renamedArg: Long, func: Long => Boolean): Boolean = func(renamedArg)
+            |
+            |  def test(shadowedArg: AnyVal): Boolean =
+            |    shadowedArg match {
+            |      case l1: Long   => testCaller(l1, testCallbackFunction1)  // WARNING on testCallbackFunction1
+            |      case l2: Double => testCaller(l2.toLong, testCallbackFunction2)
+            |      case l3         => false
+            |    }
+            |}
+            |""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
+
     }
   }
 }
