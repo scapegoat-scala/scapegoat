@@ -197,6 +197,25 @@ class VariableShadowingTest extends InspectionTest {
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "when using Builder-pattern method chaining (#398)" in {
+        val code =
+          """
+            |object Test {
+            |
+            |  def f(x: Int): String = x.toString
+            |  def g(y: String): Int = y.toInt
+            |
+            |  val a = Seq(1, 2, 3)
+            |  System.out.println(
+            |   a
+            |    .map(s => f(s))
+            |    .map(s => g(s))
+            |  )
+            |}
+            |""".stripMargin
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
