@@ -4,7 +4,8 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 abstract class Inspection(
   val text: String,
   val defaultLevel: Level,
@@ -67,9 +68,8 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       val names = Set("all", cls.getSimpleName, cls.getCanonicalName).map(_.toLowerCase)
       val suppressedNames: Seq[String] = an.javaArgs.values.headOption.toSeq.flatMap {
         case ArrayAnnotArg(args) =>
-          args.collect {
-            case LiteralAnnotArg(Constant(suppressedName: String)) =>
-              suppressedName.toLowerCase
+          args.collect { case LiteralAnnotArg(Constant(suppressedName: String)) =>
+            suppressedName.toLowerCase
           }
         case _ =>
           Seq.empty[String]
@@ -94,6 +94,7 @@ case class InspectionContext(global: Global, feedback: Feedback) {
       tree match {
         // ignore synthetic methods added
         case DefDef(_, _, _, _, _, _) if tree.symbol.isSynthetic =>
+        case ValDef(_, _, _, _) if tree.symbol.isSynthetic       =>
         case member: MemberDef if isSuppressed(member.symbol)    =>
         case block @ Block(_, _) if isSuppressed(block.symbol)   =>
         case iff @ If(_, _, _) if isSuppressed(iff.symbol)       =>
