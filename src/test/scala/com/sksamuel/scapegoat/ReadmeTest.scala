@@ -19,8 +19,8 @@ class ReadmeTest extends AnyFreeSpec with Matchers {
       .drop(1)
       .takeWhile(l => l.trim.nonEmpty)
       .map(_.split("\\|"))
-      .collect {
-        case Array(_, className, _, level) => className.trim -> level.trim
+      .collect { case Array(_, className, _, level) =>
+        className.trim -> level.trim
       }
 
   val inspectionNamesAndLevels =
@@ -45,8 +45,8 @@ class ReadmeTest extends AnyFreeSpec with Matchers {
 
     "should have correct number of inspections" in {
       val Pattern = raw"There are currently (\d+?) inspections.*".r
-      readme.collect {
-        case Pattern(n) => n.toInt shouldBe inspectionNamesAndLevels.size
+      readme.collect { case Pattern(n) =>
+        n.toInt shouldBe inspectionNamesAndLevels.size
       }
     }
   }

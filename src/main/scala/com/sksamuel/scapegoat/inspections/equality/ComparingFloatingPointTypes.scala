@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.equality
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class ComparingFloatingPointTypes
     extends Inspection(
       text = "Floating type comparison",

@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class AvoidSizeEqualsZero
     extends Inspection(
       text = "Avoid Traversable.size == 0",

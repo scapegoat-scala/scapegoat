@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.option
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class OptionSize
     extends Inspection(
       text = "Prefer Option.isDefined instead of Option.size",

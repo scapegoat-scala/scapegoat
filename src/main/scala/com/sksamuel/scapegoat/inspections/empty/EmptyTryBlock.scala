@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.empty
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class EmptyTryBlock
     extends Inspection(
       text = "Empty try block",

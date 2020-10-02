@@ -5,7 +5,8 @@ import scala.reflect.internal.Flags
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class UnusedMethodParameter
     extends Inspection(
       text = "Unused parameter",
@@ -96,14 +97,14 @@ class UnusedMethodParameter
               // ignore overridden methods, the parameter might be used by other classes
               case DefDef(mods, _, _, _, _, _)
                   if mods.isOverride ||
-                  mods.hasFlag(Flags.OVERRIDE) ||
-                  (tree.symbol != null && (tree.symbol.isAnyOverride || tree.symbol.isOverridingSymbol)) =>
+                    mods.hasFlag(Flags.OVERRIDE) ||
+                    (tree.symbol != null && (tree.symbol.isAnyOverride || tree.symbol.isOverridingSymbol)) =>
               // ignore main method
               case DefDef(_, name, _, List(List(param)), tpt, _)
                   if name.toString == "main" &&
-                  param.name.toString == "args" &&
-                  tpt.tpe =:= UnitTpe &&
-                  param.tpt.tpe =:= typeOf[Array[String]] =>
+                    param.name.toString == "args" &&
+                    tpt.tpe =:= UnitTpe &&
+                    param.tpt.tpe =:= typeOf[Array[String]] =>
               case DefDef(_, _, _, vparamss, _, rhs) =>
                 for {
                   vparams <- vparamss

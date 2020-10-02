@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /**
- * @author Zack Grannan */
+ * @author Zack Grannan
+ */
 class UnsafeStringContains
     extends Inspection(
       text = "Unsafe string contains",

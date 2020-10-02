@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat._
 
 /**
- * @author Matic Potočnik */
+ * @author Matic Potočnik
+ */
 class UseCbrt
     extends Inspection(
       text = "Use cbrt",
@@ -25,8 +26,8 @@ class UseCbrt
                   if (pack.symbol.fullNameString == "scala.math.package"
                   || pack.symbol.fullNameString == "java.lang.Math"
                   || pack.symbol.fullNameString == "java.lang.StrictMath")
-                  && third >= 0.3333332
-                  && third <= 0.3333334 =>
+                    && third >= 0.3333332
+                    && third <= 0.3333334 =>
                 context.warn(tree.pos, self)
               case _ => continue(tree)
             }

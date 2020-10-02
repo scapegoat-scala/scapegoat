@@ -28,8 +28,8 @@ class IncorrectlyNamedExceptions
               case cdef @ ClassDef(_, name, _, impl) =>
                 val isNamedException = name.toString.endsWith("Exception")
                 val isAnon = scala.util.Try {
-                    cdef.symbol.isAnonymousClass
-                  } getOrElse false
+                  cdef.symbol.isAnonymousClass
+                } getOrElse false
 
                 val extendsException = impl.tpe <:< typeOf[Exception]
                 val selfTypeIsException = impl match {

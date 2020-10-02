@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class BigDecimalDoubleConstructor
     extends Inspection(
       text = "Big decimal double constructor",

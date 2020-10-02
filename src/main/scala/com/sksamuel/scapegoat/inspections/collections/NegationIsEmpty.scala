@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class NegationIsEmpty
     extends Inspection(
       text = "!isEmpty can be replaced with nonEmpty",

@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class UnnecessaryConversion
     extends Inspection(
       text = "Unnecessary conversion",

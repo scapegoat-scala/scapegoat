@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class PredefTraversableIsMutable
     extends Inspection(
       text = "Traversable is mutable",

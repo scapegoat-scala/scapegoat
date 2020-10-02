@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.unsafe
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class TryGet
     extends Inspection(
       text = "Use of Try.get",

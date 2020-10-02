@@ -46,13 +46,13 @@ class ComparingUnrelatedTypesTest extends InspectionTest {
     }
     "should not report warning" - {
       "for zero" - {
-        "compared to long" in { verifyNoWarnings("""object A { val l = 100l; val b = 0 == l }""") }
-        "compared to double" in { verifyNoWarnings("""object A { val d = 100d; val b = 0 == d }""") }
-        "compared to float" in { verifyNoWarnings("""object A { val f = 100f; val b = 0 == f }""") }
+        "compared to long" in verifyNoWarnings("""object A { val l = 100l; val b = 0 == l }""")
+        "compared to double" in verifyNoWarnings("""object A { val d = 100d; val b = 0 == d }""")
+        "compared to float" in verifyNoWarnings("""object A { val f = 100f; val b = 0 == f }""")
       }
       "for long" - {
-        "compared to zero" in { verifyNoWarnings("""object A { val l = 100l; val b = l == 0 }""") }
-        "compared to int literal" in { verifyNoWarnings("""object A { val l = 100l; val b = l == 100 }""") }
+        "compared to zero" in verifyNoWarnings("""object A { val l = 100l; val b = l == 0 }""")
+        "compared to int literal" in verifyNoWarnings("""object A { val l = 100l; val b = l == 100 }""")
       }
       "for char" - {
         "compared to char-sized long literal" in {
@@ -68,10 +68,10 @@ class ComparingUnrelatedTypesTest extends InspectionTest {
         }
       }
       "for double" - {
-        "compared to zero" in { verifyNoWarnings("""object A { val d = 100d; val b = d == 0 }""") }
+        "compared to zero" in verifyNoWarnings("""object A { val d = 100d; val b = d == 0 }""")
       }
       "for float" - {
-        "compared to zero" in { verifyNoWarnings("""object A { val f = 100f; val b = f == 0 }""") }
+        "compared to zero" in verifyNoWarnings("""object A { val f = 100f; val b = f == 0 }""")
       }
       "for same enum values" in {
         val code = """object Main {
@@ -88,8 +88,8 @@ class ComparingUnrelatedTypesTest extends InspectionTest {
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
       "for isSize comparison" - {
-        "equality check" in { verifyNoWarnings("""object A { val b = Seq("a", "b").sizeIs == 2 }""") }
-        "inequality check" in { verifyNoWarnings("""object A { val b = Seq("a", "b").sizeIs != 2 }""") }
+        "equality check" in verifyNoWarnings("""object A { val b = Seq("a", "b").sizeIs == 2 }""")
+        "inequality check" in verifyNoWarnings("""object A { val b = Seq("a", "b").sizeIs != 2 }""")
       }
       "singleton types" - {
         "sealed trait hierarchy match if guard" in {

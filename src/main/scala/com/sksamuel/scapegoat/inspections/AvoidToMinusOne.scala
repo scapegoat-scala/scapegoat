@@ -5,7 +5,8 @@ import scala.runtime.{RichInt, RichLong}
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class AvoidToMinusOne
     extends Inspection(
       text = "Avoid (j to k - 1)",

@@ -5,7 +5,8 @@ import scala.xml.Node
 import com.sksamuel.scapegoat.{Feedback, Warning}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 object XmlReportWriter extends ReportWriter {
 
   override protected val fileName = "scapegoat.xml"

@@ -56,7 +56,7 @@ class ExistsSimplifiableToContains
                     )
                   )
                   if isContainsTraversable(lhs) && doesElementTypeMatch(lhs, x)
-                  && countUsagesOfAVariable(List(subtree), iterationVariable) == 1 =>
+                    && countUsagesOfAVariable(List(subtree), iterationVariable) == 1 =>
                 context.warn(tree.pos, self, tree.toString.take(500))
               case _ => continue(tree)
             }

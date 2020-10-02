@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.empty
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class EmptyIfBlock
     extends Inspection(
       text = "Empty if expression",

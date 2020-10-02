@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.nulls
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class NullAssignment
     extends Inspection(
       text = "Null assignment",

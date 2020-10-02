@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class VarClosure
     extends Inspection(
       text = "Var in closure",
