@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.option
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class EitherGet
     extends Inspection(
       text = "Use of Either.right or Either.left projection followed by a get",

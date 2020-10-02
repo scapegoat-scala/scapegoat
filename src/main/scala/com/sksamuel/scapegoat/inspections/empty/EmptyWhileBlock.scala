@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.empty
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class EmptyWhileBlock
     extends Inspection(
       text = "Empty while block",

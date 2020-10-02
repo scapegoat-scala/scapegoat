@@ -5,7 +5,8 @@ import scala.util.control.ControlThrowable
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Marconi Lanna */
+ * @author Marconi Lanna
+ */
 class CatchFatal
     extends Inspection(
       text = "Catch fatal exception",

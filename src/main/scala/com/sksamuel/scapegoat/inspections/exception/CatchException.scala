@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Marconi Lanna */
+ * @author Marconi Lanna
+ */
 @SuppressWarnings(Array("IncorrectlyNamedExceptions"))
 class CatchException
     extends Inspection(

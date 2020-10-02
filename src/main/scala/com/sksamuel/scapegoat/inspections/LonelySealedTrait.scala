@@ -5,7 +5,8 @@ import scala.collection.mutable
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class LonelySealedTrait
     extends Inspection(
       text = "Lonely sealed trait",

@@ -1,7 +1,8 @@
 package com.sksamuel.scapegoat
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 sealed trait Level
 
 object Levels {

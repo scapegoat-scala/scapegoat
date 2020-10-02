@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.naming
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class ClassNames
     extends Inspection(
       text = "Class name not recommended",

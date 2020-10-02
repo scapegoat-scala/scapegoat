@@ -5,7 +5,8 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.reporters.Reporter
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class Feedback(
   consoleOutput: Boolean,
   reporter: Reporter,

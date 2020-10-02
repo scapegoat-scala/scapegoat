@@ -5,7 +5,8 @@ import scala.xml.Unparsed
 import com.sksamuel.scapegoat.{Feedback, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 object HtmlReportWriter extends ReportWriter {
 
   override protected def fileName: String = "scapegoat.html"

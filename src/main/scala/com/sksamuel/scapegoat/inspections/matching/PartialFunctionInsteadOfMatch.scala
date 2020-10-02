@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class PartialFunctionInsteadOfMatch
     extends Inspection(
       text = "Match instead of a partial function",

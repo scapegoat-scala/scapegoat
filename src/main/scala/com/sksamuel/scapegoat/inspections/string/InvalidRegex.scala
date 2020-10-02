@@ -5,7 +5,8 @@ import java.util.regex.PatternSyntaxException
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class InvalidRegex
     extends Inspection(
       text = "Invalid regex",

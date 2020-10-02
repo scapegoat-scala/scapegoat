@@ -5,7 +5,8 @@ import scala.collection.mutable
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class TypeShadowing
     extends Inspection(
       text = "Type shadowing",

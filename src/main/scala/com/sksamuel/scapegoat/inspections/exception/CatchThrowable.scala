@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class CatchThrowable
     extends Inspection(
       text = "Catch throwable",

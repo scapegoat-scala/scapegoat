@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /**
- * @author Josh Rosen */
+ * @author Josh Rosen
+ */
 class CollectionIndexOnNonIndexedSeq
     extends Inspection(
       text = "Use of apply method on a non-indexed Seq",

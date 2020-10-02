@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.matching
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class SuspiciousMatchOnClassObject
     extends Inspection(
       text = "Suspicious match on class object",
@@ -36,9 +37,9 @@ class SuspiciousMatchOnClassObject
                     _
                   ) // if we have a case object and a companion class, then we are matching on an object instead of a class
                   if pat.symbol != null &&
-                  pat.symbol.isModuleOrModuleClass &&
-                  pat.tpe.typeSymbol.companionClass.isClass &&
-                  !pat.tpe.typeSymbol.companionClass.isAbstractClass =>
+                    pat.symbol.isModuleOrModuleClass &&
+                    pat.tpe.typeSymbol.companionClass.isClass &&
+                    !pat.tpe.typeSymbol.companionClass.isAbstractClass =>
                 context.warn(c.pos, self, c.toString.take(500))
                 true
               case _ => false

@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.inference
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class BoundedByFinalType
     extends Inspection(
       text = "Bounded by a final type",

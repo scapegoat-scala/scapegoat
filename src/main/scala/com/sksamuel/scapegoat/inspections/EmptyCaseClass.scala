@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel */
+ * @author Stephen Samuel
+ */
 class EmptyCaseClass
     extends Inspection(
       text = "Empty case class",
@@ -21,8 +22,8 @@ class EmptyCaseClass
 
           def accessors(trees: List[Tree]): List[ValDef] = {
             trees
-              .collect {
-                case v: ValDef => v
+              .collect { case v: ValDef =>
+                v
               }
               .filter(_.mods.isCaseAccessor)
           }
