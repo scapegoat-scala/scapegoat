@@ -70,5 +70,22 @@ class AsInstanceOfTest extends InspectionTest {
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
+    "should not warn on GADT pattern matching (#378)" in {
+      val code =
+        """
+          |sealed trait MyGADT[T]
+          |final case class VariantInt(value: Int) extends MyGADT[Int]
+          |final case class VariantString(value: String) extends MyGADT[String]
+          |
+          |def doStuff[T](gadt: MyGADT[T]): T = {
+          |  gadt match {
+          |    case VariantInt(value)    => value
+          |    case VariantString(value) => value
+          |  }
+          |}
+          |""".stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
   }
 }
