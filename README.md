@@ -63,7 +63,11 @@ You can pass other configuration flags same way, e.g.
 
 Note: You may use a separate maven profile, so that the dependency doesn't go to you runtime classpath.
 
-### Gradle
+### Gradle with a plugin
+
+Use [gradle-scapegoat-plugin by @eugene-sy](https://github.com/eugene-sy/gradle-scapegoat-plugin)
+
+### Gradle - manually
 
 Firstly you need to add scapegoat plugin as a dependency:
 
