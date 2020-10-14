@@ -43,6 +43,9 @@ class UnusedMethodParameter
             }
           }
 
+          private def isParameterExcused(param: ValDef): Boolean =
+            param.symbol.annotations.exists(_.atp.toString == "scala.annotation.unused")
+
           /**
            * For constructor params, some params become vals / fields of the class:
            *   1. all params in the first argument list for case classes
@@ -109,8 +112,9 @@ class UnusedMethodParameter
                 for {
                   vparams <- vparamss
                   vparam  <- vparams
-                } if (!usesParameter(vparam.name.toString, rhs))
+                } if (!isParameterExcused(vparam) && !usesParameter(vparam.name.toString, rhs)) {
                   context.warn(tree.pos, self, s"Unused method parameter ($vparam).")
+                }
               case _ => continue(tree)
             }
           }
