@@ -143,8 +143,8 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     ).mkString("\n")
   )
 
-  private def forProperty(name: String): Option[String] =
-    options.find(_.startsWith(name))
+  private def forProperty(propertyName: String): Option[String] =
+    options.find(_.startsWith(propertyName))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
