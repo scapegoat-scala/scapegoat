@@ -35,7 +35,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val feedback = new Feedback(true, reporter, defaultSourcePrefix)
         feedback.warn(position, inspection)
         reporter.infos should contain(
-          reporter.Info(position, "[scapegoat] My default is Error\n  This is explanation.", reporter.ERROR)
+          reporter.Info(position, "[scapegoat] [DummyInspection] My default is Error\n  This is explanation.", reporter.ERROR)
         )
       }
       "for warning" in {
@@ -50,7 +50,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         feedback.warn(position, inspection)
         reporter.infos should contain(
           reporter
-            .Info(position, "[scapegoat] My default is Warning\n  This is explanation.", reporter.WARNING)
+            .Info(position, "[scapegoat] [DummyInspection] My default is Warning\n  This is explanation.", reporter.WARNING)
         )
       }
       "for info" in {
@@ -64,7 +64,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val feedback = new Feedback(true, reporter, defaultSourcePrefix)
         feedback.warn(position, inspection)
         reporter.infos should contain(
-          reporter.Info(position, "[scapegoat] My default is Info\n  This is explanation.", reporter.INFO)
+          reporter.Info(position, "[scapegoat] [DummyInspection] My default is Info\n  This is explanation.", reporter.INFO)
         )
       }
     }

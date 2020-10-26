@@ -18,6 +18,8 @@ abstract class Inspection(
   def inspector(context: InspectionContext): Inspector
 
   def isEnabled: Boolean = true
+
+  def name: String = getClass.getSimpleName
 }
 
 abstract class Inspector(val context: InspectionContext) {

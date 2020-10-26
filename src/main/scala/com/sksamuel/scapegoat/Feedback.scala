@@ -35,6 +35,7 @@ class Feedback(
   ): Unit = {
     val level = inspection.defaultLevel
     val text = inspection.text
+    val name = inspection.name
     val explanation = adhocExplanation.getOrElse(inspection.explanation)
     val adjustedLevel = (
       levelOverridesByInspectionSimpleName.get("all"),
@@ -61,7 +62,7 @@ class Feedback(
 
     if (shouldPrint(warning)) {
       val snippetText = snippet.fold("")("\n  " + _ + "\n")
-      val report = s"""[scapegoat] $text
+      val report = s"""[scapegoat] [$name] $text
                       |  $explanation$snippetText""".stripMargin
 
       adjustedLevel match {

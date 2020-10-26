@@ -183,10 +183,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   def activeInspections: Seq[Inspection] = {
     if (enabledInspections.isEmpty)
       (inspections ++ customInpections)
-        .filterNot(inspection => disabledInspections.contains(inspection.getClass.getSimpleName))
+        .filterNot(inspection => disabledInspections.contains(inspection.name))
     else
       (inspections ++ customInpections)
-        .filter(inspection => enabledInspections.contains(inspection.getClass.getSimpleName))
+        .filter(inspection => enabledInspections.contains(inspection.name))
   }
   lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix, minimalLevel)
 
