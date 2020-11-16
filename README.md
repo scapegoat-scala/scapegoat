@@ -47,7 +47,7 @@ Then configure `scala-maven-plugin` by adding `compilerPlugin`
             <compilerPlugin>
                 <groupId>com.sksamuel.scapegoat</groupId>
                 <artifactId>scalac-scapegoat-plugin_${scala.binary.version}</artifactId>
-                <version>1.3.3</version>
+                <version>1.4.6</version>
             </compilerPlugin>
         </compilerPlugins>
     </configuration>
@@ -73,8 +73,8 @@ Firstly you need to add scapegoat plugin as a dependency:
 
 ```groovy
 dependencies {
-  compile 'com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12:1.3.3'
-  scalaCompilerPlugin "com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12:1.3.3"
+  compile 'com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12.12:1.4.6'
+  scalaCompilerPlugin "com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12.12:1.4.6"
 }
 
 ```
