@@ -22,17 +22,21 @@ class ComparisonToEmptyList
 
           private val Equals = TermName("$eq$eq")
           private val Empty = TermName("empty")
-          private val Nil = TermName("Nil")
+          private val TermApply = TermName("apply")
+          private val TermNil = TermName("Nil")
           private val TermList = TermName("List")
 
           override def inspect(tree: Tree): Unit = {
             tree match {
-              case Apply(Select(_, Equals), List(Select(_, Nil))) => warn(tree)
-              case Apply(Select(Select(_, Nil), Equals), _)       => warn(tree)
+              case Apply(Select(_, Equals), List(Select(_, TermNil))) => warn(tree)
+              case Apply(Select(Select(_, TermNil), Equals), _)       => warn(tree)
               case Apply(Select(_, Equals), List(TypeApply(Select(Select(_, TermList), Empty), _))) =>
                 warn(tree)
               case Apply(Select(TypeApply(Select(Select(_, TermList), Empty), _), Equals), _) => warn(tree)
-              case _                                                                          => continue(tree)
+              case Apply(Select(_, Equals), List(Apply(TypeApply(Select(_, TermApply), _), Nil))) =>
+                warn(tree)
+              case Apply(Select(Apply(TypeApply(Select(_, TermApply), _), Nil), Equals), _) => warn(tree)
+              case _                                                                        => continue(tree)
             }
           }
 

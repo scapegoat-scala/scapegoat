@@ -15,9 +15,10 @@ jobs:
           - 2.12.12
           - 2.13.2
           - 2.13.3
+          - 2.13.4
     steps:
       - uses: actions/checkout@v2
-      - uses: olafurpg/setup-scala@v7
+      - uses: olafurpg/setup-scala@v10
         with:
           java-version: adopt@1.${{matrix.java}}
       - uses: actions/cache@v1
@@ -36,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: olafurpg/setup-scala@v7
+      - uses: olafurpg/setup-scala@v10
         with:
           java-version: adopt@1.11
       - uses: actions/cache@v1
