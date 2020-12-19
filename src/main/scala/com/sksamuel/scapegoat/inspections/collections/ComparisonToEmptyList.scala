@@ -33,10 +33,17 @@ class ComparisonToEmptyList
               case Apply(Select(_, Equals), List(TypeApply(Select(Select(_, TermList), Empty), _))) =>
                 warn(tree)
               case Apply(Select(TypeApply(Select(Select(_, TermList), Empty), _), Equals), _) => warn(tree)
-              case Apply(Select(_, Equals), List(Apply(TypeApply(Select(_, TermApply), _), Nil))) =>
+              case Apply(
+                    Select(_, Equals),
+                    List(Apply(TypeApply(Select(Select(_, TermList), TermApply), _), Nil))
+                  ) =>
                 warn(tree)
-              case Apply(Select(Apply(TypeApply(Select(_, TermApply), _), Nil), Equals), _) => warn(tree)
-              case _                                                                        => continue(tree)
+              case Apply(
+                    Select(Apply(TypeApply(Select(Select(_, TermList), TermApply), _), Nil), Equals),
+                    _
+                  ) =>
+                warn(tree)
+              case _ => continue(tree)
             }
           }
 
