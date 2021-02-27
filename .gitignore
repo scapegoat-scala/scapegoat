@@ -1,7 +1,7 @@
 *.class
 *.log
 
-# sbt specific
+# sbt@sy specific
 dist/*
 target/
 lib_managed/
@@ -21,3 +21,5 @@ target
 .bloop
 .metals
 metals.sbt
+
+.bsp
