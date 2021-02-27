@@ -1,7 +1,7 @@
 *.class
 *.log
 
-# sbt@sy specific
+# sbt specific
 dist/*
 target/
 lib_managed/
