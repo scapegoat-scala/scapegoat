@@ -62,7 +62,7 @@ class VarCouldBeVal
           private def containsUnwrittenVar(trees: List[Tree]): List[(String, Tree)] =
             containsUnwrittenVar(trees, mutable.HashMap[String, Tree]())
 
-          override final def inspect(tree: Tree): Unit = {
+          override def inspect(tree: Tree): Unit = {
             tree match {
               case DefDef(_, _, _, _, _, Block(stmt, expr)) =>
                 for ((_, definitionTree) <- containsUnwrittenVar(stmt :+ expr))

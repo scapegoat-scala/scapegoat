@@ -81,7 +81,7 @@ class Feedback(
   }
 }
 
-case class Warning(
+final case class Warning(
   text: String,
   line: Int,
   level: Level,
