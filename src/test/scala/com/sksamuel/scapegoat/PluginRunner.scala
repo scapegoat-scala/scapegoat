@@ -87,11 +87,8 @@ class ScapegoatCompiler(
 ) extends scala.tools.nsc.Global(settings, reporter) {
 
   val scapegoat = new ScapegoatComponent(this, inspections)
-  scapegoat.disableHTML = true
-  scapegoat.disableXML = true
-  scapegoat.disableScalastyleXML = true
-  scapegoat.verbose = false
   scapegoat.summary = false
+  scapegoat.configuration = TestConfiguration.configuration
 
   override def computeInternalPhases(): Unit = {
     super.computeInternalPhases()

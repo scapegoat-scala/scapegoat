@@ -1,18 +1,19 @@
 package com.sksamuel.scapegoat
 
-import com.sksamuel.scapegoat.io.IOUtils
-
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
+
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
+
+import com.sksamuel.scapegoat.io.IOUtils
 
 class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override val name: String = "scapegoat"
   override val description: String = "scapegoat compiler plugin"
-  val component = new ScapegoatComponent(global, ScapegoatConfig.inspections)
+  val component = new ScapegoatComponent(global, Inspections.inspections)
   override val components: List[PluginComponent] = List(component)
 
   override def init(options: List[String], error: String => Unit): Boolean = {
@@ -26,26 +27,27 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       }
     }
 
-    component.disabledInspections =
+    val disabledInspections =
       fromProperty("disabledInspections", defaultValue = List.empty[String])(_.split(':').toList)
-    component.enabledInspections =
+    val enabledInspections =
       fromProperty("enabledInspections", defaultValue = List.empty[String])(_.split(':').toList)
-    component.consoleOutput = fromProperty("consoleOutput", defaultValue = true)(_.toBoolean)
-    component.ignoredFiles =
+    val consoleOutput = fromProperty("consoleOutput", defaultValue = true)(_.toBoolean)
+    val ignoredFiles =
       fromProperty("ignoredFiles", defaultValue = List.empty[String])(_.split(':').toList)
-    component.verbose = fromProperty("verbose", defaultValue = false)(_.toBoolean)
+    val verbose = fromProperty("verbose", defaultValue = false)(_.toBoolean)
 
-    component.customInpections = fromProperty("customInspectors", defaultValue = Seq.empty[Inspection]) {
+    val customInspections = fromProperty("customInspectors", defaultValue = Seq.empty[Inspection]) {
       _.split(':').toSeq
         .map(inspection => Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection])
     }
     val enabledReports = fromProperty("reports", defaultValue = Seq("all"))(_.split(':').toSeq)
-    component.disableXML = !(enabledReports.contains("xml") || enabledReports.contains("all"))
-    component.disableHTML = !(enabledReports.contains("html") || enabledReports.contains("all"))
-    component.disableScalastyleXML =
+    val disableXML = !(enabledReports.contains("xml") || enabledReports.contains("all"))
+    val disableHTML = !(enabledReports.contains("html") || enabledReports.contains("all"))
+    val disableScalastyleXML =
       !(enabledReports.contains("scalastyle") || enabledReports.contains("all"))
-    component.disableMarkdown = !(enabledReports.contains("markdown") || enabledReports.contains("all"))
+    val disableMarkdown = !(enabledReports.contains("markdown") || enabledReports.contains("all"))
 
+    // TODO That should go into configuration too
     component.feedback.levelOverridesByInspectionSimpleName =
       fromProperty("overrideLevels", defaultValue = Map.empty[String, Level]) {
         _.split(":").map { nameLevel =>
@@ -61,11 +63,11 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
           }
         }.toMap
       }
-    component.sourcePrefix = fromProperty("sourcePrefix", defaultValue = "src/main/scala/")(x => x)
-    component.minimalLevel = fromProperty[Level]("minimalLevel", defaultValue = Levels.Info) { value =>
+    val sourcePrefix = fromProperty("sourcePrefix", defaultValue = "src/main/scala/")(x => x)
+    val minimalLevel = fromProperty[Level]("minimalLevel", defaultValue = Levels.Info) { value =>
       Levels.fromName(value)
     }
-    component.dataDir = fromProperty[Option[File]](
+    val dataDir = fromProperty[Option[File]](
       "dataDir",
       defaultValue = {
         error("-P:scapegoat:dataDir not specified")
@@ -75,7 +77,23 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       Some(new File(value))
     }
 
-    component.dataDir.isDefined
+    component.configuration = Configuration(
+      dataDir = dataDir,
+      disabledInspections = disabledInspections,
+      enabledInspections = enabledInspections,
+      ignoredFiles = ignoredFiles,
+      consoleOutput = consoleOutput,
+      verbose = verbose,
+      disableXML = disableXML,
+      disableHTML = disableHTML,
+      disableScalastyleXML = disableScalastyleXML,
+      disableMarkdown = disableMarkdown,
+      customInspections = customInspections,
+      sourcePrefix = sourcePrefix,
+      minimalLevel = minimalLevel
+    )
+
+    component.configuration.dataDir.isDefined
   }
 
   override val optionsHelp: Option[String] = Some(
@@ -118,21 +136,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   import global._
 
-  var dataDir: Option[File] = Some(new File("."))
-  var disabledInspections: List[String] = Nil
-  var enabledInspections: List[String] = Nil
-  var ignoredFiles: List[String] = Nil
-  var consoleOutput: Boolean = true
-  var verbose: Boolean = false
+  var configuration: Configuration = null
+
   val debug: Boolean = false
   var summary: Boolean = true
-  var disableXML = true
-  var disableHTML = true
-  var disableScalastyleXML = true
-  var disableMarkdown = true
-  var customInpections: Seq[Inspection] = Nil
-  var sourcePrefix = "src/main/scala/"
-  var minimalLevel: Level = Levels.Info
 
   private val count = new AtomicInteger(0)
 
@@ -140,23 +147,23 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
-  def disableAll: Boolean = disabledInspections.exists(_.compareToIgnoreCase("all") == 0)
+  def disableAll: Boolean = configuration.disabledInspections.exists(_.compareToIgnoreCase("all") == 0)
 
   def activeInspections: Seq[Inspection] = {
-    if (enabledInspections.isEmpty)
-      (inspections ++ customInpections)
-        .filterNot(inspection => disabledInspections.contains(inspection.name))
+    if (configuration.enabledInspections.isEmpty)
+      (inspections ++ configuration.customInspections)
+        .filterNot(inspection => configuration.disabledInspections.contains(inspection.name))
     else
-      (inspections ++ customInpections)
-        .filter(inspection => enabledInspections.contains(inspection.name))
+      (inspections ++ configuration.customInspections)
+        .filter(inspection => configuration.enabledInspections.contains(inspection.name))
   }
-  lazy val feedback = new Feedback(consoleOutput, global.reporter, sourcePrefix, minimalLevel)
+  lazy val feedback = new Feedback(global.reporter, configuration)
 
   def writeReport(isDisabled: Boolean, reportName: String, writer: (File, Feedback) => File): Unit = {
     if (!isDisabled) {
-      dataDir.foreach { outputDir =>
+      configuration.dataDir.foreach { outputDir =>
         val output = writer(outputDir, feedback)
-        if (verbose)
+        if (configuration.verbose)
           reporter.echo(s"[info] [scapegoat] Written $reportName report [$output]")
       }
     }
@@ -169,9 +176,9 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           reporter.echo("[info] [scapegoat] All inspections disabled")
         else {
           reporter.echo(s"[info] [scapegoat] ${activeInspections.size} activated inspections")
-          if (verbose)
-            if (ignoredFiles.nonEmpty)
-              reporter.echo(s"[info] [scapegoat] $ignoredFiles ignored file patterns")
+          if (configuration.verbose)
+            if (configuration.ignoredFiles.nonEmpty)
+              reporter.echo(s"[info] [scapegoat] ${configuration.ignoredFiles} ignored file patterns")
           super.run()
 
           if (summary) {
@@ -184,10 +191,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
             )
           }
 
-          writeReport(disableHTML, "HTML", IOUtils.writeHTMLReport)
-          writeReport(disableXML, "XML", IOUtils.writeXMLReport)
-          writeReport(disableScalastyleXML, "Scalastyle XML", IOUtils.writeScalastyleReport)
-          writeReport(disableMarkdown, "Markdown", IOUtils.writeMarkdownReport)
+          writeReport(configuration.disableHTML, "HTML", IOUtils.writeHTMLReport)
+          writeReport(configuration.disableXML, "XML", IOUtils.writeXMLReport)
+          writeReport(configuration.disableScalastyleXML, "Scalastyle XML", IOUtils.writeScalastyleReport)
+          writeReport(configuration.disableMarkdown, "Markdown", IOUtils.writeMarkdownReport)
         }
       }
     }
@@ -199,7 +206,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   class Transformer(unit: global.CompilationUnit) extends TypingTransformer(unit) {
     override def transform(tree: global.Tree): global.Tree = {
-      if (ignoredFiles.exists(unit.source.path.matches)) {
+      if (configuration.ignoredFiles.exists(unit.source.path.matches)) {
         if (debug)
           reporter.echo(s"[debug] Skipping scapegoat [$unit]")
       } else {

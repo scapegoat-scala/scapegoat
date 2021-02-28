@@ -8,17 +8,17 @@ import scala.tools.nsc.reporters.Reporter
  * @author Stephen Samuel
  */
 class Feedback(
-  consoleOutput: Boolean,
   reporter: Reporter,
-  sourcePrefix: String,
-  minimalLevel: Level = Levels.Info
+  configuration: Configuration
 ) {
 
   private val warningsBuffer = new ListBuffer[Warning]
 
   def warnings: Seq[Warning] = warningsBuffer.toSeq
-  def warningsWithMinimalLevel: Seq[Warning] = warnings.filter(_.hasMinimalLevelOf(minimalLevel))
-  def shouldPrint(warning: Warning): Boolean = consoleOutput && warning.hasMinimalLevelOf(minimalLevel)
+  def warningsWithMinimalLevel: Seq[Warning] =
+    warnings.filter(_.hasMinimalLevelOf(configuration.minimalLevel))
+  def shouldPrint(warning: Warning): Boolean =
+    configuration.consoleOutput && warning.hasMinimalLevelOf(configuration.minimalLevel)
 
   var levelOverridesByInspectionSimpleName: Map[String, Level] = Map.empty
 
@@ -74,6 +74,7 @@ class Feedback(
   }
 
   private def normalizeSourceFile(sourceFile: String): String = {
+    val sourcePrefix = configuration.sourcePrefix
     val indexOf = sourceFile.indexOf(sourcePrefix)
     val fullPrefix = if (sourcePrefix.endsWith("/")) sourcePrefix else s"$sourcePrefix/"
     val packageAndFile = if (indexOf == -1) sourceFile else sourceFile.drop(indexOf).drop(fullPrefix.length)

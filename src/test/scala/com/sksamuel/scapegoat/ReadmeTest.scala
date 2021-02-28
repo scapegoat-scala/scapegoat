@@ -24,7 +24,7 @@ class ReadmeTest extends AnyFreeSpec with Matchers {
       }
 
   val inspectionNamesAndLevels =
-    ScapegoatConfig.inspections.map(i => i.getClass.getSimpleName -> i.defaultLevel.toString).toSet
+    Inspections.inspections.map(i => i.getClass.getSimpleName -> i.defaultLevel.toString).toSet
 
   "README" - {
     "should be up to date" in {

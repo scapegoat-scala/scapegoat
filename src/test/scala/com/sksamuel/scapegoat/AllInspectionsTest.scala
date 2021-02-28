@@ -7,7 +7,7 @@ class AllInspectionsTest extends AnyFreeSpec with Matchers {
 
   val code = "\\s[A-Za-z0-9.]+\\(\\)\\s".r
 
-  ScapegoatConfig.inspections.foreach { insp =>
+  Inspections.inspections.foreach { insp =>
     insp.getClass.getSimpleName - {
       "should have a properly-formatted description" in {
         insp.description.trim shouldNot be("")
