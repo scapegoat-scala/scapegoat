@@ -47,8 +47,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       !(enabledReports.contains("scalastyle") || enabledReports.contains("all"))
     val disableMarkdown = !(enabledReports.contains("markdown") || enabledReports.contains("all"))
 
-    // TODO That should go into configuration too
-    component.feedback.levelOverridesByInspectionSimpleName =
+    val levelOverridesByInspectionSimpleName =
       fromProperty("overrideLevels", defaultValue = Map.empty[String, Level]) {
         _.split(":").map { nameLevel =>
           nameLevel.split("=") match {
@@ -90,7 +89,8 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
       disableMarkdown = disableMarkdown,
       customInspections = customInspections,
       sourcePrefix = sourcePrefix,
-      minimalLevel = minimalLevel
+      minimalLevel = minimalLevel,
+      levelOverridesByInspectionSimpleName = levelOverridesByInspectionSimpleName
     )
 
     component.configuration.dataDir.isDefined

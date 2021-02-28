@@ -15,6 +15,7 @@ object TestConfiguration {
     disableMarkdown = true,
     customInspections = Seq(),
     sourcePrefix = "src/main/scala",
-    minimalLevel = Levels.Info
+    minimalLevel = Levels.Info,
+    levelOverridesByInspectionSimpleName = Map.empty[String, Level]
   )
 }

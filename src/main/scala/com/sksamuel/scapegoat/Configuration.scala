@@ -15,5 +15,6 @@ case class Configuration(
   disableMarkdown: Boolean,
   customInspections: Seq[Inspection],
   sourcePrefix: String,
-  minimalLevel: Level
+  minimalLevel: Level,
+  levelOverridesByInspectionSimpleName: Map[String, Level]
 )

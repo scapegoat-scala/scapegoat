@@ -20,8 +20,6 @@ class Feedback(
   def shouldPrint(warning: Warning): Boolean =
     configuration.consoleOutput && warning.hasMinimalLevelOf(configuration.minimalLevel)
 
-  var levelOverridesByInspectionSimpleName: Map[String, Level] = Map.empty
-
   def infos = warnings(Levels.Info)
   def errors = warnings(Levels.Error)
   def warns = warnings(Levels.Warning)
@@ -38,8 +36,8 @@ class Feedback(
     val name = inspection.name
     val explanation = adhocExplanation.getOrElse(inspection.explanation)
     val adjustedLevel = (
-      levelOverridesByInspectionSimpleName.get("all"),
-      levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)
+      configuration.levelOverridesByInspectionSimpleName.get("all"),
+      configuration.levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)
     ) match {
       case (Some(l), _)    => l
       case (None, Some(l)) => l
