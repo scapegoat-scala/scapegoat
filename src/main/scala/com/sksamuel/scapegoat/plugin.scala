@@ -1,13 +1,12 @@
 package com.sksamuel.scapegoat
 
+import com.sksamuel.scapegoat.io.IOUtils
+
 import java.io.File
 import java.util.concurrent.atomic.AtomicInteger
-
 import scala.tools.nsc._
 import scala.tools.nsc.plugins.{Plugin, PluginComponent}
 import scala.tools.nsc.transform.{Transform, TypingTransformers}
-
-import com.sksamuel.scapegoat.io.IOUtils
 
 class ScapegoatPlugin(val global: Global) extends Plugin {
 
@@ -17,70 +16,39 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override val components: List[PluginComponent] = List(component)
 
   override def init(options: List[String], error: String => Unit): Boolean = {
-    forProperty("disabledInspections:") match {
-      case Some(option) =>
-        component.disabledInspections = option.drop("disabledInspections:".length).split(':').toList
-      case _ =>
+    def fromProperty[T](propertyName: String, defaultValue: T)(fn: String => T): T = {
+      options.find(_.startsWith(propertyName + ":")) match {
+        case Some(property) =>
+          val justTheValue = property.drop(propertyName.length + 1)
+          fn(justTheValue)
+        case None =>
+          defaultValue
+      }
     }
-    forProperty("enabledInspections:") match {
-      case Some(option) =>
-        component.enabledInspections = option.drop("enabledInspections:".length).split(':').toList
-      case _ =>
+
+    component.disabledInspections =
+      fromProperty("disabledInspections", defaultValue = List.empty[String])(_.split(':').toList)
+    component.enabledInspections =
+      fromProperty("enabledInspections", defaultValue = List.empty[String])(_.split(':').toList)
+    component.consoleOutput = fromProperty("consoleOutput", defaultValue = true)(_.toBoolean)
+    component.ignoredFiles =
+      fromProperty("ignoredFiles", defaultValue = List.empty[String])(_.split(':').toList)
+    component.verbose = fromProperty("verbose", defaultValue = false)(_.toBoolean)
+
+    component.customInpections = fromProperty("customInspectors", defaultValue = Seq.empty[Inspection]) {
+      _.split(':').toSeq
+        .map(inspection => Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection])
     }
-    forProperty("consoleOutput:") match {
-      case Some(option) => component.consoleOutput = option.drop("consoleOutput:".length).toBoolean
-      case _            =>
-    }
-    forProperty("ignoredFiles:") match {
-      case Some(option) => component.ignoredFiles = option.drop("ignoredFiles:".length).split(':').toList
-      case _            =>
-    }
-    for (verbose <- forProperty("verbose:"))
-      component.verbose = verbose.drop("verbose:".length).toBoolean
-    forProperty("customInspectors:") match {
-      case Some(option) =>
-        component.customInpections = option
-          .drop("customInspectors:".length)
-          .split(':')
-          .toSeq
-          .map(inspection =>
-            Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection]
-          )
-      case _ =>
-    }
-    forProperty("reports:") match {
-      case Some(option) =>
-        option
-          .drop("reports:".length)
-          .split(':')
-          .toSeq
-          .foreach {
-            case "xml"        => component.disableXML = false
-            case "html"       => component.disableHTML = false
-            case "scalastyle" => component.disableScalastyleXML = false
-            case "markdown"   => component.disableMarkdown = false
-            case "all" =>
-              component.disableXML = false
-              component.disableHTML = false
-              component.disableScalastyleXML = false
-              component.disableMarkdown = false
-            case "none" =>
-              component.disableXML = true
-              component.disableHTML = true
-              component.disableScalastyleXML = true
-              component.disableMarkdown = true
-            case _ =>
-          }
-      case None =>
-        component.disableXML = false
-        component.disableHTML = false
-        component.disableScalastyleXML = false
-    }
-    forProperty("overrideLevels:") foreach { option =>
-      component.feedback.levelOverridesByInspectionSimpleName = option
-        .drop("overrideLevels:".length)
-        .split(":")
-        .map { nameLevel =>
+    val enabledReports = fromProperty("reports", defaultValue = Seq("all"))(_.split(':').toSeq)
+    component.disableXML = !(enabledReports.contains("xml") || enabledReports.contains("all"))
+    component.disableHTML = !(enabledReports.contains("html") || enabledReports.contains("all"))
+    component.disableScalastyleXML =
+      !(enabledReports.contains("scalastyle") || enabledReports.contains("all"))
+    component.disableMarkdown = !(enabledReports.contains("markdown") || enabledReports.contains("all"))
+
+    component.feedback.levelOverridesByInspectionSimpleName =
+      fromProperty("overrideLevels", defaultValue = Map.empty[String, Level]) {
+        _.split(":").map { nameLevel =>
           nameLevel.split("=") match {
             case Array(insp, level) => insp -> Levels.fromName(level)
             case _ =>
@@ -91,33 +59,29 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
                 "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
               )
           }
-        }
-        .toMap
+        }.toMap
+      }
+    component.sourcePrefix = fromProperty("sourcePrefix", defaultValue = "src/main/scala/")(x => x)
+    component.minimalLevel = fromProperty[Level]("minimalLevel", defaultValue = Levels.Info) { value =>
+      Levels.fromName(value)
     }
-    forProperty("sourcePrefix:") match {
-      case Some(option) =>
-        component.sourcePrefix = option.drop("sourcePrefix:".length)
-      case None => component.sourcePrefix = "src/main/scala/"
-    }
-    forProperty("minimalLevel:") match {
-      case Some(option) =>
-        component.minimalLevel = Levels.fromName(option.drop("minimalLevel:".length))
-      case None => component.minimalLevel = Levels.Info
-    }
-    forProperty("dataDir:") match {
-      case Some(option) =>
-        component.dataDir = new File(option.drop("dataDir:".length))
-        true
-      case None =>
+    component.dataDir = fromProperty[Option[File]](
+      "dataDir",
+      defaultValue = {
         error("-P:scapegoat:dataDir not specified")
-        false
+        None
+      }
+    ) { value =>
+      Some(new File(value))
     }
+
+    component.dataDir.isDefined
   }
 
   override val optionsHelp: Option[String] = Some(
     Seq(
       "-P:scapegoat:dataDir:<pathtodatadir>                 where the report should be written",
-      "-P:scapegoat:disabledInspections:<listofinspections> colon separated list of disabled inspections (defauls to none)",
+      "-P:scapegoat:disabledInspections:<listofinspections> colon separated list of disabled inspections (defaults to none)",
       "-P:scapegoat:enabledInspections:<listofinspections>  colon separated list of enabled inspections (defaults to all)",
       "-P:scapegoat:customInspectors:<listofinspections>    colon separated list of custom inspections",
       "-P:scapegoat:ignoredFiles:<patterns>                 colon separated list of regexes to match ",
@@ -143,8 +107,6 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
     ).mkString("\n")
   )
 
-  private def forProperty(propertyName: String): Option[String] =
-    options.find(_.startsWith(propertyName))
 }
 
 class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
@@ -156,7 +118,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   import global._
 
-  var dataDir: File = new File(".")
+  var dataDir: Option[File] = Some(new File("."))
   var disabledInspections: List[String] = Nil
   var enabledInspections: List[String] = Nil
   var ignoredFiles: List[String] = Nil
@@ -192,9 +154,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def writeReport(isDisabled: Boolean, reportName: String, writer: (File, Feedback) => File): Unit = {
     if (!isDisabled) {
-      val output = writer(dataDir, feedback)
-      if (verbose)
-        reporter.echo(s"[info] [scapegoat] Written $reportName report [$output]")
+      dataDir.foreach { outputDir =>
+        val output = writer(outputDir, feedback)
+        if (verbose)
+          reporter.echo(s"[info] [scapegoat] Written $reportName report [$output]")
+      }
     }
   }
 
