@@ -18,6 +18,9 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
 
   override def init(options: List[String], error: String => Unit): Boolean = {
     component.configuration = Configuration.fromPluginOptions(options, error)
+    if (component.configuration.dataDir.isEmpty) {
+      error("-P:scapegoat:dataDir not specified")
+    }
     component.configuration.dataDir.isDefined
   }
 

@@ -73,10 +73,7 @@ object Configuration {
     }
     val dataDir = fromProperty[Option[File]](
       "dataDir",
-      defaultValue = {
-        error("-P:scapegoat:dataDir not specified")
-        None
-      }
+      defaultValue = None
     ) { value =>
       Some(new File(value))
     }
