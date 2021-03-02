@@ -24,7 +24,7 @@ class ReadmeTest extends AnyFreeSpec with Matchers {
       }
 
   val inspectionNamesAndLevels =
-    ScapegoatConfig.inspections.map(i => i.getClass.getSimpleName -> i.defaultLevel.toString).toSet
+    Inspections.inspections.map(i => i.getClass.getSimpleName -> i.defaultLevel.toString).toSet
 
   "README" - {
     "should be up to date" in {
@@ -47,6 +47,17 @@ class ReadmeTest extends AnyFreeSpec with Matchers {
       val Pattern = raw"There are currently (\d+?) inspections.*".r
       readme.collect { case Pattern(n) =>
         n.toInt shouldBe inspectionNamesAndLevels.size
+      }
+    }
+
+    "should mention all existing configuration options" - {
+      val existingOptions = classOf[Configuration].getDeclaredFields.map(_.getName)
+      val readmeText = readme.mkString("\n")
+
+      existingOptions.foreach { option =>
+        s"$option should be listed in help" in {
+          readmeText.contains(s"-P:scapegoat:$option:") shouldBe true
+        }
       }
     }
   }

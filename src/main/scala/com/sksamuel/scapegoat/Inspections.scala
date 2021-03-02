@@ -21,7 +21,7 @@ import com.sksamuel.scapegoat.inspections.unsafe._
 /**
  * @author Stephen Samuel
  */
-object ScapegoatConfig extends App {
+object Inspections extends App {
 
   def inspections: Seq[Inspection] =
     Seq(
