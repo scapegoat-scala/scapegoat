@@ -9,13 +9,15 @@ object TestConfiguration {
     ignoredFiles = List(),
     consoleOutput = false,
     verbose = false,
-    disableXML = true,
-    disableHTML = true,
-    disableScalastyleXML = true,
-    disableMarkdown = true,
-    customInspections = Seq(),
+    reports = Reports(
+      disableXML = true,
+      disableHTML = true,
+      disableScalastyleXML = true,
+      disableMarkdown = true
+    ),
+    customInspectors = Seq(),
     sourcePrefix = "src/main/scala",
     minimalLevel = Levels.Info,
-    levelOverridesByInspectionSimpleName = Map.empty[String, Level]
+    overrideLevels = Map.empty[String, Level]
   )
 }

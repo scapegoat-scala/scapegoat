@@ -2,6 +2,13 @@ package com.sksamuel.scapegoat
 
 import java.io.File
 
+case class Reports(
+  disableXML: Boolean,
+  disableHTML: Boolean,
+  disableScalastyleXML: Boolean,
+  disableMarkdown: Boolean
+)
+
 case class Configuration(
   dataDir: Option[File],
   disabledInspections: List[String],
@@ -9,19 +16,16 @@ case class Configuration(
   ignoredFiles: List[String],
   consoleOutput: Boolean,
   verbose: Boolean,
-  disableXML: Boolean,
-  disableHTML: Boolean,
-  disableScalastyleXML: Boolean,
-  disableMarkdown: Boolean,
-  customInspections: Seq[Inspection],
+  reports: Reports,
+  customInspectors: Seq[Inspection],
   sourcePrefix: String,
   minimalLevel: Level,
-  levelOverridesByInspectionSimpleName: Map[String, Level]
+  overrideLevels: Map[String, Level]
 )
 
 object Configuration {
 
-  def fromPluginOptions(options: List[String], error: String => Unit): Configuration = {
+  def fromPluginOptions(options: List[String]): Configuration = {
     def fromProperty[T](propertyName: String, defaultValue: T)(fn: String => T): T = {
       options.find(_.startsWith(propertyName + ":")) match {
         case Some(property) =>
@@ -41,7 +45,7 @@ object Configuration {
       fromProperty("ignoredFiles", defaultValue = List.empty[String])(_.split(':').toList)
     val verbose = fromProperty("verbose", defaultValue = false)(_.toBoolean)
 
-    val customInspections = fromProperty("customInspectors", defaultValue = Seq.empty[Inspection]) {
+    val customInspectors = fromProperty("customInspectors", defaultValue = Seq.empty[Inspection]) {
       _.split(':').toSeq
         .map(inspection => Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection])
     }
@@ -85,14 +89,16 @@ object Configuration {
       ignoredFiles = ignoredFiles,
       consoleOutput = consoleOutput,
       verbose = verbose,
-      disableXML = disableXML,
-      disableHTML = disableHTML,
-      disableScalastyleXML = disableScalastyleXML,
-      disableMarkdown = disableMarkdown,
-      customInspections = customInspections,
+      reports = Reports(
+        disableXML = disableXML,
+        disableHTML = disableHTML,
+        disableScalastyleXML = disableScalastyleXML,
+        disableMarkdown = disableMarkdown
+      ),
+      customInspectors = customInspectors,
       sourcePrefix = sourcePrefix,
       minimalLevel = minimalLevel,
-      levelOverridesByInspectionSimpleName = levelOverridesByInspectionSimpleName
+      overrideLevels = levelOverridesByInspectionSimpleName
     )
   }
 
@@ -118,7 +124,7 @@ object Configuration {
       "                                                     You can use 'all' for inspection name to operate on all inspections.",
       "-P:scapegoat:sourcePrefix:<prefix>                   overrides source prefix if it differs from src/main/scala",
       "                                                     for ex., in Play applications where sources are in app/ folder",
-      "-P:scapegoat:minimalWarnLevel:<level>                provides minimal level of triggered inspections,",
+      "-P:scapegoat:minimalLevel:<level>                    provides minimal level of triggered inspections,",
       "                                                     that will be shown in a report.",
       "                                                     'level' is the simple name of a",
       "                                                     com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."

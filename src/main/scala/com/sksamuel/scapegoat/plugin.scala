@@ -17,7 +17,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override val components: List[PluginComponent] = List(component)
 
   override def init(options: List[String], error: String => Unit): Boolean = {
-    component.configuration = Configuration.fromPluginOptions(options, error)
+    component.configuration = Configuration.fromPluginOptions(options)
     if (component.configuration.dataDir.isEmpty) {
       error("-P:scapegoat:dataDir not specified")
     }
@@ -51,10 +51,10 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   def activeInspections: Seq[Inspection] = {
     if (configuration.enabledInspections.isEmpty)
-      (inspections ++ configuration.customInspections)
+      (inspections ++ configuration.customInspectors)
         .filterNot(inspection => configuration.disabledInspections.contains(inspection.name))
     else
-      (inspections ++ configuration.customInspections)
+      (inspections ++ configuration.customInspectors)
         .filter(inspection => configuration.enabledInspections.contains(inspection.name))
   }
   lazy val feedback = new Feedback(global.reporter, configuration)
@@ -91,10 +91,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
             )
           }
 
-          writeReport(configuration.disableHTML, "HTML", IOUtils.writeHTMLReport)
-          writeReport(configuration.disableXML, "XML", IOUtils.writeXMLReport)
-          writeReport(configuration.disableScalastyleXML, "Scalastyle XML", IOUtils.writeScalastyleReport)
-          writeReport(configuration.disableMarkdown, "Markdown", IOUtils.writeMarkdownReport)
+          val reports = configuration.reports
+          writeReport(reports.disableHTML, "HTML", IOUtils.writeHTMLReport)
+          writeReport(reports.disableXML, "XML", IOUtils.writeXMLReport)
+          writeReport(reports.disableScalastyleXML, "Scalastyle XML", IOUtils.writeScalastyleReport)
+          writeReport(reports.disableMarkdown, "Markdown", IOUtils.writeMarkdownReport)
         }
       }
     }

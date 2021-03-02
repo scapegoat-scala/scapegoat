@@ -36,8 +36,8 @@ class Feedback(
     val name = inspection.name
     val explanation = adhocExplanation.getOrElse(inspection.explanation)
     val adjustedLevel = (
-      configuration.levelOverridesByInspectionSimpleName.get("all"),
-      configuration.levelOverridesByInspectionSimpleName.get(inspection.getClass.getSimpleName)
+      configuration.overrideLevels.get("all"),
+      configuration.overrideLevels.get(inspection.getClass.getSimpleName)
     ) match {
       case (Some(l), _)    => l
       case (None, Some(l)) => l
