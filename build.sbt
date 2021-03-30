@@ -105,7 +105,7 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-xml"     % "1.3.0" excludeAll (
     ExclusionRule(organization = "org.scala-lang")
   ),
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.4.2" excludeAll (
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.4.3" excludeAll (
     ExclusionRule(organization = "org.scala-lang")
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
