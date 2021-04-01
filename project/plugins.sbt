@@ -3,7 +3,7 @@ resolvers += Classpaths.sbtPluginReleases
 addSbtPlugin("com.geirsson"  % "sbt-ci-release" % "1.5.7")
 addSbtPlugin("com.eed3si9n"  % "sbt-assembly"   % "0.14.10")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt"   % "2.4.2")
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix"   % "0.9.26")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix"   % "0.9.27")
 addSbtPlugin("org.scoverage" % "sbt-scoverage"  % "1.6.1")
 
 if (System.getProperty("add-scapegoat-plugin") == "true")
