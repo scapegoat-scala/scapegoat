@@ -1,5 +1,5 @@
 // compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.17" cross CrossVersion.full)
+addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.18" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
@@ -23,7 +23,7 @@ developers := List(
 )
 
 scalaVersion := "2.13.5"
-crossScalaVersions := Seq("2.11.12", "2.12.11", "2.12.12", "2.12.13", "2.13.3", "2.13.4", "2.13.5")
+crossScalaVersions := Seq("2.11.12", "2.12.11", "2.12.12", "2.13.6", "2.13.3", "2.13.4", "2.13.5")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -109,7 +109,7 @@ libraryDependencies ++= Seq(
     ExclusionRule(organization = "org.scala-lang")
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest"  %% "scalatest"     % "3.2.8"            % "test",
+  "org.scalatest"  %% "scalatest"     % "3.2.9"            % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.10.10"           % "test",
   "org.joda"       % "joda-convert"   % "2.2.1"            % "test",
