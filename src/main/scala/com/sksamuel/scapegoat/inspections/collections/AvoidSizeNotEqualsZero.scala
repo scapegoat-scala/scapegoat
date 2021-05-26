@@ -28,7 +28,7 @@ class AvoidSizeNotEqualsZero
               case Apply(
                     Select(Select(q, Length | Size), TermName("$bang$eq") | TermName("$greater")),
                     List(Literal(Constant(0)))
-                  ) if isTraversable(q) =>
+                  ) if isIterable(q) =>
                 context.warn(tree.pos, self, tree.toString.take(100))
               case _ => continue(tree)
             }

@@ -22,7 +22,7 @@ class ReverseTakeReverse
               case Select(
                     Apply(Select(Select(c, TermName("reverse")), TermName("take")), _),
                     TermName("reverse")
-                  ) if isTraversable(c) =>
+                  ) if isIterable(c) =>
                 context.warn(tree.pos, self, tree.toString.take(500))
               case Select(
                     Apply(

@@ -26,7 +26,7 @@ class ExistsSimplifiableToContains
 
           private def doesElementTypeMatch(container: Tree, value: Tree): Boolean = {
             val valueType = value.tpe.underlying.typeSymbol.tpe
-            val traversableType = container.tpe.underlying.baseType(typeOf[Traversable[Any]].typeSymbol)
+            val traversableType = container.tpe.underlying.baseType(typeOf[Iterable[Any]].typeSymbol)
             traversableType.typeArgs.exists(t => valueType <:< t || valueType =:= t)
           }
 

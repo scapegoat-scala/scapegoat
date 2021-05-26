@@ -20,7 +20,7 @@ class ReverseTailReverse
           override def inspect(tree: Tree): Unit = {
             tree match {
               case Select(Select(Select(c, TermName("reverse")), TermName("tail")), TermName("reverse"))
-                  if isTraversable(c) =>
+                  if isIterable(c) =>
                 context.warn(tree.pos, self, tree.toString.take(500))
               case Select(
                     Apply(
