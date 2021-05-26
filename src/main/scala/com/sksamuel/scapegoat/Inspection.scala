@@ -13,7 +13,7 @@ abstract class Inspection(
   val explanation: String
 ) {
 
-  val self = this
+  val self: Inspection = this
 
   def inspector(context: InspectionContext): Inspector
 
@@ -88,7 +88,7 @@ final case class InspectionContext(global: Global, feedback: Feedback) {
       symbol != null &&
       symbol.annotations.exists(an => isSkipAnnotation(an) && isThisDisabled(an))
 
-    protected def continue(tree: Tree) = super.traverse(tree)
+    protected def continue(tree: Tree): Unit = super.traverse(tree)
 
     protected def inspect(tree: Tree): Unit
 

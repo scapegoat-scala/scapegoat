@@ -10,7 +10,7 @@ import org.scalatest.{OneInstancePerTest, PrivateMethodTester}
 /** @author Stephen Samuel */
 class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest with PrivateMethodTester {
 
-  val position = NoPosition
+  val position: NoPosition.type = NoPosition
   val defaultSourcePrefix = "src/main/scala/"
 
   class DummyInspection(

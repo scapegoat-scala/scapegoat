@@ -12,12 +12,12 @@ class UseLog1P
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
 
-          def isMathPackage(pack: String) =
+          def isMathPackage(pack: String): Boolean =
             pack == "scala.math.package" ||
             pack == "java.lang.Math" ||
             pack == "java.lang.StrictMath"
