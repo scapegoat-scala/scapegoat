@@ -25,7 +25,7 @@ class VariableShadowing
           private def isDefined(name: String): Boolean = contexts exists (_.contains(name.trim))
 
           private def enter(): Unit = contexts = new ListBuffer[String] :: contexts
-          private def exit(): Unit = contexts = contexts.tail
+          private def exit(): Unit = contexts = contexts.drop(1)
 
           override def inspect(tree: Tree): Unit = {
             tree match {
