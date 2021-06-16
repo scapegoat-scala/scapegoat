@@ -22,8 +22,8 @@ developers := List(
   )
 )
 
-scalaVersion := "2.13.5"
-crossScalaVersions := Seq("2.11.12", "2.12.11", "2.12.14", "2.13.6", "2.13.3", "2.13.4", "2.13.5")
+scalaVersion := "2.13.6"
+crossScalaVersions := Seq("2.11.12", "2.12.12", "2.12.13", "2.12.14", "2.13.3", "2.13.4", "2.13.5", "2.13.6")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -75,18 +75,18 @@ scalacOptions := {
   common ++ (scalaBinaryVersion.value match {
     case "2.11" => scalac11Options
     case "2.12" => scalac12Options
-    case "2.13" => scalac13Options ++ (
-      scalaVersion.value.split('.') match {
+    case "2.13" =>
+      scalac13Options ++ (scalaVersion.value.split('.') match {
         case Array(_, _, patch) if Set("0", "1", "2")(patch) => Seq("-Xlint:nullary-override")
-        case _ => Seq.empty[String]
+        case _                                               => Seq.empty[String]
       })
   })
 }
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 // because that's where "PluginRunner" is
-fullClasspath in console in Compile ++= (fullClasspath in Test).value
-initialCommands in console := s"""
+Compile / console / fullClasspath ++= (Test / fullClasspath).value
+console / initialCommands := s"""
 import com.sksamuel.scapegoat._
 def check(code: String) = {
   val runner = new PluginRunner { val inspections = ScapegoatConfig.inspections }
@@ -100,54 +100,49 @@ def check(code: String) = {
 """
 
 libraryDependencies ++= Seq(
-  "org.scala-lang"         % "scala-reflect"  % scalaVersion.value % "provided",
-  "org.scala-lang"         % "scala-compiler" % scalaVersion.value % "provided",
-  "org.scala-lang.modules" %% "scala-xml"     % "1.3.0" excludeAll (
-    ExclusionRule(organization = "org.scala-lang")
-  ),
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.4.4" excludeAll (
-    ExclusionRule(organization = "org.scala-lang")
+  "org.scala-lang"          % "scala-reflect"           % scalaVersion.value % "provided",
+  "org.scala-lang"          % "scala-compiler"          % scalaVersion.value % "provided",
+  "org.scala-lang.modules" %% "scala-xml"               % "1.3.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.4.4" excludeAll ExclusionRule(organization =
+    "org.scala-lang"
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest"  %% "scalatest"     % "3.2.9"            % "test",
+  "org.scalatest" %% "scalatest"      % "3.2.9"            % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
-  "joda-time"      % "joda-time"      % "2.10.10"           % "test",
+  "joda-time"      % "joda-time"      % "2.10.10"          % "test",
   "org.joda"       % "joda-convert"   % "2.2.1"            % "test",
   "org.slf4j"      % "slf4j-api"      % "1.7.30"           % "test"
 )
 
 // Test
-fork in (Test, run) := true
-logBuffered in Test := false
-parallelExecution in Test := false
+Test / run / fork := true
+Test / logBuffered := false
+Test / parallelExecution := false
 
 // ScalaTest reporter config:
 // -o - standard output,
 // D - show all durations,
 // T - show reminder of failed and cancelled tests with short stack traces,
 // F - show full stack traces.
-testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-oDTF")
+Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oDTF")
 
 // Assembly
 // include the scala xml and compat modules into the final jar, shaded
-assemblyShadeRules in assembly := Seq(
+assembly / assemblyShadeRules := Seq(
   ShadeRule.rename("scala.xml.**" -> "scapegoat.xml.@1").inAll,
   ShadeRule.rename("scala.collection.compat.**" -> "scapegoat.compat.@1").inAll
 )
-packageBin in Compile := crossTarget.value / (assemblyJarName in assembly).value
+Compile / packageBin := crossTarget.value / (assembly / assemblyJarName).value
 makePom := makePom.dependsOn(assembly).value
-test in assembly := {} // do not run tests during assembly
-publishArtifact in Test := false
+assembly / test := {} // do not run tests during assembly
+Test / publishArtifact := false
 
 // Scalafix
-scalafixDependencies in ThisBuild += "com.nequissimus" %% "sort-imports" % "0.3.1"
+ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.3.1"
 addCommandAlias("fix", "all compile:scalafix test:scalafix; fixImports")
 addCommandAlias("fixImports", "compile:scalafix SortImports; test:scalafix SortImports")
 addCommandAlias("fixCheck", "compile:scalafix --check; test:scalafix --check; fixCheckImports")
 addCommandAlias("fixCheckImports", "compile:scalafix --check SortImports; test:scalafix --check SortImports")
 
 // Scalafmt
-scalafmtOnCompile in ThisBuild :=
-  sys.env
-    .get("GITHUB_ACTIONS")
-    .forall(_.toLowerCase == "false")
+ThisBuild / scalafmtOnCompile := sys.env.get("GITHUB_ACTIONS").forall(_.toLowerCase == "false")

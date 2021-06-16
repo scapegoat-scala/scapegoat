@@ -10,7 +10,7 @@ import org.scalatest.{OneInstancePerTest, PrivateMethodTester}
 /** @author Stephen Samuel */
 class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest with PrivateMethodTester {
 
-  val position = NoPosition
+  val position: NoPosition.type = NoPosition
   val defaultSourcePrefix = "src/main/scala/"
 
   class DummyInspection(
@@ -32,7 +32,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(true, defaultSourcePrefix))
+        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should contain(
           reporter.Info(
@@ -50,15 +50,14 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(true, defaultSourcePrefix))
+        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should contain(
-          reporter
-            .Info(
-              position,
-              "[scapegoat] [DummyInspection] My default is Warning\n  This is explanation.",
-              reporter.WARNING
-            )
+          reporter.Info(
+            position,
+            "[scapegoat] [DummyInspection] My default is Warning\n  This is explanation.",
+            reporter.WARNING
+          )
         )
       }
       "for info" in {
@@ -69,7 +68,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(true, defaultSourcePrefix))
+        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should contain(
           reporter.Info(
@@ -84,7 +83,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
       "for `src/main/scala`" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(true, defaultSourcePrefix))
+        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         val source = "src/main/scala/com/sksamuel/scapegoat/Test.scala"
         val result = feedback invokePrivate normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
@@ -93,7 +92,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
       "for `app`" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(true, "app/"))
+        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, "app/"))
         val source = "app/com/sksamuel/scapegoat/Test.scala"
         val result = feedback invokePrivate normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
@@ -102,7 +101,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
       "should add trailing / to the sourcePrefix automatically" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(true, "app/custom"))
+        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, "app/custom"))
         val source = "app/custom/com/sksamuel/scapegoat/Test.scala"
         val result = feedback invokePrivate normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
@@ -130,7 +129,8 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(true, defaultSourcePrefix, Levels.Info))
+        val feedback =
+          new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix, Levels.Info))
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(3)
       }
@@ -156,7 +156,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(false, defaultSourcePrefix, Levels.Warning))
+        val feedback =
+          new Feedback(
+            reporter,
+            testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Warning)
+          )
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(2)
         feedback.warningsWithMinimalLevel
@@ -184,7 +188,8 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter
-        val feedback = new Feedback(reporter, testConfiguration(false, defaultSourcePrefix, Levels.Error))
+        val feedback =
+          new Feedback(reporter, testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Error))
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(1)
         feedback.warningsWithMinimalLevel.map(_.level) should contain only (Seq(Levels.Error): _*)

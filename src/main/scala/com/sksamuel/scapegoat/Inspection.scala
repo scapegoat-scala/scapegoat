@@ -13,7 +13,7 @@ abstract class Inspection(
   val explanation: String
 ) {
 
-  val self = this
+  val self: Inspection = this
 
   def inspector(context: InspectionContext): Inspector
 
@@ -88,7 +88,7 @@ final case class InspectionContext(global: Global, feedback: Feedback) {
       symbol != null &&
       symbol.annotations.exists(an => isSkipAnnotation(an) && isThisDisabled(an))
 
-    protected def continue(tree: Tree) = super.traverse(tree)
+    protected def continue(tree: Tree): Unit = super.traverse(tree)
 
     protected def inspect(tree: Tree): Unit
 
@@ -109,7 +109,7 @@ final case class InspectionContext(global: Global, feedback: Feedback) {
     }
 
     protected def isArray(tree: Tree): Boolean = tree.tpe.typeSymbol.fullName == "scala.Array"
-    protected def isTraversable(tree: Tree): Boolean = tree.tpe <:< typeOf[Traversable[Any]]
+    protected def isIterable(tree: Tree): Boolean = tree.tpe <:< typeOf[Iterable[Any]]
     protected def isSeq(t: Tree): Boolean = t.tpe <:< typeOf[Seq[Any]]
     protected def isIndexedSeq(t: Tree): Boolean = t.tpe <:< typeOf[IndexedSeq[Any]]
     protected def isSet(t: Tree, allowMutableSet: Boolean = true): Boolean = {

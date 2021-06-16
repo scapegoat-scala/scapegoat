@@ -27,7 +27,7 @@ class ReverseFunc
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
@@ -35,7 +35,7 @@ class ReverseFunc
           override def inspect(tree: Tree): Unit = {
             tree match {
               case Select(Select(c, TermName("reverse")), TermName(FuncReplace(_, _)))
-                  if c.tpe <:< typeOf[Traversable[Any]] =>
+                  if c.tpe <:< typeOf[Iterable[Any]] =>
                 context.warn(tree.pos, self, tree.toString.take(500))
               case Select(
                     Apply(arrayOps1, List(Select(Apply(arrayOps2, List(_)), TermName("reverse")))),
