@@ -1,5 +1,5 @@
 // compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.27" cross CrossVersion.full)
+addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.28" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
