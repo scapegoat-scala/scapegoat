@@ -6,7 +6,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: github.repository == 'sksamuel/scapegoat'
+    if: github.repository == 'scapegoat-scala/scapegoat'
     steps:
       - uses: actions/checkout@v2
       - run: git fetch --prune --unshallow
