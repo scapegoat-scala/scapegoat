@@ -103,11 +103,11 @@ libraryDependencies ++= Seq(
   "org.scala-lang"          % "scala-reflect"           % scalaVersion.value % "provided",
   "org.scala-lang"          % "scala-compiler"          % scalaVersion.value % "provided",
   "org.scala-lang.modules" %% "scala-xml"               % "1.3.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.5.0" excludeAll ExclusionRule(organization =
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.6.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest" %% "scalatest"      % "3.2.10"            % "test",
+  "org.scalatest" %% "scalatest"      % "3.2.10"           % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.10.12"          % "test",
   "org.joda"       % "joda-convert"   % "2.2.1"            % "test",
