@@ -1,5 +1,5 @@
 // compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.28" cross CrossVersion.full)
+addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.30" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
@@ -22,8 +22,8 @@ developers := List(
   )
 )
 
-scalaVersion := "2.13.6"
-crossScalaVersions := Seq("2.11.12", "2.12.14", "2.12.15", "2.13.5", "2.13.6")
+scalaVersion := "2.13.7"
+crossScalaVersions := Seq("2.11.12", "2.12.14", "2.12.15", "2.13.6", "2.13.7")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -39,8 +39,10 @@ val scalac13Options = Seq(
   "-Xlint:inaccessible",
   "-Xlint:infer-any",
   "-Xlint:nullary-unit",
+  "-Xlint:strict-unsealed-patmat",
   "-Yrangepos",
-  "-Ywarn-unused"
+  "-Ywarn-unused",
+  "-Xsource:3"
 )
 val scalac12Options = Seq(
   "-Xlint:adapted-args",
