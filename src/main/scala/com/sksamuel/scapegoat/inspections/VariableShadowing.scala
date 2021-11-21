@@ -42,7 +42,7 @@ class VariableShadowing
                 exit()
               case ValDef(_, TermName(name), _, _) =>
                 if (isDefined(name)) context.warn(tree.pos, self, tree.toString.take(200))
-                contexts.head.append(name.trim)
+                contexts.headOption.foreach(_.append(name.trim))
               case Match(_, cases) =>
                 cases.foreach {
                   case CaseDef(Bind(name, _), _, _) =>
