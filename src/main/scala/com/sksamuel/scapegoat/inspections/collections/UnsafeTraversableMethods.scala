@@ -37,6 +37,7 @@ class UnsafeTraversableMethods
               case Select(left, TermName(method)) =>
                 if (isIterable(left) && unsafeMethods.contains(method))
                   context.warn(tree.pos, self, tree.toString.take(500))
+                else continue(tree)
               case _ => continue(tree)
             }
           }

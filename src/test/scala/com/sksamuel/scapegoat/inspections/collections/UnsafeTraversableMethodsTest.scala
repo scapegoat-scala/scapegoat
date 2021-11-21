@@ -1,6 +1,7 @@
 package com.sksamuel.scapegoat.inspections.collections
 
 import com.sksamuel.scapegoat.InspectionTest
+
 class UnsafeTraversableMethodsTest extends InspectionTest {
 
   override val inspections = Seq(new UnsafeTraversableMethods)
@@ -43,5 +44,18 @@ class UnsafeTraversableMethodsTest extends InspectionTest {
       }
     }
 
+  }
+
+  "Regression" - {
+    "should report warning in method chains" in {
+      val code = """class Test {
+                   val xs = List((1, 1), (1, 2), (2, 3))
+                   val groups = xs.groupBy(_._1)
+                   groups.collect { case (_, groupItems) => groupItems.head._1 }
+                 }""".stripMargin
+
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 1
+    }
   }
 }
