@@ -27,7 +27,10 @@ class DuplicateMapKey
             val keys = trees.foldLeft(List.empty[String])((keys, tree) =>
               tree match {
                 case Apply(TypeApply(Select(Apply(_, args), Arrow | UnicodeArrow), _), _) =>
-                  keys :+ args.head.toString()
+                  args match {
+                    case Nil => keys
+                    case firstArg :: _ => keys :+ firstArg.toString
+                  }
                 case _ => keys
               }
             )
