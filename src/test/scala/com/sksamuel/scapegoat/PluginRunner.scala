@@ -4,6 +4,7 @@ import java.io.{File, FileNotFoundException}
 import java.net.URL
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
+
 import scala.tools.nsc.Settings
 import scala.tools.nsc.reporters.ConsoleReporter
 

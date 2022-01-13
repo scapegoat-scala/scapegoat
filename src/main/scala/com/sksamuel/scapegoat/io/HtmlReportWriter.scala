@@ -1,6 +1,7 @@
 package com.sksamuel.scapegoat.io
 
 import scala.xml.{Elem, Unparsed}
+
 import com.sksamuel.scapegoat.{Feedback, Levels}
 
 /**

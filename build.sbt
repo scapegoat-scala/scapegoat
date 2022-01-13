@@ -140,11 +140,11 @@ assembly / test := {} // do not run tests during assembly
 Test / publishArtifact := false
 
 // Scalafix
-ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.3.1"
-addCommandAlias("fix", "all compile:scalafix test:scalafix; fixImports")
-addCommandAlias("fixImports", "compile:scalafix SortImports; test:scalafix SortImports")
-addCommandAlias("fixCheck", "compile:scalafix --check; test:scalafix --check; fixCheckImports")
-addCommandAlias("fixCheckImports", "compile:scalafix --check SortImports; test:scalafix --check SortImports")
+ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.6.1"
+addCommandAlias("fix", "all Compile / scalafix Test / scalafix; fixImports")
+addCommandAlias("fixImports", "Compile / scalafix SortImports; Test / scalafix SortImports")
+addCommandAlias("fixCheck", "Compile / scalafix --check; Test / scalafix --check; fixCheckImports")
+addCommandAlias("fixCheckImports", "Compile / scalafix --check SortImports; Test / scalafix --check SortImports")
 
 // Scalafmt
 ThisBuild / scalafmtOnCompile := sys.env.get("GITHUB_ACTIONS").forall(_.toLowerCase == "false")
