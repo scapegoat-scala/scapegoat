@@ -1,5 +1,5 @@
 // compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.31" cross CrossVersion.full)
+addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.32" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
@@ -23,7 +23,7 @@ developers := List(
 )
 
 scalaVersion := "2.13.7"
-crossScalaVersions := Seq("2.11.12", "2.12.14", "2.12.15", "2.13.6", "2.13.7")
+crossScalaVersions := Seq("2.11.12", "2.12.14", "2.12.15", "2.13.7", "2.13.8")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -63,7 +63,7 @@ val scalac11Options = Seq(
   "-Ywarn-numeric-widen",
   "-Xmax-classfile-name",
   "254"
-  //"-Ywarn-value-discard"
+  // "-Ywarn-value-discard"
 )
 scalacOptions := {
   val common = Seq(
@@ -109,7 +109,7 @@ libraryDependencies ++= Seq(
     "org.scala-lang"
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest" %% "scalatest"      % "3.2.10"            % "test",
+  "org.scalatest" %% "scalatest"      % "3.2.10"           % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.10.13"          % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
