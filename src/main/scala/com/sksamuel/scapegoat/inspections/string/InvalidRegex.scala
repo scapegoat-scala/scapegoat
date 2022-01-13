@@ -5,7 +5,8 @@ import java.util.regex.PatternSyntaxException
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class InvalidRegex
     extends Inspection(
@@ -18,7 +19,7 @@ class InvalidRegex
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

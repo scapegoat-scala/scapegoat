@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.style
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class ParameterlessMethodReturnsUnit
     extends Inspection(
@@ -16,7 +17,7 @@ class ParameterlessMethodReturnsUnit
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

@@ -5,7 +5,8 @@ import scala.reflect.internal.Flags
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class UnusedMethodParameter
     extends Inspection(
@@ -17,7 +18,7 @@ class UnusedMethodParameter
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
@@ -49,11 +50,10 @@ class UnusedMethodParameter
           /**
            * For constructor params, some params become vals / fields of the class:
            *   1. all params in the first argument list for case classes
-           *   2. all params marked "val"
+           *   1. all params marked "val"
            *
-           * In both cases, by the time we see the tree, a "def x = this.x" method
-           * will have been added by the compiler, so "usesField" will notice and
-           * not mark the param as unused.
+           * In both cases, by the time we see the tree, a "def x = this.x" method will have been added by the
+           * compiler, so "usesField" will notice and not mark the param as unused.
            */
           private def checkConstructor(
             vparamss: List[List[ValDef]],

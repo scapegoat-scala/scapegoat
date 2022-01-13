@@ -5,7 +5,8 @@ import scala.collection.mutable
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class LonelySealedTrait
     extends Inspection(
@@ -36,7 +37,7 @@ class LonelySealedTrait
         }
       }
 
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           override def inspect(tree: Tree): Unit = {

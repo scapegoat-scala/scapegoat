@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class ArraysToString
     extends Inspection(
@@ -15,7 +16,7 @@ class ArraysToString
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

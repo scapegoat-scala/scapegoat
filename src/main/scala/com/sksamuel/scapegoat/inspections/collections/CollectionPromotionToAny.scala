@@ -3,8 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
- *         This inspection was inspired by http://p5wscala.wordpress.com/scalaprocessing-gotchas/#t2
+ * @author
+ *   Stephen Samuel This inspection was inspired by http://p5wscala.wordpress.com/scalaprocessing-gotchas/#t2
  */
 class CollectionPromotionToAny
     extends Inspection(
@@ -17,7 +17,7 @@ class CollectionPromotionToAny
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

@@ -5,9 +5,10 @@ import scala.reflect.internal.Flags
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  *
- *         http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names
+ * http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names
  */
 class AvoidOperatorOverload
     extends Inspection(
@@ -20,7 +21,7 @@ class AvoidOperatorOverload
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

@@ -4,7 +4,8 @@ import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 abstract class Inspection(
   val text: String,
@@ -30,8 +31,8 @@ abstract class Inspector(val context: InspectionContext) {
   def postTyperTraverser: context.Traverser
 
   /**
-   * This method is invoked after all phases of the compiler have completed.
-   * This method can be used to clean up inspections; to report errors after all phases are complete.
+   * This method is invoked after all phases of the compiler have completed. This method can be used to clean
+   * up inspections; to report errors after all phases are complete.
    */
   def postInspection(): Unit = ()
 }
@@ -103,7 +104,7 @@ final case class InspectionContext(global: Global, feedback: Feedback) {
         case tri @ Try(_, _, _) if isSuppressed(tri.symbol)      =>
         case ClassDef(_, _, _, Template(parents, _, _))
             if parents.map(_.tpe.typeSymbol.fullName).contains("scala.reflect.api.TypeCreator") =>
-        case _ if analyzer.hasMacroExpansionAttachment(tree) => //skip macros as per http://bit.ly/2uS8BrU
+        case _ if analyzer.hasMacroExpansionAttachment(tree) => // skip macros as per http://bit.ly/2uS8BrU
         case _                                               => inspect(tree)
       }
     }

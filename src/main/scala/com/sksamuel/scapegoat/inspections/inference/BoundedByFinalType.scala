@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.inference
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class BoundedByFinalType
     extends Inspection(
@@ -15,7 +16,7 @@ class BoundedByFinalType
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

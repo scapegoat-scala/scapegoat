@@ -3,9 +3,10 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  *
- *         Checks for if statements where the condition evaluates to a constant true or a constant false.
+ * Checks for if statements where the condition evaluates to a constant true or a constant false.
  */
 class ConstantIf
     extends Inspection(
@@ -18,7 +19,7 @@ class ConstantIf
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

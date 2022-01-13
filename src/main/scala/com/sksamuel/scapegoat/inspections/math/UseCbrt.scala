@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.math
 import com.sksamuel.scapegoat._
 
 /**
- * @author Matic Potočnik
+ * @author
+ *   Matic Potočnik
  */
 class UseCbrt
     extends Inspection(
@@ -15,7 +16,7 @@ class UseCbrt
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

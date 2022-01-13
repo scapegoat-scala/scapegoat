@@ -5,7 +5,8 @@ import scala.util.control.ControlThrowable
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Marconi Lanna
+ * @author
+ *   Marconi Lanna
  */
 class CatchFatal
     extends Inspection(
@@ -19,12 +20,12 @@ class CatchFatal
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
 
-          def isFatal(tpe: context.global.Type) = {
+          def isFatal(tpe: context.global.Type): Boolean = {
             tpe =:= typeOf[VirtualMachineError] ||
             tpe =:= typeOf[ThreadDeath] ||
             tpe =:= typeOf[InterruptedException] ||
@@ -32,7 +33,7 @@ class CatchFatal
             tpe =:= typeOf[ControlThrowable]
           }
 
-          def catchesFatal(cases: List[CaseDef]) = {
+          def catchesFatal(cases: List[CaseDef]): Boolean = {
             cases.exists {
               // matches t : FatalException
               case CaseDef(Bind(_, Typed(_, tpt)), _, _) if isFatal(tpt.tpe) => true

@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.option
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class ImpossibleOptionSizeCondition
     extends Inspection(
@@ -15,7 +16,7 @@ class ImpossibleOptionSizeCondition
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

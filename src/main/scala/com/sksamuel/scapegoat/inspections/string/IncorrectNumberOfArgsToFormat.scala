@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class IncorrectNumberOfArgsToFormat
     extends Inspection(
@@ -20,12 +21,12 @@ class IncorrectNumberOfArgsToFormat
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
 
-          private def doesNotTakeArguments(formatSpecifier: String) =
+          private def doesNotTakeArguments(formatSpecifier: String): Boolean =
             formatSpecifier == "%%" || formatSpecifier == "%n"
 
           override def inspect(tree: Tree): Unit = {

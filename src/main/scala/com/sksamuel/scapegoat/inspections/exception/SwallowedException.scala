@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 @SuppressWarnings(Array("IncorrectlyNamedExceptions"))
 class SwallowedException
@@ -17,7 +18,7 @@ class SwallowedException
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
@@ -35,7 +36,7 @@ class SwallowedException
             }
           }
 
-          private def checkCatches(defs: List[CaseDef]) =
+          private def checkCatches(defs: List[CaseDef]): Unit =
             defs.foreach {
               case CaseDef(Bind(TermName("ignored") | TermName("ignore"), _), _, _) =>
               case cdef @ CaseDef(_, _, Literal(Constant(()))) if cdef.body.toString == "()" =>
