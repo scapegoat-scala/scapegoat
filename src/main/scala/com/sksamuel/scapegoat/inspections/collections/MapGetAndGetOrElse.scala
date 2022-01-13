@@ -6,7 +6,7 @@ import com.sksamuel.scapegoat._
  * @author
  *   Sanjiv Sahayam
  *
- * Inspired by Intellij inspection that does: myMap.get(key).getOrElse(defaultValue) –> myMap.getOrElse(key,
+ * Inspired by IntelliJ inspection that does: myMap.get(key).getOrElse(defaultValue) –> myMap.getOrElse(key,
  * defaultValue)
  */
 class MapGetAndGetOrElse
