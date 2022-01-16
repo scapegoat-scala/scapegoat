@@ -1,5 +1,5 @@
 // compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.31" cross CrossVersion.full)
+addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.4.32" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
@@ -113,7 +113,7 @@ libraryDependencies ++= Seq(
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.10.13"          % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
-  "org.slf4j"      % "slf4j-api"      % "1.7.32"           % "test"
+  "org.slf4j"      % "slf4j-api"      % "1.7.33"           % "test"
 )
 
 // Test
