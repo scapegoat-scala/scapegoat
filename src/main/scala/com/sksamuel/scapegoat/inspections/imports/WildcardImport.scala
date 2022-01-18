@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.imports
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class WildcardImport
     extends Inspection(
@@ -21,7 +22,7 @@ class WildcardImport
 
       private def isWildcard(trees: List[ImportSelector]): Boolean = trees.exists(_.name == nme.WILDCARD)
 
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           override def inspect(tree: Tree): Unit = {

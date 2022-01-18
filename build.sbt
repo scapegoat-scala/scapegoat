@@ -23,7 +23,7 @@ developers := List(
 )
 
 scalaVersion := "2.13.7"
-crossScalaVersions := Seq("2.11.12", "2.12.14", "2.12.15", "2.13.6", "2.13.7")
+crossScalaVersions := Seq("2.11.12", "2.12.14", "2.12.15", "2.13.7", "2.13.8")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -63,7 +63,7 @@ val scalac11Options = Seq(
   "-Ywarn-numeric-widen",
   "-Xmax-classfile-name",
   "254"
-  //"-Ywarn-value-discard"
+  // "-Ywarn-value-discard"
 )
 scalacOptions := {
   val common = Seq(
@@ -109,7 +109,7 @@ libraryDependencies ++= Seq(
     "org.scala-lang"
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest" %% "scalatest"      % "3.2.10"            % "test",
+  "org.scalatest" %% "scalatest"      % "3.2.10"           % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.10.13"          % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
@@ -140,11 +140,11 @@ assembly / test := {} // do not run tests during assembly
 Test / publishArtifact := false
 
 // Scalafix
-ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.3.1"
-addCommandAlias("fix", "all compile:scalafix test:scalafix; fixImports")
-addCommandAlias("fixImports", "compile:scalafix SortImports; test:scalafix SortImports")
-addCommandAlias("fixCheck", "compile:scalafix --check; test:scalafix --check; fixCheckImports")
-addCommandAlias("fixCheckImports", "compile:scalafix --check SortImports; test:scalafix --check SortImports")
+ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.6.1"
+addCommandAlias("fix", "all Compile / scalafix Test / scalafix; fixImports")
+addCommandAlias("fixImports", "Compile / scalafix SortImports; Test / scalafix SortImports")
+addCommandAlias("fixCheck", "Compile / scalafix --check; Test / scalafix --check; fixCheckImports")
+addCommandAlias("fixCheckImports", "Compile / scalafix --check SortImports; Test / scalafix --check SortImports")
 
 // Scalafmt
 ThisBuild / scalafmtOnCompile := sys.env.get("GITHUB_ACTIONS").forall(_.toLowerCase == "false")

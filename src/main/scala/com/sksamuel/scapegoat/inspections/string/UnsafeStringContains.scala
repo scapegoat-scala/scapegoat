@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat._
 
 /**
- * @author Zack Grannan
+ * @author
+ *   Zack Grannan
  */
 class UnsafeStringContains
     extends Inspection(
@@ -16,7 +17,7 @@ class UnsafeStringContains
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

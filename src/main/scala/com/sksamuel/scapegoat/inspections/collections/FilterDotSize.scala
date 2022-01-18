@@ -3,9 +3,10 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  *
- *         Inspired by IntelliJ
+ * Inspired by IntelliJ
  */
 class FilterDotSize
     extends Inspection(
@@ -17,7 +18,7 @@ class FilterDotSize
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class UnnecessaryConversion
     extends Inspection(
@@ -16,7 +17,7 @@ class UnnecessaryConversion
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

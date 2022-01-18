@@ -3,9 +3,10 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  *
- *         Inspired by Intellij
+ * Inspired by IntelliJ
  */
 class ExistsSimplifiableToContains
     extends Inspection(

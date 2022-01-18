@@ -5,7 +5,8 @@ import scala.collection.mutable
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class DuplicateImport
     extends Inspection(
@@ -20,7 +21,7 @@ class DuplicateImport
 
       private val imports = mutable.HashSet[String]()
 
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

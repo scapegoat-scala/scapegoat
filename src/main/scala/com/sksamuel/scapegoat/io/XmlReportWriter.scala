@@ -1,11 +1,12 @@
 package com.sksamuel.scapegoat.io
 
-import scala.xml.Node
+import scala.xml.{Elem, Node}
 
 import com.sksamuel.scapegoat.{Feedback, Warning}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 object XmlReportWriter extends ReportWriter {
 
@@ -19,7 +20,7 @@ object XmlReportWriter extends ReportWriter {
     </scapegoat>
   }
 
-  private def warning2xml(warning: Warning) =
+  private def warning2xml(warning: Warning): Elem =
     <warning line={warning.line.toString} text={warning.text} snippet={warning.snippet.orNull} explanation={
       warning.explanation
     } level={warning.level.toString} file={warning.sourceFileNormalized} inspection={warning.inspection}/>

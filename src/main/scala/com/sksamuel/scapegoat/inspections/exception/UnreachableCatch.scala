@@ -5,7 +5,8 @@ import scala.collection.mutable
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class UnreachableCatch
     extends Inspection(
@@ -17,12 +18,12 @@ class UnreachableCatch
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
 
-          def isUnreachable(cases: List[CaseDef]) = {
+          def isUnreachable(cases: List[CaseDef]): Boolean = {
             val types = mutable.HashSet[Type]()
             def check(tpe: Type, guard: Tree): Boolean = {
               if (types.exists(tpe <:< _))

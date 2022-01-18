@@ -3,10 +3,11 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /**
- * @author Sanjiv Sahayam
+ * @author
+ *   Sanjiv Sahayam
  *
- * Inspired by Intellij inspection that does:
- *   myMap.get(key).getOrElse(defaultValue) –> myMap.getOrElse(key, defaultValue)
+ * Inspired by IntelliJ inspection that does: myMap.get(key).getOrElse(defaultValue) –> myMap.getOrElse(key,
+ * defaultValue)
  */
 class MapGetAndGetOrElse
     extends Inspection(
@@ -19,7 +20,7 @@ class MapGetAndGetOrElse
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

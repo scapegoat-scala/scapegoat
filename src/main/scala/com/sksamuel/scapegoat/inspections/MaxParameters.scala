@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class MaxParameters
     extends Inspection(
@@ -16,7 +17,7 @@ class MaxParameters
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
@@ -24,7 +25,7 @@ class MaxParameters
           private def count(vparamss: List[List[ValDef]]): Int =
             vparamss.foldLeft(0)((a, b) => a + b.size)
 
-          private def countExceeds(vparamss: List[List[ValDef]], limit: Int) =
+          private def countExceeds(vparamss: List[List[ValDef]], limit: Int): Boolean =
             count(vparamss) > limit
 
           override def inspect(tree: Tree): Unit = {

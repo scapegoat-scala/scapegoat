@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class PredefSeqIsMutable
     extends Inspection(
@@ -13,11 +14,11 @@ class PredefSeqIsMutable
       explanation = "Predef.Seq aliases scala.collection.mutable.Seq. Did you intend to use an immutable Seq?"
     ) {
 
-  override def isEnabled = !isScala213
+  override def isEnabled: Boolean = !isScala213
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
           import context.global._
 

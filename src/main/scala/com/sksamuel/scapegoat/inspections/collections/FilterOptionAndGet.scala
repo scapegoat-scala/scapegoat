@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class FilterOptionAndGet
     extends Inspection(
@@ -15,7 +16,7 @@ class FilterOptionAndGet
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.collections
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class DuplicateMapKey
     extends Inspection(
@@ -15,7 +16,7 @@ class DuplicateMapKey
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
@@ -28,7 +29,7 @@ class DuplicateMapKey
               tree match {
                 case Apply(TypeApply(Select(Apply(_, args), Arrow | UnicodeArrow), _), _) =>
                   args match {
-                    case Nil => keys
+                    case Nil           => keys
                     case firstArg :: _ => keys :+ firstArg.toString
                   }
                 case _ => keys

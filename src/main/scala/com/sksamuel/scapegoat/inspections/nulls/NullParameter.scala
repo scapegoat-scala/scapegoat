@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.nulls
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class NullParameter
     extends Inspection(
@@ -15,12 +16,12 @@ class NullParameter
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
 
-          def containsNull(trees: List[Tree]) =
+          def containsNull(trees: List[Tree]): Boolean =
             trees exists {
               case Literal(Constant(null)) => true
               case _                       => false

@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Marconi Lanna
+ * @author
+ *   Marconi Lanna
  */
 @SuppressWarnings(Array("IncorrectlyNamedExceptions"))
 class CatchException
@@ -17,12 +18,12 @@ class CatchException
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
 
-          def catchesException(cases: List[CaseDef]) = {
+          def catchesException(cases: List[CaseDef]): Boolean = {
             cases.exists {
               // matches t : Exception
               case CaseDef(Bind(_, Typed(_, tpt)), _, _) if tpt.tpe =:= typeOf[Exception] => true

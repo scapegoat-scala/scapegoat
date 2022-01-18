@@ -5,7 +5,8 @@ import java.io.File
 import com.sksamuel.scapegoat.Feedback
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 object IOUtils {
   def writeHTMLReport(targetDir: File, reporter: Feedback): File =

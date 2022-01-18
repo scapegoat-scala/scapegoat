@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.exception
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class CatchThrowable
     extends Inspection(
@@ -16,12 +17,12 @@ class CatchThrowable
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
 
-          def catchesThrowable(cases: List[CaseDef]) = {
+          def catchesThrowable(cases: List[CaseDef]): Boolean = {
             cases.exists {
               // matches t : Throwable
               case CaseDef(Bind(_, Typed(_, tpt)), _, _) if tpt.tpe =:= typeOf[Throwable] => true

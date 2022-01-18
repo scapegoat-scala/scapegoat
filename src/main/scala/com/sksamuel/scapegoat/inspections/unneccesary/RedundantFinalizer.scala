@@ -3,9 +3,10 @@ package com.sksamuel.scapegoat.inspections.unneccesary
 import com.sksamuel.scapegoat._
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  *
- *         Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#FI_USELESS
+ * Inspired by http://findbugs.sourceforge.net/bugDescriptions.html#FI_USELESS
  */
 class RedundantFinalizer
     extends Inspection(
@@ -18,7 +19,7 @@ class RedundantFinalizer
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

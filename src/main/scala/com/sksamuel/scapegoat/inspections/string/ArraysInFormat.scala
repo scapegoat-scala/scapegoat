@@ -3,7 +3,8 @@ package com.sksamuel.scapegoat.inspections.string
 import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 class ArraysInFormat
     extends Inspection(
@@ -15,12 +16,12 @@ class ArraysInFormat
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._
 
-          private def containsArrayType(trees: List[Tree]) = trees.exists(isArray)
+          private def containsArrayType(trees: List[Tree]): Boolean = trees.exists(isArray)
 
           override def inspect(tree: Tree): Unit = {
             tree match {

@@ -5,18 +5,20 @@ import java.net.URL
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
+import scala.tools.nsc.Settings
 import scala.tools.nsc.reporters.ConsoleReporter
 
 /**
- * @author Stephen Samuel
+ * @author
+ *   Stephen Samuel
  */
 trait PluginRunner {
 
-  val scalaVersion = util.Properties.versionNumberString
+  val scalaVersion: String = util.Properties.versionNumberString
 
-  val classPath = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
+  val classPath: List[String] = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
 
-  val settings = {
+  val settings: Settings = {
     val s = new scala.tools.nsc.Settings
     for (_ <- Option(System.getProperty("printphases"))) {
       s.Xprint.value = List("all")
