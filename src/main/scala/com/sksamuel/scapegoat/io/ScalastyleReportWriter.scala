@@ -24,7 +24,7 @@ object ScalastyleReportWriter extends ReportWriter {
   }
 
   private def warningToXml(warning: Warning) =
-    <error line={warning.line.toString} message={warning.text} severity={warning.level.toString} source={
+    <error line={warning.line.toString} message={warning.text} severity={warning.level.toString.toLowerCase()} source={
       warning.inspection
     } snippet={warning.snippet.orNull} explanation={warning.explanation}></error>
 
