@@ -102,9 +102,9 @@ def check(code: String) = {
 """
 
 libraryDependencies ++= Seq(
-  "org.scala-lang"          % "scala-reflect"           % scalaVersion.value % "provided",
-  "org.scala-lang"          % "scala-compiler"          % scalaVersion.value % "provided",
-  "org.scala-lang.modules" %% "scala-xml"               % "1.3.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
+  "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
+  "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
+  "org.scala-lang.modules" %% "scala-xml" % "1.3.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.5.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
@@ -113,7 +113,7 @@ libraryDependencies ++= Seq(
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.10.13"          % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
-  "org.slf4j"      % "slf4j-api"      % "1.7.33"           % "test"
+  "org.slf4j"      % "slf4j-api"      % "1.7.35"           % "test"
 )
 
 // Test
@@ -144,7 +144,10 @@ ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.6.1
 addCommandAlias("fix", "all Compile / scalafix Test / scalafix; fixImports")
 addCommandAlias("fixImports", "Compile / scalafix SortImports; Test / scalafix SortImports")
 addCommandAlias("fixCheck", "Compile / scalafix --check; Test / scalafix --check; fixCheckImports")
-addCommandAlias("fixCheckImports", "Compile / scalafix --check SortImports; Test / scalafix --check SortImports")
+addCommandAlias(
+  "fixCheckImports",
+  "Compile / scalafix --check SortImports; Test / scalafix --check SortImports"
+)
 
 // Scalafmt
 ThisBuild / scalafmtOnCompile := sys.env.get("GITHUB_ACTIONS").forall(_.toLowerCase == "false")
