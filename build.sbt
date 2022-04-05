@@ -113,7 +113,7 @@ libraryDependencies ++= Seq(
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.10.14"          % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
-  "org.slf4j"      % "slf4j-api"      % "1.7.35"           % "test"
+  "org.slf4j"      % "slf4j-api"      % "1.7.36"           % "test"
 )
 
 // Test
