@@ -86,8 +86,7 @@ final case class InspectionContext(global: Global, feedback: Feedback) {
       an.tree.tpe =:= SuppressWarnings || an.tree.tpe.erasure.toString == "com.sksamuel.scapegoat.Safe"
 
     private def isSuppressed(symbol: Symbol) =
-      symbol != null &&
-      symbol.annotations.exists(an => isSkipAnnotation(an) && isThisDisabled(an))
+      symbol != null && symbol.annotations.exists(an => isSkipAnnotation(an) && isThisDisabled(an))
 
     protected def continue(tree: Tree): Unit = super.traverse(tree)
 

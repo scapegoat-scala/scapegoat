@@ -23,11 +23,9 @@ class CollectionNamingConfusion
           import context.global._
 
           private def isNamedSet(name: String): Boolean =
-            name.trim == "set" || name.trim.endsWith("Set") ||
-            name.matches(".*Set[A-Z].*")
+            name.trim == "set" || name.trim.endsWith("Set") || name.matches(".*Set[A-Z].*")
           private def isNamedList(name: String): Boolean =
-            name.trim == "list" || name.trim.endsWith("List") ||
-            name.matches(".*List[A-Z].*")
+            name.trim == "list" || name.trim.endsWith("List") || name.matches(".*List[A-Z].*")
 
           override def inspect(tree: Tree): Unit = {
             tree match {

@@ -12,8 +12,7 @@ class FilterDotIsEmpty
       defaultLevel = Levels.Info,
       description = "Checks for use of filter().isEmpty.",
       explanation =
-        "`filter()` scans the entire collection, which can potentially be avoided if the element exists in the " +
-        "collection - `filter().isEmpty` can be replaced with `!exists()`."
+        "`filter()` scans the entire collection, which can potentially be avoided if the element exists in the collection - `filter().isEmpty` can be replaced with `!exists()`."
     ) {
 
   def inspector(context: InspectionContext): Inspector =

@@ -30,9 +30,9 @@ class AvoidToMinusOne
 
           private def isIntegral(tree: Tree): Boolean =
             tree.tpe <:< IntTpe ||
-            tree.tpe <:< LongTpe ||
-            tree.tpe <:< typeOf[RichInt] ||
-            tree.tpe <:< typeOf[RichLong]
+              tree.tpe <:< LongTpe ||
+              tree.tpe <:< typeOf[RichInt] ||
+              tree.tpe <:< typeOf[RichLong]
 
           override def inspect(tree: Tree): Unit = {
             tree match {

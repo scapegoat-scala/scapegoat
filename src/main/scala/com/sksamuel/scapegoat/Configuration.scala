@@ -64,9 +64,7 @@ object Configuration {
             case _ =>
               throw new IllegalArgumentException(
                 s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
-                "Expecting 'name=level' where 'name' is the simple name of " +
-                "an inspection and 'level' is the simple name of a " +
-                "com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
+                  "Expecting 'name=level' where 'name' is the simple name of an inspection and 'level' is the simple name of a com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
               )
           }
         }.toMap

@@ -22,10 +22,7 @@ class RedundantFinalModifierOnVar
             tree match {
               case ValDef(mods, _, _, _)
                   if mods.isFinal && mods.isMutable &&
-                    (tree.symbol.enclClass.isFinal ||
-                    tree.symbol.enclClass.isCase ||
-                    tree.symbol.enclClass.isModuleOrModuleClass ||
-                    tree.symbol.enclClass.isPackageObjectOrClass) =>
+                    (tree.symbol.enclClass.isFinal || tree.symbol.enclClass.isCase || tree.symbol.enclClass.isModuleOrModuleClass || tree.symbol.enclClass.isPackageObjectOrClass) =>
                 context.warn(tree.pos, self)
               case _ => continue(tree)
             }
