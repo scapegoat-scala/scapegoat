@@ -1,6 +1,7 @@
 package com.sksamuel.scapegoat.io
 
 import scala.xml.{Elem, Node}
+
 import com.sksamuel.scapegoat.{Feedback, Warning}
 
 object ScalastyleReportWriter extends ReportWriter {
