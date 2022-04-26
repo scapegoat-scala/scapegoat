@@ -36,6 +36,7 @@ object Inspections extends App {
       new AvoidToMinusOne,
       new BigDecimalDoubleConstructor,
       new BigDecimalScaleWithoutRoundingMode,
+      new BooleanParameter,
       new BoundedByFinalType,
       new BrokenOddness,
       new CatchException,
