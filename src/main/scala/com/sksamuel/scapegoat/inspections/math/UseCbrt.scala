@@ -24,9 +24,7 @@ class UseCbrt
           override def inspect(tree: Tree): Unit = {
             tree match {
               case Apply(Select(pack, TermName("pow")), List(_, Literal(Constant(third: Double))))
-                  if (pack.symbol.fullNameString == "scala.math.package"
-                  || pack.symbol.fullNameString == "java.lang.Math"
-                  || pack.symbol.fullNameString == "java.lang.StrictMath")
+                  if (pack.symbol.fullNameString == "scala.math.package" || pack.symbol.fullNameString == "java.lang.Math" || pack.symbol.fullNameString == "java.lang.StrictMath")
                     && third >= 0.3333332
                     && third <= 0.3333334 =>
                 context.warn(tree.pos, self)

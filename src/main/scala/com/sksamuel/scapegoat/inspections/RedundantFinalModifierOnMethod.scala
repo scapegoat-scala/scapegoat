@@ -31,10 +31,7 @@ class RedundantFinalModifierOnMethod
               case DefDef(_, nme.CONSTRUCTOR, _, _, _, _)                      =>
               case DefDef(mods, _, _, _, _, _)
                   if mods.isFinal &&
-                    (tree.symbol.enclClass.isFinal ||
-                    tree.symbol.enclClass.isCase ||
-                    tree.symbol.enclClass.isModuleOrModuleClass ||
-                    tree.symbol.enclClass.isPackageObjectOrClass) =>
+                    (tree.symbol.enclClass.isFinal || tree.symbol.enclClass.isCase || tree.symbol.enclClass.isModuleOrModuleClass || tree.symbol.enclClass.isPackageObjectOrClass) =>
                 context.warn(tree.pos, self)
               case _ => continue(tree)
             }

@@ -12,8 +12,7 @@ class UnsafeContains
       defaultLevel = Levels.Error,
       description = "Checks `Seq.contains()` and `Option.contains()` for unrelated types.",
       explanation =
-        "`contains()` accepts arguments af any type, which means you might be checking if your collection " +
-        "contains an element of an unrelated type."
+        "`contains()` accepts arguments af any type, which means you might be checking if your collection contains an element of an unrelated type."
     ) {
 
   def inspector(context: InspectionContext): Inspector =

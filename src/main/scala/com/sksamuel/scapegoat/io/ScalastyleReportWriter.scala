@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.io
 
-import scala.xml.Node
+import scala.xml.{Elem, Node}
 
 import com.sksamuel.scapegoat.{Feedback, Warning}
 
@@ -23,8 +23,10 @@ object ScalastyleReportWriter extends ReportWriter {
     </file>
   }
 
-  private def warningToXml(warning: Warning) =
-    <error line={warning.line.toString} message={warning.text} severity={warning.level.toString.toLowerCase()} source={
+  private def warningToXml(warning: Warning): Elem =
+    <error line={warning.line.toString} message={warning.text} severity={
+      warning.level.toString.toLowerCase()
+    } source={
       warning.inspection
     } snippet={warning.snippet.orNull} explanation={warning.explanation}></error>
 
