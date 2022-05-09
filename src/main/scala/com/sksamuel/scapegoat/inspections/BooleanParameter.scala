@@ -34,7 +34,8 @@ class BooleanParameter
           case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.ACCESSOR)    =>
           // ignore overridden methods as the parent will receive the warning
           case DefDef(mods, _, _, _, _, _) if mods.isOverride =>
-          case DefDef(_, _, _, vparamss, _, _) if hasBooleanParameter(vparamss) =>
+          case DefDef(_, name, _, vparamss, _, _)
+              if hasBooleanParameter(vparamss) && name != TermName("<init>") =>
             context.warn(tree.pos, self, tree.toString.take(300))
           case _ => continue(tree)
         }
