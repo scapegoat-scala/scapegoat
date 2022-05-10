@@ -16,6 +16,13 @@ class BooleanParameterTest extends InspectionTest {
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+
+      "not for case classes using Boolean parameter" in {
+        val code = """final case class Test(bool: Boolean)""".stripMargin
+
+        compileCodeSnippet(code)
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
