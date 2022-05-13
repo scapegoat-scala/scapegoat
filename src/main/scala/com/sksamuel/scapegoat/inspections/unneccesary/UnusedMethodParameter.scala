@@ -101,7 +101,7 @@ class UnusedMethodParameter
               case DefDef(mods, _, _, _, _, _)
                   if mods.isOverride ||
                     mods.hasFlag(Flags.OVERRIDE) ||
-                    (tree.symbol != null && (tree.symbol.isAnyOverride || tree.symbol.isOverridingSymbol)) =>
+                    tree.symbol != null && (tree.symbol.isAnyOverride || tree.symbol.isOverridingSymbol) =>
               // ignore main method
               case DefDef(_, name, _, List(List(param)), tpt, _)
                   if name.toString == "main" &&

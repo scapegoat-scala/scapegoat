@@ -114,7 +114,7 @@ final case class InspectionContext(global: Global, feedback: Feedback) {
     protected def isIndexedSeq(t: Tree): Boolean = t.tpe <:< typeOf[IndexedSeq[Any]]
     protected def isSet(t: Tree, allowMutableSet: Boolean = true): Boolean = {
       t.tpe.widen.baseClasses.exists { c =>
-        (allowMutableSet && c.fullName == "scala.collection.mutable.Set") || c.fullName == "scala.collection.immutable.Set"
+        allowMutableSet && c.fullName == "scala.collection.mutable.Set" || c.fullName == "scala.collection.immutable.Set"
       }
     }
     protected def isList(t: Tree): Boolean = t.tpe <:< typeOf[scala.collection.immutable.List[Any]]
