@@ -149,7 +149,7 @@ For instructions on suppressing warnings by file, by inspection or by line see [
 
 ### Inspections
 
-There are currently 119 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 120 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level |
 |---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
@@ -247,6 +247,7 @@ There are currently 119 inspections. An overview list is given, followed by a mo
 | ReverseTailReverse                    | `.reverse.tail.reverse` can be replaced with `init`                                                                                                          | Info          |
 | ReverseTakeReverse                    | `.reverse.take(...).reverse` can be replaced with `takeRight`                                                                                                | Info          |
 | SimplifyBooleanExpression             | `b == false` can be simplified to `!b`                                                                                                                       | Info          |
+| StoreBeforeReturn                     | Checks for storing a value in a block, and immediately returning the value                                                                                   | Info          |
 | StripMarginOnRegex                    | Checks for .stripMargin on regex strings that contain a pipe                                                                                                 | Error         |
 | SubstringZero                         | Checks for `String.substring(0)`                                                                                                                             | Info          |
 | SuspiciousMatchOnClassObject          | Finds code where matching is taking place on class literals                                                                                                  | Warning       |

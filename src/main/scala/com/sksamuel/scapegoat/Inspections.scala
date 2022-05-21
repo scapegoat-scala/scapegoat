@@ -120,6 +120,7 @@ object Inspections extends App {
       new ReverseTailReverse,
       new ReverseTakeReverse,
       new SimplifyBooleanExpression,
+      new StoreBeforeReturn,
       new StripMarginOnRegex,
       new SubstringZero,
       new SuspiciousMatchOnClassObject,
