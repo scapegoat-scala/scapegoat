@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.exception
 
-import com.sksamuel.scapegoat.*
+import com.sksamuel.scapegoat._
 
 class CatchExceptionImmediatelyRethrown
     extends Inspection(
