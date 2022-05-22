@@ -149,7 +149,7 @@ For instructions on suppressing warnings by file, by inspection or by line see [
 
 ### Inspections
 
-There are currently 119 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 120 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level |
 |---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
@@ -167,6 +167,7 @@ There are currently 119 inspections. An overview list is given, followed by a mo
 | BoundedByFinalType                    | Looks for types with upper bounds of a final type                                                                                                            | Warning       |
 | BrokenOddness                         | checks for a % 2 == 1 for oddness because this fails on negative numbers                                                                                     | Warning       |
 | CatchException                        | Checks for try blocks that catch Exception                                                                                                                   | Warning       |
+| CatchExceptionImmediatelyRethrown     | Checks for try-catch blocks that immediately rethrow caught exceptions.                                                                                      | Warning       |
 | CatchFatal                            | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable                    | Warning       |
 | CatchNpe                              | Checks for try blocks that catch null pointer exceptions                                                                                                     | Error         |
 | CatchThrowable                        | Checks for try blocks that catch Throwable                                                                                                                   | Warning       |
