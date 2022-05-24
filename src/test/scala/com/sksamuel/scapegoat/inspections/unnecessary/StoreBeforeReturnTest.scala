@@ -89,4 +89,24 @@ class StoreBeforeReturnTest extends InspectionTest {
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
   }
+
+  "store value and return for mutually-recusive functions" - {
+    "should report a warning, and terminate" in {
+      val code =
+        """
+          |object Test {
+          |  def foo(): Int = {
+          |    var x = bar()
+          |    return  x
+          |  }
+          |  def bar(): Int = {
+          |    val x = foo()
+          |    return x
+          |  }
+          |}
+          |""".stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 2
+    }
+  }
 }
