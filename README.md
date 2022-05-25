@@ -149,7 +149,7 @@ For instructions on suppressing warnings by file, by inspection or by line see [
 
 ### Inspections
 
-There are currently 120 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
+There are currently 121 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level |
 |---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|
