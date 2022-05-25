@@ -40,6 +40,7 @@ object Inspections extends App {
       new BoundedByFinalType,
       new BrokenOddness,
       new CatchException,
+      new CatchExceptionImmediatelyRethrown,
       new CatchFatal,
       new CatchNpe,
       new CatchThrowable,
