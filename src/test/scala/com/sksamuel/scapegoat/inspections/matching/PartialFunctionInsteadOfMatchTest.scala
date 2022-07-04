@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class PartialFunctionInsteadOfMatchTest extends InspectionTest {
 
-  override val inspections = Seq(new PartialFunctionInsteadOfMatch)
+  override val inspections: Seq[Inspection] = Seq(new PartialFunctionInsteadOfMatch)
 
   "when using match instead of partial function" - {
     "should report warning" in {
@@ -83,10 +83,6 @@ class PartialFunctionInsteadOfMatchTest extends InspectionTest {
                      future onComplete {
                        case _ =>
                      }
-                     future onSuccess {
-                      case _ =>
-                     }
-
 
                     } """.stripMargin
 

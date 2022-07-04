@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.equality
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ComparingUnrelatedTypesTest extends InspectionTest {
 
-  override val inspections = Seq(new ComparingUnrelatedTypes)
+  override val inspections: Seq[Inspection] = Seq(new ComparingUnrelatedTypes)
 
   private def verifyNoWarnings(code: String): Unit = {
     compileCodeSnippet(code)
@@ -56,10 +56,10 @@ class ComparingUnrelatedTypesTest extends InspectionTest {
       }
       "for char" - {
         "compared to char-sized long literal" in {
-          verifyNoWarnings("""object A { val c = 'a'; val c = l == 97L }""")
+          verifyNoWarnings("""object A { val c = 'a'; val l = c == 97L }""")
         }
         "compared to char-sized int literal" in {
-          verifyNoWarnings("""object A { val c = 'a'; val c = l == 97 }""")
+          verifyNoWarnings("""object A { val c = 'a'; val l = c == 97 }""")
         }
       }
       "for short" - {
