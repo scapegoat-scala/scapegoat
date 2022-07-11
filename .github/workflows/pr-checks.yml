@@ -11,11 +11,11 @@ jobs:
         java: [8, 11]
         scala:
           - 2.11.12
-          - 2.12.13
-          - 2.12.14
-          - 2.13.5
+          - 2.12.15
+          - 2.12.16
           - 2.13.6
           - 2.13.7
+          - 2.13.8
     steps:
       - uses: actions/checkout@v2
       - uses: olafurpg/setup-scala@v10
