@@ -58,16 +58,18 @@ object Configuration {
 
     val levelOverridesByInspectionSimpleName =
       fromProperty("overrideLevels", defaultValue = Map.empty[String, Level]) {
-        _.split(":").map { nameLevel =>
-          nameLevel.split("=") match {
-            case Array(insp, level) => insp -> Levels.fromName(level)
-            case _ =>
-              throw new IllegalArgumentException(
-                s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
-                  "Expecting 'name=level' where 'name' is the simple name of an inspection and 'level' is the simple name of a com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
-              )
+        _.split(":")
+          .map { nameLevel =>
+            nameLevel.split("=") match {
+              case Array(insp, level) => insp -> Levels.fromName(level)
+              case _ =>
+                throw new IllegalArgumentException(
+                  s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
+                    "Expecting 'name=level' where 'name' is the simple name of an inspection and 'level' is the simple name of a com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."
+                )
+            }
           }
-        }.toMap
+          .toMap
       }
     val sourcePrefix = fromProperty("sourcePrefix", defaultValue = "src/main/scala/")(x => x)
     val minimalLevel = fromProperty[Level]("minimalLevel", defaultValue = Levels.Info) { value =>
