@@ -109,7 +109,7 @@ libraryDependencies ++= Seq(
     "org.scala-lang"
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest" %% "scalatest"      % "3.2.12"           % "test",
+  "org.scalatest" %% "scalatest"      % "3.2.13"           % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.11.0"           % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
