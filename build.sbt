@@ -22,7 +22,6 @@ developers := List(
   )
 )
 
-
 scalaVersion := "2.13.10"
 crossScalaVersions := Seq("2.11.12", "2.12.16", "2.12.17", "2.13.8", "2.13.9", "2.13.10")
 autoScalaLibrary := false
@@ -110,7 +109,7 @@ libraryDependencies ++= Seq(
     "org.scala-lang"
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest" %% "scalatest"      % "3.2.13"           % "test",
+  "org.scalatest" %% "scalatest"      % "3.2.14"           % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.11.1"           % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
