@@ -165,7 +165,7 @@ There are currently 121 inspections. An overview list is given, followed by a mo
 | BigDecimalScaleWithoutRoundingMode    | `setScale()` on a `BigDecimal` without setting the rounding mode can throw an exception                                                                      | Warning       |
 | BooleanParameter                      | Checks for functions that have a Boolean parameter                                                                                                           | Info          |
 | BoundedByFinalType                    | Looks for types with upper bounds of a final type                                                                                                            | Warning       |
-| BrokenOddness                         | checks for a % 2 == 1 for oddness because this fails on negative numbers                                                                                     | Warning       |
+| BrokenOddness                         | Checks for a % 2 == 1 for oddness because this fails on negative numbers                                                                                     | Warning       |
 | CatchException                        | Checks for try blocks that catch Exception                                                                                                                   | Warning       |
 | CatchExceptionImmediatelyRethrown     | Checks for try-catch blocks that immediately rethrow caught exceptions.                                                                                      | Warning       |
 | CatchFatal                            | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable                    | Warning       |
@@ -339,7 +339,7 @@ Checks for code that uses a `while(true)` or `do { } while(true)` block.
 
 ### Suppressing Warnings by Method or Class
 
-You can suppress a specific warning by method or by class using the java.lang.SuppressWarnings anotation.
+You can suppress a specific warning by method or by class using the java.lang.SuppressWarnings annotation.
 
 Use the simple name of the inspection to be ignored as the argument, or use "all" to suppress all scapegoat warnings in the specified scope.
 
