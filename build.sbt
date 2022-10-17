@@ -1,5 +1,5 @@
 // compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.5.13" cross CrossVersion.full)
+addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.6.0" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
@@ -22,9 +22,8 @@ developers := List(
   )
 )
 
-
 scalaVersion := "2.13.10"
-crossScalaVersions := Seq("2.11.12", "2.12.16", "2.12.17", "2.13.8", "2.13.9", "2.13.10")
+crossScalaVersions := Seq("2.12.16", "2.12.17", "2.13.9", "2.13.10")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -54,18 +53,7 @@ val scalac12Options = Seq(
   "-Xmax-classfile-name",
   "254"
 )
-val scalac11Options = Seq(
-  "-Ywarn-adapted-args",
-  "-Ywarn-inaccessible",
-  "-Ywarn-infer-any",
-  "-Ywarn-nullary-override",
-  "-Ywarn-dead-code",
-  "-Ywarn-nullary-unit",
-  "-Ywarn-numeric-widen",
-  "-Xmax-classfile-name",
-  "254"
-  // "-Ywarn-value-discard"
-)
+
 scalacOptions := {
   val common = Seq(
     "-unchecked",
@@ -76,7 +64,6 @@ scalacOptions := {
     "-Xlint"
   )
   common ++ (scalaBinaryVersion.value match {
-    case "2.11" => scalac11Options
     case "2.12" => scalac12Options
     case "2.13" =>
       scalac13Options ++ (scalaVersion.value.split('.') match {
@@ -105,16 +92,16 @@ def check(code: String) = {
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
-  "org.scala-lang.modules" %% "scala-xml" % "1.3.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
+  "org.scala-lang.modules" %% "scala-xml" % "2.1.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.8.1" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest" %% "scalatest"      % "3.2.13"           % "test",
+  "org.scalatest" %% "scalatest"      % "3.2.14"           % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
-  "joda-time"      % "joda-time"      % "2.11.1"           % "test",
+  "joda-time"      % "joda-time"      % "2.11.2"           % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
-  "org.slf4j"      % "slf4j-api"      % "2.0.1"            % "test"
+  "org.slf4j"      % "slf4j-api"      % "2.0.3"            % "test"
 )
 
 // Test
