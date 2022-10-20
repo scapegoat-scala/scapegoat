@@ -67,7 +67,7 @@ class Feedback(
       adjustedLevel match {
         case Levels.Error   => reporter.error(pos, report)
         case Levels.Warning => reporter.warning(pos, report)
-        case Levels.Info    => reporter.info(pos, report, force = false)
+        case Levels.Info    => reporter.echo(pos, report)
       }
     }
   }
