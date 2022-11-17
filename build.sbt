@@ -120,7 +120,9 @@ Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oDTF")
 // include the scala xml and compat modules into the final jar, shaded
 assembly / assemblyShadeRules := Seq(
   ShadeRule.rename("scala.xml.**" -> "scapegoat.xml.@1").inAll,
-  ShadeRule.rename("scala.collection.compat.**" -> "scapegoat.compat.@1").inAll
+  ShadeRule.rename("scala.collection.compat.**" -> "scapegoat.compat.@1").inAll,
+  // scala-collection-compat has classes outside of the previous shade path, move them as well.
+  ShadeRule.rename("scala.util.control.compat.**" -> "scapegoat.util.@1").inAll
 )
 Compile / packageBin := crossTarget.value / (assembly / assemblyJarName).value
 makePom := makePom.dependsOn(assembly).value
