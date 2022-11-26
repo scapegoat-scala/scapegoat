@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{isScala213, Inspection, InspectionContext, Inspector, Levels}
 
 /**
  * @author
@@ -14,6 +14,8 @@ class PredefTraversableIsMutable
       explanation =
         "Traversable aliases scala.collection.mutable.Traversable. Did you intend to use an immutable Traversable?"
     ) {
+
+  override def isEnabled: Boolean = !isScala213
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
