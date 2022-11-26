@@ -35,21 +35,17 @@ crossTarget := {
 ThisBuild / useCoursier := false
 
 val scalac13Options = Seq(
-  "-Xlint:adapted-args",
   "-Xlint:inaccessible",
   "-Xlint:infer-any",
-  "-Xlint:nullary-unit",
   "-Xlint:strict-unsealed-patmat",
   "-Yrangepos",
   "-Ywarn-unused",
   "-Xsource:3"
 )
 val scalac12Options = Seq(
-  "-Xlint:adapted-args",
   "-Ywarn-inaccessible",
   "-Ywarn-infer-any",
   "-Xlint:nullary-override",
-  "-Xlint:nullary-unit",
   "-Xmax-classfile-name",
   "254"
 )
@@ -61,15 +57,13 @@ scalacOptions := {
     "-feature",
     "-encoding",
     "utf8",
-    "-Xlint"
+    "-Xlint",
+    "-Xlint:adapted-args",
+    "-Xlint:nullary-unit"
   )
   common ++ (scalaBinaryVersion.value match {
     case "2.12" => scalac12Options
-    case "2.13" =>
-      scalac13Options ++ (scalaVersion.value.split('.') match {
-        case Array(_, _, patch) if Set("0", "1", "2")(patch) => Seq("-Xlint:nullary-override")
-        case _                                               => Seq.empty[String]
-      })
+    case "2.13" => scalac13Options
   })
 }
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")

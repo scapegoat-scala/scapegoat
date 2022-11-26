@@ -10,8 +10,8 @@ class BooleanParameterTest extends InspectionTest {
     "should report info" - {
       "for methods using Boolean parameter" in {
         val code = """class Test {
-                       def foo(bool: Boolean) = 4
-                    } """.stripMargin
+                        def foo(bool: Boolean) = 4
+                      }""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1

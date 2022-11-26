@@ -1,6 +1,7 @@
 package com.sksamuel.scapegoat
 
 import scala.reflect.internal.util.NoPosition
+import scala.tools.nsc.Settings
 import scala.tools.nsc.reporters.StoreReporter
 
 import org.scalatest.freespec.AnyFreeSpec
@@ -31,17 +32,18 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is description.",
           "This is explanation."
         )
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should contain(
-          reporter.Info(
+          StoreReporter.Info(
             position,
             "[scapegoat] [DummyInspection] My default is Error\n  This is explanation.",
             reporter.ERROR
           )
         )
       }
+
       "for warning" in {
         val inspection = new DummyInspection(
           "My default is Warning",
@@ -49,17 +51,18 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is description.",
           "This is explanation."
         )
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should contain(
-          reporter.Info(
+          StoreReporter.Info(
             position,
             "[scapegoat] [DummyInspection] My default is Warning\n  This is explanation.",
             reporter.WARNING
           )
         )
       }
+
       "for info" in {
         val inspection = new DummyInspection(
           "My default is Info",
@@ -67,11 +70,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is description.",
           "This is explanation."
         )
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should contain(
-          reporter.Info(
+          StoreReporter.Info(
             position,
             "[scapegoat] [DummyInspection] My default is Info\n  This is explanation.",
             reporter.INFO
@@ -79,10 +82,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         )
       }
     }
+
     "should use proper paths" - {
       "for `src/main/scala`" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         val source = "src/main/scala/com/sksamuel/scapegoat/Test.scala"
         val result = feedback invokePrivate normalizeSourceFile(source)
@@ -91,7 +95,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
 
       "for `app`" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, "app/"))
         val source = "app/com/sksamuel/scapegoat/Test.scala"
         val result = feedback invokePrivate normalizeSourceFile(source)
@@ -100,13 +104,14 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
 
       "should add trailing / to the sourcePrefix automatically" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, "app/custom"))
         val source = "app/custom/com/sksamuel/scapegoat/Test.scala"
         val result = feedback invokePrivate normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
     }
+
     "should use minimal warning level in reports" - {
       "for `info`" in {
         val inspectionError = new DummyInspection(
@@ -128,7 +133,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback =
           new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix, Levels.Info))
         inspections.foreach(inspection => feedback.warn(position, inspection))
@@ -155,7 +160,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback =
           new Feedback(
             reporter,
@@ -187,7 +192,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
-        val reporter = new StoreReporter
+        val reporter = new StoreReporter(new Settings())
         val feedback =
           new Feedback(reporter, testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Error))
         inspections.foreach(inspection => feedback.warn(position, inspection))
