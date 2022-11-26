@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{isScala213, Inspection, InspectionContext, Inspector, Levels}
 
 /**
  * @author
@@ -14,6 +14,8 @@ class PredefIterableIsMutable
       explanation =
         "Iterable aliases scala.collection.mutable.Iterable. Did you intend to use an immutable Iterable?"
     ) {
+
+  override def isEnabled: Boolean = !isScala213
 
   def inspector(context: InspectionContext): Inspector =
     new Inspector(context) {
