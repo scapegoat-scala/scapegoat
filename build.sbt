@@ -31,6 +31,9 @@ crossTarget := {
   target.value / s"scala-${scalaVersion.value}"
 }
 
+// https://github.com/sksamuel/scapegoat/issues/298
+ThisBuild / useCoursier := false
+
 val scalac13Options = Seq(
   "-Xlint:inaccessible",
   "-Xlint:infer-any",
