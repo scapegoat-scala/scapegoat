@@ -99,9 +99,9 @@ libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
   "org.scalatest" %% "scalatest"      % "3.2.14"           % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
-  "joda-time"      % "joda-time"      % "2.12.0"           % "test",
+  "joda-time"      % "joda-time"      % "2.12.1"           % "test",
   "org.joda"       % "joda-convert"   % "2.2.2"            % "test",
-  "org.slf4j"      % "slf4j-api"      % "2.0.3"            % "test"
+  "org.slf4j"      % "slf4j-api"      % "2.0.4"            % "test"
 )
 
 // Test
@@ -120,7 +120,9 @@ Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oDTF")
 // include the scala xml and compat modules into the final jar, shaded
 assembly / assemblyShadeRules := Seq(
   ShadeRule.rename("scala.xml.**" -> "scapegoat.xml.@1").inAll,
-  ShadeRule.rename("scala.collection.compat.**" -> "scapegoat.compat.@1").inAll
+  ShadeRule.rename("scala.collection.compat.**" -> "scapegoat.compat.@1").inAll,
+  // scala-collection-compat has classes outside of the previous shade path, move them as well.
+  ShadeRule.rename("scala.util.control.compat.**" -> "scapegoat.util.@1").inAll
 )
 Compile / packageBin := crossTarget.value / (assembly / assemblyJarName).value
 makePom := makePom.dependsOn(assembly).value
