@@ -87,7 +87,7 @@ libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
   "org.scala-lang.modules" %% "scala-xml" % "2.1.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.8.1" excludeAll ExclusionRule(organization =
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.9.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
   "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
