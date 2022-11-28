@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ExistsSimplifiableToContainsTest extends InspectionTest {
 
-  override val inspections = Seq(new ExistsSimplifiableToContains)
+  override val inspections: Seq[Inspection] = Seq(new ExistsSimplifiableToContains)
 
   "should report warning" - {
     "when exists is called with compatible type" in {
@@ -15,7 +15,7 @@ class ExistsSimplifiableToContainsTest extends InspectionTest {
           |val list = List("sam", "spade")
           |val exists2 = list.exists(_ == "spoof")
           |val exists3 = (1 to 3).exists(_ == 2)
-          |} """.stripMargin
+          |}""".stripMargin
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 3
@@ -30,8 +30,7 @@ class ExistsSimplifiableToContainsTest extends InspectionTest {
           |      element.toLowerCase == "a"
           |    }
           |  }
-          |}
-          |""".stripMargin
+          |}""".stripMargin
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 1
     }
@@ -44,7 +43,7 @@ class ExistsSimplifiableToContainsTest extends InspectionTest {
           |val exists1 = List("sam").exists(x => x == new RuntimeException)
           |val list = List("sam", "spade")
           |val exists2 = list.exists(_ == 3)
-          |} """.stripMargin
+          |}""".stripMargin
 
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
@@ -72,8 +71,7 @@ class ExistsSimplifiableToContainsTest extends InspectionTest {
           |      element == element.toLowerCase
           |    }
           |  }
-          |}
-          |""".stripMargin
+          |}""".stripMargin
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
@@ -87,8 +85,16 @@ class ExistsSimplifiableToContainsTest extends InspectionTest {
           |      element.replaceAll("a", "").size == element.size
           |    }
           |  }
-          |}
-          |""".stripMargin
+          |}""".stripMargin
+      compileCodeSnippet(code)
+      compiler.scapegoat.feedback.warnings.size shouldBe 0
+    }
+
+    "when a Map's key and value are of the same type" in {
+      val code =
+        """
+          |val map = Map("answer" -> "42")
+          |val isCorrect = map.exists(_._2 == "42")""".stripMargin
       compileCodeSnippet(code)
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
