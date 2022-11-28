@@ -90,7 +90,7 @@ class ExistsSimplifiableToContainsTest extends InspectionTest {
       compiler.scapegoat.feedback.warnings.size shouldBe 0
     }
 
-    "when a Map's key and value are of the same time" in {
+    "when a Map's key and value are of the same type" in {
       val code =
         """
           |val map = Map("answer" -> "42")
