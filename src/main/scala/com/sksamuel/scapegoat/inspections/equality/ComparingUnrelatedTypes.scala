@@ -53,6 +53,11 @@ class ComparingUnrelatedTypes
                   if integralLiteralFitsInType(lit, value.tpe) =>
               case Apply(Select(lit @ Literal(_), TermName("$eq$eq" | "$bang$eq")), List(value))
                   if integralLiteralFitsInType(lit, value.tpe) =>
+              // Comparing number types like BigDecimal to integer types causes boxing to promote
+              // the integer to Number to do the comparison.
+              case Apply(Select(lhs, TermName("$eq$eq" | "$bang$eq")), List(rhs))
+                  if (lhs.tpe <:< typeOf[Number] && rhs.tpe.typeSymbol.isNumericValueClass) ||
+                    (rhs.tpe <:< typeOf[Number] && lhs.tpe.typeSymbol.isNumericValueClass) =>
               // -- End special cases ------------------------------------------------------------------
 
               case Apply(Select(lhs, op @ TermName("$eq$eq" | "$bang$eq")), List(rhs)) =>
