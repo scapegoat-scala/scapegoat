@@ -73,6 +73,14 @@ class ComparingUnrelatedTypesTest extends InspectionTest {
       "for float" - {
         "compared to zero" in verifyNoWarnings("""object A { val f = 100f; val b = f == 0 }""")
       }
+
+      "for numbers types comparing to number literals" - {
+        "number left hand side" in verifyNoWarnings("""object A { val a = BigDecimal(5); val b = a == 0 } """)
+        "number right hand side" in verifyNoWarnings(
+          """object A { val a = BigDecimal(5); val b = 0 != a } """
+        )
+      }
+
       "for same enum values" in {
         val code = """object Main {
                         def main(args: Array[String]): Unit = {
