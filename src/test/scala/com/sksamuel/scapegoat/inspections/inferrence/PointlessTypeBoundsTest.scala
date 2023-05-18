@@ -169,6 +169,15 @@ class PointlessTypeBoundsTest extends InspectionTest {
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+      "for bound starting with Any" in {
+        compileCodeSnippet("class Test[T <: AnyRef, S]")
+        compileCodeSnippet("class Test[T<: AnyRef, S]")
+        compileCodeSnippet("class Test[T<:AnyRef, S]")
+        compileCodeSnippet("class Test[T<:AnyRef,S]")
+        compileCodeSnippet("class Test[S, T <: AnyRef]")
+        compileCodeSnippet("class Test[S, T <: AnyHow]")
+        compiler.scapegoat.feedback.warnings.size shouldBe 0
+      }
     }
   }
 }
