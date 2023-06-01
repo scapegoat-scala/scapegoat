@@ -26,7 +26,9 @@ class PointlessTypeBounds
               case TypeDef(_, tn, _, rhs)
                   if rhs.tpe.bounds.isEmptyBounds
                     && rhs.pos != null
-                    && (rhs.pos.lineContent.matches(s".*${tn}\\s*<:\\s*Any\\s*[,:\\]].*") || rhs.pos.lineContent.contains(">: Nothing")) =>
+                    && (rhs.pos.lineContent.matches(
+                      s".*${tn}\\s*<:\\s*Any\\s*[,:\\]].*"
+                    ) || rhs.pos.lineContent.contains(">: Nothing")) =>
                 context.warn(tree.pos, self, tree.toString.take(300))
               case _ => continue(tree)
             }
