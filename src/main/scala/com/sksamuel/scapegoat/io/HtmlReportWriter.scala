@@ -1,7 +1,6 @@
 package com.sksamuel.scapegoat.io
 
-import scala.xml.{Elem, Unparsed}
-
+import scala.xml.{Elem, Unparsed, XML}
 import com.sksamuel.scapegoat.{Feedback, Levels}
 
 /**
@@ -38,18 +37,24 @@ object HtmlReportWriter extends ReportWriter {
       |      }
       |
       |      .title {
-      |      	color: #616161;
-      |      	font-size: 16px;
+      |      	 color: #616161;
+      |      	 font-size: 16px;
       |      }
       |
       |      .source {
       |        float: right;
-      |      	 font-style: italic;
+      |        font-style: italic;
       |        color: #868686;
       |      }
       |
       |      .snippet {
       |        padding-top: 8px;
+      |        color: #0C0C0C;
+      |        font-weight: 300;
+      |        font-size: 12px;
+      |      }
+      |
+      |      code {
       |        color: #0C0C0C;
       |        font-weight: 300;
       |        font-size: 12px;
@@ -111,12 +116,12 @@ object HtmlReportWriter extends ReportWriter {
           case Levels.Warning => <span class="label label-warning">Warning</span>
           case Levels.Error   => <span class="label label-danger">Error</span>
         }
-      }&nbsp;{warning.text}&nbsp; <span class="inspection">
+      }&nbsp;{decorateCode(warning.text)}&nbsp; <span class="inspection">
             {warning.inspection}
           </span>
           </div>
           <div>
-            {warning.explanation}
+            {decorateCode(warning.explanation)}
           </div>{
         warning.snippet match {
           case None =>
@@ -134,6 +139,9 @@ object HtmlReportWriter extends ReportWriter {
     <html>
       {header}{body(reporter)}
     </html>
+
+  private def decorateCode(text: String): Elem =
+    XML.loadString(s"<span>${text.replaceAll("`([^`]*)`", "<code>$1</code>")}</span>")
 
   override protected def generate(feedback: Feedback): String = toHTML(feedback).toString()
 }
