@@ -14,8 +14,8 @@ class ClassNames
       explanation = "Class names should begin with uppercase letter."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

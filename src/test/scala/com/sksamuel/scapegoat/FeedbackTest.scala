@@ -20,7 +20,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
     description: String,
     explanation: String
   ) extends Inspection(text, defaultLevel, description, explanation) {
-    override def inspector(context: InspectionContext): Inspector = ???
+    override def inspector(ctx: InspectionContext): Inspector = ???
   }
 
   "Feedback" - {

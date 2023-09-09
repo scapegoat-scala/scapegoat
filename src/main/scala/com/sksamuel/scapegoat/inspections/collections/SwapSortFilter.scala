@@ -15,8 +15,8 @@ class SwapSortFilter
         "Filter first and then sort the remaining collection. Swap sort.filter for filter.sort for better performance."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

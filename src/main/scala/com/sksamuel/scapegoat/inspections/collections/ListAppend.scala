@@ -15,8 +15,8 @@ class ListAppend
         "List append is O(n). For large lists, consider using cons (::) or another data structure such as ListBuffer, Vector or a cats.data.Chain (which has constant prepend and append)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

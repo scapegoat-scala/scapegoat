@@ -11,8 +11,8 @@ class PreferMapEmpty
         "`Map[K,V]()` allocates an intermediate object. Consider `Map.empty` which returns a singleton instance without creating a new object."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser =
         new context.Traverser {
 

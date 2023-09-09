@@ -11,8 +11,8 @@ class AsInstanceOf
         "Use of asInstanceOf is considered a bad practice - consider using pattern matching instead."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser =
         new context.Traverser {
 

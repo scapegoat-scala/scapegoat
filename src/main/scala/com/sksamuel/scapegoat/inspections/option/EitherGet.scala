@@ -15,8 +15,8 @@ class EitherGet
         "Method .get on a Left and a Right projection is deprecated since 2.13, use Either.getOrElse or Either.swap.getOrElse instead."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

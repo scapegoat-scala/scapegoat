@@ -14,8 +14,8 @@ class ComparisonToEmptySet
       explanation = "Prefer use of `isEmpty` instead of comparison to an empty Set."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

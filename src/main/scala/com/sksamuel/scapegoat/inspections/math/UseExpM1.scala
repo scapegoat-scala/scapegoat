@@ -14,8 +14,8 @@ class UseExpM1
       explanation = "Use math.expm1(x), which is clearer and more performant than math.exp(x) - 1."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

@@ -15,8 +15,8 @@ class CollectionNegativeIndex
         "Trying to access Seq elements using a negative index will result in an IndexOutOfBoundsException."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

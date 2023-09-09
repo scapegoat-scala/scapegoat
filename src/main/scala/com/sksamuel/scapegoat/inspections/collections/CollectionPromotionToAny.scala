@@ -15,8 +15,8 @@ class CollectionPromotionToAny
         "The `:+` (append) operator on collections accepts any argument you give it, which means that you can end up with e.g. `Seq[Any]` if your types don't match."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

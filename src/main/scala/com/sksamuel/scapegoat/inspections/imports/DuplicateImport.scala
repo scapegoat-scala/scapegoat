@@ -16,8 +16,8 @@ class DuplicateImport
       explanation = "Duplicate imports should be removed."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
 
       private val imports = mutable.HashSet[String]()
 

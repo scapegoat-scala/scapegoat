@@ -16,8 +16,8 @@ class AvoidToMinusOne
       explanation = "A range in the following format (j to k - 1) can be simplified to (j until k)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

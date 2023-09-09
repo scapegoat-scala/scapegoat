@@ -15,8 +15,8 @@ class TryGet
         "Using Try.get is unsafe because it will throw the underlying exception in case of a Failure. Use the following instead: Try.getOrElse, Try.fold, pattern matching or don't take the value out of the container and map over it to transform it."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

@@ -11,8 +11,8 @@ class RepeatedIfElseBody
         "The if statement could be refactored if both branches are the same or start with the same."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser =
         new context.Traverser {
 

@@ -15,8 +15,8 @@ class UnnecessaryIf
         "If comparison is not needed. Use the condition, e.g. instead of if (a == b) true else false, use a == b or instead of if (a == b) false else true, use !(a == b)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

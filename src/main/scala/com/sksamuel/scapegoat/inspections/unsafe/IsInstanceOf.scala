@@ -15,8 +15,8 @@ class IsInstanceOf
         "Use of isInstanceOf is considered a bad practice - consider using pattern matching instead."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

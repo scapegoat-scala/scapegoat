@@ -14,8 +14,8 @@ class CollectionIndexOnNonIndexedSeq
       explanation = "Using an index to access elements of an IndexedSeq may cause performance problems."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

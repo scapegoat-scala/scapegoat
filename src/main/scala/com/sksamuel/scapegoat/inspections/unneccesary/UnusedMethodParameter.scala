@@ -16,8 +16,8 @@ class UnusedMethodParameter
       explanation = "Unused constructor or method parameters should be removed."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

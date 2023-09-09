@@ -15,8 +15,8 @@ class UnnecessaryReturnUse
         "Scala returns the value of the last expression in a block. Use of return here is not an idiomatic Scala."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

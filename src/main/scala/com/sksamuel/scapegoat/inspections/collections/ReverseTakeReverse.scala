@@ -10,8 +10,8 @@ class ReverseTakeReverse
       explanation = "`reverse.take().reverse` can be replaced with `takeRight`, which is more concise."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

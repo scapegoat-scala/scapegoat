@@ -14,8 +14,8 @@ class SuspiciousMatchOnClassObject
       explanation = "Matching on an companion object of a case class is probably not what you intended."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

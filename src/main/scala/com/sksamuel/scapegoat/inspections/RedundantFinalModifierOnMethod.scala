@@ -12,8 +12,8 @@ class RedundantFinalModifierOnMethod
       explanation = "A final modifier on methods that cannot be overridden is redundant."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  override def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
 
       import context.global._
       import definitions._

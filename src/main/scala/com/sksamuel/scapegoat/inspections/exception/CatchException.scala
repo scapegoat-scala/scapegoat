@@ -16,8 +16,8 @@ class CatchException
         "Did you intend to catch all exceptions? Consider catching a more specific exception class."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

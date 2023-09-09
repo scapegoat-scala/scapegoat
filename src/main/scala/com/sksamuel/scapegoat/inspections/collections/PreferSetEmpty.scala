@@ -15,8 +15,8 @@ class PreferSetEmpty
         "`Set[T]()` allocates an intermediate object. Consider `Set.empty` which returns a singleton instance without creating a new object."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

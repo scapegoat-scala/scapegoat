@@ -14,8 +14,8 @@ class PublicFinalizer
       explanation = "Public finalizer should be avoided as finalizers should not be programmatically invoked."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  override def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
 
       import context.global._
 

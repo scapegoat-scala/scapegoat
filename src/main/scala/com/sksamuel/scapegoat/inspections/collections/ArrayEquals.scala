@@ -15,8 +15,8 @@ class ArrayEquals
         "Array equals is not an equality check. Use a.deep == b.deep or convert to another collection type."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

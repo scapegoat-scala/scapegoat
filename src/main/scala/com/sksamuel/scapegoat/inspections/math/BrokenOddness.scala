@@ -17,8 +17,8 @@ class BrokenOddness
         "Code that attempts to check for oddness using `x % 2 == 1` will fail on negative numbers. Consider using `x % 2 != 0`."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

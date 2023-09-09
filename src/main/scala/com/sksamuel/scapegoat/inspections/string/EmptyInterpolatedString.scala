@@ -15,8 +15,8 @@ class EmptyInterpolatedString
         "String declared as interpolated but has no parameters can be turned into a regular string."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

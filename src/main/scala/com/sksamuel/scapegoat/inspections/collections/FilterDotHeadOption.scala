@@ -15,8 +15,8 @@ class FilterDotHeadOption
         "`filter()` scans the entire collection, which is unnecessary if you only want to get the first element that satisfies the predicate - `filter().headOption` can be replaced with `find()` to potentially avoid scanning the entire collection."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

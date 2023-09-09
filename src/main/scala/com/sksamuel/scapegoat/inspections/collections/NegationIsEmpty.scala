@@ -14,8 +14,8 @@ class NegationIsEmpty
       explanation = "!.isEmpty can be replaced with.nonEmpty to make it easier to reason about."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

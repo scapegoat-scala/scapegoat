@@ -15,8 +15,8 @@ class FilterDotIsEmpty
         "`filter()` scans the entire collection, which can potentially be avoided if the element exists in the collection - `filter().isEmpty` can be replaced with `!exists()`."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

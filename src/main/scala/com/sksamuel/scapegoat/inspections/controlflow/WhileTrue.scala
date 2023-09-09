@@ -14,8 +14,8 @@ class WhileTrue
       explanation = "A (do) while true loop is unlikely to be meant for production."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

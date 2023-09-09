@@ -16,7 +16,7 @@ abstract class Inspection(
 
   val self: Inspection = this
 
-  def inspector(context: InspectionContext): Inspector
+  def inspector(ctx: InspectionContext): Inspector
 
   def isEnabled: Boolean = true
 

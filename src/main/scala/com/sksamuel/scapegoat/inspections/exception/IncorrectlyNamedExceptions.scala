@@ -17,8 +17,8 @@ class IncorrectlyNamedExceptions
         "Class named exception does not derive from Exception / class derived from Exception is not named *Exception."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

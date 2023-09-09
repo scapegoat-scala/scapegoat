@@ -16,8 +16,8 @@ class SwallowedException
         "If you use a try/catch block to deal with an exception, you should handle all of the caught exceptions and if for some reason you're throwing another exception in the result, you should include the original exception as the cause."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

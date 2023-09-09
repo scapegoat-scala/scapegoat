@@ -11,8 +11,8 @@ class VarUse
         "Use of variables is generally discouraged, especially in the context of a shared mutable state. Consider using an immutable state or other referentially transparent alternatives."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser =
         new context.Traverser {
 

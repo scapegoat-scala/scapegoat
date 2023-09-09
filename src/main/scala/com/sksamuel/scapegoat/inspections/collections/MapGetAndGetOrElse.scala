@@ -18,8 +18,8 @@ class MapGetAndGetOrElse
         "Map.get(key).getOrElse(value) can be replaced with Map.getOrElse(key, value), which is more concise."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

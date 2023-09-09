@@ -15,8 +15,8 @@ class ListSize
         "List.size is O(n). Consider using a different data type with O(1) size lookup such as Vector or an Array."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

@@ -15,8 +15,8 @@ class JavaConversionsUse
         "Use of Java conversions can lead to unusual behaviour. It is recommended to use JavaConverters."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

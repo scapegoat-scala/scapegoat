@@ -15,8 +15,8 @@ class UnnecessaryConversion
         "Calling e.g. toString on a String or toList on a List is completely unnecessary and it's an equivalent to identity."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

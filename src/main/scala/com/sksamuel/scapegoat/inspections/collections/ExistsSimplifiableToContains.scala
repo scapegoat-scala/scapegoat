@@ -16,8 +16,8 @@ class ExistsSimplifiableToContains
       explanation = "`exists(x => x == y)` can be replaced with `contains(y)`."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

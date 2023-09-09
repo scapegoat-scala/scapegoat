@@ -11,8 +11,8 @@ class StoreBeforeReturn
         "Storing a value and then immediately returning it is equivalent to returning the raw value itself."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  override def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
           import context.global._

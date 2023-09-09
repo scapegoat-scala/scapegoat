@@ -14,8 +14,8 @@ class NullParameter
       explanation = "Use an Option instead when the value can be empty and pass down a None instead."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

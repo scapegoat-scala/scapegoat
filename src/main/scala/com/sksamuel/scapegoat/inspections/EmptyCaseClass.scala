@@ -14,8 +14,8 @@ class EmptyCaseClass
       explanation = "An empty case class can be rewritten as a case object."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
