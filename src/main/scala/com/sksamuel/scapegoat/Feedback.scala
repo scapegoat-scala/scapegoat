@@ -93,9 +93,10 @@ final case class Warning(
 ) {
   def hasMinimalLevelOf(minimalLevel: Level): Boolean = {
     minimalLevel match {
-      case Levels.Info    => true
-      case Levels.Warning => this.level == Levels.Warning || this.level == Levels.Error
-      case Levels.Error   => this.level == Levels.Error
+      case Levels.Ignore  => throw new IllegalArgumentException("Ignore cannot be minimal level")
+      case Levels.Info    => this.level.higherOrEqualTo(Levels.Info)
+      case Levels.Warning => this.level.higherOrEqualTo(Levels.Warning)
+      case Levels.Error   => this.level.higherOrEqualTo(Levels.Error)
     }
   }
 }
