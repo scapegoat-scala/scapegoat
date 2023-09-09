@@ -13,7 +13,7 @@ class VarUse
 
   def inspector(ctx: InspectionContext): Inspector =
     new Inspector(ctx) {
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

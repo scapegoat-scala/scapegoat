@@ -15,7 +15,7 @@ class RedundantFinalModifierOnVar
 
       import context.global._
 
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           override def inspect(tree: Tree): Unit = {
