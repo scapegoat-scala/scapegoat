@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.inferrence
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.inference.ProductWithSerializableInferred
 
 /** @author Stephen Samuel */
 class ProductWithSerializableInferredTest extends InspectionTest {
 
-  override val inspections = Seq(new ProductWithSerializableInferred)
+  override val inspections = Seq[Inspection](new ProductWithSerializableInferred)
 
   "when Product with Serializable is inferred" - {
     "should report warning" in {

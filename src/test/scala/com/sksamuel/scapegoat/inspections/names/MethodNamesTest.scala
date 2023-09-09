@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.names
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.naming.MethodNames
 
 /** @author Stephen Samuel */
 class MethodNamesTest extends InspectionTest {
 
-  override val inspections = Seq(new MethodNames)
+  override val inspections = Seq[Inspection](new MethodNames)
 
   "MethodNames" - {
     "should report warning" - {

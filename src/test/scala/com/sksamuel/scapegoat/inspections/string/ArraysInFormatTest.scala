@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ArraysInFormatTest extends InspectionTest {
 
-  override val inspections = Seq(new ArraysInFormat)
+  override val inspections = Seq[Inspection](new ArraysInFormat)
 
   "use of array in format" - {
     "should report warning" in {

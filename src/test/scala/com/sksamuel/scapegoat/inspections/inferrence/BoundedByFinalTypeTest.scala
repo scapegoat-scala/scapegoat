@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.inferrence
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.inference.BoundedByFinalType
 
 /** @author Stephen Samuel */
 class BoundedByFinalTypeTest extends InspectionTest {
 
-  override val inspections = Seq(new BoundedByFinalType)
+  override val inspections = Seq[Inspection](new BoundedByFinalType)
 
   "BoundedByFinalType" - {
     "should report warning" - {

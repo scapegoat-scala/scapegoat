@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unneccesary.UnusedMethodParameter
 
 class UnusedMethodParameterTest213 extends InspectionTest {
 
-  override val inspections = Seq(new UnusedMethodParameter)
+  override val inspections = Seq[Inspection](new UnusedMethodParameter)
 
   "UnusedMethodParameter in Scala 2.13" - {
     "should not report warning" - {

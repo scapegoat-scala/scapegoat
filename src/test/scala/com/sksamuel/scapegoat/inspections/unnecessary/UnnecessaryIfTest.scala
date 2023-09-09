@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryIf
 
 /** @author Stephen Samuel */
 class UnnecessaryIfTest extends InspectionTest {
 
-  override val inspections = Seq(new UnnecessaryIf)
+  override val inspections = Seq[Inspection](new UnnecessaryIf)
 
   "unncessary if" - {
     "should report warning" in {

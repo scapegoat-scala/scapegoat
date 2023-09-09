@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class NanComparisonTest extends InspectionTest {
 
-  override val inspections = Seq(new NanComparison)
+  override val inspections = Seq[Inspection](new NanComparison)
 
   "nan comparison" - {
     "should report warning" - {

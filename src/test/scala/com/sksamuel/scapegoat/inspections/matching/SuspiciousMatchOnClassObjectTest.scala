@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class SuspiciousMatchOnClassObjectTest extends InspectionTest {
 
-  override val inspections = Seq(new SuspiciousMatchOnClassObject)
+  override val inspections = Seq[Inspection](new SuspiciousMatchOnClassObject)
 
   "SuspiciousMatchOnClassObject" - {
     "should report warning" - {

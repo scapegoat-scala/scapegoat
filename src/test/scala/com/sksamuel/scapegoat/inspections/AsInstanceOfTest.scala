@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unsafe.AsInstanceOf
 
 class AsInstanceOfTest extends InspectionTest {
 
-  override val inspections = Seq(new AsInstanceOf)
+  override val inspections = Seq[Inspection](new AsInstanceOf)
 
   "AsInstanceOf" - {
     "should report warning" in {

@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class VariableShadowingTest extends InspectionTest {
 
-  override val inspections = Seq(new VariableShadowing)
+  override val inspections = Seq[Inspection](new VariableShadowing)
 
   "VariableShadowing" - {
     "should report warning" - {

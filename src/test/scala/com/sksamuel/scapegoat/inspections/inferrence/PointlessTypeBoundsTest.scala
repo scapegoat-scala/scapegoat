@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.inferrence
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.inference.PointlessTypeBounds
 
 /** @author Stephen Samuel */
 class PointlessTypeBoundsTest extends InspectionTest {
 
-  override val inspections = Seq(new PointlessTypeBounds)
+  override val inspections = Seq[Inspection](new PointlessTypeBounds)
 
   "PointlessTypeBounds" - {
     "should report warning" - {

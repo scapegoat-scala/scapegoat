@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class UseSqrtTest extends InspectionTest {
 
-  override val inspections = Seq(new UseSqrt)
+  override val inspections = Seq[Inspection](new UseSqrt)
 
   "using pow instead of sqrt" - {
     "should report warning" in {

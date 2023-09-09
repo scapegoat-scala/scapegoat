@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.empty
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class EmptySynchronizedBlockTest extends InspectionTest {
 
-  override val inspections = Seq(new EmptySynchronizedBlock)
+  override val inspections = Seq[Inspection](new EmptySynchronizedBlock)
 
   "empty empty" - {
     "should report warning" in {

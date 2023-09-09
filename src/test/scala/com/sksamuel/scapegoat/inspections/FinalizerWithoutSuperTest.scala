@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unsafe.FinalizerWithoutSuper
 
 /** @author Stephen Samuel */
 class FinalizerWithoutSuperTest extends InspectionTest {
 
-  override val inspections = Seq(new FinalizerWithoutSuper)
+  override val inspections = Seq[Inspection](new FinalizerWithoutSuper)
 
   "FinalizerWithoutSuper" - {
     "should report warning" - {

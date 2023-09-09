@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unneccesary.StoreBeforeReturn
 
 class StoreBeforeReturnTest extends InspectionTest {
 
-  override val inspections = Seq(new StoreBeforeReturn)
+  override val inspections = Seq[Inspection](new StoreBeforeReturn)
 
   "store value before explicit return" - {
     "should report warning" in {

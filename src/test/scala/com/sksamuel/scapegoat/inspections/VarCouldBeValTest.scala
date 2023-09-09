@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unneccesary.VarCouldBeVal
 
 class VarCouldBeValTest extends InspectionTest {
 
-  override val inspections = Seq(new VarCouldBeVal)
+  override val inspections = Seq[Inspection](new VarCouldBeVal)
 
   "Var could be Val" - {
     "should report warning" - {

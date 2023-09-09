@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{isScala213, InspectionTest}
+import com.sksamuel.scapegoat.{isScala213, Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class JavaConversionsUseTest extends InspectionTest {
 
-  override val inspections = Seq(new JavaConversionsUse)
+  override val inspections = Seq[Inspection](new JavaConversionsUse)
 
   "JavaConversionsUse" - {
     "should report warning (for Scala < 2.13)" in {

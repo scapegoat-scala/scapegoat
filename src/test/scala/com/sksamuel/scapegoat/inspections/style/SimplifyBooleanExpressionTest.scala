@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.style
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class SimplifyBooleanExpressionTest extends InspectionTest {
 
-  override val inspections = Seq(new SimplifyBooleanExpression)
+  override val inspections = Seq[Inspection](new SimplifyBooleanExpression)
 
   "incorrectly named exceptions" - {
     "should report warning" in {

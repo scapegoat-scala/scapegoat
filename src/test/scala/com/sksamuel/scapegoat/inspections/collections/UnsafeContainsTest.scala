@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class UnsafeContainsTest extends InspectionTest {
 
-  override val inspections = Seq(new UnsafeContains)
+  override val inspections = Seq[Inspection](new UnsafeContains)
 
   "unsafe contains" - {
     "should report warning" in {

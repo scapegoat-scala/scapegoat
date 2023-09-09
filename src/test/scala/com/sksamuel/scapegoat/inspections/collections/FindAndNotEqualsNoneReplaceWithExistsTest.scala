@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class FindAndNotEqualsNoneReplaceWithExistsTest extends InspectionTest {
 
-  override val inspections = Seq(new FindAndNotEqualsNoneReplaceWithExists)
+  override val inspections = Seq[Inspection](new FindAndNotEqualsNoneReplaceWithExists)
 
   "FindAndNotEqualsNoneReplaceWithExists" - {
     "should report warning" - {

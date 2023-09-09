@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unsafe.TryGet
 
 /** @author Stephen Samuel */
 class TryGetTest extends InspectionTest {
 
-  override val inspections = Seq(new TryGet)
+  override val inspections = Seq[Inspection](new TryGet)
 
   "try.get use" - {
     "should report warning" in {

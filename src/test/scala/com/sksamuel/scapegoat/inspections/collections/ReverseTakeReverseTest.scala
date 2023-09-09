@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class ReverseTakeReverseTest extends InspectionTest {
 
-  override val inspections = Seq(new ReverseTakeReverse)
+  override val inspections = Seq[Inspection](new ReverseTakeReverse)
 
   "ReverseTakeReverse" - {
     "should report warning" in {

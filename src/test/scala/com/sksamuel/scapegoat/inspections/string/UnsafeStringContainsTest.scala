@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Zack Grannan */
 class UnsafeStringContainsTest extends InspectionTest {
-  override val inspections = Seq(new UnsafeStringContains)
+  override val inspections = Seq[Inspection](new UnsafeStringContains)
   "unsafe string contains" - {
     "should report warning" in {
       val code =

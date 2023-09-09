@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ArrayEqualsTest extends InspectionTest {
 
-  override val inspections = Seq(new ArrayEquals)
+  override val inspections = Seq[Inspection](new ArrayEquals)
 
   "ArrayEquals" - {
     "should report warning" - {

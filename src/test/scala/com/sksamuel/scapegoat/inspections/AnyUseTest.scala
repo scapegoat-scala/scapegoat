@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class AnyUseTest extends InspectionTest {
 
-  override val inspections = Seq(new AnyUse)
+  override val inspections = Seq[Inspection](new AnyUse)
 
   "AnyUse" - {
     "should report warning" - {

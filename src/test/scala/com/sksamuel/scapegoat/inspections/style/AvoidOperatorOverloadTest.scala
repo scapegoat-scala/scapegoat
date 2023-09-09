@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.style
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class AvoidOperatorOverloadTest extends InspectionTest {
 
-  override val inspections = Seq(new AvoidOperatorOverload)
+  override val inspections = Seq[Inspection](new AvoidOperatorOverload)
 
   "AvoidOperatorOverload" - {
     "should report warning" - {

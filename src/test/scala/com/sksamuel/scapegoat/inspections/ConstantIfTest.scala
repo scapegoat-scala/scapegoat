@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unneccesary.ConstantIf
 
 /** @author Stephen Samuel */
 class ConstantIfTest extends InspectionTest {
 
-  override val inspections = Seq(new ConstantIf)
+  override val inspections = Seq[Inspection](new ConstantIf)
 
   "ConstantIf" - {
     "should report warning" in {

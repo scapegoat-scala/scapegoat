@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Josh Rosen */
 class CollectionIndexOnNonIndexedSeqTest extends InspectionTest {
 
-  override val inspections = Seq(new CollectionIndexOnNonIndexedSeq)
+  override val inspections = Seq[Inspection](new CollectionIndexOnNonIndexedSeq)
 
   "collection index on non indexed seq" - {
     "should report warning" in {

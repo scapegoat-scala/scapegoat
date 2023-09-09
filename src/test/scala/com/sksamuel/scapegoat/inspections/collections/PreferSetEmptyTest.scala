@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class PreferSetEmptyTest extends InspectionTest {
 
-  override val inspections = Seq(new PreferSetEmpty)
+  override val inspections = Seq[Inspection](new PreferSetEmpty)
 
   "set apply" - {
     "should report warning" in {

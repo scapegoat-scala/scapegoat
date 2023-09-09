@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.nulls
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class NullAssignmentTest extends InspectionTest {
 
-  override val inspections = Seq(new NullAssignment)
+  override val inspections = Seq[Inspection](new NullAssignment)
 
   "NullAssignment" - {
     "should report warning" - {

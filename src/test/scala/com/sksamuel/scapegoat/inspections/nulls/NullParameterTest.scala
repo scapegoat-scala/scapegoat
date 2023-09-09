@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.nulls
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class NullParameterTest extends InspectionTest {
 
-  override val inspections = Seq(new NullParameter)
+  override val inspections = Seq[Inspection](new NullParameter)
 
   "NullParameter" - {
     "should report warning" - {

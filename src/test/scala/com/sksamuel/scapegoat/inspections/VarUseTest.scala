@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class VarUseTest extends InspectionTest {
 
-  override val inspections = Seq(new VarUse)
+  override val inspections = Seq[Inspection](new VarUse)
 
   "var keyword use" - {
     "should report warning" in {

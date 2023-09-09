@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class CollectionNamingConfusionTest extends InspectionTest {
 
-  override val inspections = Seq(new CollectionNamingConfusion)
+  override val inspections = Seq[Inspection](new CollectionNamingConfusion)
 
   "collection confusing names" - {
     "should report warning" in {

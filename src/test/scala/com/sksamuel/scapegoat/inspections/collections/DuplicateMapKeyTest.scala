@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class DuplicateMapKeyTest extends InspectionTest {
 
-  override val inspections = Seq(new DuplicateMapKey)
+  override val inspections = Seq[Inspection](new DuplicateMapKey)
 
   "DuplicateMapKey" - {
     "should report warning" in {

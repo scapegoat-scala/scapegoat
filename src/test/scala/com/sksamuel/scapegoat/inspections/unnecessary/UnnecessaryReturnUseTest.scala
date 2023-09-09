@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryReturnUse
 
 /** @author Stephen Samuel */
 class UnnecessaryReturnUseTest extends InspectionTest {
 
-  override val inspections = Seq(new UnnecessaryReturnUse)
+  override val inspections = Seq[Inspection](new UnnecessaryReturnUse)
 
   "return keyword use" - {
     "should report warning" in {

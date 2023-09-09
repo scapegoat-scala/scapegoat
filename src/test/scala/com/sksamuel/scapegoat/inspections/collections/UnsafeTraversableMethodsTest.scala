@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 class UnsafeTraversableMethodsTest extends InspectionTest {
 
-  override val inspections = Seq(new UnsafeTraversableMethods)
+  override val inspections = Seq[Inspection](new UnsafeTraversableMethods)
 
   val unsafeMethodUsages = Set(
     "head",

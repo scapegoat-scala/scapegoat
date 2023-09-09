@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.exception
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 class CatchExceptionImmediatelyRethrownTest extends InspectionTest {
 
-  override val inspections = Seq(new CatchExceptionImmediatelyRethrown)
+  override val inspections = Seq[Inspection](new CatchExceptionImmediatelyRethrown)
 
   "catch exception immediately throw" - {
     "should report warning" in {

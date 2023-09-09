@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.imports
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class WildcardImportTest extends InspectionTest {
 
-  override val inspections = Seq(new WildcardImport)
+  override val inspections = Seq[Inspection](new WildcardImport)
 
   "WildcardImport" - {
     "should report warning" - {

@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class CollectionNegativeIndexTest extends InspectionTest {
 
-  override val inspections = Seq(new CollectionNegativeIndex)
+  override val inspections = Seq[Inspection](new CollectionNegativeIndex)
 
   "collection negative index" - {
     "should report warning" in {

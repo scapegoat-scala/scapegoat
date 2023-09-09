@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class SwapSortFilterTest extends InspectionTest {
 
-  override val inspections = Seq(new SwapSortFilter)
+  override val inspections = Seq[Inspection](new SwapSortFilter)
 
   "sort then filter" - {
     "should report warning" in {

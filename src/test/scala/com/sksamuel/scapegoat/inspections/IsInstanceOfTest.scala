@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unsafe.IsInstanceOf
 
 /** @author Stephen Samuel */
 class IsInstanceOfTest extends InspectionTest {
 
-  override val inspections = Seq(new IsInstanceOf)
+  override val inspections = Seq[Inspection](new IsInstanceOf)
 
   List(1).size
 

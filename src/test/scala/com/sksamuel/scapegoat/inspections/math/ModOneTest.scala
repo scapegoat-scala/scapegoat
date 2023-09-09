@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ModOneTest extends InspectionTest {
 
-  override val inspections = Seq(new ModOne)
+  override val inspections = Seq[Inspection](new ModOne)
 
   "mod one use" - {
     "should report warning" in {

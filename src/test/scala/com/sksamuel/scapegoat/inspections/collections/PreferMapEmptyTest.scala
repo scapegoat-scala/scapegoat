@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class PreferMapEmptyTest extends InspectionTest {
 
-  override val inspections = Seq(new PreferMapEmpty)
+  override val inspections = Seq[Inspection](new PreferMapEmpty)
 
   "should report warning" - {
     "with map apply" in {

@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.NoOpOverride
 
 /** @author Stephen Samuel */
 class NoOpOverrideTest extends InspectionTest {
 
-  override val inspections = Seq(new NoOpOverride)
+  override val inspections = Seq[Inspection](new NoOpOverride)
 
   "UnnecessaryOverride" - {
     "should report warning" - {

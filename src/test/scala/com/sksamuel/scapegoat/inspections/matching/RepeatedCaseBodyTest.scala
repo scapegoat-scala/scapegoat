@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.matching
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class RepeatedCaseBodyTest extends InspectionTest {
 
-  override val inspections = Seq(new RepeatedCaseBody)
+  override val inspections = Seq[Inspection](new RepeatedCaseBody)
 
   "repeated case bodies" - {
     "should report warning" - {

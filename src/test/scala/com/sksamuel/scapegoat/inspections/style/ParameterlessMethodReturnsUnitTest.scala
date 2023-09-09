@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.style
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ParameterlessMethodReturnsUnitTest extends InspectionTest {
 
-  override val inspections = Seq(new ParameterlessMethodReturnsUnit)
+  override val inspections = Seq[Inspection](new ParameterlessMethodReturnsUnit)
 
   "ParameterlessMethodReturnsUnit" - {
     "should report warning" - {

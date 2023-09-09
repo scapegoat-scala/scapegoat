@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.controlflow.WhileTrue
 
 /** @author Stephen Samuel */
 class WhileTrueTest extends InspectionTest {
 
-  override val inspections = Seq(new WhileTrue)
+  override val inspections = Seq[Inspection](new WhileTrue)
 
   "while loop" - {
     "when constant" - {
