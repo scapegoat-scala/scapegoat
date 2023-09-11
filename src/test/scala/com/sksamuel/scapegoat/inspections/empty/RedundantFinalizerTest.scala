@@ -11,8 +11,8 @@ class RedundantFinalizerTest extends InspectionTest {
   "redundant finalizer" - {
     "should report warning" in {
       val code = """class Test {
-                   |  override def finalize : Unit = {}
-                   |  override def hashCode : Int = 3
+                   |  override def finalize: Unit = {}
+                   |  override def hashCode: Int = 3
                    |  def empty = {}
                    |}""".stripMargin
 

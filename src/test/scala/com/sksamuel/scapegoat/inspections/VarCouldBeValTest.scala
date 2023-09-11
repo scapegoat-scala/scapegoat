@@ -29,7 +29,7 @@ class VarCouldBeValTest extends InspectionTest {
                      |  def foo {
                      |    var count = 1
                      |    println(count)
-                     |    def boo(n : Int) : Unit = {
+                     |    def boo(n: Int): Unit = {
                      |      println(n + count)
                      |    }
                      |    for (k <- 1 until 10) {
@@ -87,7 +87,7 @@ class VarCouldBeValTest extends InspectionTest {
                      |  def foo {
                      |    var count = 1
                      |    println(count)
-                     |    def boo(n : Int) : Unit = {
+                     |    def boo(n: Int): Unit = {
                      |      count = n
                      |      println( count)
                      |    }
@@ -184,7 +184,7 @@ class VarCouldBeValTest extends InspectionTest {
       "when var is written to for nested defs" in {
         val code = """package com.sam
                      |trait Iterator {
-                     |  def next : Int
+                     |  def next: Int
                      |}
                      |object Test {
                      |  val iterator = new Iterator {

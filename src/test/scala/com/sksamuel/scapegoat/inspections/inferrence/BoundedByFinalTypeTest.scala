@@ -18,7 +18,7 @@ class BoundedByFinalTypeTest extends InspectionTest {
 
       "for method with pointless type bound" in {
         val code = """object Test {
-                     |  def foo[B <: Integer] :Unit = {}
+                     |  def foo[B <: Integer]: Unit = {}
                      |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1

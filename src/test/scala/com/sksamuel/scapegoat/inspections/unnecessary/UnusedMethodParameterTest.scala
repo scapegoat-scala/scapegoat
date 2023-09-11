@@ -14,9 +14,9 @@ class UnusedMethodParameterTest extends InspectionTest {
       "for unused parameters in concrete methods" in {
         val code = """class Test {
                      |  val initstuff = "sammy"
-                     |  def foo(a:String, b:Int, c:Int) {
+                     |  def foo(a: String, b: Int, c: Int) {
                      |    println(b)
-                     |    foo(a,b,b)
+                     |    foo(a, b, b)
                      |  }
                      |}""".stripMargin
 
@@ -29,9 +29,9 @@ class UnusedMethodParameterTest extends InspectionTest {
     "should ignore @SuppressWarnings" in {
       val code = """class Test {
                    |  @SuppressWarnings(Array("all"))
-                   |  def foo(a:String, b:Int, c:Int) {
+                   |  def foo(a: String, b: Int, c: Int) {
                    |    println(b)
-                   |    foo(a,b,b)
+                   |    foo(a, b, b)
                    |  }
                    |}""".stripMargin
 
@@ -42,7 +42,7 @@ class UnusedMethodParameterTest extends InspectionTest {
     "should not report warning" - {
       "for main method" in {
         val code = """class Test {
-                     |  def main(args: Array[String]) : Unit = {}
+                     |  def main(args: Array[String]): Unit = {}
                      |}""".stripMargin
 
         compileCodeSnippet(code)
@@ -51,7 +51,7 @@ class UnusedMethodParameterTest extends InspectionTest {
 
       "for abstract methods" in {
         val code = """abstract class Test {
-                     |  def foo(name:String) : String
+                     |  def foo(name: String): String
                      |}""".stripMargin
 
         compileCodeSnippet(code)
@@ -67,7 +67,7 @@ class UnusedMethodParameterTest extends InspectionTest {
 
       "for methods not returning" in {
         val code = """class Test {
-                     |  def foo(name:String) = throw new RuntimeException
+                     |  def foo(name: String) = throw new RuntimeException
                      |}""".stripMargin
 
         compileCodeSnippet(code)
@@ -76,7 +76,7 @@ class UnusedMethodParameterTest extends InspectionTest {
 
       "for methods not returning when their return type is specified" in {
         val code = """class Test {
-                     |  def foo(name:String): String = throw new RuntimeException
+                     |  def foo(name: String): String = throw new RuntimeException
                      |}""".stripMargin
 
         compileCodeSnippet(code)
@@ -86,10 +86,10 @@ class UnusedMethodParameterTest extends InspectionTest {
       "for overridden method" in {
         val code = """package com.sam
                      |trait Foo {
-                     |  def foo(name:String):String
+                     |  def foo(name: String): String
                      |}
                      |object Fool extends Foo {
-                     |  override def foo(name:String) : String = "sam"
+                     |  override def foo(name: String): String = "sam"
                      |}""".stripMargin
 
         compileCodeSnippet(code)
@@ -99,10 +99,10 @@ class UnusedMethodParameterTest extends InspectionTest {
       "for overridden method without override keyword" in {
         val code = """package com.sam
                      |trait Foo {
-                     |  def foo(name:String):String
+                     |  def foo(name: String): String
                      |}
                      |object Fool extends Foo {
-                     |  def foo(name:String) : String = "sam"
+                     |  def foo(name: String): String = "sam"
                      |}""".stripMargin
 
         compileCodeSnippet(code)
@@ -112,10 +112,10 @@ class UnusedMethodParameterTest extends InspectionTest {
       "for implemented method" in {
         val code = """package com.sam
                      |trait Foo {
-                     |  def foo(name:String): String
+                     |  def foo(name: String): String
                      |}
                      |case class Fool() extends Foo {
-                     |  def foo(name:String): String = "sam"
+                     |  def foo(name: String): String = "sam"
                      |}""".stripMargin
 
         compileCodeSnippet(code)

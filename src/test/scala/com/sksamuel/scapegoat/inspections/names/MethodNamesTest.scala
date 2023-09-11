@@ -54,7 +54,7 @@ class MethodNamesTest extends InspectionTest {
 
       "for parameters" in {
         val code = """object A {
-                     |  def foo(Name:String) = {}
+                     |  def foo(Name: String) = {}
                      |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0

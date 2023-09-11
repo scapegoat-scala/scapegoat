@@ -12,7 +12,7 @@ class MethodReturningAnyTest extends InspectionTest {
     "should report warning" - {
       "for methods returning any" in {
         val code = """class Test {
-                     |  def foo : Any = 1
+                     |  def foo: Any = 1
                      |}""".stripMargin
 
         compileCodeSnippet(code)
@@ -23,8 +23,8 @@ class MethodReturningAnyTest extends InspectionTest {
     "should not report warning" - {
       "for methods returning <:< Any" in {
         val code = """class Test {
-                     |  def foo : Int = 4
-                     |  def boo : String = "sam"
+                     |  def foo: Int = 4
+                     |  def boo: String = "sam"
                      |}""".stripMargin
 
         compileCodeSnippet(code)
@@ -34,10 +34,10 @@ class MethodReturningAnyTest extends InspectionTest {
       "for overridden methods returning any" in {
         val code = """object T {
                      |  trait A {
-                     |    def foo : AnyRef = "foo"
+                     |    def foo: AnyRef = "foo"
                      |  }
                      |  class B extends A {
-                     |    override def foo : AnyRef = "overridden foo"
+                     |    override def foo: AnyRef = "overridden foo"
                      |  }
                      |}""".stripMargin
         compileCodeSnippet(code)

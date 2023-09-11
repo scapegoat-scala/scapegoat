@@ -67,7 +67,7 @@ class UnnecessaryConversionTest extends InspectionTest {
 
       "when invoking toList on a list" in {
         val code = """object Test {
-                     |  val list = List(1,2,3)
+                     |  val list = List(1, 2, 3)
                      |  val something = list.toList
                      |}""".stripMargin
 
@@ -78,7 +78,7 @@ class UnnecessaryConversionTest extends InspectionTest {
 
       "when invoking toSet on a set" in {
         val code = """object Test {
-                     |  val set = Set(4,3,6)
+                     |  val set = Set(4, 3, 6)
                      |  val something = set.toSet
                      |}""".stripMargin
 
@@ -89,7 +89,7 @@ class UnnecessaryConversionTest extends InspectionTest {
 
       "when invoking toSeq on a seq" in {
         val code = """object Test {
-                     |  val seq = Seq(4,3,6)
+                     |  val seq = Seq(4, 3, 6)
                      |  val something = seq.toSeq
                      |}""".stripMargin
 
@@ -143,7 +143,7 @@ class UnnecessaryConversionTest extends InspectionTest {
 
       "when invoking toSeq on a set" in {
         val code = """object Test {
-                     |  val set = Set(4,3,6)
+                     |  val set = Set(4, 3, 6)
                      |  val something = set.toSeq
                      |}""".stripMargin
 
@@ -153,9 +153,9 @@ class UnnecessaryConversionTest extends InspectionTest {
 
       "when invoking toSet on a list or seq" in {
         val code = """object Test {
-                     |  val list = List(4,3,6)
+                     |  val list = List(4, 3, 6)
                      |  val something = list.toSet
-                     |  val seq = Seq(1,3,6)
+                     |  val seq = Seq(1, 3, 6)
                      |  val thing = seq.toSet
                      |}""".stripMargin
 

@@ -44,8 +44,8 @@ class PointlessTypeBoundsTest extends InspectionTest {
 
       "for implicit class with Nothing lower bound" in {
         val code = """class Test {
-                     |  implicit class Monster[T >: Nothing](t:T) {
-                     |    def bite : T = t
+                     |  implicit class Monster[T >: Nothing](t: T) {
+                     |    def bite: T = t
                      |  }
                      |  "bfg".bite
                      |}""".stripMargin
@@ -56,8 +56,8 @@ class PointlessTypeBoundsTest extends InspectionTest {
 
       "for implicit class with Any upper bound" in {
         val code = """class Test {
-                     |  implicit class Monster[T <: Any](t:T) {
-                     |    def bite : T = t
+                     |  implicit class Monster[T <: Any](t: T) {
+                     |    def bite: T = t
                      |  }
                      |  "bfg".bite
                      |}""".stripMargin
@@ -83,7 +83,7 @@ class PointlessTypeBoundsTest extends InspectionTest {
       }
 
       "for class with multiple type params" in {
-        val code = """class Test[A,B]""".stripMargin
+        val code = """class Test[A, B]""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
@@ -91,7 +91,7 @@ class PointlessTypeBoundsTest extends InspectionTest {
 
       "for class with multiple type params and single bounds" in {
         val code = """trait Foo
-                     |class Test[A,B <: Foo]""".stripMargin
+                     |class Test[A, B <: Foo]""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
@@ -101,7 +101,7 @@ class PointlessTypeBoundsTest extends InspectionTest {
         val code = """package com.sammy
                      |trait Foo
                      |trait Boo
-                     |class Test[A >: Boo,B <: Foo]""".stripMargin
+                     |class Test[A >: Boo, B <: Foo]""".stripMargin
 
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
@@ -136,8 +136,8 @@ class PointlessTypeBoundsTest extends InspectionTest {
 
       "for implicit class with no type bound" in {
         val code = """class Test {
-                     |  implicit class Monster[T](t:T) {
-                     |    def bite : T = t
+                     |  implicit class Monster[T](t: T) {
+                     |    def bite: T = t
                      |  }
                      |  "bfg".bite
                      |}""".stripMargin
