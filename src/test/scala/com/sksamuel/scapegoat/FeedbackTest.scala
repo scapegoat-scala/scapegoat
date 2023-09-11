@@ -155,11 +155,10 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter(new Settings())
-        val feedback =
-          new Feedback(
-            reporter,
-            testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Warning)
-          )
+        val feedback = new Feedback(
+          reporter,
+          testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Warning)
+        )
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(2)
         feedback.warningsWithMinimalLevel
@@ -200,10 +199,9 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
     consoleOutput: Boolean,
     sourcePrefix: String,
     minimalLevel: Level = Levels.Info
-  ) =
-    TestConfiguration.configuration.copy(
-      consoleOutput = consoleOutput,
-      sourcePrefix = sourcePrefix,
-      minimalLevel = minimalLevel
-    )
+  ) = TestConfiguration.configuration.copy(
+    consoleOutput = consoleOutput,
+    sourcePrefix = sourcePrefix,
+    minimalLevel = minimalLevel
+  )
 }

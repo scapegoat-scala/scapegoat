@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
-import com.sksamuel.scapegoat.{isScala21312, Inspection, InspectionTest}
 import com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryConversion
+import com.sksamuel.scapegoat.{isScala21312, Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class UnnecessaryConversionTest extends InspectionTest {
