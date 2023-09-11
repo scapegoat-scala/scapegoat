@@ -35,13 +35,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
-        reporter.infos should contain(
-          StoreReporter.Info(
-            position,
-            "[scapegoat] [DummyInspection] My default is Error\n  This is explanation.",
-            reporter.ERROR
-          )
-        )
+        reporter.infos should have size 1
+        val info = reporter.infos.head
+        info.pos === position
+        info.msg === "[scapegoat] [DummyInspection] My default is Error\n  This is explanation."
+        info.severity === reporter.ERROR
       }
 
       "for warning" in {
@@ -54,13 +52,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
-        reporter.infos should contain(
-          StoreReporter.Info(
-            position,
-            "[scapegoat] [DummyInspection] My default is Warning\n  This is explanation.",
-            reporter.WARNING
-          )
-        )
+        reporter.infos should have size 1
+        val info = reporter.infos.head
+        info.pos === position
+        info.msg === "[scapegoat] [DummyInspection] My default is Warning\n  This is explanation."
+        info.severity === reporter.WARNING
       }
 
       "for info" in {
@@ -73,13 +69,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
-        reporter.infos should contain(
-          StoreReporter.Info(
-            position,
-            "[scapegoat] [DummyInspection] My default is Info\n  This is explanation.",
-            reporter.INFO
-          )
-        )
+        reporter.infos should have size 1
+        val info = reporter.infos.head
+        info.pos === position
+        info.msg === "[scapegoat] [DummyInspection] My default is Info\n  This is explanation."
+        info.severity === reporter.INFO
       }
     }
 
