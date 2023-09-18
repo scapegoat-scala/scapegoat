@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class BigDecimalDoubleConstructorTest extends InspectionTest {
 
-  override val inspections = Seq(new BigDecimalDoubleConstructor)
+  override val inspections = Seq[Inspection](new BigDecimalDoubleConstructor)
 
   "big decimal double constructor" - {
     "should report warning" in {

@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class RedundantFinalModifierOnVarTest extends InspectionTest {
 
-  override val inspections = Seq(new RedundantFinalModifierOnVar)
+  override val inspections = Seq[Inspection](new RedundantFinalModifierOnVar)
 
   "RedundantFinalModifierOnVar" - {
     "should report warning" - {

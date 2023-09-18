@@ -16,8 +16,8 @@ class BigDecimalScaleWithoutRoundingMode
         "When using `setScale()` on a BigDecimal without setting the rounding mode, this can throw an exception if rounding is required. Did you mean to call `setScale(s, RoundingMode.XYZ)`?"
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

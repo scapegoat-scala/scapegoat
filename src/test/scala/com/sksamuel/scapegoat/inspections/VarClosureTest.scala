@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class VarClosureTest extends InspectionTest {
 
-  override val inspections = Seq(new VarClosure)
+  override val inspections = Seq[Inspection](new VarClosure)
 
   "VarClosure" - {
     "should report warning" - {

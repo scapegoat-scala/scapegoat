@@ -1,10 +1,10 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 class UseLog10Test extends InspectionTest {
 
-  override val inspections = Seq(new UseLog10)
+  override val inspections = Seq[Inspection](new UseLog10)
 
   "using log(x)/log(10) instead of log10(x)" - {
     "should report warning" in {

@@ -16,8 +16,8 @@ class MethodReturningAny
       explanation = "Method returns Any. Consider using a more specialized type."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

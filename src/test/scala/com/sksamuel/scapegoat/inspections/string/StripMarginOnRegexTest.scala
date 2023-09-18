@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class StripMarginOnRegexTest extends InspectionTest {
 
-  override val inspections = Seq(new StripMarginOnRegex)
+  override val inspections = Seq[Inspection](new StripMarginOnRegex)
 
   "StripMarginOnRegex" - {
     "should report warning" - {

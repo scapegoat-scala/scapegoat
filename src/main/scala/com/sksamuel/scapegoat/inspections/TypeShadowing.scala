@@ -16,8 +16,8 @@ class TypeShadowing
       explanation = "Shadowing type parameters is considered a bad practice and should be avoided."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

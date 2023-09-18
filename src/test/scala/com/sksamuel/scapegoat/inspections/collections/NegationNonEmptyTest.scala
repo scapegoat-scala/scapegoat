@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class NegationNonEmptyTest extends InspectionTest {
 
-  override val inspections = Seq(new NegationNonEmpty)
+  override val inspections = Seq[Inspection](new NegationNonEmpty)
 
   "!nonEmpty" - {
     "should report warning" in {

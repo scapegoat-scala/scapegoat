@@ -17,8 +17,8 @@ class InvalidRegex
         "Invalid regex literals can fail at compile time with a PatternSyntaxException. This could be caused by e.g. dangling meta characters, or unclosed escape characters, etc."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

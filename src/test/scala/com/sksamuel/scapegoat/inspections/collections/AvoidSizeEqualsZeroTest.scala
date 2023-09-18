@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class AvoidSizeEqualsZeroTest extends InspectionTest {
 
-  override val inspections = Seq(new AvoidSizeEqualsZero)
+  override val inspections = Seq[Inspection](new AvoidSizeEqualsZero)
 
   "collection.size == 0" - {
     "should report warning" in {

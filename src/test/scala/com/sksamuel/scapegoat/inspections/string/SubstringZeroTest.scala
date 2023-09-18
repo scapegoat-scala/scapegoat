@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class SubstringZeroTest extends InspectionTest {
 
-  override val inspections = Seq(new SubstringZero)
+  override val inspections = Seq[Inspection](new SubstringZero)
 
   "String.substring(0)" - {
     "should report warning" in {

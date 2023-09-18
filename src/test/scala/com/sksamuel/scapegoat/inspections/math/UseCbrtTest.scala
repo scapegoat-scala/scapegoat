@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Matic Potočnik */
 class UseCbrtTest extends InspectionTest {
 
-  override val inspections = Seq(new UseCbrt)
+  override val inspections = Seq[Inspection](new UseCbrt)
 
   "using pow instead of cbrt" - {
     "should report warning" in {

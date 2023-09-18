@@ -15,8 +15,8 @@ class ParameterlessMethodReturnsUnit
         "Methods should be defined with empty parentheses if they have side effects. A method returning Unit must have side effects, therefore you should declare it with ()."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

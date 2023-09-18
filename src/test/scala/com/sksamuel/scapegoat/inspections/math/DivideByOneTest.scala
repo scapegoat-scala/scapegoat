@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class DivideByOneTest extends InspectionTest {
 
-  override val inspections = Seq(new DivideByOne)
+  override val inspections = Seq[Inspection](new DivideByOne)
 
   "divide by one" - {
     "for int" - {

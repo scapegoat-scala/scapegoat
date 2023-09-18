@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class ZeroNumeratorTest extends InspectionTest {
 
-  override val inspections = Seq(new ZeroNumerator)
+  override val inspections = Seq[Inspection](new ZeroNumerator)
 
   "zero numerator" - {
     "should report warning" - {

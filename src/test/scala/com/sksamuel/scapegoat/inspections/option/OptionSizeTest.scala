@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.option
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class OptionSizeTest extends InspectionTest {
 
-  override val inspections = Seq(new OptionSize)
+  override val inspections = Seq[Inspection](new OptionSize)
 
   "option.size use" - {
     "should report warning" in {

@@ -15,8 +15,8 @@ class WildcardImport
         "Avoid using wildcard imports, unless you are importing more than a few entities. Wildcard imports make the code more difficult to maintain."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  override def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
 
       import context.global._
 

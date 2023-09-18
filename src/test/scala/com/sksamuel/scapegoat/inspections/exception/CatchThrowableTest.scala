@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.exception
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class CatchThrowableTest extends InspectionTest {
 
-  override val inspections = Seq(new CatchThrowable)
+  override val inspections = Seq[Inspection](new CatchThrowable)
 
   "catch _ throwable" - {
     "should report warning" in {

@@ -16,8 +16,8 @@ class LonelySealedTrait
       explanation = "A sealed trait that is not extended is considered dead code."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  override def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
 
       import context.global._
 

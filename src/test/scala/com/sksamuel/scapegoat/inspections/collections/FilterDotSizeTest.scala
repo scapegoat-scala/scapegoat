@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class FilterDotSizeTest extends InspectionTest {
 
-  override val inspections = Seq(new FilterDotSize)
+  override val inspections = Seq[Inspection](new FilterDotSize)
 
   "filter then size" - {
     "should report warning" in {

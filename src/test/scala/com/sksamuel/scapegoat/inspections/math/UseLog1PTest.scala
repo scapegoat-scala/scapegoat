@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class UseLog1PTest extends InspectionTest {
 
-  override val inspections = Seq(new UseLog1P)
+  override val inspections = Seq[Inspection](new UseLog1P)
 
   "using log(x + 1) instead of log1p(x)" - {
     "should report warning" in {

@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class MapGetAndGetOrElseTest extends InspectionTest {
 
-  override val inspections = Seq(new MapGetAndGetOrElse)
+  override val inspections = Seq[Inspection](new MapGetAndGetOrElse)
 
   private def getOrElseAssertion(code: String): Unit = {
     compileCodeSnippet(code)

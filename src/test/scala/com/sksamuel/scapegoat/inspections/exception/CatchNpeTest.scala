@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.exception
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class CatchNpeTest extends InspectionTest {
 
-  override val inspections = Seq(new CatchNpe)
+  override val inspections = Seq[Inspection](new CatchNpe)
 
   "catching null pointer exception" - {
     "should report warning" in {

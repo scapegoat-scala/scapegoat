@@ -14,8 +14,8 @@ class ZeroNumerator
       explanation = "Dividing zero by any number will always return zero, e.g. 0 / x == 0."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

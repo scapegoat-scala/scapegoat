@@ -14,8 +14,8 @@ class ArraysInFormat
       explanation = "An Array passed to String.format might result in an incorrect formatting."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

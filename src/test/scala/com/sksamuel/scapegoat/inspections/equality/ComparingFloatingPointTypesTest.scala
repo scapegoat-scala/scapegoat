@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.equality
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ComparingFloatingPointTypesTest extends InspectionTest {
 
-  override val inspections = Seq(new ComparingFloatingPointTypes)
+  override val inspections = Seq[Inspection](new ComparingFloatingPointTypes)
 
   "comparing floating type inspection" - {
     "should report warning" - {

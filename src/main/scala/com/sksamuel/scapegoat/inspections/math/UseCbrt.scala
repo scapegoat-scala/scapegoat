@@ -14,8 +14,8 @@ class UseCbrt
       explanation = "Use math.cbrt, which is clearer and more performant than math.pow(x, 1/3)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

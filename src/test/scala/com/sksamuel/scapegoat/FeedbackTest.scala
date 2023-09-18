@@ -20,7 +20,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
     description: String,
     explanation: String
   ) extends Inspection(text, defaultLevel, description, explanation) {
-    override def inspector(context: InspectionContext): Inspector = ???
+    override def inspector(ctx: InspectionContext): Inspector = ???
   }
 
   "Feedback" - {
@@ -35,13 +35,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
-        reporter.infos should contain(
-          StoreReporter.Info(
-            position,
-            "[scapegoat] [DummyInspection] My default is Error\n  This is explanation.",
-            reporter.ERROR
-          )
-        )
+        reporter.infos should have size 1
+        val info = reporter.infos.head
+        info.pos === position
+        info.msg === "[scapegoat] [DummyInspection] My default is Error\n  This is explanation."
+        info.severity === reporter.ERROR
       }
 
       "for warning" in {
@@ -54,13 +52,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
-        reporter.infos should contain(
-          StoreReporter.Info(
-            position,
-            "[scapegoat] [DummyInspection] My default is Warning\n  This is explanation.",
-            reporter.WARNING
-          )
-        )
+        reporter.infos should have size 1
+        val info = reporter.infos.head
+        info.pos === position
+        info.msg === "[scapegoat] [DummyInspection] My default is Warning\n  This is explanation."
+        info.severity === reporter.WARNING
       }
 
       "for info" in {
@@ -73,13 +69,11 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
-        reporter.infos should contain(
-          StoreReporter.Info(
-            position,
-            "[scapegoat] [DummyInspection] My default is Info\n  This is explanation.",
-            reporter.INFO
-          )
-        )
+        reporter.infos should have size 1
+        val info = reporter.infos.head
+        info.pos === position
+        info.msg === "[scapegoat] [DummyInspection] My default is Info\n  This is explanation."
+        info.severity === reporter.INFO
       }
     }
 
@@ -161,11 +155,10 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
         val reporter = new StoreReporter(new Settings())
-        val feedback =
-          new Feedback(
-            reporter,
-            testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Warning)
-          )
+        val feedback = new Feedback(
+          reporter,
+          testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Warning)
+        )
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(2)
         feedback.warningsWithMinimalLevel
@@ -206,10 +199,9 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
     consoleOutput: Boolean,
     sourcePrefix: String,
     minimalLevel: Level = Levels.Info
-  ) =
-    TestConfiguration.configuration.copy(
-      consoleOutput = consoleOutput,
-      sourcePrefix = sourcePrefix,
-      minimalLevel = minimalLevel
-    )
+  ) = TestConfiguration.configuration.copy(
+    consoleOutput = consoleOutput,
+    sourcePrefix = sourcePrefix,
+    minimalLevel = minimalLevel
+  )
 }

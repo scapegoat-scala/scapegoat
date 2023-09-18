@@ -19,8 +19,8 @@ class AvoidOperatorOverload
         "Scala style guide advocates against routinely using operators as method names, see http://docs.scala-lang.org/style/naming-conventions.html#symbolic-method-names."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

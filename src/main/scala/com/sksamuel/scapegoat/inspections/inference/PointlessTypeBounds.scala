@@ -14,8 +14,8 @@ class PointlessTypeBounds
       explanation = "Type bound resolves to `Nothing <: T <: Any`. Did you mean to put in other bounds?"
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

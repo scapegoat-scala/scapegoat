@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class FinalModifierOnCaseClassTest extends InspectionTest {
 
-  override val inspections = Seq(new FinalModifierOnCaseClass)
+  override val inspections = Seq[Inspection](new FinalModifierOnCaseClass)
 
   private def assertFinalModOnCaseClass(code: String): Unit = {
     compileCodeSnippet(code)

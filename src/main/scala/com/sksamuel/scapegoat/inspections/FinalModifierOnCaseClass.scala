@@ -10,12 +10,12 @@ class FinalModifierOnCaseClass
       explanation = "Using case classes without final modifier can lead to surprising breakage."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  override def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
 
       import context.global._
 
-      override def postTyperTraverser =
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           override def inspect(tree: Tree): Unit = {

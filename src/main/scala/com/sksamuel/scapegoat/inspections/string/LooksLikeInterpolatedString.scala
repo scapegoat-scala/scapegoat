@@ -13,9 +13,9 @@ class LooksLikeInterpolatedString
   final val regex1 = "\\$\\{[a-z][.a-zA-Z0-9_]*\\}".r
   final val regex2 = "\\$[a-z][.a-zA-Z0-9_]*".r
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
-      override def postTyperTraverser =
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
+      override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
           import context.global._

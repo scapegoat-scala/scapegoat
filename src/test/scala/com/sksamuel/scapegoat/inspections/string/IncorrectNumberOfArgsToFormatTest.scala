@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class IncorrectNumberOfArgsToFormatTest extends InspectionTest {
 
-  override val inspections = Seq(new IncorrectNumberOfArgsToFormat)
+  override val inspections = Seq[Inspection](new IncorrectNumberOfArgsToFormat)
 
   "IncorrectNumberOfArgsToFormat" - {
     "should report warning" in {

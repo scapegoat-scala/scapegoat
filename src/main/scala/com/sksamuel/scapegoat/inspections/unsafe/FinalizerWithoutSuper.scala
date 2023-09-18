@@ -15,8 +15,8 @@ class FinalizerWithoutSuper
         "Finalizers should call `super.finalize()` to ensure superclasses are able to run their finalization logic."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

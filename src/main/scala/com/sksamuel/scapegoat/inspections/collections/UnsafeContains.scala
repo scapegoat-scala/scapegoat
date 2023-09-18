@@ -15,8 +15,8 @@ class UnsafeContains
         "`contains()` accepts arguments af any type, which means you might be checking if your collection contains an element of an unrelated type."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
           import context.global._

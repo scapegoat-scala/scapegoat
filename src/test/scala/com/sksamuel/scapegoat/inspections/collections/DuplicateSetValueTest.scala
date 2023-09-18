@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class DuplicateSetValueTest extends InspectionTest {
 
-  override val inspections = Seq(new DuplicateSetValue)
+  override val inspections = Seq[Inspection](new DuplicateSetValue)
 
   "duplicate set literals" - {
     "should report warning" in {

@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class CollectionPromotionToAnyTest extends InspectionTest {
 
-  override val inspections = Seq(new CollectionPromotionToAny)
+  override val inspections = Seq[Inspection](new CollectionPromotionToAny)
 
   "CollectionPromotionToAny" - {
     "should report warning" - {

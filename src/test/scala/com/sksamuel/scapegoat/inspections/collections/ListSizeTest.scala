@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ListSizeTest extends InspectionTest {
 
-  override val inspections = Seq(new ListSize)
+  override val inspections = Seq[Inspection](new ListSize)
 
   "list.size use" - {
     "should report warning" - {

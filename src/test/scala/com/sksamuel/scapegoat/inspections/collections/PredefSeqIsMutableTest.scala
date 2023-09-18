@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.{isScala213, InspectionTest}
+import com.sksamuel.scapegoat.{isScala213, Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class PredefSeqIsMutableTest extends InspectionTest {
 
-  override val inspections = Seq(new PredefSeqIsMutable)
+  override val inspections = Seq[Inspection](new PredefSeqIsMutable)
 
   "PredefSeqUse" - {
     "should report warning (for Scala < 2.13)" - {

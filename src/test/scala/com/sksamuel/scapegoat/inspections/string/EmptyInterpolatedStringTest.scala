@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.{isScala213, InspectionTest}
+import com.sksamuel.scapegoat.{isScala213, Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class EmptyInterpolatedStringTest extends InspectionTest {
 
-  override val inspections = Seq(new EmptyInterpolatedString)
+  override val inspections = Seq[Inspection](new EmptyInterpolatedString)
 
   "EmptyInterpolatedString" - {
     "should report warning (for Scala < 2.13)" in {

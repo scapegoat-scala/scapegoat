@@ -13,8 +13,8 @@ class SimplifyBooleanExpression
       description = "Checks for boolean expressions that can be simplified.",
       explanation = "Boolean expressions such as x == false can be re-written as !x."
     ) {
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

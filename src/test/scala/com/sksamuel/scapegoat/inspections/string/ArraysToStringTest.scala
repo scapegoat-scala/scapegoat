@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ArraysToStringTest extends InspectionTest {
 
-  override val inspections = Seq(new ArraysToString)
+  override val inspections = Seq[Inspection](new ArraysToString)
 
   "ArraysToString" - {
     "should report warning" - {

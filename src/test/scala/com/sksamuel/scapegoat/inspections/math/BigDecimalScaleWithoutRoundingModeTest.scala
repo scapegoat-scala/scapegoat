@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class BigDecimalScaleWithoutRoundingModeTest extends InspectionTest {
 
-  override val inspections = Seq(new BigDecimalScaleWithoutRoundingMode)
+  override val inspections = Seq[Inspection](new BigDecimalScaleWithoutRoundingMode)
 
   "BigDecimalScaleWithoutRoundingMode" - {
     "should report warning" - {

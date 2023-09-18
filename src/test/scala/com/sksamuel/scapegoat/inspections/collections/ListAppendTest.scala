@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ListAppendTest extends InspectionTest {
 
-  override val inspections = Seq(new ListAppend)
+  override val inspections = Seq[Inspection](new ListAppend)
 
   "list.append use" - {
     "should report warning" - {

@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class PublicFinalizerTest extends InspectionTest {
 
-  override val inspections = Seq(new PublicFinalizer)
+  override val inspections = Seq[Inspection](new PublicFinalizer)
 
   "public finalizer" - {
     "should report warning" - {

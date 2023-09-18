@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.empty
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class EmptyMethodTest extends InspectionTest {
 
-  override val inspections = Seq(new EmptyMethod)
+  override val inspections = Seq[Inspection](new EmptyMethod)
 
   "empty method" - {
     "should report warning" in {

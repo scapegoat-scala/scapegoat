@@ -10,8 +10,8 @@ class UseLog10
       explanation = "Use math.log10(x), which is clearer and more performant than $math.log(x)/$math.log(10)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

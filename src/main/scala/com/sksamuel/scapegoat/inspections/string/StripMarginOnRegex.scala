@@ -14,8 +14,8 @@ class StripMarginOnRegex
       explanation = "Strip margin will strip | from regex - possible corrupted regex."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

@@ -14,8 +14,8 @@ class NegativeSeqPad
       explanation = "Seq.padTo with a negative length will not have any effect."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

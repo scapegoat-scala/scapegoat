@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.equality
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class ComparisonWithSelfInspectionTest extends InspectionTest {
 
-  override val inspections = Seq(new ComparisonWithSelf)
+  override val inspections = Seq[Inspection](new ComparisonWithSelf)
 
   "ComparisonWithSelf" - {
     "should report warning" in {

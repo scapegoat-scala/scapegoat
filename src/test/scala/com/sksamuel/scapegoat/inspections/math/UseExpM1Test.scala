@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.math
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Matic Potočnik */
 class UseExpM1Test extends InspectionTest {
 
-  override val inspections = Seq(new UseExpM1)
+  override val inspections = Seq[Inspection](new UseExpM1)
 
   "using exp(x) - 1 instead of expm1(x)" - {
     "should report warning" in {

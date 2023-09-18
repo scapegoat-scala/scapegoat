@@ -15,8 +15,8 @@ class CollectionNamingConfusion
         "E.g. an instance of a Set is confusingly referred to by a variable called/containing list, or the other way around."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

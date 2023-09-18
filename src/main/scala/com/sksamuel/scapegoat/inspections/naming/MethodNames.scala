@@ -17,8 +17,8 @@ class MethodNames
         "Methods should be in camelCase style with the first letter lower-case. See http://docs.scala-lang.org/style/naming-conventions.html#methods."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

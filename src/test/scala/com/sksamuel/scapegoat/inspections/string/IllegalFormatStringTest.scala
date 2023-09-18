@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class IllegalFormatStringTest extends InspectionTest {
 
-  override val inspections = Seq(new IllegalFormatString)
+  override val inspections = Seq[Inspection](new IllegalFormatString)
 
   "unknown conversion type" - {
     "should report warning" in {

@@ -15,8 +15,8 @@ class AvoidSizeEqualsZero
         "Traversable.size can be slow for some data structures, prefer Traversable.isEmpty, which is O(1)."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

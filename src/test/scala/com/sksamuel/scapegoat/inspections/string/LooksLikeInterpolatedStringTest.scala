@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.string
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class LooksLikeInterpolatedStringTest extends InspectionTest {
 
-  override val inspections = Seq(new LooksLikeInterpolatedString)
+  override val inspections = Seq[Inspection](new LooksLikeInterpolatedString)
 
   "LooksLikeInterpolatedString" - {
     "should report warning" - {

@@ -1,9 +1,9 @@
 package com.sksamuel.scapegoat.inspections.controlflow
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 class RepeatedIfElseBodyTest extends InspectionTest {
 
-  override val inspections = Seq(new RepeatedIfElseBody)
+  override val inspections = Seq[Inspection](new RepeatedIfElseBody)
 
   "repeated if else body" - {
     "should report warning" - {

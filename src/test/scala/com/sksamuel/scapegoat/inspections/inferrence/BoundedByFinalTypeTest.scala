@@ -1,12 +1,12 @@
 package com.sksamuel.scapegoat.inspections.inferrence
 
-import com.sksamuel.scapegoat.InspectionTest
 import com.sksamuel.scapegoat.inspections.inference.BoundedByFinalType
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class BoundedByFinalTypeTest extends InspectionTest {
 
-  override val inspections = Seq(new BoundedByFinalType)
+  override val inspections: Seq[Inspection] = Seq(new BoundedByFinalType)
 
   "BoundedByFinalType" - {
     "should report warning" - {
@@ -15,51 +15,53 @@ class BoundedByFinalTypeTest extends InspectionTest {
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
+
       "for method with pointless type bound" in {
-        val code =
-          """object Test {
-              def foo[B <: Integer] :Unit = {}
-            } """
+        val code = """object Test {
+                     |  def foo[B <: Integer]: Unit = {}
+                     |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 1
       }
     }
+
     "should not report warning" - {
       "for partial function" in {
-        val code =
-          """        object TestObject {
-            |          val test: PartialFunction[Array[String], Int] = {
-            |            case _ ⇒ -1
-            |          }
-            |        }
-          """.stripMargin
+        val code = """object TestObject {
+                     |  val test: PartialFunction[Array[String], Int] = {
+                     |    case _ ⇒ -1
+                     |  }
+                     |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for applied type" in {
-        val code =
-          """        object TestObject {
-            |          val a = List[String]("sam")
-            |        }
-          """.stripMargin
+        val code = """object TestObject {
+                     |  val a = List[String]("sam")
+                     |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for class with non final type bound" in {
         val code = """class Test[A <: Exception]""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for class with any type bound" in {
         val code = """class Test[A <: Any]""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for class with no type bound" in {
         val code = """class Test""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for method with non final type bound" in {
         val code = """object Test {
                      |  def foo[B <: Exception] = {}
@@ -67,31 +69,35 @@ class BoundedByFinalTypeTest extends InspectionTest {
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for method with any type bound" in {
         val code = """object Test {
                      |  def foo[B <: Any] = {}
-                     |} """.stripMargin
+                     |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for method with no type bound" in {
         val code = """object Test {
                      |  def foo = {}
-                     |} """.stripMargin
+                     |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for type alias" in {
         val code = """class A {
-                        type Texty = String
-                      }"""
+                     |  type Texty = String
+                     |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }
+
       "for type constructor" in {
         val code = """class A {
-                        type ListBuffer[A] = scala.collection.mutable.ListBuffer[A]
-                      }"""
+                     |  type ListBuffer[A] = scala.collection.mutable.ListBuffer[A]
+                     |}""".stripMargin
         compileCodeSnippet(code)
         compiler.scapegoat.feedback.warnings.size shouldBe 0
       }

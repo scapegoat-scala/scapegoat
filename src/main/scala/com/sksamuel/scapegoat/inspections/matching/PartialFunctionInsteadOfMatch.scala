@@ -14,8 +14,8 @@ class PartialFunctionInsteadOfMatch
       explanation = "A map match can be replaced with a partial function for greater readability."
     ) {
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 

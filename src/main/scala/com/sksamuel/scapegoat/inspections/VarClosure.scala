@@ -14,8 +14,8 @@ class VarClosure
       explanation = "Closing over a var can lead to subtle bugs."
     ) {
 
-  override def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  override def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
 
       import context.global._
 

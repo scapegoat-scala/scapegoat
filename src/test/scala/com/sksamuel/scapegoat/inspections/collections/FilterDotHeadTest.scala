@@ -1,11 +1,11 @@
 package com.sksamuel.scapegoat.inspections.collections
 
-import com.sksamuel.scapegoat.InspectionTest
+import com.sksamuel.scapegoat.{Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class FilterDotHeadTest extends InspectionTest {
 
-  override val inspections = Seq(new FilterDotHead)
+  override val inspections = Seq[Inspection](new FilterDotHead)
 
   "self assignment" - {
     "should report warning" in {

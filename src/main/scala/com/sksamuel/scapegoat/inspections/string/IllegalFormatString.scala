@@ -20,8 +20,8 @@ class IllegalFormatString
   // format is: %[argument_index$][flags][width][.precision][t]conversion
   final val argRegex = "%(\\d+\\$)?[-#+ 0,(\\<]*?\\d*(\\.\\d+)?[tT]?[a-zA-Z]".r
 
-  def inspector(context: InspectionContext): Inspector =
-    new Inspector(context) {
+  def inspector(ctx: InspectionContext): Inspector =
+    new Inspector(ctx) {
       override def postTyperTraverser: context.Traverser =
         new context.Traverser {
 
