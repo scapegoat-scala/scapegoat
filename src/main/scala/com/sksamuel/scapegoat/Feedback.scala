@@ -68,6 +68,7 @@ class Feedback(
         case Levels.Error   => reporter.error(pos, report)
         case Levels.Warning => reporter.warning(pos, report)
         case Levels.Info    => reporter.echo(pos, report)
+        case Levels.Ignore  => ()
       }
     }
   }
