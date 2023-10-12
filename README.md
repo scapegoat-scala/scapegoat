@@ -147,6 +147,13 @@ And if you prefer a prettier report, here is a screen shot of the type of HTML r
 
 For instructions on suppressing warnings by file, by inspection or by line see [the sbt-scapegoat README](https://github.com/sksamuel/sbt-scapegoat).
 
+To suppress warnings globally for the project, use `disabledInspections` or `overrideLevels` flags: 
+
+```
+-P:scapegoat:disabledInspections:FinalModifierOnCaseClass
+-P:scapegoat:overrideLevels:PreferSeqEmpty=ignore:AsInstanceOf=ignore
+```
+
 ### Inspections
 
 There are currently 121 inspections. An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
