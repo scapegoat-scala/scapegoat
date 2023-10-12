@@ -17,5 +17,9 @@ class ConfigurationTest extends AnyFreeSpec with Matchers {
         }
       }
     }
+
+    "throw an exception on 'ignore' as minimal level" in {
+      the[IllegalArgumentException] thrownBy Configuration.fromPluginOptions(List("minimalLevel:ignore"))
+    }
   }
 }
