@@ -126,7 +126,13 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is description.",
           "This is explanation."
         )
-        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
+        val inspectionIgnored = new DummyInspection(
+          "My default is Ignore",
+          Levels.Ignore,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo, inspectionIgnored)
         val reporter = new StoreReporter(new Settings())
         val feedback =
           new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix, Levels.Info))
@@ -153,7 +159,13 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is description.",
           "This is explanation."
         )
-        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
+        val inspectionIgnored = new DummyInspection(
+          "My default is Ignore",
+          Levels.Ignore,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo, inspectionIgnored)
         val reporter = new StoreReporter(new Settings())
         val feedback = new Feedback(
           reporter,
@@ -184,7 +196,13 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is description.",
           "This is explanation."
         )
-        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo)
+        val inspectionIgnored = new DummyInspection(
+          "My default is Ignore",
+          Levels.Ignore,
+          "This is description.",
+          "This is explanation."
+        )
+        val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo, inspectionIgnored)
         val reporter = new StoreReporter(new Settings())
         val feedback =
           new Feedback(reporter, testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Error))

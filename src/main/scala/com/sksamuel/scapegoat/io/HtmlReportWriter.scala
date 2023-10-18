@@ -116,6 +116,7 @@ object HtmlReportWriter extends ReportWriter {
           case Levels.Info    => <span class="label label-info">Info</span>
           case Levels.Warning => <span class="label label-warning">Warning</span>
           case Levels.Error   => <span class="label label-danger">Error</span>
+          case Levels.Ignore  => ()
         }
       }&nbsp;{decorateCode(warning.text)}&nbsp; <span class="inspection">
             {warning.inspection}

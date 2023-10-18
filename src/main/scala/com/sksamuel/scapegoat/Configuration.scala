@@ -74,7 +74,11 @@ object Configuration {
     val sourcePrefix = fromProperty("sourcePrefix", defaultValue = "src/main/scala/")(x => x)
     val minimalLevel = fromProperty[Level]("minimalLevel", defaultValue = Levels.Info) { value =>
       Levels.fromName(value)
+    } match {
+      case Levels.Ignore => throw new IllegalArgumentException(s"Minimal level cannot be set to 'ignore'")
+      case l             => l
     }
+
     val dataDir = fromProperty[Option[File]](
       "dataDir",
       defaultValue = None
