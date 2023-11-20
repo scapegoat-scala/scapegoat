@@ -96,6 +96,11 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
           writeReport(reports.disableXML, "XML", IOUtils.writeXMLReport)
           writeReport(reports.disableScalastyleXML, "Scalastyle XML", IOUtils.writeScalastyleReport)
           writeReport(reports.disableMarkdown, "Markdown", IOUtils.writeMarkdownReport)
+          writeReport(
+            reports.disableGitlabCodeQuality,
+            "GitLab Code Quality",
+            IOUtils.writeGitlabCodeQualityReport
+          )
         }
       }
     }
