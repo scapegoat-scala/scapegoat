@@ -14,21 +14,26 @@ object GitlabCodeQualityReportWriter extends ReportWriter {
 
   override protected def fileName: String = "scapegoat-gitlab.json"
 
-  override protected def generate(feedback: Feedback): String =
-    toCodeQualityElements(feedback.warningsWithMinimalLevel, sys.env.get("CI_PROJECT_DIR"))
+  override protected def generate(feedback: Feedback): String = {
+    val md5Digest = MessageDigest.getInstance("MD5")
+    toCodeQualityElements(feedback.warningsWithMinimalLevel, sys.env.get("CI_PROJECT_DIR"), md5Digest)
       .map(_.toJsonArrayElement)
       .mkString("[", ",", "]")
+  }
 
-  def toCodeQualityElements(
+  private[io] def toCodeQualityElements(
     warnings: Seq[Warning],
-    gitlabBuildDir: Option[String]
+    gitlabBuildDir: Option[String],
+    messageDigest: MessageDigest
   ): Seq[CodeQualityReportElement] = warnings.map { warning =>
     // Stable hash for the same warning.
     // Avoids moving code blocks around from causing "new" detecions.
     val fingerprintRaw = warning.sourceFileNormalized + warning.snippet.getOrElse(warning.line.toString)
-    val fingerprint = MessageDigest
-      .getInstance("MD5")
-      .digest(fingerprintRaw.getBytes(StandardCharsets.UTF_8))
+
+    messageDigest.reset()
+    messageDigest.update(fingerprintRaw.getBytes(StandardCharsets.UTF_8))
+    val fingerprint = messageDigest
+      .digest()
       .map("%02x".format(_))
       .mkString
 
@@ -84,11 +89,11 @@ case object CriticalSeverity extends CodeClimateSeverity {
   override val name: String = "critical"
 }
 
-case class Location(path: String, lines: Lines)
+final case class Location(path: String, lines: Lines)
 
-case class Lines(begin: Int)
+final case class Lines(begin: Int)
 
-case class CodeQualityReportElement(
+final case class CodeQualityReportElement(
   description: String,
   checkName: String,
   severity: CodeClimateSeverity,
