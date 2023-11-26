@@ -13,7 +13,8 @@ object TestConfiguration {
       disableXML = true,
       disableHTML = true,
       disableScalastyleXML = true,
-      disableMarkdown = true
+      disableMarkdown = true,
+      disableGitlabCodeQuality = true
     ),
     customInspectors = Seq(),
     sourcePrefix = "src/main/scala",

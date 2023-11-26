@@ -6,7 +6,8 @@ case class Reports(
   disableXML: Boolean,
   disableHTML: Boolean,
   disableScalastyleXML: Boolean,
-  disableMarkdown: Boolean
+  disableMarkdown: Boolean,
+  disableGitlabCodeQuality: Boolean
 )
 
 case class Configuration(
@@ -50,11 +51,14 @@ object Configuration {
         .map(inspection => Class.forName(inspection).getConstructor().newInstance().asInstanceOf[Inspection])
     }
     val enabledReports = fromProperty("reports", defaultValue = Seq("all"))(_.split(':').toSeq)
-    val disableXML = !(enabledReports.contains("xml") || enabledReports.contains("all"))
-    val disableHTML = !(enabledReports.contains("html") || enabledReports.contains("all"))
+    def isReportEnabled(report: String): Boolean =
+      enabledReports.contains(report) || enabledReports.contains("all")
+    val disableXML = !isReportEnabled("xml")
+    val disableHTML = !isReportEnabled("html")
     val disableScalastyleXML =
-      !(enabledReports.contains("scalastyle") || enabledReports.contains("all"))
-    val disableMarkdown = !(enabledReports.contains("markdown") || enabledReports.contains("all"))
+      !isReportEnabled("scalastyle")
+    val disableMarkdown = !isReportEnabled("markdown")
+    val disableGitlabCodeQuality = !isReportEnabled("gitlab-codequality")
 
     val levelOverridesByInspectionSimpleName =
       fromProperty("overrideLevels", defaultValue = Map.empty[String, Level]) {
@@ -97,7 +101,8 @@ object Configuration {
         disableXML = disableXML,
         disableHTML = disableHTML,
         disableScalastyleXML = disableScalastyleXML,
-        disableMarkdown = disableMarkdown
+        disableMarkdown = disableMarkdown,
+        disableGitlabCodeQuality = disableGitlabCodeQuality
       ),
       customInspectors = customInspectors,
       sourcePrefix = sourcePrefix,
@@ -118,7 +123,7 @@ object Configuration {
       "-P:scapegoat:consoleOutput:<boolean>                 enable/disable console report output",
       "-P:scapegoat:reports:<reports>                       colon separated list of reports to generate.",
       "                                                     Valid options are `xml', `html', `scalastyle', 'markdown',",
-      "                                                     or `all'. Use `none' to disable reports.",
+      "                                                     'gitlab-codequality' or `all'. Use `none' to disable reports.",
       "-P:scapegoat:overrideLevels:<levels>                 override the built in warning levels, e.g. to",
       "                                                     downgrade a Error to a Warning.",
       "                                                     <levels> should be a colon separated list of name=level",

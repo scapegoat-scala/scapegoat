@@ -20,4 +20,7 @@ object IOUtils {
 
   def writeMarkdownReport(targetDir: File, reporter: Feedback): File =
     MarkdownReportWriter.write(targetDir, reporter)
+
+  def writeGitlabCodeQualityReport(targetDir: File, reporter: Feedback): File =
+    GitlabCodeQualityReportWriter.write(targetDir, reporter)
 }
