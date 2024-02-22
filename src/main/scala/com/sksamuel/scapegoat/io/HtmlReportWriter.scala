@@ -2,7 +2,7 @@ package com.sksamuel.scapegoat.io
 
 import scala.xml.{Elem, Unparsed, XML}
 
-import com.sksamuel.scapegoat.{Feedback, Levels}
+import com.sksamuel.scapegoat.{Feedback, Levels, Warning}
 
 /**
  * @author
@@ -100,11 +100,11 @@ object HtmlReportWriter extends ReportWriter {
         {reporter.warnings(Levels.Warning).size.toString}
         Infos
         {reporter.warnings(Levels.Info).size.toString}
-      </h3>{warnings(reporter)}
+      </h3>{warnings(reporter.warningsWithMinimalLevel)}
     </body>
 
-  private def warnings(reporter: Feedback): Seq[Elem] = {
-    reporter.warningsWithMinimalLevel.map { warning =>
+  private[io] def warnings(warnings: Seq[Warning]): Seq[Elem] = {
+    warnings.map { warning =>
       val source = warning.sourceFileNormalized + ":" + warning.line
       <div class="warning">
           <div class="source">
@@ -123,7 +123,7 @@ object HtmlReportWriter extends ReportWriter {
           </span>
           </div>
           <div>
-            {decorateCode(warning.explanation)}
+            {decorateCode(warning.explanation.replace("<", "&lt;").replace(">", "&gt;"))}
           </div>{
         warning.snippet match {
           case None =>
