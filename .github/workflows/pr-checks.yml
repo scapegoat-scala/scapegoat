@@ -15,7 +15,7 @@ jobs:
           - 2.13.11
           - 2.13.12
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: olafurpg/setup-scala@v14
         with:
           java-version: adopt@1.${{matrix.java}}
@@ -34,7 +34,7 @@ jobs:
     name: Run additional checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: olafurpg/setup-scala@v14
         with:
           java-version: adopt@1.11
