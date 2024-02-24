@@ -7,7 +7,7 @@ jobs:
     name: Run codecov on master
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: olafurpg/setup-scala@v14
         with:
           java-version: adopt@1.11

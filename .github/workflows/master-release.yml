@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.repository == 'scapegoat-scala/scapegoat'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: git fetch --prune --unshallow
       - uses: olafurpg/setup-scala@v14
         with:
