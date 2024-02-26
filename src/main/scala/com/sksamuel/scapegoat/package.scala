@@ -5,5 +5,6 @@ package object scapegoat {
   private val shortScalaVersion = scalaVersion.split('.').dropRight(1).mkString(".")
 
   val isScala213: Boolean = shortScalaVersion == "2.13"
-  val isScala21312: Boolean = scalaVersion == "2.13.12"
+  val isScala21312OrLater: Boolean = scalaVersion == "2.13.12" || scalaVersion == "2.13.13"
+
 }

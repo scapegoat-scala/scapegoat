@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat.inspections.unnecessary
 
 import com.sksamuel.scapegoat.inspections.unneccesary.UnnecessaryConversion
-import com.sksamuel.scapegoat.{isScala21312, Inspection, InspectionTest}
+import com.sksamuel.scapegoat.{isScala21312OrLater, Inspection, InspectionTest}
 
 /** @author Stephen Samuel */
 class UnnecessaryConversionTest extends InspectionTest {
@@ -17,7 +17,7 @@ class UnnecessaryConversionTest extends InspectionTest {
                      |}""".stripMargin
 
         compileCodeSnippet(code)
-        val expectedWarnings = if (isScala21312) 0 else 1
+        val expectedWarnings = if (isScala21312OrLater) 0 else 1
         compiler.scapegoat.feedback.warnings.size shouldBe expectedWarnings
       }
 
@@ -28,7 +28,7 @@ class UnnecessaryConversionTest extends InspectionTest {
                      |}""".stripMargin
 
         compileCodeSnippet(code)
-        val expectedWarnings = if (isScala21312) 0 else 1
+        val expectedWarnings = if (isScala21312OrLater) 0 else 1
         compiler.scapegoat.feedback.warnings.size shouldBe expectedWarnings
       }
 
@@ -39,7 +39,7 @@ class UnnecessaryConversionTest extends InspectionTest {
                      |}""".stripMargin
 
         compileCodeSnippet(code)
-        val expectedWarnings = if (isScala21312) 0 else 2
+        val expectedWarnings = if (isScala21312OrLater) 0 else 2
         compiler.scapegoat.feedback.warnings.size shouldBe expectedWarnings
       }
 
@@ -50,7 +50,7 @@ class UnnecessaryConversionTest extends InspectionTest {
                      |}""".stripMargin
 
         compileCodeSnippet(code)
-        val expectedWarnings = if (isScala21312) 0 else 1
+        val expectedWarnings = if (isScala21312OrLater) 0 else 1
         compiler.scapegoat.feedback.warnings.size shouldBe expectedWarnings
       }
 
@@ -61,7 +61,7 @@ class UnnecessaryConversionTest extends InspectionTest {
                      |}""".stripMargin
 
         compileCodeSnippet(code)
-        val expectedWarnings = if (isScala21312) 0 else 1
+        val expectedWarnings = if (isScala21312OrLater) 0 else 1
         compiler.scapegoat.feedback.warnings.size shouldBe expectedWarnings
       }
 
@@ -72,7 +72,7 @@ class UnnecessaryConversionTest extends InspectionTest {
                      |}""".stripMargin
 
         compileCodeSnippet(code)
-        val expectedWarnings = if (isScala21312) 0 else 1
+        val expectedWarnings = if (isScala21312OrLater) 0 else 1
         compiler.scapegoat.feedback.warnings.size shouldBe expectedWarnings
       }
 
@@ -83,7 +83,7 @@ class UnnecessaryConversionTest extends InspectionTest {
                      |}""".stripMargin
 
         compileCodeSnippet(code)
-        val expectedWarnings = if (isScala21312) 0 else 1
+        val expectedWarnings = if (isScala21312OrLater) 0 else 1
         compiler.scapegoat.feedback.warnings.size shouldBe expectedWarnings
       }
 
@@ -94,7 +94,7 @@ class UnnecessaryConversionTest extends InspectionTest {
                      |}""".stripMargin
 
         compileCodeSnippet(code)
-        val expectedWarnings = if (isScala21312) 0 else 1
+        val expectedWarnings = if (isScala21312OrLater) 0 else 1
         compiler.scapegoat.feedback.warnings.size shouldBe expectedWarnings
       }
     }
