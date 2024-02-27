@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.unneccesary
 
-import com.sksamuel.scapegoat.{isScala21312, Inspection, InspectionContext, Inspector, Levels}
+import com.sksamuel.scapegoat.{isScala21312OrLater, Inspection, InspectionContext, Inspector, Levels}
 
 /**
  * @author
@@ -15,7 +15,7 @@ class UnnecessaryConversion
         "Calling e.g. toString on a String or toList on a List is completely unnecessary and it's an equivalent to identity."
     ) {
 
-  override def isEnabled: Boolean = !isScala21312
+  override def isEnabled: Boolean = !isScala21312OrLater
 
   def inspector(ctx: InspectionContext): Inspector = new Inspector(ctx) {
     override def postTyperTraverser: context.Traverser = new context.Traverser {
