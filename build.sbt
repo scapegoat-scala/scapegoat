@@ -23,7 +23,7 @@ developers := List(
 )
 
 scalaVersion := "2.13.13"
-crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.12", "2.13.13")
+crossScalaVersions := Seq("2.12.19", "2.12.19", "2.13.12", "2.13.13")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
