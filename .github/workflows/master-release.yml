@@ -10,9 +10,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: git fetch --prune --unshallow
-      - uses: olafurpg/setup-scala@v14
+      - uses: actions/setup-java@v4
         with:
-          java-version: adopt@1.8
+          distribution: adopt
+          java-version: 8
       - run: |
           sudo apt-get update && sudo apt-get -y install gnupg2
           mkdir ~/.gnupg && chmod 700 ~/.gnupg
