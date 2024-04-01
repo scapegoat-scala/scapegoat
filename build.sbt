@@ -30,6 +30,7 @@ crossTarget := {
   // workaround for https://github.com/sbt/sbt/issues/5097
   target.value / s"scala-${scalaVersion.value}"
 }
+versionScheme := Some("early-semver")
 
 // https://github.com/sksamuel/scapegoat/issues/298
 ThisBuild / useCoursier := false
