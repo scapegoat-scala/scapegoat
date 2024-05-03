@@ -12,8 +12,8 @@ jobs:
         scala:
           - 2.12.18
           - 2.12.19
-          - 2.13.12
           - 2.13.13
+          - 2.13.14
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
