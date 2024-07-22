@@ -3,6 +3,7 @@ package com.sksamuel.scapegoat
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
+// TODO(johan): This doesn't really hold with Scala 2 / 3 mix, can't access all the inspections by code
 class ReadmeTest extends AnyFreeSpec with Matchers {
 
   val readme =

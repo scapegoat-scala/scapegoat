@@ -8,7 +8,7 @@ trait ReportWriter {
 
   protected def fileName: String
 
-  protected def generate(feedback: Feedback): String
+  protected def generate(feedback: Feedback[_]): String
 
   private def serialize(file: File, str: String): Unit = {
     val out = new BufferedWriter(new FileWriter(file))
@@ -16,7 +16,7 @@ trait ReportWriter {
     out.close()
   }
 
-  def write(targetDir: File, feedback: Feedback): File = {
+  def write(targetDir: File, feedback: Feedback[_]): File = {
     targetDir.mkdirs()
     val file = new File(s"${targetDir.getAbsolutePath}/$fileName")
     serialize(file, generate(feedback))

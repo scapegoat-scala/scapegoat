@@ -1,5 +1,6 @@
 // compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.9.6" cross CrossVersion.full)
+// fixme(johan): How to selectively enable this on Scala 2.x?
+//addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.9.6" cross CrossVersion.full)
 
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
@@ -22,8 +23,8 @@ developers := List(
   )
 )
 
-scalaVersion := "2.13.14"
-crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.13", "2.13.14")
+scalaVersion := "3.4.2"
+crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.13", "2.13.14", scalaVersion.value)
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -31,6 +32,13 @@ crossTarget := {
   target.value / s"scala-${scalaVersion.value}"
 }
 versionScheme := Some("early-semver")
+semanticdbEnabled := (scalaBinaryVersion.value == "3")
+// Compile / unmanagedSourceDirectories += (if (scalaBinaryVersion.value == "3") {
+//   baseDirectory.value / "src" / "main" / "scala-3"
+// } else {
+//   baseDirectory.value / "src" / "main" / "scala-2"
+// })
+
 
 // https://github.com/sksamuel/scapegoat/issues/298
 ThisBuild / useCoursier := false
@@ -65,6 +73,7 @@ scalacOptions := {
   common ++ (scalaBinaryVersion.value match {
     case "2.12" => scalac12Options
     case "2.13" => scalac13Options
+    case "3" => Seq()
   })
 }
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
@@ -85,19 +94,29 @@ def check(code: String) = {
 """
 
 libraryDependencies ++= Seq(
-  "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
-  "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
   "org.scala-lang.modules" %% "scala-xml" % "2.3.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
-  "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
   "org.scalatest" %% "scalatest"      % "3.2.18"           % "test",
   "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
   "joda-time"      % "joda-time"      % "2.12.7"           % "test",
   "org.joda"       % "joda-convert"   % "2.2.3"            % "test",
   "org.slf4j"      % "slf4j-api"      % "2.0.13"           % "test"
 )
+
+libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
+  Seq(
+    "org.scala-lang" %% "scala3-compiler" % scalaVersion.value % "provided",
+    "org.scala-lang" %% "scala3-compiler" % scalaVersion.value % "test",
+  )
+} else {
+  Seq(
+    "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
+    "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
+    "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
+  )
+})
 
 // Test
 Test / run / fork := true

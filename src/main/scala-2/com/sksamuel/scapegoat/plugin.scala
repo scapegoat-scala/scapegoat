@@ -27,8 +27,9 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override val optionsHelp: Option[String] = Some(Configuration.optionsHelp)
 }
 
-class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
+class ecapegoatComponent(val global: Global, override val inspections: Seq[Inspection])
     extends PluginComponent
+    with ScapegoatBasePlugin
     with TypingTransformers
     with Transform {
 
@@ -36,7 +37,7 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
 
   import global._
 
-  var configuration: Configuration = null
+  override var configuration: Configuration = null
 
   val debug: Boolean = false
   var summary: Boolean = true
@@ -47,16 +48,6 @@ class ScapegoatComponent(val global: Global, inspections: Seq[Inspection])
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
-  def disableAll: Boolean = configuration.disabledInspections.exists(_.compareToIgnoreCase("all") == 0)
-
-  def activeInspections: Seq[Inspection] = {
-    if (configuration.enabledInspections.isEmpty)
-      (inspections ++ configuration.customInspectors)
-        .filterNot(inspection => configuration.disabledInspections.contains(inspection.name))
-    else
-      (inspections ++ configuration.customInspectors)
-        .filter(inspection => configuration.enabledInspections.contains(inspection.name))
-  }
   lazy val feedback = new Feedback(global.reporter, configuration)
 
   def writeReport(isDisabled: Boolean, reportName: String, writer: (File, Feedback) => File): Unit = {

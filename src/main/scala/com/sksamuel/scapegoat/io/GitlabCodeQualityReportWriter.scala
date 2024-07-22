@@ -14,7 +14,7 @@ object GitlabCodeQualityReportWriter extends ReportWriter {
 
   override protected def fileName: String = "scapegoat-gitlab.json"
 
-  override protected def generate(feedback: Feedback): String = {
+  override protected def generate(feedback: Feedback[_]): String = {
     val md5Digest = MessageDigest.getInstance("MD5")
     toCodeQualityElements(feedback.warningsWithMinimalLevel, sys.env.get("CI_PROJECT_DIR"), md5Digest)
       .map(_.toJsonArrayElement)
