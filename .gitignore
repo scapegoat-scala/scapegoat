@@ -1,4 +1,5 @@
 *.class
+*.tasty
 *.log
 
 # sbt specific

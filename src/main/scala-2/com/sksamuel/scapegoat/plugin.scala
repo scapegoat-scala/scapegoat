@@ -27,7 +27,7 @@ class ScapegoatPlugin(val global: Global) extends Plugin {
   override val optionsHelp: Option[String] = Some(Configuration.optionsHelp)
 }
 
-class ecapegoatComponent(val global: Global, override val inspections: Seq[Inspection])
+class ScapegoatComponent(val global: Global, override val inspections: Seq[Inspection])
     extends PluginComponent
     with ScapegoatBasePlugin
     with TypingTransformers
@@ -48,9 +48,9 @@ class ecapegoatComponent(val global: Global, override val inspections: Seq[Inspe
   override val runsAfter: List[String] = List("typer")
   override val runsBefore = List[String]("patmat")
 
-  lazy val feedback = new Feedback(global.reporter, configuration)
+  lazy val feedback = new FeedbackScala2(global.reporter, configuration)
 
-  def writeReport(isDisabled: Boolean, reportName: String, writer: (File, Feedback) => File): Unit = {
+  def writeReport(isDisabled: Boolean, reportName: String, writer: (File, Feedback[_]) => File): Unit = {
     if (!isDisabled) {
       configuration.dataDir.foreach { outputDir =>
         val output = writer(outputDir, feedback)

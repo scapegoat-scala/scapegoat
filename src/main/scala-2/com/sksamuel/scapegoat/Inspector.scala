@@ -17,7 +17,7 @@ abstract class Inspector(val context: InspectionContext) {
   def postInspection(): Unit = ()
 }
 
-final case class InspectionContext(global: Global, feedback: Feedback) {
+final case class InspectionContext(global: Global, feedback: Feedback[Position]) {
 
   def warn(pos: Position, inspection: Inspection): Unit =
     feedback.warn(pos, inspection, None, None)

@@ -23,7 +23,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
     override def inspector(ctx: InspectionContext): Inspector = ???
   }
 
-  "Feedback" - {
+  "FeedbackScala2" - {
     "should report to reporter" - {
       "for error" in {
         val inspection = new DummyInspection(
@@ -33,7 +33,8 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter(new Settings())
-        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
+        val feedback =
+          new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should have size 1
         val info = reporter.infos.head
@@ -50,7 +51,8 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter(new Settings())
-        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
+        val feedback =
+          new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should have size 1
         val info = reporter.infos.head
@@ -67,7 +69,8 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
           "This is explanation."
         )
         val reporter = new StoreReporter(new Settings())
-        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
+        val feedback =
+          new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         feedback.warn(position, inspection)
         reporter.infos should have size 1
         val info = reporter.infos.head
@@ -81,7 +84,8 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
       "for `src/main/scala`" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter(new Settings())
-        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
+        val feedback =
+          new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         val source = "src/main/scala/com/sksamuel/scapegoat/Test.scala"
         val result = feedback invokePrivate normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
@@ -90,16 +94,16 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
       "for `app`" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter(new Settings())
-        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, "app/"))
+        val feedback = new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, "app/"))
         val source = "app/com/sksamuel/scapegoat/Test.scala"
-        val result = feedback invokePrivate normalizeSourceFile(source)
+        val result = feedback.asInstanceOf[Feedback[_]] invokePrivate normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
 
       "should add trailing / to the sourcePrefix automatically" in {
         val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter(new Settings())
-        val feedback = new Feedback(reporter, testConfiguration(consoleOutput = true, "app/custom"))
+        val feedback = new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, "app/custom"))
         val source = "app/custom/com/sksamuel/scapegoat/Test.scala"
         val result = feedback invokePrivate normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
@@ -135,7 +139,10 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo, inspectionIgnored)
         val reporter = new StoreReporter(new Settings())
         val feedback =
-          new Feedback(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix, Levels.Info))
+          new FeedbackScala2(
+            reporter,
+            testConfiguration(consoleOutput = true, defaultSourcePrefix, Levels.Info)
+          )
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(3)
       }
@@ -167,7 +174,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         )
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo, inspectionIgnored)
         val reporter = new StoreReporter(new Settings())
-        val feedback = new Feedback(
+        val feedback = new FeedbackScala2(
           reporter,
           testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Warning)
         )
@@ -205,7 +212,10 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val inspections = Seq(inspectionError, inspectionWarning, inspectionInfo, inspectionIgnored)
         val reporter = new StoreReporter(new Settings())
         val feedback =
-          new Feedback(reporter, testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Error))
+          new FeedbackScala2(
+            reporter,
+            testConfiguration(consoleOutput = false, defaultSourcePrefix, Levels.Error)
+          )
         inspections.foreach(inspection => feedback.warn(position, inspection))
         feedback.warningsWithMinimalLevel.length should be(1)
         feedback.warningsWithMinimalLevel.map(_.level) should contain only (Seq(Levels.Error): _*)

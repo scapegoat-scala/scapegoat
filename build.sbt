@@ -1,7 +1,3 @@
-// compiler plugins
-// fixme(johan): How to selectively enable this on Scala 2.x?
-//addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.9.6" cross CrossVersion.full)
-
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
 description := "Scala compiler plugin for static code analysis"
@@ -23,7 +19,7 @@ developers := List(
   )
 )
 
-scalaVersion := "3.4.2"
+scalaVersion := "2.13.14"//"3.4.2"
 crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.13", "2.13.14", scalaVersion.value)
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
@@ -33,12 +29,6 @@ crossTarget := {
 }
 versionScheme := Some("early-semver")
 semanticdbEnabled := (scalaBinaryVersion.value == "3")
-// Compile / unmanagedSourceDirectories += (if (scalaBinaryVersion.value == "3") {
-//   baseDirectory.value / "src" / "main" / "scala-3"
-// } else {
-//   baseDirectory.value / "src" / "main" / "scala-2"
-// })
-
 
 // https://github.com/sksamuel/scapegoat/issues/298
 ThisBuild / useCoursier := false
@@ -115,6 +105,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
     "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
     "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
     "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
+    compilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.9.6" cross CrossVersion.full),
   )
 })
 
