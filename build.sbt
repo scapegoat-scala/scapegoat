@@ -19,7 +19,7 @@ developers := List(
   )
 )
 
-scalaVersion := "2.13.14"//"3.4.2"
+scalaVersion := "3.4.2"
 crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.13", "2.13.14", scalaVersion.value)
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
@@ -63,7 +63,7 @@ scalacOptions := {
   common ++ (scalaBinaryVersion.value match {
     case "2.12" => scalac12Options
     case "2.13" => scalac13Options
-    case "3" => Seq()
+    case "3"    => Seq()
   })
 }
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
@@ -88,26 +88,28 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
-  "org.scalatest" %% "scalatest"      % "3.2.18"           % "test",
-  "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
-  "joda-time"      % "joda-time"      % "2.12.7"           % "test",
-  "org.joda"       % "joda-convert"   % "2.2.3"            % "test",
-  "org.slf4j"      % "slf4j-api"      % "2.0.13"           % "test"
+  "org.scalatest" %% "scalatest"    % "3.2.18"  % "test",
+  "org.mockito"    % "mockito-all"  % "1.10.19" % "test",
+  "joda-time"      % "joda-time"    % "2.12.7"  % "test",
+  "org.joda"       % "joda-convert" % "2.2.3"   % "test",
+  "org.slf4j"      % "slf4j-api"    % "2.0.13"  % "test"
 )
 
 libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
-  Seq(
-    "org.scala-lang" %% "scala3-compiler" % scalaVersion.value % "provided",
-    "org.scala-lang" %% "scala3-compiler" % scalaVersion.value % "test",
-  )
-} else {
-  Seq(
-    "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
-    "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
-    "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-    compilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.9.6" cross CrossVersion.full),
-  )
-})
+                           Seq(
+                             "org.scala-lang" %% "scala3-compiler" % scalaVersion.value % "provided",
+                             "org.scala-lang" %% "scala3-compiler" % scalaVersion.value % "test"
+                           )
+                         } else {
+                           Seq(
+                             "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
+                             "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
+                             "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
+                             compilerPlugin(
+                               "org.scalameta" % "semanticdb-scalac" % "4.9.6" cross CrossVersion.full
+                             )
+                           )
+                         })
 
 // Test
 Test / run / fork := true

@@ -5,6 +5,7 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.nio.file.Files
 import java.nio.charset.StandardCharsets
+import dotty.tools.dotc.reporting.Reporter
 
 class DottyRunner(val inspection: Class[? <: Inspection]) extends Driver {
 
@@ -13,7 +14,6 @@ class DottyRunner(val inspection: Class[? <: Inspection]) extends Driver {
 
   private val classPath: List[String] = getScalaJars.map(_.getAbsolutePath) :+ sbtCompileDir.getAbsolutePath
   private def getScalaJars: List[File] = {
-    // val scalaJars = List("scala3-compiler_3", "scala3-library_3")
     val scalaJars = List("scala3-library_3")
     findIvyJar("org.scala-lang", "scala-library", scalaVersion) :: scalaJars.map(findScalaJar)
   }
@@ -36,22 +36,24 @@ class DottyRunner(val inspection: Class[? <: Inspection]) extends Driver {
     else throw new FileNotFoundException(s"Could not locate SBT compile directory for plugin files [$dir]")
   }
 
-  def compileCodeSnippet(source: String): Unit = {
+  def compileCodeSnippet(source: String): Reporter = {
     val targetDir = Files.createTempDirectory("scapegoat").toFile
     val sourceFile = Files
       .write(Files.createTempFile("scapegoat_snippet", ".scala"), source.getBytes(StandardCharsets.UTF_8))
       .toFile
     sourceFile.deleteOnExit()
     targetDir.deleteOnExit()
-    val reporter = process(
+    process(
       Array[String](
-        "-Xplugin:" + sbtCompileDir.getAbsolutePath(),
+        "-Xplugin:" + sbtCompileDir.getAbsolutePath,
         "-Xplugin-require:scapegoat",
-        "-P:scapegoat:enabledInspections:" + inspection.getSimpleName(),
+        "-P:scapegoat:enabledInspections:" + inspection.getSimpleName,
         "-P:scapegoat:verbose:true",
+        "-d",
+        targetDir.getAbsolutePath,
         "-classpath",
         classPath.mkString(File.pathSeparator),
-        sourceFile.getAbsolutePath()
+        sourceFile.getAbsolutePath
       )
     )
   }

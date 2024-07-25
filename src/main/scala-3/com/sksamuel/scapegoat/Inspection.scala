@@ -1,9 +1,8 @@
 package com.sksamuel.scapegoat
 
-import dotty.tools.dotc.interfaces.SourceFile
 import dotty.tools.dotc.ast.tpd
 import dotty.tools.dotc.core.Contexts.Context
-import dotty.tools.dotc.interfaces.SourcePosition
+import dotty.tools.dotc.util.SourcePosition
 
 abstract class Inspection(
   val text: String,

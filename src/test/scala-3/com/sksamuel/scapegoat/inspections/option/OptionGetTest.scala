@@ -15,7 +15,9 @@ class OptionGetTest extends AnyFreeSpec {
                       o.get
                     } """.stripMargin
 
-      runner.compileCodeSnippet(code)
+      val r = runner.compileCodeSnippet(code)
+      val e = r.allErrors
+      e.toString
     }
   }
 

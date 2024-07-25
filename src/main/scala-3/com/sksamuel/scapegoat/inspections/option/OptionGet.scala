@@ -1,21 +1,13 @@
 package com.sksamuel.scapegoat.inspections.option
 
-import com.sksamuel.scapegoat._
-import dotty.tools.dotc.interfaces.SourcePosition
-import dotty.tools.dotc.ast.tpd
-import dotty.tools.dotc.core.Contexts.Context
-import dotty.tools.dotc.core.StdNames.*
-import dotty.tools.dotc.core.Types.TermRef
+import com.sksamuel.scapegoat.*
 import dotty.tools.dotc.ast.Trees.*
 import dotty.tools.dotc.ast.tpd
-import dotty.tools.dotc.core.Constants.Constant
 import dotty.tools.dotc.core.Contexts.Context
-import dotty.tools.dotc.core.Decorators.*
 import dotty.tools.dotc.core.StdNames.*
 import dotty.tools.dotc.core.Symbols.*
-import dotty.tools.dotc.plugins.{PluginPhase, StandardPlugin}
-import dotty.tools.dotc.report
-import dotty.tools.dotc.transform.{PickleQuotes, Staging}
+import dotty.tools.dotc.core.Types.TermRef
+import dotty.tools.dotc.util.SourcePosition
 
 /**
  * @author
@@ -34,18 +26,16 @@ class OptionGet
 
   def inspect(feedback: Feedback[SourcePosition], tree: tpd.Tree)(using Context): Unit = {
     val traverser = new TreeTraverser {
-      def traverse(tree: Tree)(using Context) = {
+      def traverse(tree: Tree)(using Context): Unit = {
         tree match {
-          case Select(qual, nme.get) => {
+          case Select(qual, nme.get) =>
             val optType = defn.OptionClass.typeRef
             qual.tpe match {
-              case tref: TermRef if tref.info.typeConstructor <:< optType => {
+              case tref: TermRef if tref.info.typeConstructor <:< optType =>
                 feedback.warn(tree.sourcePos, self)
-              }
-              case _ => {}
+              case _ =>
             }
             traverseChildren(tree)
-          }
           case _ => traverseChildren(tree)
         }
       }

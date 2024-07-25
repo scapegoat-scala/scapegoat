@@ -96,7 +96,7 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
         val reporter = new StoreReporter(new Settings())
         val feedback = new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, "app/"))
         val source = "app/com/sksamuel/scapegoat/Test.scala"
-        val result = feedback.asInstanceOf[Feedback[_]] invokePrivate normalizeSourceFile(source)
+        val result = feedback invokePrivate normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
 
