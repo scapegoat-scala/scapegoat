@@ -1,11 +1,8 @@
 package com.sksamuel.scapegoat.inspections.option
 
-import org.scalatest.freespec.AnyFreeSpec
-import com.sksamuel.scapegoat.DottyRunner
+import com.sksamuel.scapegoat.{InspectionTest, Levels, Warning}
 
-class OptionGetTest extends AnyFreeSpec {
-
-  val runner = new DottyRunner(classOf[OptionGet])
+class OptionGetTest extends InspectionTest(classOf[OptionGet]) {
 
   "option.get use" - {
     "should report warning" in {
@@ -15,9 +12,10 @@ class OptionGetTest extends AnyFreeSpec {
                       o.get
                     } """.stripMargin
 
-      val r = runner.compileCodeSnippet(code)
-      val e = r.allErrors
-      e.toString
+      val feedback = runner.compileCodeSnippet(code)
+      feedback.errors.assertable shouldEqual Seq(
+        warning(2, Levels.Error, None)
+      ).assertable
     }
   }
 

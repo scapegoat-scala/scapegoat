@@ -32,7 +32,7 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
 
   import tpd.*
 
-  private var feedback: Option[FeedbackDotty] = None
+  private[scapegoat] var feedback: Option[FeedbackDotty] = None
 
   override def phaseName: String = "scapegoat"
 
