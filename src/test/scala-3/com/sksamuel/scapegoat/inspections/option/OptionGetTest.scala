@@ -14,7 +14,7 @@ class OptionGetTest extends InspectionTest(classOf[OptionGet]) {
 
       val feedback = runner.compileCodeSnippet(code)
       feedback.errors.assertable shouldEqual Seq(
-        warning(2, Levels.Error, None)
+        warning(2, Levels.Error, Some("o.get"))
       ).assertable
     }
   }

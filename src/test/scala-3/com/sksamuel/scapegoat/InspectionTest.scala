@@ -4,19 +4,23 @@ import org.scalatest.OneInstancePerTest
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-abstract class InspectionTest(inspection: Class[? <: Inspection]) extends AnyFreeSpec with OneInstancePerTest with Matchers:
+abstract class InspectionTest(inspection: Class[? <: Inspection])
+    extends AnyFreeSpec
+    with OneInstancePerTest
+    with Matchers:
 
   extension (ws: Seq[Warning])
     /**
-     * Erases (inspection level) constant fields or tmp file based fields.
-     * @return Normalized Seq of Warnings that focus on being assertable reliably
+     * Erases (inspection level) constant fields or temporary file based fields.
+     * @return
+     *   Normalized Seq of Warnings that focus on being assertable reliably
      */
     def assertable: Seq[Warning] = ws.map { w =>
       w.copy(
         text = "text",
         sourceFileFull = "sourceFileFull",
         sourceFileNormalized = "sourceFileNormalized",
-        explanation = "explanation",
+        explanation = "explanation"
       )
     }
 

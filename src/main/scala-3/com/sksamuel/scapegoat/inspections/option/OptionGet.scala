@@ -5,8 +5,6 @@ import dotty.tools.dotc.ast.Trees.*
 import dotty.tools.dotc.ast.tpd
 import dotty.tools.dotc.core.Contexts.Context
 import dotty.tools.dotc.core.StdNames.*
-import dotty.tools.dotc.core.Symbols.*
-import dotty.tools.dotc.core.Types.TermRef
 import dotty.tools.dotc.util.SourcePosition
 
 /**
@@ -24,33 +22,17 @@ class OptionGet
 
   import tpd.*
 
-  def inspect(feedback: Feedback[SourcePosition], tree: tpd.Tree)(using Context): Unit = {
-    val traverser = new TreeTraverser {
+  def inspect(feedback: Feedback[SourcePosition], tree: tpd.Tree)(using ctx: Context): Unit = {
+    val traverser = new InspectionTraverser {
       def traverse(tree: Tree)(using Context): Unit = {
         tree match {
-          case Select(qual, nme.get) =>
-            val optType = defn.OptionClass.typeRef
-            qual.tpe match {
-              case tref: TermRef if tref.info.typeConstructor <:< optType =>
-                feedback.warn(tree.sourcePos, self)
-              case _ =>
-            }
-            traverseChildren(tree)
+          case Select(left, nme.get)
+              if left.tpe.typeSymbol.lastKnownDenotation.fullName.toString == "scala.Option" =>
+            feedback.warn(tree.sourcePos, self, tree.asSnippet)
           case _ => traverseChildren(tree)
         }
       }
     }
     traverser.traverse(tree)
   }
-
-  /**
-   * def inspector(ctx: InspectionContext): Inspector = new Inspector(ctx) { override def postTyperTraverser:
-   * context.Traverser = new context.Traverser {
-   *
-   * import context.global._
-   *
-   * override def inspect(tree: Tree): Unit = { tree match { case Select(left, TermName("get")) => if
-   * (left.tpe.typeSymbol.fullName == "scala.Option") context.warn(tree.pos, self, tree.toString.take(500))
-   * case _ => continue(tree) } } } }
-   */
 }
