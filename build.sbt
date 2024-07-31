@@ -88,7 +88,7 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
-  "org.scalatest" %% "scalatest"    % "3.2.18"  % "test",
+  "org.scalatest" %% "scalatest"    % "3.2.19"  % "test",
   "org.mockito"    % "mockito-all"  % "1.10.19" % "test",
   "joda-time"      % "joda-time"    % "2.12.7"  % "test",
   "org.joda"       % "joda-convert" % "2.2.3"   % "test",
@@ -106,7 +106,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.9.6" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.9.9" cross CrossVersion.full
                              )
                            )
                          })
