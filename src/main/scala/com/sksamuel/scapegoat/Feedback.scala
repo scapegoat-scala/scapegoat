@@ -70,7 +70,7 @@ abstract class Feedback[T](
 
   protected def report(pos: T, level: Level, message: String): Unit
 
-  private def normalizeSourceFile(sourceFile: String): String = {
+  private[scapegoat] def normalizeSourceFile(sourceFile: String): String = {
     val sourcePrefix = configuration.sourcePrefix
     val indexOf = sourceFile.indexOf(sourcePrefix)
     val fullPrefix = if (sourcePrefix.endsWith("/")) sourcePrefix else s"$sourcePrefix/"

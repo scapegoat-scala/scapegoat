@@ -3,7 +3,6 @@ package com.sksamuel.scapegoat
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
-// TODO(johan): This doesn't really hold with Scala 2 / 3 mix, can't access all the inspections by code
 class ReadmeTest extends AnyFreeSpec with Matchers {
 
   val readme =
@@ -20,12 +19,18 @@ class ReadmeTest extends AnyFreeSpec with Matchers {
       .drop(1)
       .takeWhile(l => l.trim.nonEmpty)
       .map(_.split("\\|"))
-      .collect { case Array(_, className, _, level) =>
-        className.trim -> level.trim
+      .collect { case Array(_, className, _, level, scala2, scala3) =>
+        className.trim -> (level.trim, scala2.trim.contains("Yes"), scala3.trim.contains("Yes"))
       }
+      .filter { case (_, (_, scala2, scala3)) =>
+        scala2 == (ScalaVersion.version == 2) || scala3 == (ScalaVersion.version == 3) || (!scala2 && !scala3)
+      }
+      .map { case (name, (level, _, _)) => name -> level }
 
   val inspectionNamesAndLevels =
-    Inspections.inspections.map(i => i.getClass.getSimpleName -> i.defaultLevel.toString).toSet
+    Inspections.inspections
+      .map(i => i.getClass.getSimpleName -> i.defaultLevel.toString)
+      .toSet
 
   "README" - {
     "should be up to date" in {
@@ -45,7 +50,11 @@ class ReadmeTest extends AnyFreeSpec with Matchers {
     }
 
     "should have correct number of inspections" in {
-      val Pattern = raw"There are currently (\d+?) inspections.*".r
+      val Pattern = if (ScalaVersion.version == 2) {
+        raw"There are currently (\d+?) inspections.*".r
+      } else {
+        raw"There are currently \d+ inspections.*, and (\d+?) for Scala 3\.".r
+      }
       readme.collect { case Pattern(n) =>
         n.toInt shouldBe inspectionNamesAndLevels.size
       }

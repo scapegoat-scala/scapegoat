@@ -82,30 +82,27 @@ class FeedbackTest extends AnyFreeSpec with Matchers with OneInstancePerTest wit
 
     "should use proper paths" - {
       "for `src/main/scala`" in {
-        val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter(new Settings())
         val feedback =
           new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, defaultSourcePrefix))
         val source = "src/main/scala/com/sksamuel/scapegoat/Test.scala"
-        val result = feedback invokePrivate normalizeSourceFile(source)
+        val result = feedback.normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
 
       "for `app`" in {
-        val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter(new Settings())
         val feedback = new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, "app/"))
         val source = "app/com/sksamuel/scapegoat/Test.scala"
-        val result = feedback invokePrivate normalizeSourceFile(source)
+        val result = feedback.normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
 
       "should add trailing / to the sourcePrefix automatically" in {
-        val normalizeSourceFile = PrivateMethod[String](Symbol("normalizeSourceFile"))
         val reporter = new StoreReporter(new Settings())
         val feedback = new FeedbackScala2(reporter, testConfiguration(consoleOutput = true, "app/custom"))
         val source = "app/custom/com/sksamuel/scapegoat/Test.scala"
-        val result = feedback invokePrivate normalizeSourceFile(source)
+        val result = feedback.normalizeSourceFile(source)
         result should ===("com.sksamuel.scapegoat.Test.scala")
       }
     }

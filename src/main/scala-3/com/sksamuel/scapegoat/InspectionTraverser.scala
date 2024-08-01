@@ -9,6 +9,6 @@ abstract class InspectionTraverser extends TreeTraverser {
   extension (tree: Tree)(using Context)
     def asSnippet: Option[String] = tree.source match
       case NoSource => None
-      case _ => Some(tree.source.content().slice(tree.sourcePos.start, tree.sourcePos.end).mkString)
+      case _        => Some(tree.source.content().slice(tree.sourcePos.start, tree.sourcePos.end).mkString)
 
 }
