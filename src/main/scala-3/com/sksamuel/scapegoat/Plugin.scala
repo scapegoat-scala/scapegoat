@@ -36,8 +36,7 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
 
   override def phaseName: String = "scapegoat"
 
-  // TODO(johan): Where is the proper type exposing this name?
-  override val runsAfter: Set[String] = Set("typer")
+  override val runsAfter: Set[String] = Set(dotty.tools.dotc.typer.TyperPhase.name)
 
   override val runsBefore: Set[String] = Set(PatternMatcher.name)
 
@@ -55,14 +54,15 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
       val errors = feedbackDotty.errors.size
       val warns = feedbackDotty.warns.size
       val infos = feedbackDotty.infos.size
-      val level: String => Diagnostic =
+      val msg = s"[scapegoat] Analysis complete: $errors errors $warns warns $infos infos"
+      val level: Diagnostic =
         if (errors > 0)
-          msg => Diagnostic.Error(msg, NoSourcePosition)
+          Diagnostic.Error(msg, NoSourcePosition)
         else if (warns > 0)
-          msg => Diagnostic.Warning(msg.toMessage, NoSourcePosition)
+          Diagnostic.Warning(msg.toMessage, NoSourcePosition)
         else
-          msg => Diagnostic.Info(msg, NoSourcePosition)
-      ctx.reporter.report(level(s"[scapegoat] Analysis complete: $errors errors $warns warns $infos infos"))
+          Diagnostic.Info(msg, NoSourcePosition)
+      ctx.reporter.report(level)
 
       val reports = configuration.reports
       writeReport(reports.disableHTML, "HTML", feedbackDotty, IOUtils.writeHTMLReport)

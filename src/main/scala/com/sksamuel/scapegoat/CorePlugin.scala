@@ -10,13 +10,12 @@ abstract trait ScapegoatBasePlugin {
 
   def disableAll: Boolean = configuration.disabledInspections.exists(_.compareToIgnoreCase("all") == 0)
 
+  private val allInspections = inspections ++ configuration.customInspectors
   def activeInspections: Seq[Inspection] = {
     if (configuration.enabledInspections.isEmpty)
-      (inspections ++ configuration.customInspectors)
-        .filterNot(inspection => configuration.disabledInspections.contains(inspection.name))
+      allInspections.filterNot(inspection => configuration.disabledInspections.contains(inspection.name))
     else
-      (inspections ++ configuration.customInspectors)
-        .filter(inspection => configuration.enabledInspections.contains(inspection.name))
+      allInspections.filter(inspection => configuration.enabledInspections.contains(inspection.name))
   }
 
 }
