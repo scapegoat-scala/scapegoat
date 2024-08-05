@@ -1,5 +1,7 @@
 package com.sksamuel.scapegoat
 
+import java.io.File
+
 import com.sksamuel.scapegoat.io.IOUtils
 import dotty.tools.dotc.ast.tpd
 import dotty.tools.dotc.core.Contexts.{ctx, Context}
@@ -9,8 +11,6 @@ import dotty.tools.dotc.reporting.Diagnostic.{Error, Info, Warning}
 import dotty.tools.dotc.transform.PatternMatcher
 import dotty.tools.dotc.typer.TyperPhase
 import dotty.tools.dotc.util.NoSourcePosition
-
-import java.io.File
 
 class ScapegoatPlugin extends StandardPlugin {
 

@@ -1,14 +1,14 @@
 package com.sksamuel.scapegoat
 
+import java.io.File
+import java.io.FileNotFoundException
+import java.nio.charset.StandardCharsets
+import java.nio.file.Files
+
 import dotty.tools.dotc.Driver
 import dotty.tools.dotc.core.Contexts
 import dotty.tools.dotc.core.Contexts.ContextBase
 import dotty.tools.dotc.plugins.{Plugin, PluginPhase, Plugins}
-
-import java.io.File
-import java.io.FileNotFoundException
-import java.nio.file.Files
-import java.nio.charset.StandardCharsets
 import dotty.tools.dotc.reporting.Reporter
 import dotty.tools.dotc.reporting.Reporter.NoReporter
 

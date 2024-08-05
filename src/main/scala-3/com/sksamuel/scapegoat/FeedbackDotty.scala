@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat
 
-import dotty.tools.dotc.core.Decorators.toMessage
 import dotty.tools.dotc.core.Contexts.Context
+import dotty.tools.dotc.core.Decorators.toMessage
 import dotty.tools.dotc.reporting.Diagnostic
 import dotty.tools.dotc.util.SourcePosition
 
