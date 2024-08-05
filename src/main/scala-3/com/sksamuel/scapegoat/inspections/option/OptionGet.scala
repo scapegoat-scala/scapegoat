@@ -7,10 +7,6 @@ import dotty.tools.dotc.core.Contexts.Context
 import dotty.tools.dotc.core.StdNames.*
 import dotty.tools.dotc.util.SourcePosition
 
-/**
- * @author
- *   Stephen Samuel
- */
 class OptionGet
     extends Inspection(
       text = "Use of Option.get",

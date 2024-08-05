@@ -54,11 +54,12 @@ class DottyRunner(val inspection: Class[? <: Inspection]) extends Driver {
       .toFile
     sourceFile.deleteOnExit()
     targetDir.deleteOnExit()
-    process(
+    val _ = process(
       Array[String](
         "-Xplugin-require:scapegoat",
         "-P:scapegoat:enabledInspections:" + inspection.getSimpleName,
         "-P:scapegoat:verbose:true",
+        "-P:scapegoat:reports:none",
         "-d",
         targetDir.getAbsolutePath,
         "-classpath",

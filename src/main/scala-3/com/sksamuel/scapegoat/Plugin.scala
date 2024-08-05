@@ -7,6 +7,7 @@ import dotty.tools.dotc.plugins.{PluginPhase, StandardPlugin}
 import dotty.tools.dotc.reporting.Diagnostic
 import dotty.tools.dotc.reporting.Diagnostic.{Error, Info, Warning}
 import dotty.tools.dotc.transform.PatternMatcher
+import dotty.tools.dotc.typer.TyperPhase
 import dotty.tools.dotc.util.NoSourcePosition
 
 import java.io.File
@@ -36,7 +37,7 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
 
   override def phaseName: String = "scapegoat"
 
-  override val runsAfter: Set[String] = Set(dotty.tools.dotc.typer.TyperPhase.name)
+  override val runsAfter: Set[String] = Set(TyperPhase.name)
 
   override val runsBefore: Set[String] = Set(PatternMatcher.name)
 
