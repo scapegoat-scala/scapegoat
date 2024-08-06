@@ -5,7 +5,7 @@ import com.sksamuel.scapegoat.{Feedback, Levels, Warning}
 object MarkdownReportWriter extends ReportWriter {
   override protected def fileName: String = "scapegoat.md"
 
-  override protected def generate(reporter: Feedback): String = {
+  override protected def generate(reporter: Feedback[_]): String = {
     s"""# Scapegoat Inspections
        |
        |**Errors**: ${reporter.warnings(Levels.Error).size.toString}
@@ -20,7 +20,7 @@ object MarkdownReportWriter extends ReportWriter {
        |""".stripMargin
   }
 
-  private def renderAll(reporter: Feedback): String =
+  private def renderAll(reporter: Feedback[_]): String =
     reporter.warningsWithMinimalLevel.map(renderWarning).mkString("\n")
 
   private def renderWarning(warning: Warning): String = {

@@ -90,7 +90,7 @@ object HtmlReportWriter extends ReportWriter {
        </style>
     </head>
 
-  private def body(reporter: Feedback): Elem =
+  private def body(reporter: Feedback[_]): Elem =
     <body>
       <h1>Scapegoat Inspections</h1>
       <h3>
@@ -137,7 +137,7 @@ object HtmlReportWriter extends ReportWriter {
     }
   }
 
-  private def toHTML(reporter: Feedback): Elem =
+  private def toHTML(reporter: Feedback[_]): Elem =
     <html>
       {header}{body(reporter)}
     </html>
@@ -145,5 +145,5 @@ object HtmlReportWriter extends ReportWriter {
   private def decorateCode(text: String): Elem =
     XML.loadString(s"<span>${text.replaceAll("`([^`]*)`", "<code>$1</code>")}</span>")
 
-  override protected def generate(feedback: Feedback): String = toHTML(feedback).toString()
+  override protected def generate(feedback: Feedback[_]): String = toHTML(feedback).toString()
 }

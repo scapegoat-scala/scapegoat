@@ -1,15 +1,12 @@
 package com.sksamuel.scapegoat
 
 import scala.collection.mutable.ListBuffer
-import scala.reflect.internal.util.Position
-import scala.tools.nsc.reporters.Reporter
 
 /**
  * @author
  *   Stephen Samuel
  */
-class Feedback(
-  reporter: Reporter,
+abstract class Feedback[T](
   configuration: Configuration
 ) {
 
@@ -27,7 +24,7 @@ class Feedback(
   def warnings(level: Level): Seq[Warning] = warnings.filter(_.level == level)
 
   def warn(
-    pos: Position,
+    pos: T,
     inspection: Inspection,
     snippet: Option[String]          = None,
     adhocExplanation: Option[String] = None
@@ -45,11 +42,11 @@ class Feedback(
       case _               => level
     }
 
-    val sourceFileFull = pos.source.file.path
+    val sourceFileFull = toSourcePath(pos)
     val sourceFileNormalized = normalizeSourceFile(sourceFileFull)
     val warning = Warning(
       text = text,
-      line = pos.line,
+      line = toSourceLine(pos),
       level = adjustedLevel,
       sourceFileFull = sourceFileFull,
       sourceFileNormalized = sourceFileNormalized,
@@ -61,43 +58,23 @@ class Feedback(
 
     if (shouldPrint(warning)) {
       val snippetText = snippet.fold("")("\n  " + _ + "\n")
-      val report = s"""[scapegoat] [$name] $text
-                      |  $explanation$snippetText""".stripMargin
+      val msg = s"""[scapegoat] [$name] $text
+                   |  $explanation$snippetText""".stripMargin
 
-      adjustedLevel match {
-        case Levels.Error   => reporter.error(pos, report)
-        case Levels.Warning => reporter.warning(pos, report)
-        case Levels.Info    => reporter.echo(pos, report)
-        case Levels.Ignore  => ()
-      }
+      report(pos, adjustedLevel, msg)
     }
   }
 
-  private def normalizeSourceFile(sourceFile: String): String = {
+  protected def toSourcePath(pos: T): String
+  protected def toSourceLine(pos: T): Int
+
+  protected def report(pos: T, level: Level, message: String): Unit
+
+  private[scapegoat] def normalizeSourceFile(sourceFile: String): String = {
     val sourcePrefix = configuration.sourcePrefix
     val indexOf = sourceFile.indexOf(sourcePrefix)
     val fullPrefix = if (sourcePrefix.endsWith("/")) sourcePrefix else s"$sourcePrefix/"
     val packageAndFile = if (indexOf == -1) sourceFile else sourceFile.drop(indexOf).drop(fullPrefix.length)
     packageAndFile.replace('/', '.').replace('\\', '.')
-  }
-}
-
-final case class Warning(
-  text: String,
-  line: Int,
-  level: Level,
-  sourceFileFull: String,
-  sourceFileNormalized: String,
-  snippet: Option[String],
-  explanation: String,
-  inspection: String
-) {
-  def hasMinimalLevelOf(minimalLevel: Level): Boolean = {
-    minimalLevel match {
-      case Levels.Ignore  => throw new IllegalArgumentException("Ignore cannot be minimal level")
-      case Levels.Info    => this.level.higherOrEqualTo(Levels.Info)
-      case Levels.Warning => this.level.higherOrEqualTo(Levels.Warning)
-      case Levels.Error   => this.level.higherOrEqualTo(Levels.Error)
-    }
   }
 }

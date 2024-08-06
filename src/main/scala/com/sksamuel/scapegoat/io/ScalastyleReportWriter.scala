@@ -11,7 +11,7 @@ object ScalastyleReportWriter extends ReportWriter {
 
   override protected val fileName = "scapegoat-scalastyle.xml"
 
-  private def toXML(feedback: Feedback): Node =
+  private def toXML(feedback: Feedback[_]): Node =
     <checkstyle version={checkstyleVersion} generatedBy={scapegoat}>
       {feedback.warningsWithMinimalLevel.groupBy(_.sourceFileFull).map(fileToXml)}
     </checkstyle>
@@ -30,5 +30,5 @@ object ScalastyleReportWriter extends ReportWriter {
       warning.inspection
     } snippet={warning.snippet.orNull} explanation={warning.explanation}></error>
 
-  override protected def generate(feedback: Feedback): String = toXML(feedback).toString()
+  override protected def generate(feedback: Feedback[_]): String = toXML(feedback).toString()
 }

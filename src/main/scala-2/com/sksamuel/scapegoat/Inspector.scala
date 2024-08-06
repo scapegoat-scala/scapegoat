@@ -3,26 +3,6 @@ package com.sksamuel.scapegoat
 import scala.reflect.internal.util.Position
 import scala.tools.nsc.Global
 
-/**
- * @author
- *   Stephen Samuel
- */
-abstract class Inspection(
-  val text: String,
-  val defaultLevel: Level,
-  val description: String,
-  val explanation: String
-) {
-
-  val self: Inspection = this
-
-  def inspector(ctx: InspectionContext): Inspector
-
-  def isEnabled: Boolean = true
-
-  def name: String = getClass.getSimpleName
-}
-
 abstract class Inspector(val context: InspectionContext) {
 
   /**
@@ -37,7 +17,7 @@ abstract class Inspector(val context: InspectionContext) {
   def postInspection(): Unit = ()
 }
 
-final case class InspectionContext(global: Global, feedback: Feedback) {
+final case class InspectionContext(global: Global, feedback: Feedback[Position]) {
 
   def warn(pos: Position, inspection: Inspection): Unit =
     feedback.warn(pos, inspection, None, None)

@@ -1,6 +1,3 @@
-// compiler plugins
-addCompilerPlugin("org.scalameta" % "semanticdb-scalac" % "4.9.9" cross CrossVersion.full)
-
 name := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
 description := "Scala compiler plugin for static code analysis"
@@ -22,8 +19,8 @@ developers := List(
   )
 )
 
-scalaVersion := "2.13.14"
-crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.13", "2.13.14")
+scalaVersion := "3.4.2"
+crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.13", "2.13.14", "3.3.3", "3.4.2")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -31,11 +28,19 @@ crossTarget := {
   target.value / s"scala-${scalaVersion.value}"
 }
 versionScheme := Some("early-semver")
+semanticdbEnabled := (scalaBinaryVersion.value == "3")
+scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
 
 // https://github.com/sksamuel/scapegoat/issues/298
 ThisBuild / useCoursier := false
 
-val scalac13Options = Seq(
+val scala2Options = Seq(
+    "-Xlint",
+    "-Xlint:adapted-args",
+    "-Xlint:nullary-unit",
+)
+
+val scalac13Options = scala2Options ++ Seq(
   "-Xlint:inaccessible",
   "-Xlint:infer-any",
   "-Xlint:strict-unsealed-patmat",
@@ -43,12 +48,20 @@ val scalac13Options = Seq(
   "-Ywarn-unused",
   "-Xsource:3"
 )
-val scalac12Options = Seq(
+val scalac12Options = scala2Options ++ Seq(
   "-Ywarn-inaccessible",
   "-Ywarn-infer-any",
   "-Xlint:nullary-override",
   "-Xmax-classfile-name",
   "254"
+)
+val scala3Options = Seq(
+  "-Ysafe-init",
+  "-Wnonunit-statement",
+  "-Wunused:all",
+  "-Wvalue-discard",
+  // Unused locals seem to wrong on Scala XML syntax
+  "-Wconf:msg=unused value of type scala.xml.NodeBuffer:silent",
 )
 
 scalacOptions := {
@@ -58,13 +71,11 @@ scalacOptions := {
     "-feature",
     "-encoding",
     "utf8",
-    "-Xlint",
-    "-Xlint:adapted-args",
-    "-Xlint:nullary-unit"
   )
   common ++ (scalaBinaryVersion.value match {
     case "2.12" => scalac12Options
     case "2.13" => scalac13Options
+    case "3"    => scala3Options
   })
 }
 javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
@@ -85,19 +96,32 @@ def check(code: String) = {
 """
 
 libraryDependencies ++= Seq(
-  "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
-  "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
   "org.scala-lang.modules" %% "scala-xml" % "2.3.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
-  "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
-  "org.scalatest" %% "scalatest"      % "3.2.19"           % "test",
-  "org.mockito"    % "mockito-all"    % "1.10.19"          % "test",
-  "joda-time"      % "joda-time"      % "2.12.7"           % "test",
-  "org.joda"       % "joda-convert"   % "2.2.3"            % "test",
-  "org.slf4j"      % "slf4j-api"      % "2.0.13"           % "test"
+  "org.scalatest" %% "scalatest"    % "3.2.19"  % "test",
+  "org.mockito"    % "mockito-all"  % "1.10.19" % "test",
+  "joda-time"      % "joda-time"    % "2.12.7"  % "test",
+  "org.joda"       % "joda-convert" % "2.2.3"   % "test",
+  "org.slf4j"      % "slf4j-api"    % "2.0.13"  % "test"
 )
+
+libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
+                           Seq(
+                             "org.scala-lang" %% "scala3-compiler" % scalaVersion.value % "provided",
+                             "org.scala-lang" %% "scala3-compiler" % scalaVersion.value % "test"
+                           )
+                         } else {
+                           Seq(
+                             "org.scala-lang" % "scala-reflect"  % scalaVersion.value % "provided",
+                             "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
+                             "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
+                             compilerPlugin(
+                               "org.scalameta" % "semanticdb-scalac" % "4.9.9" cross CrossVersion.full
+                             )
+                           )
+                         })
 
 // Test
 Test / run / fork := true

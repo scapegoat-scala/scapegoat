@@ -12,7 +12,7 @@ object XmlReportWriter extends ReportWriter {
 
   override protected val fileName = "scapegoat.xml"
 
-  private def toXML(feedback: Feedback): Node = {
+  private def toXML(feedback: Feedback[_]): Node = {
     <scapegoat count={feedback.warnings.size.toString} warns={feedback.warns.size.toString} errors={
       feedback.errors.size.toString
     } infos={feedback.infos.size.toString}>
@@ -25,5 +25,5 @@ object XmlReportWriter extends ReportWriter {
       warning.explanation
     } level={warning.level.toString} file={warning.sourceFileNormalized} inspection={warning.inspection}/>
 
-  override protected def generate(feedback: Feedback): String = toXML(feedback).toString()
+  override protected def generate(feedback: Feedback[_]): String = toXML(feedback).toString()
 }
