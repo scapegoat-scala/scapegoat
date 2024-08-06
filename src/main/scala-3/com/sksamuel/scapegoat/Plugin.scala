@@ -3,6 +3,7 @@ package com.sksamuel.scapegoat
 import java.io.File
 
 import com.sksamuel.scapegoat.io.IOUtils
+import dotty.tools.dotc.CompilationUnit
 import dotty.tools.dotc.ast.tpd
 import dotty.tools.dotc.core.Contexts.Context
 import dotty.tools.dotc.plugins.{PluginPhase, StandardPlugin}
@@ -11,7 +12,6 @@ import dotty.tools.dotc.reporting.Diagnostic.{Error, Info, Warning}
 import dotty.tools.dotc.transform.PatternMatcher
 import dotty.tools.dotc.typer.TyperPhase
 import dotty.tools.dotc.util.NoSourcePosition
-import dotty.tools.dotc.CompilationUnit
 
 class ScapegoatPlugin extends StandardPlugin {
 
