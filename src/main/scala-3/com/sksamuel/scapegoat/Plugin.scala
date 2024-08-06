@@ -4,13 +4,14 @@ import java.io.File
 
 import com.sksamuel.scapegoat.io.IOUtils
 import dotty.tools.dotc.ast.tpd
-import dotty.tools.dotc.core.Contexts.{ctx, Context}
+import dotty.tools.dotc.core.Contexts.Context
 import dotty.tools.dotc.plugins.{PluginPhase, StandardPlugin}
 import dotty.tools.dotc.reporting.Diagnostic
 import dotty.tools.dotc.reporting.Diagnostic.{Error, Info, Warning}
 import dotty.tools.dotc.transform.PatternMatcher
 import dotty.tools.dotc.typer.TyperPhase
 import dotty.tools.dotc.util.NoSourcePosition
+import dotty.tools.dotc.CompilationUnit
 
 class ScapegoatPlugin extends StandardPlugin {
 
@@ -41,16 +42,22 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
 
   override val runsBefore: Set[String] = Set(PatternMatcher.name)
 
-  override def run(using Context): Unit = {
-
+  override def runOn(units: List[CompilationUnit])(using runCtx: Context): List[CompilationUnit] = {
     import dotty.tools.dotc.core.Decorators.toMessage
 
     if (disableAll) {
-      ctx.reporter.report(Info("[scapegoat] All inspections disabled", NoSourcePosition))
+      runCtx.reporter.report(Info("[scapegoat] All inspections disabled", NoSourcePosition))
+      units
     } else {
+      if (configuration.verbose) {
+        runCtx.reporter.report(
+          Info(s"Running with ${activeInspections.size} active inspections", NoSourcePosition)
+        )
+      }
+
       val feedbackDotty = new FeedbackDotty(configuration)
       feedback = Some(feedbackDotty)
-      super.run
+      val ran = super.runOn(units)
 
       val errors = feedbackDotty.errors.size
       val warns = feedbackDotty.warns.size
@@ -63,7 +70,7 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
           Diagnostic.Warning(msg.toMessage, NoSourcePosition)
         else
           Diagnostic.Info(msg, NoSourcePosition)
-      ctx.reporter.report(level)
+      runCtx.reporter.report(level)
 
       val reports = configuration.reports
       writeReport(reports.disableHTML, "HTML", feedbackDotty, IOUtils.writeHTMLReport)
@@ -81,15 +88,13 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
         feedbackDotty,
         IOUtils.writeGitlabCodeQualityReport
       )
+
+      ran
     }
   }
 
   override def transformUnit(tree: tpd.Tree)(using ctx: Context): tpd.Tree = {
-    val inspections = activeInspections
-    if (configuration.verbose) {
-      ctx.reporter.report(Info(s"Running with ${inspections.size} active inspections", NoSourcePosition))
-    }
-    inspections.foreach { inspection =>
+    activeInspections.foreach { inspection =>
       feedback.foreach(f => inspection.inspect(f, tree))
     }
     tree
