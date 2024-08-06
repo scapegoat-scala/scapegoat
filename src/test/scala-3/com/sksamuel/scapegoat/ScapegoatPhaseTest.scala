@@ -40,13 +40,13 @@ class ScapegoatPhaseTest extends AnyFreeSpec with should.Matchers {
   "ScapegoatPhase" - {
 
     "be disablable" in {
-        val (outputDir, config) = configuration(reports = noReports.copy(disableHTML = false))
-        val phase = new ScapegoatPhase(config.copy(disabledInspections = List("all")), Nil)
-        implicit val ctx: Context = (new ContextBase).initialCtx
+      val (outputDir, config) = configuration(reports = noReports.copy(disableHTML = false))
+      val phase = new ScapegoatPhase(config.copy(disabledInspections = List("all")), Nil)
+      implicit val ctx: Context = (new ContextBase).initialCtx
 
-        val _ = phase.runOn(Nil)
+      val _ = phase.runOn(Nil)
 
-        assert(outputDir.listFiles().size === 0)
+      assert(outputDir.listFiles().size === 0)
     }
 
     "generate reports" - {
