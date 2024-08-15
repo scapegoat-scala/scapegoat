@@ -19,8 +19,8 @@ developers := List(
   )
 )
 
-scalaVersion := "3.4.2"
-crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.13", "2.13.14", "3.3.3", "3.4.2")
+scalaVersion := "3.4.3"
+crossScalaVersions := Seq("2.12.18", "2.12.19", "2.13.13", "2.13.14", "3.3.3", "3.4.3")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -35,9 +35,9 @@ scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf
 ThisBuild / useCoursier := false
 
 val scala2Options = Seq(
-    "-Xlint",
-    "-Xlint:adapted-args",
-    "-Xlint:nullary-unit",
+  "-Xlint",
+  "-Xlint:adapted-args",
+  "-Xlint:nullary-unit"
 )
 
 val scalac13Options = scala2Options ++ Seq(
@@ -61,7 +61,7 @@ val scala3Options = Seq(
   "-Wunused:all",
   "-Wvalue-discard",
   // Unused locals seem to wrong on Scala XML syntax
-  "-Wconf:msg=unused value of type scala.xml.NodeBuffer:silent",
+  "-Wconf:msg=unused value of type scala.xml.NodeBuffer:silent"
 )
 
 scalacOptions := {
@@ -70,7 +70,7 @@ scalacOptions := {
     "-deprecation",
     "-feature",
     "-encoding",
-    "utf8",
+    "utf8"
   )
   common ++ (scalaBinaryVersion.value match {
     case "2.12" => scalac12Options
