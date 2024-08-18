@@ -35,9 +35,9 @@ scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf
 ThisBuild / useCoursier := false
 
 val scala2Options = Seq(
-    "-Xlint",
-    "-Xlint:adapted-args",
-    "-Xlint:nullary-unit",
+  "-Xlint",
+  "-Xlint:adapted-args",
+  "-Xlint:nullary-unit"
 )
 
 val scalac13Options = scala2Options ++ Seq(
@@ -61,7 +61,7 @@ val scala3Options = Seq(
   "-Wunused:all",
   "-Wvalue-discard",
   // Unused locals seem to wrong on Scala XML syntax
-  "-Wconf:msg=unused value of type scala.xml.NodeBuffer:silent",
+  "-Wconf:msg=unused value of type scala.xml.NodeBuffer:silent"
 )
 
 scalacOptions := {
@@ -70,7 +70,7 @@ scalacOptions := {
     "-deprecation",
     "-feature",
     "-encoding",
-    "utf8",
+    "utf8"
   )
   common ++ (scalaBinaryVersion.value match {
     case "2.12" => scalac12Options
@@ -104,7 +104,7 @@ libraryDependencies ++= Seq(
   "org.mockito"    % "mockito-all"  % "1.10.19" % "test",
   "joda-time"      % "joda-time"    % "2.12.7"  % "test",
   "org.joda"       % "joda-convert" % "2.2.3"   % "test",
-  "org.slf4j"      % "slf4j-api"    % "2.0.13"  % "test"
+  "org.slf4j"      % "slf4j-api"    % "2.0.16"  % "test"
 )
 
 libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
