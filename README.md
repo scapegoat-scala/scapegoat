@@ -283,6 +283,7 @@ An overview list is given, followed by a more detailed description of each inspe
 | VariableShadowing                     | Checks for multiple uses of the variable name in nested scopes                                                                                               | Warning       | Yes     | No      |
 | WhileTrue                             | Checks for code that uses a `while(true)` or `do { } while(true)` block.                                                                                     | Warning       | Yes     | No      |
 | ZeroNumerator                         | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0`                                                                                | Warning       | Yes     | No      |
+| AbstractTrait                         | Check if trat is abstract                                                                                                                                    | Info          | Yes     | No      | 
 
 ##### Arrays to string
 
