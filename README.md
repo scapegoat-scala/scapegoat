@@ -162,6 +162,7 @@ An overview list is given, followed by a more detailed description of each inspe
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level | Scala 2 | Scala 3 |
 |---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|---------|---------|
+| AbstractTrait                         | Check if trait is abstract                                                                                                                                   | Info          | Yes     | No      |
 | ArrayEquals                           | Checks for comparison of arrays using `==` which will always return false                                                                                    | Info          | Yes     | No      |
 | ArraysInFormat                        | Checks for arrays passed to String.format                                                                                                                    | Error         | Yes     | No      |
 | ArraysToString                        | Checks for explicit toString calls on arrays                                                                                                                 | Warning       | Yes     | No      |
@@ -283,7 +284,6 @@ An overview list is given, followed by a more detailed description of each inspe
 | VariableShadowing                     | Checks for multiple uses of the variable name in nested scopes                                                                                               | Warning       | Yes     | No      |
 | WhileTrue                             | Checks for code that uses a `while(true)` or `do { } while(true)` block.                                                                                     | Warning       | Yes     | No      |
 | ZeroNumerator                         | Checks for dividing by 0 by a number, eg `0 / x` which will always return `0`                                                                                | Warning       | Yes     | No      |
-| AbstractTrait                         | Check if trait is abstract                                                                                                                                   | Info          | Yes     | No      |
 
 ##### Arrays to string
 
