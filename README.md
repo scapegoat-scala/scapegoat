@@ -157,11 +157,12 @@ To suppress warnings globally for the project, use `disabledInspections` or `ove
 
 ### Inspections
 
-There are currently 121 inspections for Scala 2, and 1 for Scala 3.
+There are currently 122 inspections for Scala 2, and 1 for Scala 3.
 An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level | Scala 2 | Scala 3 |
 |---------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|---------|---------|
+| AbstractTrait                         | Check if trait is abstract                                                                                                                                   | Info          | Yes     | No      |
 | ArrayEquals                           | Checks for comparison of arrays using `==` which will always return false                                                                                    | Info          | Yes     | No      |
 | ArraysInFormat                        | Checks for arrays passed to String.format                                                                                                                    | Error         | Yes     | No      |
 | ArraysToString                        | Checks for explicit toString calls on arrays                                                                                                                 | Warning       | Yes     | No      |
