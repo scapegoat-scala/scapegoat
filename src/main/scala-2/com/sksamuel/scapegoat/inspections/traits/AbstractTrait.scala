@@ -1,6 +1,6 @@
 package com.sksamuel.scapegoat.inspections.traits
 
-import com.sksamuel.scapegoat.*
+import com.sksamuel.scapegoat._
 
 class AbstractTrait
   extends Inspection(
