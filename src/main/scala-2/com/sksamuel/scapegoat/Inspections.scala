@@ -27,6 +27,7 @@ object Inspections extends App {
 
   def inspections: Seq[Inspection] =
     Seq(
+      new AvoidRequire,
       new ArrayEquals,
       new ArraysInFormat,
       new ArraysToString,
