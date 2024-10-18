@@ -6,7 +6,7 @@ class AvoidRequire extends
   Inspection(
     text = "Use of require",
     defaultLevel = Levels.Warning,
-    description = "Use require in code",
+    description = "Use require in code.",
     explanation = "Using require throws an untyped Exception."
   ) {
 

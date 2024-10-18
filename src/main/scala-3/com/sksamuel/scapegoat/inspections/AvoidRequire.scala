@@ -12,7 +12,7 @@ class AvoidRequire
   extends Inspection(
     text = "Use of require",
     defaultLevel = Levels.Warning,
-    description = "Use require in code",
+    description = "Use require in code.",
     explanation = "Using require throws an untyped Exception."
   ) {
 
@@ -22,7 +22,7 @@ class AvoidRequire
     val traverser = new InspectionTraverser {
       def traverse(tree: Tree)(using Context): Unit = {
         tree match {
-          case f @ Apply(ident: Ident, _) if ident.name.toString == "require" =>
+          case f@Apply(ident: Ident, _) if ident.name.toString == "require" =>
             ident.tpe.normalizedPrefix match {
               case TermRef(tx, nm: Symbol)
                 if nm.toString == "object Predef" &&
