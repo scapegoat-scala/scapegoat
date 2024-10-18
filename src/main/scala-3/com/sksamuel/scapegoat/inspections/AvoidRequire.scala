@@ -4,8 +4,8 @@ import com.sksamuel.scapegoat.*
 import dotty.tools.dotc.ast.Trees.*
 import dotty.tools.dotc.ast.tpd
 import dotty.tools.dotc.core.Contexts.Context
-import dotty.tools.dotc.core.Types.TermRef
 import dotty.tools.dotc.core.Symbols.Symbol
+import dotty.tools.dotc.core.Types.TermRef
 import dotty.tools.dotc.util.SourcePosition
 
 class AvoidRequire
