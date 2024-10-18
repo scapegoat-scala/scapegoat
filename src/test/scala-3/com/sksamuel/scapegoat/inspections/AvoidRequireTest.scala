@@ -1,9 +1,8 @@
 package com.sksamuel.scapegoat.inspections
 
-import com.sksamuel.scapegoat.{Inspection, InspectionTest}
+import com.sksamuel.scapegoat.InspectionTest
 
-class AvoidRequireTest extends InspectionTest {
-  override val inspections = Seq[Inspection](new AvoidRequire)
+class AvoidRequireTest extends InspectionTest(classOf[AvoidRequire]) {
 
   "require use" - {
     "should return warning in method" in {
@@ -17,8 +16,8 @@ class AvoidRequireTest extends InspectionTest {
           }
           """.stripMargin
 
-      compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 1
+      val feedback = runner.compileCodeSnippet(code)
+      feedback.warnings.assertable.size shouldBe 1
     }
 
     "should return warning in class" in {
@@ -29,8 +28,8 @@ class AvoidRequireTest extends InspectionTest {
           }
           """.stripMargin
 
-      compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 1
+      val feedback = runner.compileCodeSnippet(code)
+      feedback.warnings.assertable.size shouldBe 1
     }
 
     "should not return warnin on own require method" in {
@@ -45,8 +44,8 @@ class AvoidRequireTest extends InspectionTest {
           }
           """.stripMargin
 
-      compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 0
+      val feedback = runner.compileCodeSnippet(code)
+      feedback.warnings.assertable.size shouldBe 0
     }
 
     "should not return warning if no require" in {
@@ -55,8 +54,9 @@ class AvoidRequireTest extends InspectionTest {
           class Test(val x: Int) { }
           """.stripMargin
 
-      compileCodeSnippet(code)
-      compiler.scapegoat.feedback.warnings.size shouldBe 0
+      val feedback = runner.compileCodeSnippet(code)
+      feedback.warnings.assertable.size shouldBe 0
     }
   }
+
 }
