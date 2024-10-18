@@ -4,8 +4,8 @@ import com.sksamuel.scapegoat.*
 import dotty.tools.dotc.ast.tpd
 import dotty.tools.dotc.core.Contexts.Context
 import dotty.tools.dotc.core.Flags
-import dotty.tools.dotc.core.Types.TypeRef
 import dotty.tools.dotc.core.Symbols.ClassSymbol
+import dotty.tools.dotc.core.Types.TypeRef
 import dotty.tools.dotc.util.SourcePosition
 
 class AbstractTrait
