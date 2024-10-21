@@ -32,7 +32,7 @@ class AvoidRequireTest extends InspectionTest(classOf[AvoidRequire]) {
       feedback.warnings.assertable.size shouldBe 1
     }
 
-    "should not return warnin on own require method" in {
+    "should not return warning on own require method" in {
       val code =
         """
           object T {

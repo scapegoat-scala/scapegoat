@@ -22,7 +22,7 @@ class AvoidRequire
     val traverser = new InspectionTraverser {
       def traverse(tree: Tree)(using Context): Unit = {
         tree match {
-          case f@Apply(ident: Ident, _) if ident.name.toString == "require" =>
+          case Apply(ident: Ident, _) if ident.name.toString == "require" =>
             ident.tpe.normalizedPrefix match {
               case TermRef(tx, nm: Symbol)
                 if nm.toString == "object Predef" &&
