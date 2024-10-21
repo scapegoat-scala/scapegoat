@@ -157,7 +157,7 @@ To suppress warnings globally for the project, use `disabledInspections` or `ove
 
 ### Inspections
 
-There are currently 122 inspections for Scala 2, and 2 for Scala 3.
+There are currently 123 inspections for Scala 2, and 3 for Scala 3.
 An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level | Scala 2 | Scala 3 |
@@ -168,6 +168,7 @@ An overview list is given, followed by a more detailed description of each inspe
 | ArraysToString                        | Checks for explicit toString calls on arrays                                                                                                                 | Warning       | Yes     | No      |
 | AsInstanceOf                          | Checks for use of `asInstanceOf`                                                                                                                             | Warning       | Yes     | No      |
 | AvoidOperatorOverload                 | Checks for mental symbolic method names                                                                                                                      | Info          | Yes     | No      |
+| AvoidRequire                          | Use of require                                                                                                                                               | Warning       | Yes     | Yes     |
 | AvoidSizeEqualsZero                   | Traversable.size can be slow for some data structure, prefer .isEmpty                                                                                        | Warning       | Yes     | No      |
 | AvoidSizeNotEqualsZero                | Traversable.size can be slow for some data structure, prefer .nonEmpty                                                                                       | Warning       | Yes     | No      |
 | AvoidToMinusOne                       | Checks for loops that use `x to n-1` instead of `x until n`                                                                                                  | Info          | Yes     | No      |
