@@ -127,14 +127,14 @@ class VariableShadowingTest extends InspectionTest {
 
       "when two sibling cases define the same local variable" in {
         val code = """class Test {
-                     |  val possibility: Option[Int] = Some(3) 
+                     |  val possibility: Option[Int] = Some(3)
                      |  possibility match {
-                     |    case Some(x) => 
-                     |      val y = x + 1    
+                     |    case Some(x) =>
+                     |      val y = x + 1
                      |      println(y)
                      |    case None =>
                      |      val y = 0
-                     |      println(y)     
+                     |      println(y)
                      |  }
                      |}""".stripMargin
 
@@ -225,7 +225,7 @@ class VariableShadowingTest extends InspectionTest {
         val code = """object Test {
                      |  for {
                      |    _ <- Right("something")
-                     |    _ <- Right("something")
+                     |    _ <- Right("something2")
                      |  } yield ()
                      |}""".stripMargin
         compileCodeSnippet(code)
