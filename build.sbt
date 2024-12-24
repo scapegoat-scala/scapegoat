@@ -56,7 +56,7 @@ val scalac12Options = scala2Options ++ Seq(
   "254"
 )
 val scala3Options = Seq(
-  "-Ysafe-init",
+  "-Wsafe-init",
   "-Wnonunit-statement",
   "-Wunused:all",
   "-Wvalue-discard",
