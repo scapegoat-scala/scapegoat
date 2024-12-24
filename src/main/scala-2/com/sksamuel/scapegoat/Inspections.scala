@@ -16,6 +16,7 @@ import com.sksamuel.scapegoat.inspections.option._
 import com.sksamuel.scapegoat.inspections.string._
 import com.sksamuel.scapegoat.inspections.style._
 import com.sksamuel.scapegoat.inspections.unneccesary._
+import com.sksamuel.scapegoat.inspections.traits._
 import com.sksamuel.scapegoat.inspections.unsafe._
 
 /**
@@ -26,6 +27,7 @@ object Inspections extends App {
 
   def inspections: Seq[Inspection] =
     Seq(
+      new AvoidRequire,
       new ArrayEquals,
       new ArraysInFormat,
       new ArraysToString,
@@ -146,6 +148,7 @@ object Inspections extends App {
       new VarClosure,
       new VarCouldBeVal,
       new WhileTrue,
-      new ZeroNumerator
+      new ZeroNumerator,
+      new AbstractTrait
     )
 }

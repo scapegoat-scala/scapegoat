@@ -32,7 +32,6 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
     extends PluginPhase
     with ScapegoatBasePlugin {
 
-
   private[scapegoat] var feedback: Option[FeedbackDotty] = None
 
   override def phaseName: String = "scapegoat"
