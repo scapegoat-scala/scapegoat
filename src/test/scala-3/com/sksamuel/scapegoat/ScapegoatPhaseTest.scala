@@ -1,99 +1,71 @@
 package com.sksamuel.scapegoat
 
-import java.io.File
-import java.nio.file.Files
+import java.io.{File, FilenameFilter}
 
-import dotty.tools.dotc.core.Contexts.Context
-import dotty.tools.dotc.core.Contexts.ContextBase
+import com.sksamuel.scapegoat.inspections.option.OptionGet
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should
 
 class ScapegoatPhaseTest extends AnyFreeSpec with should.Matchers {
 
-  private def configuration(reports: Reports): (File, Configuration) = {
-    val tmpDir = Files.createTempDirectory("scapegoat").toFile
-    tmpDir.deleteOnExit()
-    val configuration = Configuration(
-      dataDir = Some(tmpDir),
-      disabledInspections = Nil,
-      enabledInspections = Nil,
-      ignoredFiles = Nil,
-      consoleOutput = false,
-      verbose = true,
-      reports = reports,
-      customInspectors = Nil,
-      sourcePrefix = "",
-      minimalLevel = Levels.Info,
-      overrideLevels = Map.empty
+  private def runDotty(report: String, disabledAll: Boolean = false): File = {
+    val targetFolder = DottyRunner.createTempDataDir()
+    val dotty = new DottyRunner(
+      classOf[OptionGet],
+      report,
+      if (disabledAll) List("all") else List("none"),
+      () => targetFolder
     )
-    (tmpDir, configuration)
+    val _ = dotty.compileCodeSnippet("class Test {}")
+    targetFolder
   }
 
-  private val noReports = Reports(
-    disableXML = true,
-    disableHTML = true,
-    disableScalastyleXML = true,
-    disableMarkdown = true,
-    disableGitlabCodeQuality = true
-  )
+  private val reportFilter = new FilenameFilter {
+    private val reportExtensions = "html" :: "xml" :: "md" :: "json" :: Nil
+    override def accept(dir: File, name: String): Boolean = reportExtensions.exists(name.endsWith)
+  }
 
   "ScapegoatPhase" - {
 
     "be disablable" in {
-      val (outputDir, config) = configuration(reports = noReports.copy(disableHTML = false))
-      val phase = new ScapegoatPhase(config.copy(disabledInspections = List("all")), Nil)
-      implicit val ctx: Context = (new ContextBase).initialCtx
-
-      val _ = phase.runOn(Nil)
-
-      assert(outputDir.listFiles().size === 0)
+      val outputDir = runDotty("html", true)
+      outputDir.listFiles(reportFilter) should contain theSameElementsAs (Array.empty[File])
     }
 
     "generate reports" - {
       "should generate html report" in {
-        val (outputDir, config) = configuration(reports = noReports.copy(disableHTML = false))
-        val phase = new ScapegoatPhase(config, Nil)
-        implicit val ctx: Context = (new ContextBase).initialCtx
-
-        val _ = phase.runOn(Nil)
-
-        assert(new File(outputDir, "scapegoat.html").exists() === true)
+        val outputDir = runDotty("html")
+        outputDir.listFiles(reportFilter) should contain theSameElementsAs (Array(
+          new File(outputDir, "scapegoat.html")
+        ))
       }
+
       "should generate xml report" in {
-        val (outputDir, config) = configuration(reports = noReports.copy(disableXML = false))
-        val phase = new ScapegoatPhase(config, Nil)
-        implicit val ctx: Context = (new ContextBase).initialCtx
-
-        val _ = phase.runOn(Nil)
-
-        assert(new File(outputDir, "scapegoat.xml").exists() === true)
+        val outputDir = runDotty("xml")
+        outputDir.listFiles(reportFilter) should contain theSameElementsAs (Array(
+          new File(outputDir, "scapegoat.xml")
+        ))
       }
+
       "should generate scalastyle report" in {
-        val (outputDir, config) = configuration(reports = noReports.copy(disableScalastyleXML = false))
-        val phase = new ScapegoatPhase(config, Nil)
-        implicit val ctx: Context = (new ContextBase).initialCtx
-
-        val _ = phase.runOn(Nil)
-
-        assert(new File(outputDir, "scapegoat-scalastyle.xml").exists() === true)
+        val outputDir = runDotty("scalastyle")
+        outputDir.listFiles(reportFilter) should contain theSameElementsAs (Array(
+          new File(outputDir, "scapegoat-scalastyle.xml")
+        ))
       }
+
       "should generate markdown report" in {
-        val (outputDir, config) = configuration(reports = noReports.copy(disableMarkdown = false))
-        val phase = new ScapegoatPhase(config, Nil)
-        implicit val ctx: Context = (new ContextBase).initialCtx
-
-        val _ = phase.runOn(Nil)
-
-        assert(new File(outputDir, "scapegoat.md").exists() === true)
+        val outputDir = runDotty("markdown")
+        outputDir.listFiles(reportFilter) should contain theSameElementsAs (Array(
+          new File(outputDir, "scapegoat.md")
+        ))
       }
+
       "should generate gitlab code quality report" in {
-        val (outputDir, config) = configuration(reports = noReports.copy(disableGitlabCodeQuality = false))
-        val phase = new ScapegoatPhase(config, Nil)
-        implicit val ctx: Context = (new ContextBase).initialCtx
-
-        val _ = phase.runOn(Nil)
-
-        assert(new File(outputDir, "scapegoat-gitlab.json").exists() === true)
+        val outputDir = runDotty("gitlab-codequality")
+        outputDir.listFiles(reportFilter) should contain theSameElementsAs (Array(
+          new File(outputDir, "scapegoat-gitlab.json")
+        ))
       }
     }
   }

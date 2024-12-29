@@ -5,6 +5,7 @@ import java.io.FileNotFoundException
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 
+import com.sksamuel.scapegoat.TestingScapegoatPlugin.emptyFeedback
 import dotty.tools.dotc.Driver
 import dotty.tools.dotc.core.Contexts
 import dotty.tools.dotc.core.Contexts.ContextBase
@@ -22,8 +23,26 @@ class TestingScapegoatPlugin extends ScapegoatPlugin {
     phases
   }
 
-  def feedback: FeedbackDotty = scapegoatPhase.get.feedback.get
+  def feedback: FeedbackDotty = scapegoatPhase.get.feedback.getOrElse(emptyFeedback)
 
+}
+
+object TestingScapegoatPlugin {
+  final val emptyFeedback: FeedbackDotty = FeedbackDotty(
+    Configuration(
+      dataDir = None,
+      disabledInspections = Nil,
+      enabledInspections = Nil,
+      ignoredFiles = Nil,
+      consoleOutput = false,
+      verbose = false,
+      reports = Reports(true, true, true, true, true),
+      customInspectors = Seq.empty,
+      sourcePrefix = "src/main/scala",
+      minimalLevel = Levels.Info,
+      overrideLevels = Map.empty
+    )
+  )(using Contexts.NoContext)
 }
 
 class TestingScapegoat extends ContextBase with Plugins {
@@ -36,7 +55,12 @@ class TestingScapegoat extends ContextBase with Plugins {
   def feedback: FeedbackDotty = scapegoat.feedback
 }
 
-class DottyRunner(val inspection: Class[? <: Inspection]) extends Driver {
+class DottyRunner(
+  val inspection: Class[? <: Inspection],
+  reports: String                   = "none",
+  disabledInspections: List[String] = List("none"),
+  createDataDir: () => File         = DottyRunner.createTempDataDir
+) extends Driver {
 
   private val dottyVersion: String = dotty.tools.dotc.config.Properties.versionNumberString
   private val scalaVersion: String = util.Properties.versionNumberString
@@ -48,18 +72,19 @@ class DottyRunner(val inspection: Class[? <: Inspection]) extends Driver {
   override protected def initCtx: Contexts.Context = testingContext.initialCtx
 
   def compileCodeSnippet(source: String): FeedbackDotty = {
-    val targetDir = Files.createTempDirectory("scapegoat").toFile
+    val targetDir = createDataDir()
     val sourceFile = Files
       .write(Files.createTempFile("scapegoat_snippet", ".scala"), source.getBytes(StandardCharsets.UTF_8))
       .toFile
     sourceFile.deleteOnExit()
-    targetDir.deleteOnExit()
     val _ = process(
       Array[String](
         "-Xplugin-require:scapegoat",
         "-P:scapegoat:enabledInspections:" + inspection.getSimpleName,
+        "-P:scapegoat:disabledInspections:" + disabledInspections.mkString(":"),
         "-P:scapegoat:verbose:true",
-        "-P:scapegoat:reports:none",
+        s"-P:scapegoat:reports:$reports",
+        s"-P:scapegoat:dataDir:${targetDir.getAbsolutePath}",
         "-d",
         targetDir.getAbsolutePath,
         "-classpath",
@@ -93,6 +118,16 @@ class DottyRunner(val inspection: Class[? <: Inspection]) extends Driver {
     val dir = new File("./target/scala-" + dottyVersion + "/classes")
     if (dir.exists) dir
     else throw new FileNotFoundException(s"Could not locate SBT compile directory for plugin files [$dir]")
+  }
+
+}
+
+object DottyRunner {
+
+  def createTempDataDir(): File = {
+    val targetDir = Files.createTempDirectory("scapegoat").toFile
+    targetDir.deleteOnExit()
+    targetDir
   }
 
 }
