@@ -49,7 +49,7 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
     } else {
       if (configuration.verbose) {
         runCtx.reporter.report(
-          Info(s"Running with ${activeInspections.size} active inspections", NoSourcePosition)
+          Info(s"[scapegoat] Running with ${activeInspections.size} active inspections", NoSourcePosition)
         )
       }
 
