@@ -57,6 +57,8 @@ jobs:
       - uses: codecov/codecov-action@v4
       - name: Run Scalafix check
         run: sbt fixCheck
+      - name: Check formatting
+        run: sbt scalafmtCheckAll
       - name: Run Scapegoat
         run: |
           sbt 'set version := "99.0-SNAPSHOT"; publishLocal'

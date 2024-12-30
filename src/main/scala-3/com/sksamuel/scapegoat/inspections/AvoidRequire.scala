@@ -9,12 +9,12 @@ import dotty.tools.dotc.core.Types.TermRef
 import dotty.tools.dotc.util.SourcePosition
 
 class AvoidRequire
-  extends Inspection(
-    text = "Use of require",
-    defaultLevel = Levels.Warning,
-    description = "Use require in code.",
-    explanation = "Using require throws an untyped Exception."
-  ) {
+    extends Inspection(
+      text = "Use of require",
+      defaultLevel = Levels.Warning,
+      description = "Use require in code.",
+      explanation = "Using require throws an untyped Exception."
+    ) {
 
   import tpd.*
 
@@ -25,10 +25,10 @@ class AvoidRequire
           case Apply(ident: Ident, _) if ident.name.toString == "require" =>
             ident.tpe.normalizedPrefix match {
               case TermRef(tx, nm: Symbol)
-                if nm.toString == "object Predef" &&
-                  tx.normalizedPrefix.typeSymbol.name.toString == "<root>" =>
+                  if nm.toString == "object Predef" &&
+                    tx.normalizedPrefix.typeSymbol.name.toString == "<root>" =>
                 feedback.warn(tree.sourcePos, self, tree.asSnippet)
-              case x =>
+              case _ =>
             }
           case _ => traverseChildren(tree)
         }
