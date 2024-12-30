@@ -31,7 +31,9 @@ class VariableShadowing
             tree match {
               case Block(_, _) | ClassDef(_, _, _, Template(_, _, _)) | ModuleDef(_, _, Template(_, _, _)) |
                   Function(_, _) =>
-                enter(); continue(tree); exit()
+                enter()
+                continue(tree)
+                exit()
               case DefDef(_, name, _, vparamss, _, rhs) =>
                 enter()
                 // For case classes there's a synthetic constructor (not marked as <synthentic>) which takes
@@ -40,13 +42,13 @@ class VariableShadowing
                   vparamss.foreach(_.foreach(inspect))
                 inspect(rhs)
                 exit()
-              case ValDef(_, TermName(name), _, _) =>
+              case ValDef(_, TermName(name), _, _) if name != "_" =>
                 if (isDefined(name)) context.warn(tree.pos, self, tree.toString.take(200))
                 contexts.headOption.foreach(_.append(name.trim))
               case Match(_, cases) =>
                 cases.foreach {
-                  case CaseDef(Bind(name, _), _, _) =>
-                    if (isDefined(name.toString)) context.warn(tree.pos, self, tree.toString.take(200))
+                  case CaseDef(Bind(name, _), _, _) if isDefined(name.toString) =>
+                    context.warn(tree.pos, self, tree.toString.take(200))
                   case _ => // do nothing
                 }
                 continue(tree)
