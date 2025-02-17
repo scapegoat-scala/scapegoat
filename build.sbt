@@ -118,7 +118,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.12.7" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.13.1.1" cross CrossVersion.full
                              )
                            )
                          })
