@@ -5,7 +5,7 @@ on:
     tags: ["*"]
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: github.repository == 'scapegoat-scala/scapegoat'
     steps:
       - uses: actions/checkout@v4

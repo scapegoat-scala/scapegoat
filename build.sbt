@@ -19,8 +19,8 @@ developers := List(
   )
 )
 
-scalaVersion := "3.6.2"
-crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.15", "2.13.16", "3.3.4", "3.6.2")
+scalaVersion := "3.6.3"
+crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.15", "2.13.16", "3.3.5", "3.6.3")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -97,14 +97,14 @@ def check(code: String) = {
 
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-xml" % "2.3.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.12.0" excludeAll ExclusionRule(organization =
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.13.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
   "org.scalatest" %% "scalatest"    % "3.2.19"  % "test",
   "org.mockito"    % "mockito-all"  % "1.10.19" % "test",
-  "joda-time"      % "joda-time"    % "2.13.0"  % "test",
+  "joda-time"      % "joda-time"    % "2.13.1"  % "test",
   "org.joda"       % "joda-convert" % "3.0.1"   % "test",
-  "org.slf4j"      % "slf4j-api"    % "2.0.16"  % "test"
+  "org.slf4j"      % "slf4j-api"    % "2.0.17"  % "test"
 )
 
 libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
@@ -118,7 +118,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.12.4" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.13.2" cross CrossVersion.full
                              )
                            )
                          })
