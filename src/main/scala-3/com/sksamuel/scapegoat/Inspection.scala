@@ -11,7 +11,7 @@ abstract class Inspection(
   val explanation: String
 ) extends InspectionBase {
 
-  val self: Inspection = this
+  implicit val self: Inspection = this
 
   def inspect(feedback: Feedback[SourcePosition], tree: tpd.Tree)(using Context): Unit
 

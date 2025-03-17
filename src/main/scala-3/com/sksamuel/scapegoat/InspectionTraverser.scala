@@ -10,7 +10,7 @@ import dotty.tools.dotc.core.Symbols
 import dotty.tools.dotc.core.Symbols.requiredClass
 import dotty.tools.dotc.util.NoSource
 
-abstract class InspectionTraverser extends TreeTraverser {
+abstract class InspectionTraverser(using inspection: Inspection) extends TreeTraverser {
 
   override protected def traverseChildren(tree: tpd.Tree)(using Context): Unit = {
     if (!isSuppressed(tree)) {
@@ -19,22 +19,27 @@ abstract class InspectionTraverser extends TreeTraverser {
   }
 
   private def isSuppressed(t: tpd.Tree)(using Context): Boolean = {
-    t.symbol.getAnnotation(requiredClass("java.lang.SuppressWarnings")).flatMap(_.argument(0)) match {
+    val symbol = t.symbol
+    val annotation = symbol.getAnnotation(requiredClass("java.lang.SuppressWarnings"))
+    val arg = annotation.flatMap(_.argument(0)).map(extractArg)
+    val inspectionName = inspection.getClass.getSimpleName
+    arg match {
       case Some(
-            NamedArg(
-              _,
-              Apply(
-                Apply(TypeApply(Select(Ident(name), _), _), List(Typed(SeqLiteral(args, _), _))),
-                _
-              )
-            )
-          ) if name.toTermName == Names.termName("Array") =>
-        args.collectFirst {
+            Apply(Apply(TypeApply(Select(Ident(array), _), _), List(Typed(SeqLiteral(args, _), _))), _)
+          ) =>
+        args.exists {
           case Literal(value) if value.tag == Constants.StringTag =>
-            value.stringValue == "all"
-        }.isDefined
+            value.stringValue == "all" || value.stringValue == inspectionName
+          case _ => false
+        }
       case _ => false
     }
+  }
+
+  // Scala 3.3 doesn't insert NamedArg, skip it while trying to match
+  private def extractArg(t: tpd.Tree): tpd.Tree = t match {
+    case NamedArg(_, tree) => tree
+    case _                 => t
   }
 
   extension (tree: Tree)(using Context)
@@ -42,4 +47,8 @@ abstract class InspectionTraverser extends TreeTraverser {
       case NoSource => None
       case _        => Some(tree.source.content().slice(tree.sourcePos.start, tree.sourcePos.end).mkString)
 
+}
+
+object InspectionTraverser {
+  val array = Names.termName("Array")
 }

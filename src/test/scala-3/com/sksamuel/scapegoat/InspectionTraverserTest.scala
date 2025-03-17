@@ -4,7 +4,7 @@ import com.sksamuel.scapegoat.inspections.option.OptionGet
 
 class InspectionTraverserTest extends InspectionTest(classOf[OptionGet]) {
   "InspectionTraverser" - {
-    "should ignore inspection based on SuppressWarnings on class" in {
+    "should ignore all inspection based on SuppressWarnings on class" in {
       val code = """
       @SuppressWarnings(Array("all"))
       class Test {
@@ -16,7 +16,33 @@ class InspectionTraverserTest extends InspectionTest(classOf[OptionGet]) {
       feedback.errors.assertable shouldEqual Seq.empty
     }
 
-    "should ignore inspection based on SuppressWarnings on method" in {
+    "should ignore specific inspection based on SuppressWarnings on class" in {
+      val code = """
+      @SuppressWarnings(Array("OptionGet"))
+      class Test {
+        val o = Option("sammy")
+        o.get
+      }""".stripMargin
+
+      val feedback = runner.compileCodeSnippet(code)
+      feedback.errors.assertable shouldEqual Seq.empty
+    }
+
+    "should ignore specific inspection based on SuppressWarnings on class (Different warning)" in {
+      val code = """
+      @SuppressWarnings(Array("AvoidRequire"))
+      class Test {
+        val o = Option("sammy")
+        o.get
+      }""".stripMargin
+
+      val feedback = runner.compileCodeSnippet(code)
+      feedback.errors.assertable shouldEqual Seq(
+        warning(4, Levels.Error, Some("o.get"))
+      )
+    }
+
+    "should ignore all inspection based on SuppressWarnings on method" in {
       val code = """
       class Test {
         @SuppressWarnings(Array("all"))
