@@ -14,6 +14,7 @@ class ScapegoatPhaseTest extends AnyFreeSpec with should.Matchers {
       classOf[OptionGet],
       report,
       if (disabledAll) List("all") else List("none"),
+      List.empty,
       () => targetFolder
     )
     val _ = dotty.compileCodeSnippet("class Test {}")
@@ -30,6 +31,28 @@ class ScapegoatPhaseTest extends AnyFreeSpec with should.Matchers {
     "be disablable" in {
       val outputDir = runDotty("html", true)
       outputDir.listFiles(reportFilter) should contain theSameElementsAs (Array.empty[File])
+    }
+
+    "ignore files" - {
+
+      def runDottyWithIgnore(patterns: List[String]) = {
+        val dotty = new DottyRunner(classOf[OptionGet], "html", List("none"), patterns)
+        dotty.compileCodeSnippet("""
+        class Test {
+          val o = Option("sammy")
+          o.get
+        }""".stripMargin)
+      }
+
+      "should report issue" in {
+        val feedback = runDottyWithIgnore(List.empty)
+        feedback.errors.size shouldBe 1
+      }
+
+      "should not report issue" in {
+        val feedback = runDottyWithIgnore(List(".*scapegoat_snippet.*\\.scala$"))
+        feedback.errors.size shouldBe 0
+      }
     }
 
     "generate reports" - {

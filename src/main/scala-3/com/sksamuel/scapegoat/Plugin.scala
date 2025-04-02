@@ -28,11 +28,13 @@ class ScapegoatPlugin extends StandardPlugin {
 
 }
 
-class ScapegoatPhase(var configuration: Configuration, override val inspections: Seq[Inspection])
+class ScapegoatPhase(val configuration: Configuration, override val inspections: Seq[Inspection])
     extends PluginPhase
     with ScapegoatBasePlugin {
 
   private[scapegoat] var feedback: Option[FeedbackDotty] = None
+
+  private val ignorePatterns = configuration.ignoredFiles.map(_.r)
 
   override def phaseName: String = "scapegoat"
 
@@ -92,8 +94,11 @@ class ScapegoatPhase(var configuration: Configuration, override val inspections:
   }
 
   override def transformUnit(tree: tpd.Tree)(using ctx: Context): tpd.Tree = {
-    activeInspections.foreach { inspection =>
-      feedback.foreach(f => inspection.inspect(f, tree))
+    val sourcePath = ctx.compilationUnit.source.path
+    if (!ignorePatterns.exists(_.matches(sourcePath))) {
+      activeInspections.foreach { inspection =>
+        feedback.foreach(f => inspection.inspect(f, tree))
+      }
     }
     tree
   }
