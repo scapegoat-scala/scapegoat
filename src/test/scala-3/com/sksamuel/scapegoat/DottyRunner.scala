@@ -59,6 +59,7 @@ class DottyRunner(
   val inspection: Class[? <: Inspection],
   reports: String                   = "none",
   disabledInspections: List[String] = List("none"),
+  ignoredFiles: List[String]        = List.empty,
   createDataDir: () => File         = DottyRunner.createTempDataDir
 ) extends Driver {
 
@@ -82,6 +83,7 @@ class DottyRunner(
         "-Xplugin-require:scapegoat",
         "-P:scapegoat:enabledInspections:" + inspection.getSimpleName,
         "-P:scapegoat:disabledInspections:" + disabledInspections.mkString(":"),
+        "-P:scapegoat:ignoredFiles:" + ignoredFiles.mkString(":"),
         "-P:scapegoat:verbose:true",
         s"-P:scapegoat:reports:$reports",
         s"-P:scapegoat:dataDir:${targetDir.getAbsolutePath}",
