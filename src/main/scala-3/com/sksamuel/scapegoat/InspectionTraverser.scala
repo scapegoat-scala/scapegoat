@@ -25,7 +25,7 @@ abstract class InspectionTraverser(using inspection: Inspection) extends TreeTra
     val inspectionName = inspection.getClass.getSimpleName
     arg match {
       case Some(
-            Apply(Apply(TypeApply(Select(Ident(array), _), _), List(Typed(SeqLiteral(args, _), _))), _)
+            Apply(Apply(TypeApply(Select(Ident(_), _), _), List(Typed(SeqLiteral(args, _), _))), _)
           ) =>
         args.exists {
           case Literal(value) if value.tag == Constants.StringTag =>

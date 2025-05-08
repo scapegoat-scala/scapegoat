@@ -10,7 +10,6 @@ import dotty.tools.dotc.Driver
 import dotty.tools.dotc.core.Contexts
 import dotty.tools.dotc.core.Contexts.ContextBase
 import dotty.tools.dotc.plugins.{Plugin, PluginPhase, Plugins}
-import dotty.tools.dotc.reporting.Reporter
 import dotty.tools.dotc.reporting.Reporter.NoReporter
 
 class TestingScapegoatPlugin extends ScapegoatPlugin {
