@@ -2,7 +2,7 @@ resolvers += Classpaths.sbtPluginReleases
 
 addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.9.3")
 addSbtPlugin("com.eed3si9n"   % "sbt-assembly"   % "0.14.10")
-addSbtPlugin("org.scalameta"  % "sbt-scalafmt"   % "2.5.4")
+addSbtPlugin("org.scalameta"  % "sbt-scalafmt"   % "2.5.5")
 addSbtPlugin("org.scoverage"  % "sbt-scoverage"  % "2.3.1")
 addSbtPlugin("ch.epfl.scala"  % "sbt-scalafix"   % "0.14.3")
 
