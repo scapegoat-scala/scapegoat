@@ -1,0 +1,11 @@
+.sbt:
+  image: $CI_REGISTRY/docker-images/sbt:jdk-17
+  variables:
+    COURSIER_CACHE: "cache/coursier"
+  cache:
+    key: "${CI_COMMIT_REF_NAME}"
+    fallback_keys:
+      - "main"
+    paths:
+      - "cache/coursier"
+      - "**/target/**"

@@ -1,0 +1,12 @@
+test:
+  extends: [ .sbt ]
+  parallel:
+    matrix:
+      - SCALA_VERSION: "3.7.2"
+      - SCALA_VERSION: "3.3.6"
+      - SCALA_VERSION: "2.13.17"
+      - SCALA_VERSION: "2.13.16"
+      - SCALA_VERSION: "2.12.20"
+      - SCALA_VERSION: "2.12.19"
+  script:
+    - sbt "++$SCALA_VERSION; test"
