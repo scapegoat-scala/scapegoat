@@ -1,5 +1,5 @@
 name := "scalac-scapegoat-plugin"
-organization := "com.sksamuel.scapegoat"
+organization := "org.johnnei.scapegoat"
 description := "Scala compiler plugin for static code analysis"
 homepage := Some(url("https://github.com/sksamuel/scapegoat"))
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
@@ -12,6 +12,12 @@ scmInfo := Some(
 )
 developers := List(
   Developer(
+    "johnnei",
+    "Johnnei",
+    "@johnnei",
+    url("https://github.com/johnnei")
+  ),
+  Developer(
     "sksamuel",
     "sksamuel",
     "@sksamuel",
@@ -19,8 +25,8 @@ developers := List(
   )
 )
 
-scalaVersion := "3.7.0"
-crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.15", "2.13.16", "3.3.6", "3.7.0")
+scalaVersion := "3.7.2"
+crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.16", "2.13.17", "3.3.6", "3.7.2")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -118,7 +124,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.13.6" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.13.10" cross CrossVersion.full
                              )
                            )
                          })
