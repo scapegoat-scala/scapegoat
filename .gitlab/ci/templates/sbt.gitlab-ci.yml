@@ -2,6 +2,7 @@
   image: $CI_REGISTRY/docker-images/sbt:jdk-17
   variables:
     COURSIER_CACHE: "cache/coursier"
+    MAVEN_PROXY: "https/nexus.johnnei.org/repository/maven-proxy"
   cache:
     key: "${CI_COMMIT_REF_NAME}"
     fallback_keys:

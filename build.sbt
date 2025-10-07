@@ -37,9 +37,6 @@ versionScheme := Some("early-semver")
 semanticdbEnabled := (scalaBinaryVersion.value == "3")
 scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
 
-// https://github.com/sksamuel/scapegoat/issues/298
-ThisBuild / useCoursier := false
-
 val scala2Options = Seq(
   "-Xlint",
   "-Xlint:adapted-args",
