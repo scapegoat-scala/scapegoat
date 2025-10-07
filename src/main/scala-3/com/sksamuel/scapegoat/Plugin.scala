@@ -28,7 +28,7 @@ class ScapegoatPlugin extends StandardPlugin {
 
 }
 
-class ScapegoatPhase(val configuration: Configuration, override val inspections: Seq[Inspection])
+class ScapegoatPhase(var configuration: Configuration, override val inspections: Seq[Inspection])
     extends PluginPhase
     with ScapegoatBasePlugin {
 
