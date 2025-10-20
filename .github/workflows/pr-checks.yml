@@ -58,7 +58,7 @@ jobs:
       - name: Run Scalafix check
         run: sbt fixCheck
       - name: Check formatting
-        run: sbt scalafmtCheckAll
+        run: sbt ++scalafmtCheckAll
       - name: Run Scapegoat
         run: |
           sbt 'set version := "99.0-SNAPSHOT"; publishLocal'

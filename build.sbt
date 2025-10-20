@@ -149,7 +149,7 @@ Test / publishArtifact := false
 ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.6.1"
 addCommandAlias("fix", "all Compile / scalafix Test / scalafix; fixImports")
 addCommandAlias("fixImports", "Compile / scalafix SortImports; Test / scalafix SortImports")
-addCommandAlias("fixCheck", "Compile / scalafix --check; Test / scalafix --check; fixCheckImports")
+addCommandAlias("fixCheck", "scalafixAll --check; fixCheckImports")
 addCommandAlias(
   "fixCheckImports",
   "Compile / scalafix --check SortImports; Test / scalafix --check SortImports"
