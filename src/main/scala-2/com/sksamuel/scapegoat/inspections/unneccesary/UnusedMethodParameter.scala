@@ -74,8 +74,8 @@ class UnusedMethodParameter
           override def inspect(tree: Tree): Unit = {
             tree match {
               // ignore traits, quite often you define a method in a trait with default impl that does nothing
-              case ClassDef(_, _, _, _) if tree.symbol.isTrait     =>
-              case ClassDef(mods, _, _, _) if mods.hasAbstractFlag =>
+              case ClassDef(_, _, _, _) if tree.symbol.isTrait                       =>
+              case ClassDef(mods, _, _, _) if mods.hasAbstractFlag                   =>
               case ClassDef(_, _, _, classBody @ Template(_, _, classTopLevelStmts)) =>
                 classTopLevelStmts.foreach {
                   case DefDef(_, nme.CONSTRUCTOR, _, vparamss, _, constructorBody) =>

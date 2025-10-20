@@ -1,6 +1,5 @@
 package com.sksamuel.scapegoat
 
-import com.sksamuel.scapegoat._
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 
