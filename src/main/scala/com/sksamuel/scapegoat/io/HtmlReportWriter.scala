@@ -126,7 +126,7 @@ object HtmlReportWriter extends ReportWriter {
             {decorateCode(warning.explanation.replace("<", "&lt;").replace(">", "&gt;"))}
           </div>{
         warning.snippet match {
-          case None =>
+          case None          =>
           case Some(snippet) =>
             <div class="snippet">
               {snippet}

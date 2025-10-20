@@ -66,7 +66,7 @@ object Configuration {
           .map { nameLevel =>
             nameLevel.split("=") match {
               case Array(insp, level) => insp -> Levels.fromName(level)
-              case _ =>
+              case _                  =>
                 throw new IllegalArgumentException(
                   s"Malformed argument to 'overrideLevels': '$nameLevel'. " +
                     "Expecting 'name=level' where 'name' is the simple name of an inspection and 'level' is the simple name of a com.sksamuel.scapegoat.Level constant, e.g. 'Warning'."

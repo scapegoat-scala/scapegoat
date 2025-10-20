@@ -19,8 +19,8 @@ developers := List(
   )
 )
 
-scalaVersion := "3.7.0"
-crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.15", "2.13.16", "3.3.6", "3.7.0")
+scalaVersion := "3.7.3"
+crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.16", "2.13.17", "3.3.6", "3.7.3")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -30,9 +30,6 @@ crossTarget := {
 versionScheme := Some("early-semver")
 semanticdbEnabled := (scalaBinaryVersion.value == "3")
 scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
-
-// https://github.com/sksamuel/scapegoat/issues/298
-ThisBuild / useCoursier := false
 
 val scala2Options = Seq(
   "-Xlint",
@@ -118,7 +115,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.13.6" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.13.10" cross CrossVersion.full
                              )
                            )
                          })
