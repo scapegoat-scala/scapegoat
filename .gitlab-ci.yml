@@ -1,7 +1,0 @@
-include:
-  - local: .gitlab/ci/templates/*.gitlab-ci.yml
-  - local: .gitlab/ci/*.gitlab-ci.yml
-
-stages:
-  - test
-  - publish

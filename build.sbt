@@ -1,5 +1,5 @@
 name := "scalac-scapegoat-plugin"
-organization := "org.johnnei.scapegoat"
+organization := "com.sksamuel.scapegoat"
 description := "Scala compiler plugin for static code analysis"
 homepage := Some(url("https://github.com/sksamuel/scapegoat"))
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
@@ -11,12 +11,6 @@ scmInfo := Some(
   )
 )
 developers := List(
-  Developer(
-    "johnnei",
-    "Johnnei",
-    "@johnnei",
-    url("https://github.com/johnnei")
-  ),
   Developer(
     "sksamuel",
     "sksamuel",
