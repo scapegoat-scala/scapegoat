@@ -100,16 +100,16 @@ class DottyRunner(
 
   private def getScalaJars: List[File] = {
     val scalaJars = List("scala3-library_3")
-    findIvyJar("org.scala-lang", "scala-library", scalaVersion) :: scalaJars.map(findScalaJar)
+    findIvyJar("org/scala-lang", "scala-library", scalaVersion) :: scalaJars.map(findScalaJar)
   }
 
-  private def findScalaJar(artifactId: String): File = findIvyJar("org.scala-lang", artifactId, dottyVersion)
+  private def findScalaJar(artifactId: String): File = findIvyJar("org/scala-lang", artifactId, dottyVersion)
 
   private def findIvyJar(groupId: String, artifactId: String, version: String): File = {
-    val userHome = System.getProperty("user.home")
-    val sbtHome = userHome + "/.ivy2"
-    val jarPath =
-      sbtHome + "/cache/" + groupId + "/" + artifactId + "/jars/" + artifactId + "-" + version + ".jar"
+    val coursierCache =
+      sys.env.getOrElse("COURSIER_CACHE", System.getProperty("user.home") + "/.cache/coursier/v1")
+    val mavenProxy = sys.env.getOrElse("MAVEN_PROXY", "https/repo1.maven.org/maven2")
+    val jarPath = s"$coursierCache/$mavenProxy/$groupId/$artifactId/$version/$artifactId-$version.jar"
     val file = new File(jarPath)
     if (file.exists) file
     else throw new FileNotFoundException(s"Could not locate [$jarPath].")

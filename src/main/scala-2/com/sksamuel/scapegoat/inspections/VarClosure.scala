@@ -24,7 +24,7 @@ class VarClosure
 
           private def capturesVar(tree: Tree): Unit =
             tree match {
-              case Block(stmt, expr) => (stmt :+ expr).foreach(capturesVar)
+              case Block(stmt, expr)         => (stmt :+ expr).foreach(capturesVar)
               case Apply(Select(_, _), args) =>
                 args
                   .filter(_.symbol != null)

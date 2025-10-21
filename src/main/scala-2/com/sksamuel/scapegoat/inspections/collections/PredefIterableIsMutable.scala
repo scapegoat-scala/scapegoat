@@ -26,7 +26,7 @@ class PredefIterableIsMutable
 
           override def inspect(tree: Tree): Unit = {
             tree match {
-              case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor =>
+              case DefDef(_, _, _, _, _, _) if tree.symbol.isAccessor           =>
               case TypeTree() if tree.tpe.erasure.toString() == "Iterable[Any]" =>
                 context.warn(tree.pos, self)
               case _ => continue(tree)

@@ -25,7 +25,7 @@ class ClassNames
 
           override def inspect(tree: Tree): Unit = {
             tree match {
-              case ClassDef(_, name, _, _) if name.toString.contains("$anon") =>
+              case ClassDef(_, name, _, _) if name.toString.contains("$anon")                       =>
               case ClassDef(mods, name, _, _) if !mods.isSynthetic && !name.toString.matches(regex) =>
                 context.warn(tree.pos, self)
               case _ => continue(tree)
