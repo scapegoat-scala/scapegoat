@@ -19,8 +19,8 @@ developers := List(
   )
 )
 
-scalaVersion := "3.7.0"
-crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.15", "2.13.16", "3.3.6", "3.7.0")
+scalaVersion := "3.7.3"
+crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.16", "2.13.17", "3.3.6", "3.7.3")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 crossTarget := {
@@ -30,9 +30,6 @@ crossTarget := {
 versionScheme := Some("early-semver")
 semanticdbEnabled := (scalaBinaryVersion.value == "3")
 scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
-
-// https://github.com/sksamuel/scapegoat/issues/298
-ThisBuild / useCoursier := false
 
 val scala2Options = Seq(
   "-Xlint",
@@ -97,7 +94,7 @@ def check(code: String) = {
 
 libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-xml" % "2.4.0" excludeAll ExclusionRule(organization = "org.scala-lang"),
-  "org.scala-lang.modules" %% "scala-collection-compat" % "2.13.0" excludeAll ExclusionRule(organization =
+  "org.scala-lang.modules" %% "scala-collection-compat" % "2.14.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
   "org.scalatest" %% "scalatest"    % "3.2.19"  % "test",
@@ -118,7 +115,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.13.6" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.13.10" cross CrossVersion.full
                              )
                            )
                          })
@@ -152,7 +149,7 @@ Test / publishArtifact := false
 ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.6.1"
 addCommandAlias("fix", "all Compile / scalafix Test / scalafix; fixImports")
 addCommandAlias("fixImports", "Compile / scalafix SortImports; Test / scalafix SortImports")
-addCommandAlias("fixCheck", "Compile / scalafix --check; Test / scalafix --check; fixCheckImports")
+addCommandAlias("fixCheck", "scalafixAll --check; fixCheckImports")
 addCommandAlias(
   "fixCheckImports",
   "Compile / scalafix --check SortImports; Test / scalafix --check SortImports"

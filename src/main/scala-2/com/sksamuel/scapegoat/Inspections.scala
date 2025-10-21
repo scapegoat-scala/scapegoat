@@ -15,8 +15,8 @@ import com.sksamuel.scapegoat.inspections.nulls._
 import com.sksamuel.scapegoat.inspections.option._
 import com.sksamuel.scapegoat.inspections.string._
 import com.sksamuel.scapegoat.inspections.style._
-import com.sksamuel.scapegoat.inspections.unneccesary._
 import com.sksamuel.scapegoat.inspections.traits._
+import com.sksamuel.scapegoat.inspections.unneccesary._
 import com.sksamuel.scapegoat.inspections.unsafe._
 
 /**

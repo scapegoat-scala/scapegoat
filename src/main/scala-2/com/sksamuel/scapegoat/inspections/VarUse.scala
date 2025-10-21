@@ -28,7 +28,7 @@ class VarUse
               case ModuleDef(_, _, Template(parents, _, _)) if parents.exists(isActor)   =>
               case ValDef(mods, _, _, _) if mods.isSynthetic || mods.isMacro             =>
               case ValDef(_, _, tpt, _) if isXmlLiteral(tpt.tpe)                         =>
-              case ValDef(modifiers, _, _, _) if modifiers.hasFlag(Flag.MUTABLE) =>
+              case ValDef(modifiers, _, _, _) if modifiers.hasFlag(Flag.MUTABLE)         =>
                 context.warn(tree.pos, self, tree.toString.take(300))
               case _ => continue(tree)
             }
