@@ -10,8 +10,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
+          cache: sbt
           distribution: adopt
           java-version: 11
+      - uses: sbt/setup-sbt@v1
       - uses: actions/cache@v4
         with:
           path: ~/.ivy2/cache
