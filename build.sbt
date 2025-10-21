@@ -23,10 +23,9 @@ scalaVersion := "3.7.3"
 crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.16", "2.13.17", "3.3.7", "3.7.3")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
-crossTarget := {
+crossTarget :=
   // workaround for https://github.com/sbt/sbt/issues/5097
   target.value / s"scala-${scalaVersion.value}"
-}
 versionScheme := Some("early-semver")
 semanticdbEnabled := (scalaBinaryVersion.value == "3")
 scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
@@ -115,7 +114,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.13.10" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.14.1" cross CrossVersion.full
                              )
                            )
                          })
