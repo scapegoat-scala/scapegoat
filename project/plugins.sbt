@@ -1,7 +1,7 @@
 addSbtPlugin("com.github.sbt" % "sbt-ci-release" % "1.11.2")
 addSbtPlugin("com.eed3si9n"   % "sbt-assembly"   % "0.15.0")
 addSbtPlugin("org.scalameta"  % "sbt-scalafmt"   % "2.5.5")
-addSbtPlugin("org.scoverage"  % "sbt-scoverage"  % "2.3.1")
+addSbtPlugin("org.scoverage"  % "sbt-scoverage"  % "2.4.0")
 addSbtPlugin("ch.epfl.scala"  % "sbt-scalafix"   % "0.14.4")
 
 if (System.getProperty("add-scapegoat-plugin") == "true")
