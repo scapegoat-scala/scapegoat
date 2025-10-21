@@ -28,7 +28,7 @@ class AnyUse
               case DefDef(mods, _, _, _, _, _) if mods.isSynthetic                =>
               case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.SetterFlags) =>
               case DefDef(mods, _, _, _, _, _) if mods.hasFlag(Flags.GetterFlags) =>
-              case ValDef(_, _, tpt, _) if tpt.tpe =:= typeOf[Any] =>
+              case ValDef(_, _, tpt, _) if tpt.tpe =:= typeOf[Any]                =>
                 context.warn(tree.pos, self, tree.toString.take(200))
               case DefDef(_, _, _, _, tpt, _) if tpt.tpe =:= typeOf[Any] =>
                 context.warn(tree.pos, self, tree.toString.take(200))

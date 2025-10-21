@@ -25,7 +25,7 @@ class EmptyIfBlock
             tree match {
               // Function directly contains if, an empty block would generate Unit (or Any) output type
               case Function(_, If(_, Literal(Constant(())), _)) => // skip tree
-              case If(_, Literal(Constant(())), _) =>
+              case If(_, Literal(Constant(())), _)              =>
                 context.warn(tree.pos, self, tree.toString.take(500))
               case _ => continue(tree)
             }

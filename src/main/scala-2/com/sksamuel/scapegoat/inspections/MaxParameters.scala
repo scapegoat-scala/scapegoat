@@ -30,8 +30,8 @@ class MaxParameters
 
           override def inspect(tree: Tree): Unit = {
             tree match {
-              case DefDef(_, name, _, _, _, _) if name == nme.CONSTRUCTOR =>
-              case DefDef(mods, _, _, _, _, _) if mods.isSynthetic        =>
+              case DefDef(_, name, _, _, _, _) if name == nme.CONSTRUCTOR        =>
+              case DefDef(mods, _, _, _, _, _) if mods.isSynthetic               =>
               case DefDef(_, _, _, vparamss, _, _) if countExceeds(vparamss, 10) =>
                 context.warn(tree.pos, self)
               case _ => continue(tree)

@@ -28,7 +28,7 @@ class TypeShadowing
             tparams.foreach(tparam => types.add(tparam.name.toString))
             trees.foreach {
               case dd: DefDef if dd.symbol != null && dd.symbol.isSynthetic =>
-              case dd @ DefDef(_, _, deftparams, _, _, _) =>
+              case dd @ DefDef(_, _, deftparams, _, _, _)                   =>
                 deftparams.foreach { tparam =>
                   if (types.contains(tparam.name.toString))
                     context.warn(dd.pos, self)

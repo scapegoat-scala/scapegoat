@@ -1,7 +1,7 @@
 package com.sksamuel.scapegoat
 
-import scala.tools.nsc.reporters.Reporter
 import scala.reflect.internal.util.Position
+import scala.tools.nsc.reporters.Reporter
 
 class FeedbackScala2(
   reporter: Reporter,
