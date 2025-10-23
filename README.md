@@ -157,7 +157,7 @@ To suppress warnings globally for the project, use `disabledInspections` or `ove
 
 ### Inspections
 
-There are currently 123 inspections for Scala 2, and 3 for Scala 3.
+There are currently 123 inspections for Scala 2, and 4 for Scala 3.
 An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level | Scala 2 | Scala 3 |
@@ -198,7 +198,7 @@ An overview list is given, followed by a more detailed description of each inspe
 | DuplicateImport                       | Checks for import statements that import the same selector                                                                                                   | Info          | Yes     | No      |
 | DuplicateMapKey                       | Checks for duplicate key names in Map literals                                                                                                               | Warning       | Yes     | No      |
 | DuplicateSetValue                     | Checks for duplicate values in set literals                                                                                                                  | Warning       | Yes     | No      |
-| EitherGet                             | Checks for use of .get on Left or Right                                                                                                                      | Error         | Yes     | No      |
+| EitherGet                             | Checks for use of .get on Left or Right                                                                                                                      | Error         | Yes     | Yes     |
 | EmptyCaseClass                        | Checks for case classes like `case class Faceman()`                                                                                                          | Info          | Yes     | No      |
 | EmptyFor                              | Checks for empty `for` loops                                                                                                                                 | Warning       | Yes     | No      |
 | EmptyIfBlock                          | Checks for empty `if` blocks                                                                                                                                 | Warning       | Yes     | No      |

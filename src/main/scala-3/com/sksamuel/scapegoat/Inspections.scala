@@ -7,6 +7,7 @@ import com.sksamuel.scapegoat.inspections.traits._
 object Inspections {
 
   final val inspections: List[Inspection] = List(
+    new EitherGet,
     new OptionGet,
     new AvoidRequire,
     new AbstractTrait
