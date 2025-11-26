@@ -1,0 +1,212 @@
+name: Scala Version Updates
+
+on:
+  schedule:
+    # Run daily at 9:00 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  check-scala-versions:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+
+      - name: Fetch and process Scala versions
+        id: versions
+        run: |
+          set -e
+
+          echo "Fetching Scala versions from Maven Central..."
+
+          # Fetch Scala 2.12.x versions
+          echo "Fetching 2.12.x versions..."
+          SCALA_212_VERSIONS=$(curl -s "https://repo1.maven.org/maven2/org/scala-lang/scala-library/" | \
+            grep -oP '2\.12\.\d+' | sort -V -u | tail -2 | paste -sd ' ')
+          echo "Latest 2.12.x versions: $SCALA_212_VERSIONS"
+
+          # Fetch Scala 2.13.x versions
+          echo "Fetching 2.13.x versions..."
+          SCALA_213_VERSIONS=$(curl -s "https://repo1.maven.org/maven2/org/scala-lang/scala-library/" | \
+            grep -oP '2\.13\.\d+' | sort -V -u | tail -2 | paste -sd ' ')
+          echo "Latest 2.13.x versions: $SCALA_213_VERSIONS"
+
+          # Hardcoded Scala 3.3.7
+          SCALA_337="3.3.7"
+
+          # Fetch latest Scala 3.x version (excluding 3.3.x to find the latest mainline)
+          echo "Fetching latest 3.x version..."
+          SCALA_3_LATEST=$(curl -s "https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/" | \
+            grep -oP '3\.\d+\.\d+(?!</)' | grep -v -E '(RC|M|SNAPSHOT|alpha|beta)' | \
+            sort -V -u | tail -1)
+          echo "Latest 3.x version: $SCALA_3_LATEST"
+
+          # Read current versions from build.sbt
+          CURRENT_SCALA_VERSION=$(grep -oP '(?<=scalaVersion := ")[^"]+' build.sbt)
+          CURRENT_CROSS_VERSIONS=$(grep -oP '(?<=crossScalaVersions := Seq\()[^)]+' build.sbt | tr -d '"' | tr ',' '\n' | xargs)
+
+          echo "Current scalaVersion: $CURRENT_SCALA_VERSION"
+          echo "Current crossScalaVersions: $CURRENT_CROSS_VERSIONS"
+
+          # Build new version lists
+          NEW_CROSS_VERSIONS="$SCALA_212_VERSIONS $SCALA_213_VERSIONS $SCALA_337 $SCALA_3_LATEST"
+          NEW_CROSS_VERSIONS=$(echo $NEW_CROSS_VERSIONS | tr ' ' '\n' | sort -V -u | paste -sd ' ')
+
+          echo "New crossScalaVersions: $NEW_CROSS_VERSIONS"
+
+          # Check if scalaVersion needs update (use latest 3.x version)
+          if [ "$CURRENT_SCALA_VERSION" != "$SCALA_3_LATEST" ]; then
+            echo "scalaVersion needs update: $CURRENT_SCALA_VERSION -> $SCALA_3_LATEST"
+            echo "scala_version_changed=true" >> $GITHUB_OUTPUT
+            echo "new_scala_version=$SCALA_3_LATEST" >> $GITHUB_OUTPUT
+          else
+            echo "scalaVersion is up to date"
+            echo "scala_version_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+          # Check if crossScalaVersions changed
+          if [ "$CURRENT_CROSS_VERSIONS" != "$NEW_CROSS_VERSIONS" ]; then
+            echo "crossScalaVersions changed"
+            echo "versions_changed=true" >> $GITHUB_OUTPUT
+            echo "new_cross_versions=$NEW_CROSS_VERSIONS" >> $GITHUB_OUTPUT
+
+            # Extract individual versions for PR checks matrix
+            SCALA_212_1=$(echo $SCALA_212_VERSIONS | awk '{print $1}')
+            SCALA_212_2=$(echo $SCALA_212_VERSIONS | awk '{print $2}')
+            SCALA_213_1=$(echo $SCALA_213_VERSIONS | awk '{print $1}')
+            SCALA_213_2=$(echo $SCALA_213_VERSIONS | awk '{print $2}')
+
+            echo "scala_212_1=$SCALA_212_1" >> $GITHUB_OUTPUT
+            echo "scala_212_2=$SCALA_212_2" >> $GITHUB_OUTPUT
+            echo "scala_213_1=$SCALA_213_1" >> $GITHUB_OUTPUT
+            echo "scala_213_2=$SCALA_213_2" >> $GITHUB_OUTPUT
+            echo "scala_337=$SCALA_337" >> $GITHUB_OUTPUT
+            echo "scala_3_latest=$SCALA_3_LATEST" >> $GITHUB_OUTPUT
+
+            # Get the latest 2.12.x, 2.13.x for README badges
+            LATEST_212=$(echo $SCALA_212_VERSIONS | awk '{print $NF}')
+            LATEST_213=$(echo $SCALA_213_VERSIONS | awk '{print $NF}')
+
+            echo "latest_212=$LATEST_212" >> $GITHUB_OUTPUT
+            echo "latest_213=$LATEST_213" >> $GITHUB_OUTPUT
+          else
+            echo "No version changes detected"
+            echo "versions_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update files
+        if: steps.versions.outputs.versions_changed == 'true'
+        run: |
+          set -e
+
+          SCALA_212_1="${{ steps.versions.outputs.scala_212_1 }}"
+          SCALA_212_2="${{ steps.versions.outputs.scala_212_2 }}"
+          SCALA_213_1="${{ steps.versions.outputs.scala_213_1 }}"
+          SCALA_213_2="${{ steps.versions.outputs.scala_213_2 }}"
+          SCALA_337="${{ steps.versions.outputs.scala_337 }}"
+          SCALA_3_LATEST="${{ steps.versions.outputs.scala_3_latest }}"
+          LATEST_212="${{ steps.versions.outputs.latest_212 }}"
+          LATEST_213="${{ steps.versions.outputs.latest_213 }}"
+
+          echo "Updating build.sbt..."
+
+          # Update crossScalaVersions in build.sbt
+          sed -i "s/crossScalaVersions := Seq.*/crossScalaVersions := Seq(\"$SCALA_212_1\", \"$SCALA_212_2\", \"$SCALA_213_1\", \"$SCALA_213_2\", \"$SCALA_337\", \"$SCALA_3_LATEST\")/" build.sbt
+
+          # Update scalaVersion if it changed
+          if [ "${{ steps.versions.outputs.scala_version_changed }}" == "true" ]; then
+            echo "Updating scalaVersion to $SCALA_3_LATEST..."
+            sed -i "s/scalaVersion := \".*\"/scalaVersion := \"$SCALA_3_LATEST\"/" build.sbt
+          fi
+
+          echo "Updating .github/workflows/pr-checks.yml..."
+
+          # Update pr-checks.yml matrix
+          # Find the scala matrix section and replace it
+          awk -v s212_1="$SCALA_212_1" \
+              -v s212_2="$SCALA_212_2" \
+              -v s213_1="$SCALA_213_1" \
+              -v s213_2="$SCALA_213_2" \
+              -v s337="$SCALA_337" \
+              -v s3latest="$SCALA_3_LATEST" '
+          /^        scala:/ {
+            print
+            getline
+            print "          - " s212_1
+            print "          - " s212_2
+            print "          - " s213_1
+            print "          - " s213_2
+            print "          - " s337
+            print "          - " s3latest
+            # Skip existing scala versions
+            while (getline && /^          -/) {}
+            # Print the line that broke the loop
+            print
+            next
+          }
+          { print }
+          ' .github/workflows/pr-checks.yml > .github/workflows/pr-checks.yml.tmp
+          mv .github/workflows/pr-checks.yml.tmp .github/workflows/pr-checks.yml
+
+          echo "Updating README.md..."
+
+          # Update README badges for the latest minor versions
+          sed -i "s|scalac-scapegoat-plugin_2\.12\.[0-9]\+|scalac-scapegoat-plugin_$LATEST_212|g" README.md
+          sed -i "s|scalac-scapegoat-plugin_2\.13\.[0-9]\+|scalac-scapegoat-plugin_$LATEST_213|g" README.md
+          sed -i "s|scalac-scapegoat-plugin_3\.3\.[0-9]\+|scalac-scapegoat-plugin_$SCALA_337|g" README.md
+          # Match any 3.x version that's not 3.3.x (e.g., 3.4.x, 3.7.x, 3.10.x, etc.)
+          sed -i "s|scalac-scapegoat-plugin_3\.\([0-24-9]\|[1-9][0-9]\+\)\.[0-9]\+|scalac-scapegoat-plugin_$SCALA_3_LATEST|g" README.md
+
+          echo "Files updated successfully"
+
+      - name: Check for changes
+        if: steps.versions.outputs.versions_changed == 'true'
+        id: git-check
+        run: |
+          git diff --exit-code || echo "has_changes=true" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.versions.outputs.versions_changed == 'true' && steps.git-check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            Update Scala versions
+
+            - Update crossScalaVersions in build.sbt
+            - Update CI matrix in pr-checks.yml
+            - Update README badges
+          branch: scala-version-updates
+          delete-branch: true
+          title: 'Update Scala versions'
+          body: |
+            This PR updates the supported Scala versions based on the latest releases from Maven Central.
+
+            ## Changes
+
+            - **2.12.x**: ${{ steps.versions.outputs.scala_212_1 }}, ${{ steps.versions.outputs.scala_212_2 }}
+            - **2.13.x**: ${{ steps.versions.outputs.scala_213_1 }}, ${{ steps.versions.outputs.scala_213_2 }}
+            - **3.3.x**: ${{ steps.versions.outputs.scala_337 }} (hardcoded)
+            - **3.x latest**: ${{ steps.versions.outputs.scala_3_latest }}
+
+            ### Files updated:
+            - `build.sbt` - crossScalaVersions${{ steps.versions.outputs.scala_version_changed == 'true' && ' and scalaVersion' || '' }}
+            - `.github/workflows/pr-checks.yml` - CI test matrix
+            - `README.md` - Maven Central badges
+
+            ---
+
+            🤖 This PR was automatically generated by the [Scala Version Updates workflow](${{ github.server_url }}/${{ github.repository }}/actions/workflows/scala-version-updates.yml).
+          labels: dependencies
+          assignees: mccartney
