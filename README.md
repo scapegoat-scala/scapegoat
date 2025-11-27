@@ -2,8 +2,8 @@ Scapegoat
 =========
 
 [![Codecov](https://img.shields.io/codecov/c/github/sksamuel/scapegoat)](https://codecov.io/gh/sksamuel/scapegoat)
-[<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.12.20.svg?label=latest%20release%20for%202.12.20"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.12.20%22)
-[<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.13.17.svg?label=latest%20release%20for%202.13.17"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.13.17%22)
+[<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.12.21.svg?label=latest%20release%20for%202.12.20"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.12.21%22)
+[<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.13.18.svg?label=latest%20release%20for%202.13.17"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_2.13.18%22)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_3.3.7.svg?label=latest%20release%20for%203.3.7"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_3.3.7%22)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_3.7.3.svg?label=latest%20release%20for%203.7.3"/>](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22scalac-scapegoat-plugin_3.7.3%22)
 [![Scala Steward badge](https://img.shields.io/badge/Scala_Steward-helping-blue.svg?style=flat&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAQCAMAAAARSr4IAAAAVFBMVEUAAACHjojlOy5NWlrKzcYRKjGFjIbp293YycuLa3pYY2LSqql4f3pCUFTgSjNodYRmcXUsPD/NTTbjRS+2jomhgnzNc223cGvZS0HaSD0XLjbaSjElhIr+AAAAAXRSTlMAQObYZgAAAHlJREFUCNdNyosOwyAIhWHAQS1Vt7a77/3fcxxdmv0xwmckutAR1nkm4ggbyEcg/wWmlGLDAA3oL50xi6fk5ffZ3E2E3QfZDCcCN2YtbEWZt+Drc6u6rlqv7Uk0LdKqqr5rk2UCRXOk0vmQKGfc94nOJyQjouF9H/wCc9gECEYfONoAAAAASUVORK5CYII=)](https://scala-steward.org)
@@ -79,8 +79,8 @@ Firstly you need to add scapegoat plugin as a dependency:
 
 ```groovy
 dependencies {
-  compile 'com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12.14:1.4.6'
-  scalaCompilerPlugin "com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12.14:1.4.6"
+  compile 'com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12.21:1.4.6'
+  scalaCompilerPlugin "com.sksamuel.scapegoat:scalac-scapegoat-plugin_2.12.21:1.4.6"
 }
 
 ```
