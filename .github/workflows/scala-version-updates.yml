@@ -33,13 +33,13 @@ jobs:
           # Fetch Scala 2.12.x versions
           echo "Fetching 2.12.x versions..."
           SCALA_212_VERSIONS=$(curl -s "https://repo1.maven.org/maven2/org/scala-lang/scala-library/" | \
-            grep -oP '2\.12\.\d+' | sort -V -u | tail -2 | paste -sd ' ')
+            grep -oP 'href="2\.12\.\d+/"' | grep -oP '2\.12\.\d+' | sort -V -u | tail -2 | paste -sd ' ')
           echo "Latest 2.12.x versions: $SCALA_212_VERSIONS"
 
           # Fetch Scala 2.13.x versions
           echo "Fetching 2.13.x versions..."
           SCALA_213_VERSIONS=$(curl -s "https://repo1.maven.org/maven2/org/scala-lang/scala-library/" | \
-            grep -oP '2\.13\.\d+' | sort -V -u | tail -2 | paste -sd ' ')
+            grep -oP 'href="2\.13\.\d+/"' | grep -oP '2\.13\.\d+' | sort -V -u | tail -2 | paste -sd ' ')
           echo "Latest 2.13.x versions: $SCALA_213_VERSIONS"
 
           # Hardcoded Scala 3.3.7
@@ -48,8 +48,8 @@ jobs:
           # Fetch latest Scala 3.x version (excluding 3.3.x to find the latest mainline)
           echo "Fetching latest 3.x version..."
           SCALA_3_LATEST=$(curl -s "https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/" | \
-            grep -oP '3\.\d+\.\d+(?!</)' | grep -v -E '(RC|M|SNAPSHOT|alpha|beta)' | \
-            sort -V -u | tail -1)
+            grep -oP 'href="3\.\d+\.\d+/"' | grep -oP '3\.\d+\.\d+' | \
+            grep -v -E '(RC|M|SNAPSHOT|alpha|beta)' | sort -V -u | tail -1)
           echo "Latest 3.x version: $SCALA_3_LATEST"
 
           # Read current versions from build.sbt
