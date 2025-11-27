@@ -157,7 +157,7 @@ To suppress warnings globally for the project, use `disabledInspections` or `ove
 
 ### Inspections
 
-There are currently 123 inspections for Scala 2, and 4 for Scala 3.
+There are currently 123 inspections for Scala 2, and 5 for Scala 3.
 An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level | Scala 2 | Scala 3 |
@@ -187,7 +187,7 @@ An overview list is given, followed by a more detailed description of each inspe
 | CollectionNamingConfusion             | Checks for variables that are confusingly named                                                                                                              | Info          | Yes     | No      |
 | CollectionNegativeIndex               | Checks for negative access on a sequence eg `list.get(-1)`                                                                                                   | Warning       | Yes     | No      |
 | CollectionPromotionToAny              | Checks for collection operations that promote the collection to `Any`                                                                                        | Warning       | Yes     | No      |
-| ComparingFloatingPointTypes           | Checks for equality checks on floating point types                                                                                                           | Error         | Yes     | No      |
+| ComparingFloatingPointTypes           | Checks for equality checks on floating point types                                                                                                           | Error         | Yes     | Yes     |
 | ComparingUnrelatedTypes               | Checks for equality comparisons that cannot succeed                                                                                                          | Error         | Yes     | No      |
 | ComparisonToEmptyList                 | Checks for code like `a == List()` or `a == Nil`                                                                                                             | Info          | Yes     | No      |
 | ComparisonToEmptySet                  | Checks for code like `a == Set()` or `a == Set.empty`                                                                                                        | Info          | Yes     | No      |
