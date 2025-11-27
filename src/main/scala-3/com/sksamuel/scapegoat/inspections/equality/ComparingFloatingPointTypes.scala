@@ -21,8 +21,7 @@ class ComparingFloatingPointTypes
     val traverser = new InspectionTraverser {
       def traverse(tree: Tree)(using Context): Unit = {
         tree match {
-          case Apply(Select(left, name), List(right))
-              if name.toString == "==" || name.toString == "!=" =>
+          case Apply(Select(left, name), List(right)) if name.toString == "==" || name.toString == "!=" =>
             val leftTypeName = left.tpe.typeSymbol.fullName.toString
             val rightTypeName = right.tpe.typeSymbol.fullName.toString
             val leftFloating = leftTypeName == "scala.Double" || leftTypeName == "scala.Float"
