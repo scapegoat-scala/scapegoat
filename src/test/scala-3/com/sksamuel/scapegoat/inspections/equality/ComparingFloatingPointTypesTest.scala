@@ -54,7 +54,7 @@ class ComparingFloatingPointTypesTest extends InspectionTest(classOf[ComparingFl
       val code = """class Test {
                       def compareFloats: Boolean = {
                         val a = 14.5f
-                        val b = 15.6f
+                        val b = 15.6d
                         a != b
                       }
                     }""".stripMargin
