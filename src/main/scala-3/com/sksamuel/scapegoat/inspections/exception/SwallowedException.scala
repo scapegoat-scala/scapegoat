@@ -57,7 +57,7 @@ class SwallowedException
       def checkCatches(defs: List[CaseDef])(using Context): Unit =
         defs.foreach {
           case CaseDef(Bind(name, _), _, _) if name.toString == "ignored" || name.toString == "ignore" =>
-          case cdef @ CaseDef(_, _, Literal(c)) if c.value == () && cdef.body.toString == "()" =>
+          case cdef @ CaseDef(_, _, Literal(c)) if c.value == () && cdef.body.toString == "()"         =>
             feedback.warn(cdef.sourcePos, self, cdef.asSnippet.map(_.take(100)))
           case cdef @ CaseDef(Bind(caughtException, _), _, subtree)
               if containsMaskingThrow(caughtException, Seq(subtree)) =>

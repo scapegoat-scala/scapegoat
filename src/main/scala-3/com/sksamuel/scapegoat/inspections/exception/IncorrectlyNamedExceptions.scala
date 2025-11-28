@@ -23,9 +23,11 @@ class IncorrectlyNamedExceptions
         tree match {
           case cdef @ TypeDef(name, impl) if cdef.isClassDef =>
             val isNamedException = name.toString.endsWith("Exception")
-            val isAnon = scala.util.Try {
-              cdef.symbol.isAnonymousClass
-            }.getOrElse(false)
+            val isAnon = scala.util
+              .Try {
+                cdef.symbol.isAnonymousClass
+              }
+              .getOrElse(false)
 
             val extendsException = impl.tpe <:< ctx.definitions.ExceptionClass.typeRef
             val selfTypeIsException = impl match {
