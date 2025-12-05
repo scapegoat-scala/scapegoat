@@ -157,7 +157,7 @@ To suppress warnings globally for the project, use `disabledInspections` or `ove
 
 ### Inspections
 
-There are currently 123 inspections for Scala 2, and 13 for Scala 3.
+There are currently 123 inspections for Scala 2, and 11 for Scala 3.
 An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level | Scala 2 | Scala 3 |
@@ -177,7 +177,7 @@ An overview list is given, followed by a more detailed description of each inspe
 | BooleanParameter                      | Checks for functions that have a Boolean parameter                                                                                                           | Info          | Yes     | No      |
 | BoundedByFinalType                    | Looks for types with upper bounds of a final type                                                                                                            | Warning       | Yes     | No      |
 | BrokenOddness                         | Checks for a % 2 == 1 for oddness because this fails on negative numbers                                                                                     | Warning       | Yes     | No      |
-| CatchException                        | Checks for try blocks that catch Exception                                                                                                                   | Warning       | Yes     | Yes     |
+| CatchException                        | Checks for try blocks that catch Exception                                                                                                                   | Warning       | Yes     | No      |
 | CatchExceptionImmediatelyRethrown     | Checks for try-catch blocks that immediately rethrow caught exceptions.                                                                                      | Warning       | Yes     | Yes     |
 | CatchFatal                            | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable                    | Warning       | Yes     | Yes     |
 | CatchNpe                              | Checks for try blocks that catch null pointer exceptions                                                                                                     | Error         | Yes     | Yes     |
@@ -263,7 +263,7 @@ An overview list is given, followed by a more detailed description of each inspe
 | StripMarginOnRegex                    | Checks for .stripMargin on regex strings that contain a pipe                                                                                                 | Error         | Yes     | No      |
 | SubstringZero                         | Checks for `String.substring(0)`                                                                                                                             | Info          | Yes     | No      |
 | SuspiciousMatchOnClassObject          | Finds code where matching is taking place on class literals                                                                                                  | Warning       | Yes     | No      |
-| SwallowedException                    | Finds catch blocks that don't handle caught exceptions                                                                                                       | Warning       | Yes     | Yes     |
+| SwallowedException                    | Finds catch blocks that don't handle caught exceptions                                                                                                       | Warning       | Yes     | No      |
 | SwapSortFilter                        | `sort.filter` can be replaced with `filter.sort` for performance                                                                                             | Info          | Yes     | No      |
 | TryGet                                | Checks for use of `Try.get`                                                                                                                                  | Error         | Yes     | No      |
 | TypeShadowing                         | Checks for shadowed type parameters in methods                                                                                                               | Warning       | Yes     | No      |

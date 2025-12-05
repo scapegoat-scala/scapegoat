@@ -14,13 +14,11 @@ object Inspections {
     new AvoidRequire,
     new AbstractTrait,
     new ComparingFloatingPointTypes,
-    new CatchException,
     new CatchExceptionImmediatelyRethrown,
     new CatchFatal,
     new CatchNpe,
     new CatchThrowable,
     new IncorrectlyNamedExceptions,
-    new SwallowedException,
     new UnreachableCatch
   )
 
