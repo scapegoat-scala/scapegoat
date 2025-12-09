@@ -20,7 +20,7 @@ developers := List(
 )
 
 scalaVersion := "3.7.4"
-crossScalaVersions := Seq("2.12.19", "2.12.20", "2.13.17", "2.13.18", "3.3.7", "3.7.4")
+crossScalaVersions := Seq("2.12.20", "2.12.21", "2.13.17", "2.13.18", "3.3.7", "3.7.4")
 autoScalaLibrary := false
 crossVersion := CrossVersion.full
 // workaround for https://github.com/sbt/sbt/issues/5097, fixed in sbt 2.x
