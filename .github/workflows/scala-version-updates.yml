@@ -161,10 +161,14 @@ jobs:
 
           echo "Updating README.md..."
 
-          sed -i "s|2\.12\.[0-9]\+|$LATEST_212|g" README.md
-          sed -i "s|2\.13\.[0-9]\+|$LATEST_213|g" README.md
-          sed -i "s|3\.3\.[0-9]\+|$SCALA_337|g" README.md
-          sed -i "s|3\.\([0-24-9]\|[1-9][0-9]\+\)\.[0-9]\+|$SCALA_3_LATEST|g" README.md
+          sed -i '/shields\.io/ s|2\.12\.[0-9]\+|'"$LATEST_212"'|g' README.md
+          sed -i '/shields\.io/ s|2\.13\.[0-9]\+|'"$LATEST_213"'|g' README.md
+          sed -i '/shields\.io/ s|3\.3\.[0-9]\+|'"$SCALA_337"'|g' README.md
+          sed -i -E '/shields\.io/ s/3\.([04-9]|[1-9][0-9])\.[0-9]+/'"$SCALA_3_LATEST"'/g' README.md
+          sed -i '/scapegoat:scalac-scapegoat-plugin_/ s|scalac-scapegoat-plugin_2\.12\.[0-9]\+|scalac-scapegoat-plugin_'"$LATEST_212"'|g' README.md
+          sed -i '/scapegoat:scalac-scapegoat-plugin_/ s|scalac-scapegoat-plugin_2\.13\.[0-9]\+|scalac-scapegoat-plugin_'"$LATEST_213"'|g' README.md
+          sed -i '/scapegoat:scalac-scapegoat-plugin_/ s|scalac-scapegoat-plugin_3\.3\.[0-9]\+|scalac-scapegoat-plugin_'"$SCALA_337"'|g' README.md
+          sed -i -E '/scapegoat:scalac-scapegoat-plugin_/ s/scalac-scapegoat-plugin_3\.([04-9]|[1-9][0-9])\.[0-9]+/scalac-scapegoat-plugin_'"$SCALA_3_LATEST"'/g' README.md
 
           echo "Files updated successfully"
 
