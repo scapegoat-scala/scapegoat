@@ -12,7 +12,7 @@ jobs:
         with:
           cache: sbt
           distribution: adopt
-          java-version: 11
+          java-version: 17
       - uses: sbt/setup-sbt@v1
       - uses: actions/cache@v4
         with:
