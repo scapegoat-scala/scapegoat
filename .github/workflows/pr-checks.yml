@@ -8,14 +8,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: ['8', '11', '17']
+        java: ['17', '25']
         scala:
           - 2.12.20
           - 2.12.21
           - 2.13.17
           - 2.13.18
           - 3.3.7
-          - 3.7.4
+          - 3.8.0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
