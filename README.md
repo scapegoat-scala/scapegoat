@@ -157,7 +157,7 @@ To suppress warnings globally for the project, use `disabledInspections` or `ove
 
 ### Inspections
 
-There are currently 123 inspections for Scala 2, and 5 for Scala 3.
+There are currently 123 inspections for Scala 2, and 11 for Scala 3.
 An overview list is given, followed by a more detailed description of each inspection after the list (todo: finish rest of detailed descriptions)
 
 | Name                                  | Brief Description                                                                                                                                            | Default Level | Scala 2 | Scala 3 |
@@ -178,10 +178,10 @@ An overview list is given, followed by a more detailed description of each inspe
 | BoundedByFinalType                    | Looks for types with upper bounds of a final type                                                                                                            | Warning       | Yes     | No      |
 | BrokenOddness                         | Checks for a % 2 == 1 for oddness because this fails on negative numbers                                                                                     | Warning       | Yes     | No      |
 | CatchException                        | Checks for try blocks that catch Exception                                                                                                                   | Warning       | Yes     | No      |
-| CatchExceptionImmediatelyRethrown     | Checks for try-catch blocks that immediately rethrow caught exceptions.                                                                                      | Warning       | Yes     | No      |
-| CatchFatal                            | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable                    | Warning       | Yes     | No      |
-| CatchNpe                              | Checks for try blocks that catch null pointer exceptions                                                                                                     | Error         | Yes     | No      |
-| CatchThrowable                        | Checks for try blocks that catch Throwable                                                                                                                   | Warning       | Yes     | No      |
+| CatchExceptionImmediatelyRethrown     | Checks for try-catch blocks that immediately rethrow caught exceptions.                                                                                      | Warning       | Yes     | Yes     |
+| CatchFatal                            | Checks for try blocks that catch fatal exceptions: VirtualMachineError, ThreadDeath, InterruptedException, LinkageError, ControlThrowable                    | Warning       | Yes     | Yes     |
+| CatchNpe                              | Checks for try blocks that catch null pointer exceptions                                                                                                     | Error         | Yes     | Yes     |
+| CatchThrowable                        | Checks for try blocks that catch Throwable                                                                                                                   | Warning       | Yes     | Yes     |
 | ClassNames                            | Ensures class names adhere to the style guidelines                                                                                                           | Info          | Yes     | No      |
 | CollectionIndexOnNonIndexedSeq        | Checks for indexing on a Seq which is not an IndexedSeq                                                                                                      | Warning       | Yes     | No      |
 | CollectionNamingConfusion             | Checks for variables that are confusingly named                                                                                                              | Info          | Yes     | No      |
@@ -220,7 +220,7 @@ An overview list is given, followed by a more detailed description of each inspe
 | IllegalFormatString                   | Looks for invalid format strings                                                                                                                             | Error         | Yes     | No      |
 | ImpossibleOptionSizeCondition         | Checks for code like `option.size > 2` which can never be true                                                                                               | Error         | Yes     | No      |
 | IncorrectNumberOfArgsToFormat         | Checks for wrong number of arguments to `String.format`                                                                                                      | Error         | Yes     | No      |
-| IncorrectlyNamedExceptions            | Checks for exceptions that are not called *Exception and vice versa                                                                                          | Error         | Yes     | No      |
+| IncorrectlyNamedExceptions            | Checks for exceptions that are not called *Exception and vice versa                                                                                          | Error         | Yes     | Yes     |
 | InvalidRegex                          | Checks for invalid regex literals                                                                                                                            | Info          | Yes     | No      |
 | IsInstanceOf                          | Checks for use of `isInstanceOf`                                                                                                                             | Warning       | Yes     | No      |
 | JavaConversionsUse                    | Checks for use of implicit Java conversions                                                                                                                  | Warning       | Yes     | No      |
@@ -270,7 +270,7 @@ An overview list is given, followed by a more detailed description of each inspe
 | UnnecessaryConversion                 | Checks for unnecessary `toInt` on instances of Int or `toString` on Strings, etc.                                                                            | Warning       | Yes     | No      |
 | UnnecessaryIf                         | Checks for code like `if (expr) true else false`                                                                                                             | Info          | Yes     | No      |
 | UnnecessaryReturnUse                  | Checks for use of `return` keyword in blocks                                                                                                                 | Info          | Yes     | No      |
-| UnreachableCatch                      | Checks for catch clauses that cannot be reached                                                                                                              | Warning       | Yes     | No      |
+| UnreachableCatch                      | Checks for catch clauses that cannot be reached                                                                                                              | Warning       | Yes     | Yes     |
 | UnsafeContains                        | Checks for `List.contains(value)` for invalid types                                                                                                          | Error         | Yes     | No      |
 | UnsafeStringContains                  | Checks for `String.contains(value)` for invalid types                                                                                                        | Error         | Yes     | No      |
 | UnsafeTraversableMethods              | Check unsafe traversable method usages (head, tail, init, last, reduce, reduceLeft, reduceRight, max, maxBy, min, minBy)                                     | Error         | Yes     | No      |
