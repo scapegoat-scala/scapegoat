@@ -9,13 +9,13 @@ class LooksLikeInterpolatedStringTest extends InspectionTest with TableDrivenPro
   private def singleQuote(n: String) = "\"" + n + "\""
   private def tripleQuote(n: String) = "\"\"\"" + n + "\"\"\""
 
-  private val QuoteTypes = Table(
+  private val quoteTypes = Table(
     ("quote type", "quote function"),
     ("single quoted", singleQuote(_)),
     ("triple quoted", tripleQuote(_))
   )
 
-  forAll(QuoteTypes) { case (quoteType, quote) =>
+  forAll(quoteTypes) { case (quoteType, quote) =>
     s"LooksLikeInterpolatedString ($quoteType)" - {
       "should report warning" - {
         "for string containing $var" in {
