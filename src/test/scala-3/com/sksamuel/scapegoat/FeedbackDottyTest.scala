@@ -32,7 +32,7 @@ class FeedbackDottyTest extends AnyFreeSpec with should.Matchers {
         val feedback = FeedbackDotty(
           configuration.copy(overrideLevels =
             Map(
-              "all" -> Levels.Info,
+              "all"       -> Levels.Info,
               "OptionGet" -> Levels.Warning
             )
           )
