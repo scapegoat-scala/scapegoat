@@ -14,10 +14,10 @@ class ReverseFunc
   object FuncReplace {
 
     private val funcReplace = Map(
-      "head" -> "last",
+      "head"       -> "last",
       "headOption" -> "lastOption",
-      "iterator" -> "reverseIterator",
-      "map" -> "reverseMap"
+      "iterator"   -> "reverseIterator",
+      "map"        -> "reverseMap"
     )
 
     def unapply(func: String): Option[(String, String)] =
