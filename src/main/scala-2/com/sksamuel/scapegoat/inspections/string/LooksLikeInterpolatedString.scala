@@ -10,8 +10,8 @@ class LooksLikeInterpolatedString
       explanation = "Did you forget to prefix this string with an s, f or raw to interpolate it?"
     ) {
 
-  final val regex1 = "\\$\\{[a-z][.a-zA-Z0-9_]*\\}".r
-  final val regex2 = "\\$[a-z][.a-zA-Z0-9_]*".r
+  final val regex1 = "(?<!\\$)\\$\\{[a-z][.a-zA-Z0-9_]*\\}".r
+  final val regex2 = "(?<!\\$)\\$[a-z][.a-zA-Z0-9_]*".r
 
   def inspector(ctx: InspectionContext): Inspector =
     new Inspector(ctx) {
