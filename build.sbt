@@ -1,7 +1,7 @@
-name := "scalac-scapegoat-plugin"
+name         := "scalac-scapegoat-plugin"
 organization := "com.sksamuel.scapegoat"
-description := "Scala compiler plugin for static code analysis"
-homepage := Some(url("https://github.com/sksamuel/scapegoat"))
+description  := "Scala compiler plugin for static code analysis"
+homepage     := Some(url("https://github.com/sksamuel/scapegoat"))
 licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0.html"))
 scmInfo := Some(
   ScmInfo(
@@ -19,15 +19,15 @@ developers := List(
   )
 )
 
-scalaVersion := "3.8.2"
+scalaVersion       := "3.8.2"
 crossScalaVersions := Seq("2.12.20", "2.12.21", "2.13.17", "2.13.18", "3.3.7", "3.8.2")
-autoScalaLibrary := false
-crossVersion := CrossVersion.full
+autoScalaLibrary   := false
+crossVersion       := CrossVersion.full
 // workaround for https://github.com/sbt/sbt/issues/5097, fixed in sbt 2.x
-crossTarget := target.value / s"scala-${scalaVersion.value}"
-versionScheme := Some("early-semver")
+crossTarget       := target.value / s"scala-${scalaVersion.value}"
+versionScheme     := Some("early-semver")
 semanticdbEnabled := (scalaBinaryVersion.value == "3")
-scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
+scalafixConfig    := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
 
 val scala2Options = Seq(
   "-Xlint",
@@ -95,7 +95,7 @@ libraryDependencies ++= Seq(
   "org.scala-lang.modules" %% "scala-collection-compat" % "2.14.0" excludeAll ExclusionRule(organization =
     "org.scala-lang"
   ),
-  "org.scalatest" %% "scalatest"    % "3.2.19"  % "test",
+  "org.scalatest" %% "scalatest"    % "3.2.20"  % "test",
   "org.mockito"    % "mockito-all"  % "1.10.19" % "test",
   "joda-time"      % "joda-time"    % "2.14.1"  % "test",
   "org.joda"       % "joda-convert" % "3.0.1"   % "test",
@@ -119,8 +119,8 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                          })
 
 // Test
-Test / run / fork := true
-Test / logBuffered := false
+Test / run / fork        := true
+Test / logBuffered       := false
 Test / parallelExecution := false
 
 // ScalaTest reporter config:
@@ -138,9 +138,9 @@ assembly / assemblyShadeRules := Seq(
   // scala-collection-compat has classes outside of the previous shade path, move them as well.
   ShadeRule.rename("scala.util.control.compat.**" -> "scapegoat.util.@1").inAll
 )
-Compile / packageBin := crossTarget.value / (assembly / assemblyJarName).value
-makePom := makePom.dependsOn(assembly).value
-assembly / test := {} // do not run tests during assembly
+Compile / packageBin   := crossTarget.value / (assembly / assemblyJarName).value
+makePom                := makePom.dependsOn(assembly).value
+assembly / test        := {} // do not run tests during assembly
 Test / publishArtifact := false
 
 // Scalafix
