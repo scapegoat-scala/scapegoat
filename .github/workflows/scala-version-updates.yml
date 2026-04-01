@@ -53,8 +53,8 @@ jobs:
           echo "Latest 3.x version: $SCALA_3_LATEST"
 
           # Read current versions from build.sbt
-          CURRENT_SCALA_VERSION=$(grep -oP '(?<=scalaVersion := ")[^"]+' build.sbt)
-          CURRENT_CROSS_VERSIONS=$(grep -oP '(?<=crossScalaVersions := Seq\()[^)]+' build.sbt | tr -d '"' | tr ',' '\n' | xargs)
+          CURRENT_SCALA_VERSION=$(grep -oP 'scalaVersion\s+:=\s+"\K[^"]+' build.sbt)
+          CURRENT_CROSS_VERSIONS=$(grep -oP 'crossScalaVersions\s+:=\s+Seq\(\K[^)]+' build.sbt | tr -d '"' | tr ',' '\n' | xargs)
 
           echo "Current scalaVersion: $CURRENT_SCALA_VERSION"
           echo "Current crossScalaVersions: $CURRENT_CROSS_VERSIONS"
@@ -122,12 +122,12 @@ jobs:
           echo "Updating build.sbt..."
 
           # Update crossScalaVersions in build.sbt
-          sed -i "s/crossScalaVersions := Seq.*/crossScalaVersions := Seq(\"$SCALA_212_1\", \"$SCALA_212_2\", \"$SCALA_213_1\", \"$SCALA_213_2\", \"$SCALA_337\", \"$SCALA_3_LATEST\")/" build.sbt
+          sed -i -E "s/crossScalaVersions\s+:=\s+Seq.*/crossScalaVersions := Seq(\"$SCALA_212_1\", \"$SCALA_212_2\", \"$SCALA_213_1\", \"$SCALA_213_2\", \"$SCALA_337\", \"$SCALA_3_LATEST\")/" build.sbt
 
           # Update scalaVersion if it changed
           if [ "${{ steps.versions.outputs.scala_version_changed }}" == "true" ]; then
             echo "Updating scalaVersion to $SCALA_3_LATEST..."
-            sed -i "s/scalaVersion := \".*\"/scalaVersion := \"$SCALA_3_LATEST\"/" build.sbt
+            sed -i -E "s/scalaVersion\s+:=\s+\".*\"/scalaVersion := \"$SCALA_3_LATEST\"/" build.sbt
           fi
 
           echo "Updating .github/workflows/pr-checks.yml..."
