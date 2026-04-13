@@ -19,7 +19,7 @@ developers := List(
   )
 )
 
-scalaVersion := "3.8.3"
+scalaVersion       := "3.8.3"
 crossScalaVersions := Seq("2.12.20", "2.12.21", "2.13.17", "2.13.18", "3.3.7", "3.8.3")
 autoScalaLibrary   := false
 crossVersion       := CrossVersion.full
@@ -113,7 +113,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.15.2" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.16.0" cross CrossVersion.full
                              )
                            )
                          })
