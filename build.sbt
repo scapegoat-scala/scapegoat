@@ -99,7 +99,7 @@ libraryDependencies ++= Seq(
   "org.mockito"    % "mockito-all"  % "1.10.19" % "test",
   "joda-time"      % "joda-time"    % "2.14.2"  % "test",
   "org.joda"       % "joda-convert" % "3.0.1"   % "test",
-  "org.slf4j"      % "slf4j-api"    % "2.0.17"  % "test"
+  "org.slf4j"      % "slf4j-api"    % "2.0.18"  % "test"
 )
 
 libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
