@@ -91,7 +91,7 @@ jobs:
             echo "scala_212_2=$SCALA_212_2" >> $GITHUB_OUTPUT
             echo "scala_213_1=$SCALA_213_1" >> $GITHUB_OUTPUT
             echo "scala_213_2=$SCALA_213_2" >> $GITHUB_OUTPUT
-            echo "scala_337=$SCALA_337" >> $GITHUB_OUTPUT
+            echo "scala_338=$SCALA_338" >> $GITHUB_OUTPUT
             echo "scala_3_latest=$SCALA_3_LATEST" >> $GITHUB_OUTPUT
 
             # Get the latest 2.12.x, 2.13.x for README badges
@@ -114,7 +114,7 @@ jobs:
           SCALA_212_2="${{ steps.versions.outputs.scala_212_2 }}"
           SCALA_213_1="${{ steps.versions.outputs.scala_213_1 }}"
           SCALA_213_2="${{ steps.versions.outputs.scala_213_2 }}"
-          SCALA_337="${{ steps.versions.outputs.scala_337 }}"
+          SCALA_338="${{ steps.versions.outputs.scala_338 }}"
           SCALA_3_LATEST="${{ steps.versions.outputs.scala_3_latest }}"
           LATEST_212="${{ steps.versions.outputs.latest_212 }}"
           LATEST_213="${{ steps.versions.outputs.latest_213 }}"
@@ -138,7 +138,7 @@ jobs:
               -v s212_2="$SCALA_212_2" \
               -v s213_1="$SCALA_213_1" \
               -v s213_2="$SCALA_213_2" \
-              -v s337="$SCALA_337" \
+              -v s338="$SCALA_338" \
               -v s3latest="$SCALA_3_LATEST" '
           /^        scala:/ {
             print
@@ -147,7 +147,7 @@ jobs:
             print "          - " s212_2
             print "          - " s213_1
             print "          - " s213_2
-            print "          - " s337
+            print "          - " s338
             print "          - " s3latest
             # Skip existing scala versions
             while (getline && /^          -/) {}
@@ -163,7 +163,7 @@ jobs:
 
           sed -i '/shields\.io/ s|2\.12\.[0-9]\+|'"$LATEST_212"'|g' README.md
           sed -i '/shields\.io/ s|2\.13\.[0-9]\+|'"$LATEST_213"'|g' README.md
-          sed -i '/shields\.io/ s|3\.3\.[0-9]\+|'"$SCALA_337"'|g' README.md
+          sed -i '/shields\.io/ s|3\.3\.[0-9]\+|'"$SCALA_338"'|g' README.md
           sed -i -E '/shields\.io/ s/3\.([04-9]|[1-9][0-9])\.[0-9]+/'"$SCALA_3_LATEST"'/g' README.md
           sed -i '/scapegoat:scalac-scapegoat-plugin_/ s|scalac-scapegoat-plugin_2\.12\.[0-9]\+|scalac-scapegoat-plugin_'"$LATEST_212"'|g' README.md
           sed -i '/scapegoat:scalac-scapegoat-plugin_/ s|scalac-scapegoat-plugin_2\.13\.[0-9]\+|scalac-scapegoat-plugin_'"$LATEST_213"'|g' README.md
@@ -199,7 +199,7 @@ jobs:
 
             - **2.12.x**: ${{ steps.versions.outputs.scala_212_1 }}, ${{ steps.versions.outputs.scala_212_2 }}
             - **2.13.x**: ${{ steps.versions.outputs.scala_213_1 }}, ${{ steps.versions.outputs.scala_213_2 }}
-            - **3.3.x**: ${{ steps.versions.outputs.scala_337 }} (hardcoded)
+            - **3.3.x**: ${{ steps.versions.outputs.scala_338 }} (hardcoded)
             - **3.x latest**: ${{ steps.versions.outputs.scala_3_latest }}
 
             ### Files updated:
