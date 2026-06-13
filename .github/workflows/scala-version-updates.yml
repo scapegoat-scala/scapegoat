@@ -60,7 +60,7 @@ jobs:
           echo "Current crossScalaVersions: $CURRENT_CROSS_VERSIONS"
 
           # Build new version lists
-          NEW_CROSS_VERSIONS="$SCALA_212_VERSIONS $SCALA_213_VERSIONS $SCALA_337 $SCALA_3_LATEST"
+          NEW_CROSS_VERSIONS="$SCALA_212_VERSIONS $SCALA_213_VERSIONS $SCALA_338 $SCALA_3_LATEST"
           NEW_CROSS_VERSIONS=$(echo $NEW_CROSS_VERSIONS | tr ' ' '\n' | sort -V -u | paste -sd ' ')
 
           echo "New crossScalaVersions: $NEW_CROSS_VERSIONS"
