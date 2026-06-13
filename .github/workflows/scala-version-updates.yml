@@ -43,7 +43,7 @@ jobs:
           echo "Latest 2.13.x versions: $SCALA_213_VERSIONS"
 
           # Hardcoded Scala 3.3.7
-          SCALA_337="3.3.7"
+          SCALA_337="3.3.8"
 
           # Fetch latest Scala 3.x version (excluding 3.3.x to find the latest mainline)
           echo "Fetching latest 3.x version..."
