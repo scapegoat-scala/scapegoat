@@ -122,7 +122,7 @@ jobs:
           echo "Updating build.sbt..."
 
           # Update crossScalaVersions in build.sbt
-          sed -i -E "s/crossScalaVersions\s+:=\s+Seq.*/crossScalaVersions := Seq(\"$SCALA_212_1\", \"$SCALA_212_2\", \"$SCALA_213_1\", \"$SCALA_213_2\", \"$SCALA_337\", \"$SCALA_3_LATEST\")/" build.sbt
+          sed -i -E "s/crossScalaVersions\s+:=\s+Seq.*/crossScalaVersions := Seq(\"$SCALA_212_1\", \"$SCALA_212_2\", \"$SCALA_213_1\", \"$SCALA_213_2\", \"$SCALA_338\", \"$SCALA_3_LATEST\")/" build.sbt
 
           # Update scalaVersion if it changed
           if [ "${{ steps.versions.outputs.scala_version_changed }}" == "true" ]; then
