@@ -1,7 +1,6 @@
 Scapegoat
 =========
 
-[![Codecov](https://img.shields.io/codecov/c/github/sksamuel/scapegoat)](https://codecov.io/gh/sksamuel/scapegoat)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.12.21.svg?label=latest%20release%20for%202.12.21"/>](https://central.sonatype.com/search?q=a%3Ascalac-scapegoat-plugin_2.12.21)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_2.13.18.svg?label=latest%20release%20for%202.13.18"/>](https://central.sonatype.com/search?q=a%3Ascalac-scapegoat-plugin_2.13.18)
 [<img src="https://img.shields.io/maven-central/v/com.sksamuel.scapegoat/scalac-scapegoat-plugin_3.3.8.svg?label=latest%20release%20for%203.3.8"/>](https://central.sonatype.com/search?q=a%3Ascalac-scapegoat-plugin_3.3.8)
