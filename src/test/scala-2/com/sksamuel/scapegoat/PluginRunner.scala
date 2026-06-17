@@ -81,9 +81,11 @@ trait PluginRunner {
       .map(_.getLocation)
       .map(location => new File(location.toURI))
       .filter(_.exists())
-      .getOrElse(throw new FileNotFoundException(
-        "Could not locate SBT compile directory for plugin files via classpath"
-      ))
+      .getOrElse(
+        throw new FileNotFoundException(
+          "Could not locate SBT compile directory for plugin files via classpath"
+        )
+      )
 }
 
 class ScapegoatCompiler(
