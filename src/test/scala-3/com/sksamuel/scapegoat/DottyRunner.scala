@@ -121,11 +121,9 @@ class DottyRunner(
       .map(_.getLocation)
       .map(location => new File(location.toURI))
       .filter(_.exists())
-      .getOrElse {
-        val dir = new File("./target/scala-" + dottyVersion + "/classes")
-        if (dir.exists) dir
-        else throw new FileNotFoundException(s"Could not locate SBT compile directory for plugin files [$dir]")
-      }
+      .getOrElse(throw new FileNotFoundException(
+        "Could not locate SBT compile directory for plugin files via classpath"
+      ))
 
 }
 
