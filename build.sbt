@@ -19,7 +19,7 @@ developers := List(
   )
 )
 
-scalaVersion := "3.8.4"
+scalaVersion       := "3.8.4"
 crossScalaVersions := Seq("2.12.20", "2.12.21", "2.13.17", "2.13.18", "3.3.8", "3.8.4")
 autoScalaLibrary   := false
 crossVersion       := CrossVersion.full
@@ -138,9 +138,9 @@ assembly / assemblyShadeRules := Seq(
   // scala-collection-compat has classes outside of the previous shade path, move them as well.
   ShadeRule.rename("scala.util.control.compat.**" -> "scapegoat.util.@1").inAll
 )
-Compile / packageBin   := crossTarget.value / (assembly / assemblyJarName).value
+exportJars             := false
 makePom                := makePom.dependsOn(assembly).value
-assembly / test        := {} // do not run tests during assembly
+assembly / test        := sbt.protocol.testing.TestResult.Passed // do not run tests during assembly
 Test / publishArtifact := false
 
 // Scalafix
