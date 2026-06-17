@@ -143,6 +143,14 @@ makePom                := makePom.dependsOn(assembly).value
 assembly / test        := sbt.protocol.testing.TestResult.Passed // do not run tests during assembly
 Test / publishArtifact := false
 
+// Suppress sbt 2.0 lintUnused warnings for keys set by plugins but not consumed by other settings
+Global / excludeLintKeys ++= Set(
+  gitUncommittedChanges,
+  scmInfo,
+  publishArtifact,
+  gitDescribedVersion
+)
+
 // Scalafix
 ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.6.1"
 addCommandAlias("fix", "all Compile / scalafix Test / scalafix; fixImports")
