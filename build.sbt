@@ -23,11 +23,9 @@ scalaVersion       := "3.8.4"
 crossScalaVersions := Seq("2.12.20", "2.12.21", "2.13.17", "2.13.18", "3.3.8", "3.8.4")
 autoScalaLibrary   := false
 crossVersion       := CrossVersion.full
-// workaround for https://github.com/sbt/sbt/issues/5097, fixed in sbt 2.x
-crossTarget       := target.value / s"scala-${scalaVersion.value}"
-versionScheme     := Some("early-semver")
-semanticdbEnabled := (scalaBinaryVersion.value == "3")
-scalafixConfig    := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
+versionScheme      := Some("early-semver")
+semanticdbEnabled  := (scalaBinaryVersion.value == "3")
+scalafixConfig     := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
 
 val scala2Options = Seq(
   "-Xlint",
