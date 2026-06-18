@@ -138,6 +138,7 @@ assembly / assemblyShadeRules := Seq(
   // scala-collection-compat has classes outside of the previous shade path, move them as well.
   ShadeRule.rename("scala.util.control.compat.**" -> "scapegoat.util.@1").inAll
 )
+Compile / packageBin   := (assembly).value
 exportJars             := false
 makePom                := makePom.dependsOn(assembly).value
 assembly / test        := sbt.protocol.testing.TestResult.Passed // do not run tests during assembly
@@ -145,10 +146,10 @@ Test / publishArtifact := false
 
 // Suppress sbt 2.0 lintUnused warnings for keys set by plugins but not consumed by other settings
 Global / excludeLintKeys ++= Set(
-  gitUncommittedChanges,
+  git.gitUncommittedChanges,
   scmInfo,
   publishArtifact,
-  gitDescribedVersion
+  git.gitDescribedVersion
 )
 
 // Scalafix
