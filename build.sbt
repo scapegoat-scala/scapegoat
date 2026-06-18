@@ -19,15 +19,13 @@ developers := List(
   )
 )
 
-scalaVersion := "3.8.4"
+scalaVersion       := "3.8.4"
 crossScalaVersions := Seq("2.12.20", "2.12.21", "2.13.17", "2.13.18", "3.3.8", "3.8.4")
 autoScalaLibrary   := false
 crossVersion       := CrossVersion.full
-// workaround for https://github.com/sbt/sbt/issues/5097, fixed in sbt 2.x
-crossTarget       := target.value / s"scala-${scalaVersion.value}"
-versionScheme     := Some("early-semver")
-semanticdbEnabled := (scalaBinaryVersion.value == "3")
-scalafixConfig    := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
+versionScheme      := Some("early-semver")
+semanticdbEnabled  := (scalaBinaryVersion.value == "3")
+scalafixConfig     := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
 
 val scala2Options = Seq(
   "-Xlint",
@@ -138,10 +136,19 @@ assembly / assemblyShadeRules := Seq(
   // scala-collection-compat has classes outside of the previous shade path, move them as well.
   ShadeRule.rename("scala.util.control.compat.**" -> "scapegoat.util.@1").inAll
 )
-Compile / packageBin   := crossTarget.value / (assembly / assemblyJarName).value
+Compile / packageBin   := (assembly).value
+exportJars             := false
 makePom                := makePom.dependsOn(assembly).value
-assembly / test        := {} // do not run tests during assembly
+assembly / test        := sbt.protocol.testing.TestResult.Passed // do not run tests during assembly
 Test / publishArtifact := false
+
+// Suppress sbt 2.0 lintUnused warnings for keys set by plugins but not consumed by other settings
+Global / excludeLintKeys ++= Set(
+  git.gitUncommittedChanges,
+  scmInfo,
+  publishArtifact,
+  git.gitDescribedVersion
+)
 
 // Scalafix
 ThisBuild / scalafixDependencies += "com.nequissimus" %% "sort-imports" % "0.6.1"
