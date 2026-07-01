@@ -17,7 +17,7 @@ jobs:
           - 3.3.8
           - 3.8.4
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v4
         with:
           cache: sbt
@@ -39,7 +39,7 @@ jobs:
     name: Run additional checks
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-java@v4
         with:
           cache: sbt
