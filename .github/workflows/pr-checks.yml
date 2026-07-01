@@ -24,12 +24,12 @@ jobs:
           distribution: adopt
           java-version: ${{matrix.java}}
       - uses: sbt/setup-sbt@v1
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.cache/coursier
           key: coursier-${{hashFiles('**/*.sbt')}}
           restore-keys: coursier-
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.sbt
           key: sbt-${{hashFiles('**/*.sbt')}}-${{hashFiles('project/build.properties')}}-${{matrix.scala}}
@@ -46,12 +46,12 @@ jobs:
           distribution: adopt
           java-version: 17
       - uses: sbt/setup-sbt@v1
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.cache/coursier
           key: coursier-${{hashFiles('**/*.sbt')}}
           restore-keys: coursier-
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: ~/.sbt
           key: sbt-${{hashFiles('**/*.sbt')}}-${{hashFiles('project/build.properties')}}
