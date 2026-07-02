@@ -1,8 +1,0 @@
-{
-  "servers": {
-    "scapegoat-metals": {
-      "url": "http://localhost:50436/mcp",
-      "type": "http"
-    }
-  }
-}
