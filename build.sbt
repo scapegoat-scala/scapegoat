@@ -136,7 +136,7 @@ assembly / assemblyShadeRules := Seq(
   // scala-collection-compat has classes outside of the previous shade path, move them as well.
   ShadeRule.rename("scala.util.control.compat.**" -> "scapegoat.util.@1").inAll
 )
-Compile / packageBin   := (assembly).value
+Compile / packageBin   := Def.uncached((assembly).value)
 exportJars             := false
 makePom                := makePom.dependsOn(assembly).value
 assembly / test        := sbt.protocol.testing.TestResult.Passed // do not run tests during assembly
