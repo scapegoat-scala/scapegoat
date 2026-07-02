@@ -62,5 +62,11 @@ jobs:
         run: sbt ++scalafmtCheckAll
       - name: Run Scapegoat
         run: |
-          sbt 'set version := "99.0-SNAPSHOT"; publishLocal'
-          sbt 'set name := "scapegoat-test"; set libraryDependencies += compilerPlugin("com.sksamuel.scapegoat" % ("scalac-scapegoat-plugin_" + scalaVersion.value) % "99.0-SNAPSHOT"); set Compile / scalacOptions += ("-P:scapegoat:dataDir:target/scapegoat-ci-" + System.currentTimeMillis.toString); clean; Compile / compile'
+          sbt '
+            set version := "99.0-SNAPSHOT";
+            publishLocal;
+            set name := "scapegoat-test";
+            set libraryDependencies += compilerPlugin("com.sksamuel.scapegoat" % ("scalac-scapegoat-plugin_" + (ThisBuild / scalaVersion).value) % "99.0-SNAPSHOT");
+            set Compile / scalacOptions += "-P:scapegoat:dataDir:target/scapegoat";
+            compile
+          '
