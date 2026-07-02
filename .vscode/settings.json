@@ -1,8 +1,0 @@
-{
-    "files.watcherExclude": {
-        "**/target/**": true
-    },
-    "chat.tools.terminal.autoApprove": {
-        "sbt": true
-    }
-}
