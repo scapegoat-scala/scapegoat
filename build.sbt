@@ -25,7 +25,7 @@ autoScalaLibrary   := false
 crossVersion       := CrossVersion.full
 versionScheme      := Some("early-semver")
 semanticdbEnabled  := (scalaBinaryVersion.value == "3")
-scalafixConfig     := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
+scalafixConfig := Some(file(if (scalaBinaryVersion.value == "3") ".scalafix.conf" else ".scalafix-2.conf"))
 
 val scala2Options = Seq(
   "-Xlint",
@@ -111,7 +111,7 @@ libraryDependencies ++= (if (scalaBinaryVersion.value == "3") {
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided",
                              "org.scala-lang" % "scala-compiler" % scalaVersion.value % "test",
                              compilerPlugin(
-                               "org.scalameta" % "semanticdb-scalac" % "4.17.0" cross CrossVersion.full
+                               "org.scalameta" % "semanticdb-scalac" % "4.17.1" cross CrossVersion.full
                              )
                            )
                          })
@@ -136,7 +136,7 @@ assembly / assemblyShadeRules := Seq(
   // scala-collection-compat has classes outside of the previous shade path, move them as well.
   ShadeRule.rename("scala.util.control.compat.**" -> "scapegoat.util.@1").inAll
 )
-Compile / packageBin   := Def.uncached((assembly).value)
+Compile / packageBin   := Def.uncached(assembly.value)
 exportJars             := false
 makePom                := makePom.dependsOn(assembly).value
 assembly / test        := sbt.protocol.testing.TestResult.Passed // do not run tests during assembly
