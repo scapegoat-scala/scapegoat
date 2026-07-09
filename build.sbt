@@ -144,10 +144,8 @@ Test / publishArtifact := false
 
 // Suppress sbt 2.0 lintUnused warnings for keys set by plugins but not consumed by other settings
 Global / excludeLintKeys ++= Set(
-  git.gitUncommittedChanges,
   scmInfo,
-  publishArtifact,
-  git.gitDescribedVersion
+  publishArtifact
 )
 
 // Scalafix
