@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-java@v5
         with:
           cache: sbt
-          distribution: adopt
+          distribution: temurin
           java-version: 17
       - run: |
           sudo apt-get update && sudo apt-get -y install gnupg2
