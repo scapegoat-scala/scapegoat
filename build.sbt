@@ -19,8 +19,8 @@ developers := List(
   )
 )
 
-scalaVersion := "3.9.0"
-crossScalaVersions := Seq("2.12.20", "2.12.21", "2.13.17", "2.13.18", "3.3.8", "3.9.0")
+scalaVersion.      := "3.10.0"
+crossScalaVersions := Seq("2.12.20", "2.12.21", "2.13.17", "2.13.18", "3.10.0")
 autoScalaLibrary   := false
 crossVersion       := CrossVersion.full
 versionScheme      := Some("early-semver")
