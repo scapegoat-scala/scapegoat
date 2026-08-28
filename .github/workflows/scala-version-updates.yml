@@ -42,10 +42,14 @@ jobs:
             grep -oP 'href="2\.13\.\d+/"' | grep -oP '2\.13\.\d+' | sort -V -u | tail -2 | paste -sd ' ')
           echo "Latest 2.13.x versions: $SCALA_213_VERSIONS"
 
-          # Hardcoded Scala 3.3.8
-          SCALA_338="3.3.8"
+          # Fetch latest Scala 3.9.x LTS version
+          echo "Fetching latest 3.9.x version..."
+          SCALA_3_LTS=$(curl -s "https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/" | \
+            grep -oP 'href="3\.9\.\d+/"' | grep -oP '3\.9\.\d+' | \
+            grep -v -E '(RC|M|SNAPSHOT|alpha|beta)' | sort -V -u | tail -1)
+          echo "Latest 3.9.x version: $SCALA_3_LTS"
 
-          # Fetch latest Scala 3.x version (excluding 3.3.x to find the latest mainline)
+          # Fetch latest Scala 3.x version (excluding 3.9.x to find the latest mainline)
           echo "Fetching latest 3.x version..."
           SCALA_3_LATEST=$(curl -s "https://repo1.maven.org/maven2/org/scala-lang/scala3-library_3/" | \
             grep -oP 'href="3\.\d+\.\d+/"' | grep -oP '3\.\d+\.\d+' | \
@@ -60,7 +64,7 @@ jobs:
           echo "Current crossScalaVersions: $CURRENT_CROSS_VERSIONS"
 
           # Build new version lists
-          NEW_CROSS_VERSIONS="$SCALA_212_VERSIONS $SCALA_213_VERSIONS $SCALA_338 $SCALA_3_LATEST"
+          NEW_CROSS_VERSIONS="$SCALA_212_VERSIONS $SCALA_213_VERSIONS $SCALA_3_LTS $SCALA_3_LATEST"
           NEW_CROSS_VERSIONS=$(echo $NEW_CROSS_VERSIONS | tr ' ' '\n' | sort -V -u | paste -sd ' ')
 
           echo "New crossScalaVersions: $NEW_CROSS_VERSIONS"
@@ -91,7 +95,7 @@ jobs:
             echo "scala_212_2=$SCALA_212_2" >> $GITHUB_OUTPUT
             echo "scala_213_1=$SCALA_213_1" >> $GITHUB_OUTPUT
             echo "scala_213_2=$SCALA_213_2" >> $GITHUB_OUTPUT
-            echo "scala_338=$SCALA_338" >> $GITHUB_OUTPUT
+            echo "scala_3_lts=$SCALA_3_LTS" >> $GITHUB_OUTPUT
             echo "scala_3_latest=$SCALA_3_LATEST" >> $GITHUB_OUTPUT
 
             # Get the latest 2.12.x, 2.13.x for README badges
@@ -114,7 +118,7 @@ jobs:
           SCALA_212_2="${{ steps.versions.outputs.scala_212_2 }}"
           SCALA_213_1="${{ steps.versions.outputs.scala_213_1 }}"
           SCALA_213_2="${{ steps.versions.outputs.scala_213_2 }}"
-          SCALA_338="${{ steps.versions.outputs.scala_338 }}"
+          SCALA_3_LTS="${{ steps.versions.outputs.scala_3_lts }}"
           SCALA_3_LATEST="${{ steps.versions.outputs.scala_3_latest }}"
           LATEST_212="${{ steps.versions.outputs.latest_212 }}"
           LATEST_213="${{ steps.versions.outputs.latest_213 }}"
@@ -122,7 +126,7 @@ jobs:
           echo "Updating build.sbt..."
 
           # Update crossScalaVersions in build.sbt
-          sed -i -E "s/crossScalaVersions\s+:=\s+Seq.*/crossScalaVersions := Seq(\"$SCALA_212_1\", \"$SCALA_212_2\", \"$SCALA_213_1\", \"$SCALA_213_2\", \"$SCALA_338\", \"$SCALA_3_LATEST\")/" build.sbt
+          sed -i -E "s/crossScalaVersions\s+:=\s+Seq.*/crossScalaVersions := Seq(\"$SCALA_212_1\", \"$SCALA_212_2\", \"$SCALA_213_1\", \"$SCALA_213_2\", \"$SCALA_3_LTS\", \"$SCALA_3_LATEST\")/" build.sbt
 
           # Update scalaVersion if it changed
           if [ "${{ steps.versions.outputs.scala_version_changed }}" == "true" ]; then
@@ -138,7 +142,7 @@ jobs:
               -v s212_2="$SCALA_212_2" \
               -v s213_1="$SCALA_213_1" \
               -v s213_2="$SCALA_213_2" \
-              -v s338="$SCALA_338" \
+              -v s3lts="$SCALA_3_LTS" \
               -v s3latest="$SCALA_3_LATEST" '
           /^        scala:/ {
             print
@@ -147,7 +151,7 @@ jobs:
             print "          - " s212_2
             print "          - " s213_1
             print "          - " s213_2
-            print "          - " s338
+            print "          - " s3lts
             print "          - " s3latest
             # Skip existing scala versions
             while (getline && /^          -/) {}
@@ -163,7 +167,7 @@ jobs:
 
           sed -i '/shields\.io/ s|2\.12\.[0-9]\+|'"$LATEST_212"'|g' README.md
           sed -i '/shields\.io/ s|2\.13\.[0-9]\+|'"$LATEST_213"'|g' README.md
-          sed -i '/shields\.io/ s|3\.3\.[0-9]\+|'"$SCALA_338"'|g' README.md
+          sed -i '/shields\.io/ s|3\.3\.[0-9]\+|'"$SCALA_3_LTS"'|g' README.md
           sed -i -E '/shields\.io/ s/3\.([04-9]|[1-9][0-9])\.[0-9]+/'"$SCALA_3_LATEST"'/g' README.md
           sed -i '/scapegoat:scalac-scapegoat-plugin_/ s|scalac-scapegoat-plugin_2\.12\.[0-9]\+|scalac-scapegoat-plugin_'"$LATEST_212"'|g' README.md
           sed -i '/scapegoat:scalac-scapegoat-plugin_/ s|scalac-scapegoat-plugin_2\.13\.[0-9]\+|scalac-scapegoat-plugin_'"$LATEST_213"'|g' README.md
@@ -199,7 +203,7 @@ jobs:
 
             - **2.12.x**: ${{ steps.versions.outputs.scala_212_1 }}, ${{ steps.versions.outputs.scala_212_2 }}
             - **2.13.x**: ${{ steps.versions.outputs.scala_213_1 }}, ${{ steps.versions.outputs.scala_213_2 }}
-            - **3.3.x**: ${{ steps.versions.outputs.scala_338 }} (hardcoded)
+            - **3.3.x**: ${{ steps.versions.outputs.scala_3_lts }} (hardcoded)
             - **3.x latest**: ${{ steps.versions.outputs.scala_3_latest }}
 
             ### Files updated:
