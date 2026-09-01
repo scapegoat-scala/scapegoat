@@ -20,8 +20,8 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v6.0.0
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: temurin
+          java-version: 17
 
       - name: Fetch and process Scala versions
         id: versions
