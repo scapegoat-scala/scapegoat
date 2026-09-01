@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-java@v6.0.0
         with:
           cache: sbt
-          distribution: adopt
+          distribution: temurin
           java-version: ${{matrix.java}}
       - uses: sbt/setup-sbt@v1
       - uses: actions/cache@v6
@@ -42,7 +42,7 @@ jobs:
       - uses: actions/setup-java@v6.0.0
         with:
           cache: sbt
-          distribution: adopt
+          distribution: temurin
           java-version: 17
       - uses: sbt/setup-sbt@v1
       - uses: actions/cache@v6
