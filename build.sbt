@@ -95,7 +95,7 @@ libraryDependencies ++= Seq(
   ),
   "org.scalatest" %% "scalatest"    % "3.2.20"  % "test",
   "org.mockito"    % "mockito-all"  % "1.10.19" % "test",
-  "joda-time"      % "joda-time"    % "2.14.4"  % "test",
+  "joda-time"      % "joda-time"    % "2.15.0"  % "test",
   "org.joda"       % "joda-convert" % "3.0.1"   % "test",
   "org.slf4j"      % "slf4j-api"    % "2.0.20"  % "test"
 )
