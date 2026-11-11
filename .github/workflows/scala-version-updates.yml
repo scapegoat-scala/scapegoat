@@ -203,7 +203,7 @@ jobs:
 
             - **2.12.x**: ${{ steps.versions.outputs.scala_212_1 }}, ${{ steps.versions.outputs.scala_212_2 }}
             - **2.13.x**: ${{ steps.versions.outputs.scala_213_1 }}, ${{ steps.versions.outputs.scala_213_2 }}
-            - **3.3.x**: ${{ steps.versions.outputs.scala_3_lts }} (hardcoded)
+            - **latest 3.x LTS**: ${{ steps.versions.outputs.scala_3_lts }} (hardcoded)
             - **3.x latest**: ${{ steps.versions.outputs.scala_3_latest }}
 
             ### Files updated:
